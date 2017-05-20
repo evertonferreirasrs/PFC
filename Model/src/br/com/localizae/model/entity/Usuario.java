@@ -15,6 +15,7 @@ import java.util.Objects;
  * @author Equipe LocalizaÊ
  */
 public class Usuario extends BaseEntity{
+    
     private String nome;
     private String email;
     private String senha;

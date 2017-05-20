@@ -36,7 +36,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getEmail());
         ps.setString(++i, entity.getSenha());
-        ps.setBoolean(++i, entity.getSituacao());
+        ps.setString(++i, entity.getSituacao());
         ps.setString(++i, entity.getMotivo());
         ps.setString(++i, entity.getTokenRedeSocial());
         ps.setString(++i, entity.getTokenAutenticacao());
@@ -112,7 +112,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getEmail());
         ps.setString(++i, entity.getSenha());
-        ps.setBoolean(++i, entity.getSituacao());
+        ps.setString(++i, entity.getSituacao());
         ps.setString(++i, entity.getMotivo());
         ps.setString(++i, entity.getTokenRedeSocial());
         ps.setString(++i, entity.getTokenAutenticacao());
@@ -141,7 +141,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
             usuario.setNome(rs.getString("nome"));
             usuario.setEmail(rs.getString("email"));
             usuario.setSenha(rs.getString("senha"));
-            usuario.setSituacao(rs.getBoolean("situacao"));
+            usuario.setSituacao(rs.getString("situacao"));
             usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
             usuario.setMotivo(rs.getString("motivo"));
             usuario.setId(rs.getLong("id"));
@@ -191,7 +191,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
             usuario.setNome(rs.getString("nome"));
             usuario.setEmail(rs.getString("email"));
             usuario.setSenha(rs.getString("senha"));
-            usuario.setSituacao(rs.getBoolean("situacao"));
+            usuario.setSituacao(rs.getString("situacao"));
             usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
             usuario.setMotivo(rs.getString("motivo"));
             usuario.setId(rs.getLong("id"));
