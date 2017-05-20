@@ -25,3 +25,5 @@ On Update
 
 On read
 	Retorna os usuários com lista de critérios, e estande.
+
+

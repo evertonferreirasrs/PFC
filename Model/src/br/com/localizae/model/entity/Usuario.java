@@ -19,12 +19,13 @@ public class Usuario extends BaseEntity{
     private String email;
     private String senha;
     private TipoUsuario tipoUsuario;
-    private boolean situacao;
+    private String situacao;
     private String motivo;
     private String tokenRedeSocial;
     private String tokenAutenticacao;
     private Timestamp dataHoraExpiracaoToken;
     private List<CriterioAvaliacao> criterioAvaliacaoList;
+    private IntegranteEquipe integranteEquipe;
 
     public List<CriterioAvaliacao> getCriterioAvaliacaoList() {
         return criterioAvaliacaoList;
@@ -36,19 +37,21 @@ public class Usuario extends BaseEntity{
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.nome);
-        hash = 41 * hash + Objects.hashCode(this.email);
-        hash = 41 * hash + Objects.hashCode(this.senha);
-        hash = 41 * hash + Objects.hashCode(this.tipoUsuario);
-        hash = 41 * hash + (this.situacao ? 1 : 0);
-        hash = 41 * hash + Objects.hashCode(this.motivo);
-        hash = 41 * hash + Objects.hashCode(this.tokenRedeSocial);
-        hash = 41 * hash + Objects.hashCode(this.tokenAutenticacao);
-        hash = 41 * hash + Objects.hashCode(this.dataHoraExpiracaoToken);
+        int hash = 5;
+        hash = 11 * hash + Objects.hashCode(this.nome);
+        hash = 11 * hash + Objects.hashCode(this.email);
+        hash = 11 * hash + Objects.hashCode(this.senha);
+        hash = 11 * hash + Objects.hashCode(this.tipoUsuario);
+        hash = 11 * hash + Objects.hashCode(this.situacao);
+        hash = 11 * hash + Objects.hashCode(this.motivo);
+        hash = 11 * hash + Objects.hashCode(this.tokenRedeSocial);
+        hash = 11 * hash + Objects.hashCode(this.tokenAutenticacao);
+        hash = 11 * hash + Objects.hashCode(this.dataHoraExpiracaoToken);
+        hash = 11 * hash + Objects.hashCode(this.criterioAvaliacaoList);
+        hash = 11 * hash + Objects.hashCode(this.integranteEquipe);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -90,8 +93,6 @@ public class Usuario extends BaseEntity{
         }
         return true;
     }
-    
-    
 
     public String getNome() {
         return nome;
@@ -125,11 +126,11 @@ public class Usuario extends BaseEntity{
         this.tipoUsuario = tipoUsuario;
     }
 
-    public boolean getSituacao() {
+    public String getSituacao() {
         return situacao;
     }
 
-    public void setSituacao(boolean situacao) {
+    public void setSituacao(String situacao) {
         this.situacao = situacao;
     }
 
@@ -163,5 +164,13 @@ public class Usuario extends BaseEntity{
 
     public void setDataHoraExpiracaoToken(Timestamp dataHoraExpiracaoToken) {
         this.dataHoraExpiracaoToken = dataHoraExpiracaoToken;
+    }
+
+    public IntegranteEquipe getIntegranteEquipe() {
+        return integranteEquipe;
+    }
+
+    public void setIntegranteEquipe(IntegranteEquipe integranteEquipe) {
+        this.integranteEquipe = integranteEquipe;
     }
 }
