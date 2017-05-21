@@ -106,3 +106,5 @@ ALTER TABLE imagem ADD CONSTRAINT imagem_promocao_fk FOREIGN KEY (promocao_fk) R
 ALTER TABLE promocao ADD CONSTRAINT promocao_estande_fk FOREIGN KEY (estande_fk) REFERENCES estande(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE criterioJurado ADD CONSTRAINT criterioJurado_usuario_fk FOREIGN KEY (usuario_fk) REFERENCES usuario(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE criterioJurado ADD CONSTRAINT criterioJurado_criterioAvaliacao_fk FOREIGN KEY (criterioAvaliacao_fk) REFERENCES criterioAvaliacao(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE avaliacaoJurado ADD CONSTRAINT avaliacaoJurado_usuario_fk FOREIGN KEY (usuario_fk) REFERENCES usuario(id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE avaliacaoJurado ADD CONSTRAINT avaliacaoJurado_criterioAvaliacao_fk FOREIGN KEY (criterioAvaliacao_fk) REFERENCES criterioAvaliacao(id) ON UPDATE CASCADE ON DELETE NO ACTION;

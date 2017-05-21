@@ -14,6 +14,7 @@ import java.util.Objects;
  */
 public class CriterioAvaliacao extends BaseEntity {
     private String nome;
+    private Long peso;
 
     @Override
     public int hashCode() {
@@ -48,5 +49,13 @@ public class CriterioAvaliacao extends BaseEntity {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Long getPeso() {
+        return peso;
+    }
+
+    public void setPeso(Long peso) {
+        this.peso = peso;
     }
 }

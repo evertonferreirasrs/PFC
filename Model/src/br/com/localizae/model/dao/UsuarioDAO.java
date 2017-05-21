@@ -51,7 +51,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         rs.close();
         ps.close();
 
-        if (entity instanceof IntegranteEquipe) {
+        if (entity.getTipoUsuario().getId() == 3) {
             this.createIntegrante(entity, conn);
         }
 
@@ -122,12 +122,57 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
 
         ps.execute();
         ps.close();
+
+        if (entity.getTipoUsuario().getId() == 3) {
+            this.updateIntegrante(entity, conn);
+        }
+
+        if (entity.getTipoUsuario().getId() == 4) {
+            this.updateJurado(entity, conn);
+        }
+    }
+
+    private void updateIntegrante(Usuario entity, Connection conn) throws SQLException {
+        String sql = "UPDATE integranteEquipe SET responsavel=?, usuario_fk=?, estande_fk=? WHERE id=?;";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+
+        int i = 0;
+        ps.setBoolean(++i, entity.getIntegranteEquipe().getResponsavel());
+        ps.setLong(++i, entity.getId());
+        ps.setLong(++i, entity.getIntegranteEquipe().getEstande().getId());
+
+        ps.execute();
+        ps.close();
+    }
+
+    private void updateJurado(Usuario entity, Connection conn) throws SQLException {
+        String sql = "DELETE FROM criterioJurado WHERE usuario_fk = ?";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+
+        ps.setLong(1, entity.getId());
+
+        ps.execute();
+        ps.close();
+
+        for (CriterioAvaliacao criterio : entity.getCriterioAvaliacaoList()) {
+            sql = "INSERT INTO criterioJurado (usuario_fk, criterioAvaliacao_fk) VALUES (?, ?);";
+            PreparedStatement psUpdate = conn.prepareStatement(sql);
+
+            int i = 0;
+            psUpdate.setLong(++i, entity.getId());
+            psUpdate.setLong(++i, criterio.getId());
+
+            ps.execute();
+            ps.close();
+        }
     }
 
     @Override
     public Usuario readById(Connection conn, Long id) throws Exception {
         Usuario usuario = null;
-        String sql = "SELECT * FROM usuario WHERE id=?;";
+        String sql = "select u.*, tp.nome tipoUsuario, cj.criterioavaliacao_fk, ca.nome criterio, ca.peso, ie.estande_fk, ie.responsavel from usuario u join tipousuario tp on u.tipousuario_fk = tp.id join criteriojurado cj on u.id = cj.usuario_fk join criterioavaliacao ca on cj.criterioavaliacao_fk = ca.id join integranteequipe ie on u.id = ie.usuario_fk where u.id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -137,21 +182,38 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            usuario = new Usuario();
-            usuario.setNome(rs.getString("nome"));
-            usuario.setEmail(rs.getString("email"));
-            usuario.setSenha(rs.getString("senha"));
-            usuario.setSituacao(rs.getString("situacao"));
-            usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
-            usuario.setMotivo(rs.getString("motivo"));
-            usuario.setId(rs.getLong("id"));
-            usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));
-            usuario.setTokenRedeSocial(rs.getString("tokenRedeSocial"));
+            if (usuario == null) {
+                usuario = new Usuario();
+                usuario.setNome(rs.getString("nome"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setSituacao(rs.getString("situacao"));
+                usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
+                usuario.setMotivo(rs.getString("situacao"));
+                usuario.setId(rs.getLong("id"));
+                usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));
+                usuario.setTokenRedeSocial(rs.getString("tokenRedeSocial"));
 
-            TipoUsuario tipoUsuario = new TipoUsuario();
-            tipoUsuario.setId(rs.getLong("tipoUsuario_fk"));
+                TipoUsuario tipoUsuario = new TipoUsuario();
+                tipoUsuario.setId(rs.getLong("tipoUsuario_fk"));
+                tipoUsuario.setNome(rs.getString("tipousuario"));
 
-            usuario.setTipoUsuario(tipoUsuario);
+                usuario.setTipoUsuario(tipoUsuario);
+            }
+
+            if (usuario.getTipoUsuario().getId() == 4) {
+                if (usuario.getCriterioAvaliacaoList().isEmpty()) {
+                    usuario.setCriterioAvaliacaoList(new ArrayList<>());
+                }
+                
+                CriterioAvaliacao criterio = new CriterioAvaliacao();
+                criterio.setId(rs.getLong("criterioavaliacao_fk"));
+                criterio.setNome(rs.getString("criterio"));
+                criterio.setPeso(rs.getLong("peso"));
+                
+                usuario.getCriterioAvaliacaoList().add(criterio);
+            }
+
         }
         return usuario;
     }
@@ -162,7 +224,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
             criteria = new HashMap<>();
         }
         List<Usuario> usuarioList = new ArrayList<>();
-        String sql = "SELECT * FROM usuario WHERE 1=1";
+        String sql = "select u.*, tp.nome tipoUsuario, cj.criterioavaliacao_fk, ca.nome criterio, ca.peso, ie.estande_fk, ie.responsavel from usuario u join tipousuario tp on u.tipousuario_fk = tp.id join criteriojurado cj on u.id = cj.usuario_fk join criterioavaliacao ca on cj.criterioavaliacao_fk = ca.id join integranteequipe ie on u.id = ie.usuario_fk WHERE 1=1";
 
         List<Object> args = new ArrayList<>();
         sql += this.applyCriteria(criteria, args);
