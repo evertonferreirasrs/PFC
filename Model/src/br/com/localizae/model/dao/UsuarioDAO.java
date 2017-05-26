@@ -202,15 +202,15 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
             }
 
             if (usuario.getTipoUsuario().getId() == 4) {
-                if (usuario.getCriterioAvaliacaoList().isEmpty()) {
+                if (usuario.getCriterioAvaliacaoList() == null) {
                     usuario.setCriterioAvaliacaoList(new ArrayList<>());
                 }
-                
+
                 CriterioAvaliacao criterio = new CriterioAvaliacao();
                 criterio.setId(rs.getLong("criterioavaliacao_fk"));
                 criterio.setNome(rs.getString("criterio"));
                 criterio.setPeso(rs.getLong("peso"));
-                
+
                 usuario.getCriterioAvaliacaoList().add(criterio);
             }
 
@@ -224,7 +224,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
             criteria = new HashMap<>();
         }
         List<Usuario> usuarioList = new ArrayList<>();
-        String sql = "select u.*, tp.nome tipoUsuario, cj.criterioavaliacao_fk, ca.nome criterio, ca.peso, ie.estande_fk, ie.responsavel from usuario u join tipousuario tp on u.tipousuario_fk = tp.id join criteriojurado cj on u.id = cj.usuario_fk join criterioavaliacao ca on cj.criterioavaliacao_fk = ca.id join integranteequipe ie on u.id = ie.usuario_fk WHERE 1=1";
+        String sql = "select u.*, tp.nome tipoUsuario, cj.criterioavaliacao_fk, ca.nome criterio, ca.peso, ie.estande_fk, ie.responsavel from usuario u join tipousuario tp on u.tipousuario_fk = tp.id join criteriojurado cj on u.id = cj.usuario_fk join criterioavaliacao ca on cj.criterioavaliacao_fk = ca.id join integranteequipe ie on u.id = ie.usuario_fk where 1=1";
 
         List<Object> args = new ArrayList<>();
         sql += this.applyCriteria(criteria, args);
@@ -249,23 +249,44 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            Usuario usuario = new Usuario();
-            usuario.setNome(rs.getString("nome"));
-            usuario.setEmail(rs.getString("email"));
-            usuario.setSenha(rs.getString("senha"));
-            usuario.setSituacao(rs.getString("situacao"));
-            usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
-            usuario.setMotivo(rs.getString("motivo"));
-            usuario.setId(rs.getLong("id"));
-            usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));
-            usuario.setTokenRedeSocial(rs.getString("tokenRedeSocial"));
+            Usuario usuario = null;
+            Usuario ultimoUsuario = usuarioList.get(usuarioList.size() - 1);
 
-            TipoUsuario tipoUsuario = new TipoUsuario();
-            tipoUsuario.setId(rs.getLong("tipoUsuario_fk"));
+            if (!usuarioList.isEmpty() && ultimoUsuario.getId() == rs.getLong("id")) {
+                usuario = ultimoUsuario;
+            } else {
+                usuario = new Usuario();
+                usuario.setNome(rs.getString("nome"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setSituacao(rs.getString("situacao"));
+                usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
+                usuario.setMotivo(rs.getString("situacao"));
+                usuario.setId(rs.getLong("id"));
+                usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));
+                usuario.setTokenRedeSocial(rs.getString("tokenRedeSocial"));
 
-            usuario.setTipoUsuario(tipoUsuario);
+                TipoUsuario tipoUsuario = new TipoUsuario();
+                tipoUsuario.setId(rs.getLong("tipoUsuario_fk"));
+                tipoUsuario.setNome(rs.getString("tipousuario"));
 
-            usuarioList.add(usuario);
+                usuario.setTipoUsuario(tipoUsuario);
+
+                usuarioList.add(usuario);
+            }
+
+            if (usuario.getTipoUsuario().getId() == 4) {
+                if (usuario.getCriterioAvaliacaoList() == null) {
+                    usuario.setCriterioAvaliacaoList(new ArrayList<>());
+                }
+
+                CriterioAvaliacao criterio = new CriterioAvaliacao();
+                criterio.setId(rs.getLong("criterioavaliacao_fk"));
+                criterio.setNome(rs.getString("criterio"));
+                criterio.setPeso(rs.getLong("peso"));
+
+                usuario.getCriterioAvaliacaoList().add(criterio);
+            }
         }
         return usuarioList;
     }
@@ -295,35 +316,18 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
             args.add(senha);
         }
 
-//        boolean is_visitante = (boolean)criteria.get(UsuarioCriteria.IS_VISITANTE);
-//        if(is_visitante != false){
-//            sql = " AND tipoUsuario_fk = ?";
-//            args.add(2);
-//        }
-//        
-//        boolean is_administrador = (boolean)criteria.get(UsuarioCriteria.IS_ADMINISTRADOR);
-//        if(is_administrador != false){
-//            sql = " AND tipoUsuario_fk = ?";
-//            args.add(1);
-//        }
-//        
-//        boolean is_expositor = (boolean)criteria.get(UsuarioCriteria.IS_EXPOSITOR);
-//        if(is_expositor != false){
-//            sql = " AND tipoUsuario_fk = ?";
-//            args.add(3);
-//        }
-//        
-//        boolean is_jurado = (boolean)criteria.get(UsuarioCriteria.IS_JURADO);
-//        if(is_jurado != false){
-//            sql = " AND tipo_usuario_fk = ?";
-//            args.add(4);
-//        }
-//        
-//        boolean is_bloqueado = (boolean)criteria.get(UsuarioCriteria.IS_BLOQUEADO);
-//        if(is_bloqueado != false){
-//            sql = " AND bloqueado is ?";
-//            args.add(true);
-//        }
+        Long tipoUsuario = (Long) criteria.get(UsuarioCriteria.TIPO_USUARIO_EQ);
+        if (tipoUsuario != null && tipoUsuario > 0) {
+            sql += " AND tipoUsuario_fk = ?";
+            args.add(tipoUsuario);
+        }
+
+        String situacao = (String) criteria.get(UsuarioCriteria.SITUACAO_ILIKE);
+        if (situacao != null && !situacao.isEmpty()) {
+            sql = " AND situacao ILIKE ?";
+            situacao = "%" + situacao + "%";
+            args.add(situacao);
+        }
         return sql;
     }
 }
