@@ -46,6 +46,7 @@ CREATE TABLE avaliacaoJurado(
         dataHoraAbertura TIMESTAMP NULL,
         usuario_fk BIGINT NOT NULL,
         criterioAvaliacao_fk BIGINT NOT NULL,
+        estande_fk BIGINT NOT NULL,
 	PRIMARY KEY(id)
 );
 
@@ -108,3 +109,4 @@ ALTER TABLE criterioJurado ADD CONSTRAINT criterioJurado_usuario_fk FOREIGN KEY 
 ALTER TABLE criterioJurado ADD CONSTRAINT criterioJurado_criterioAvaliacao_fk FOREIGN KEY (criterioAvaliacao_fk) REFERENCES criterioAvaliacao(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE avaliacaoJurado ADD CONSTRAINT avaliacaoJurado_usuario_fk FOREIGN KEY (usuario_fk) REFERENCES usuario(id) ON UPDATE CASCADE ON DELETE NO ACTION;
 ALTER TABLE avaliacaoJurado ADD CONSTRAINT avaliacaoJurado_criterioAvaliacao_fk FOREIGN KEY (criterioAvaliacao_fk) REFERENCES criterioAvaliacao(id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE avaliacaoJurado ADD CONSTRAINT avaliacaoJurado_estande_fk FOREIGN KEY (avaliacaoJurado_fk) REFERENCES estande(id) ON UPDATE CASCADE ON DELETE CASCADE;
