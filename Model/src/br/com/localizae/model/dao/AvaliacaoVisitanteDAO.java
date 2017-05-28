@@ -33,7 +33,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
         int i = 0;
         ps.setLong(++i, entity.getNota());
-        ps.setString(++i, entity.getComentario());
+        ps.setString(++i, entity.getOpiniao());
         ps.setLong(++i, entity.getUsuario().getId());
         ps.setLong(++i, entity.getEstande().getId());
 
@@ -68,7 +68,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
         int i = 0;
         ps.setLong(++i, entity.getNota());
-        ps.setString(++i, entity.getComentario());
+        ps.setString(++i, entity.getOpiniao());
         ps.setLong(++i, entity.getUsuario().getId());
         ps.setLong(++i, entity.getEstande().getId());
         ps.setLong(++i, entity.getId());
@@ -92,7 +92,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
         while (rs.next()) {
             avaliacaoVisitante = new AvaliacaoVisitante();
-            avaliacaoVisitante.setComentario(rs.getString("comentario"));
+            avaliacaoVisitante.setOpiniao(rs.getString("comentario"));
             avaliacaoVisitante.setNota(rs.getLong("nota"));
             avaliacaoVisitante.setId(rs.getLong("id"));
 
@@ -144,7 +144,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
         while (rs.next()) {
             AvaliacaoVisitante avaliacaoVisitante = new AvaliacaoVisitante();
-            avaliacaoVisitante.setComentario(rs.getString("comentario"));
+            avaliacaoVisitante.setOpiniao(rs.getString("comentario"));
             avaliacaoVisitante.setNota(rs.getLong("nota"));
             avaliacaoVisitante.setId(rs.getLong("id"));
 

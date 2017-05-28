@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 public class AvaliacaoVisitante extends BaseEntity {
     private Long nota;
-    private String comentario;
+    private String opiniao;
     private Usuario usuario;
     private Estande estande;
 
@@ -22,7 +22,7 @@ public class AvaliacaoVisitante extends BaseEntity {
     public int hashCode() {
         int hash = 3;
         hash = 89 * hash + Objects.hashCode(this.nota);
-        hash = 89 * hash + Objects.hashCode(this.comentario);
+        hash = 89 * hash + Objects.hashCode(this.opiniao);
         hash = 89 * hash + Objects.hashCode(this.usuario);
         hash = 89 * hash + Objects.hashCode(this.estande);
         return hash;
@@ -40,7 +40,7 @@ public class AvaliacaoVisitante extends BaseEntity {
             return false;
         }
         final AvaliacaoVisitante other = (AvaliacaoVisitante) obj;
-        if (!Objects.equals(this.comentario, other.comentario)) {
+        if (!Objects.equals(this.opiniao, other.opiniao)) {
             return false;
         }
         if (!Objects.equals(this.nota, other.nota)) {
@@ -65,12 +65,12 @@ public class AvaliacaoVisitante extends BaseEntity {
         this.nota = nota;
     }
 
-    public String getComentario() {
-        return comentario;
+    public String getOpiniao() {
+        return opiniao;
     }
 
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
+    public void setOpiniao(String opiniao) {
+        this.opiniao = opiniao;
     }
 
     public Usuario getUsuario() {
