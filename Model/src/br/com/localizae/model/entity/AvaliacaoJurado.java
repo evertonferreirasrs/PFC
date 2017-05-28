@@ -6,6 +6,7 @@
 package br.com.localizae.model.entity;
 
 import br.com.localizae.model.base.BaseEntity;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -15,14 +16,24 @@ import java.util.Objects;
 public class AvaliacaoJurado extends BaseEntity {
     private Long nota;
     private String opiniao;
-    private InformacoesParaAvaliacao informacoesParaAvaliacao;
+    private String status;
+    private Timestamp dataHoraAbertura;
+    private Timestamp dataHoraFechamento;
+    private Usuario usuario;
+    private CriterioAvaliacao criterio;
+    private Estande estande;
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + Objects.hashCode(this.nota);
-        hash = 89 * hash + Objects.hashCode(this.opiniao);
-        hash = 89 * hash + Objects.hashCode(this.informacoesParaAvaliacao);
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.nota);
+        hash = 79 * hash + Objects.hashCode(this.opiniao);
+        hash = 79 * hash + Objects.hashCode(this.status);
+        hash = 79 * hash + Objects.hashCode(this.dataHoraAbertura);
+        hash = 79 * hash + Objects.hashCode(this.dataHoraFechamento);
+        hash = 79 * hash + Objects.hashCode(this.usuario.getId());
+        hash = 79 * hash + Objects.hashCode(this.criterio.getId());
+        hash = 79 * hash + Objects.hashCode(this.estande.getId());
         return hash;
     }
 
@@ -41,16 +52,29 @@ public class AvaliacaoJurado extends BaseEntity {
         if (!Objects.equals(this.opiniao, other.opiniao)) {
             return false;
         }
+        if (!Objects.equals(this.status, other.status)) {
+            return false;
+        }
         if (!Objects.equals(this.nota, other.nota)) {
             return false;
         }
-        if (!Objects.equals(this.informacoesParaAvaliacao.getId(), other.informacoesParaAvaliacao.getId())) {
+        if (!Objects.equals(this.dataHoraAbertura, other.dataHoraAbertura)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataHoraFechamento, other.dataHoraFechamento)) {
+            return false;
+        }
+        if (!Objects.equals(this.usuario.getId(), other.usuario.getId())) {
+            return false;
+        }
+        if (!Objects.equals(this.criterio.getId(), other.criterio.getId())) {
+            return false;
+        }
+        if (!Objects.equals(this.estande.getId(), other.estande.getId())) {
             return false;
         }
         return true;
     }
-    
-    
 
     public Long getNota() {
         return nota;
@@ -68,11 +92,51 @@ public class AvaliacaoJurado extends BaseEntity {
         this.opiniao = opiniao;
     }
 
-    public InformacoesParaAvaliacao getInformacoesParaAvaliacao() {
-        return informacoesParaAvaliacao;
+    public String getStatus() {
+        return status;
     }
 
-    public void setInformacoesParaAvaliacao(InformacoesParaAvaliacao informacoesParaAvaliacao) {
-        this.informacoesParaAvaliacao = informacoesParaAvaliacao;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Timestamp getDataHoraAbertura() {
+        return dataHoraAbertura;
+    }
+
+    public void setDataHoraAbertura(Timestamp dataHoraAbertura) {
+        this.dataHoraAbertura = dataHoraAbertura;
+    }
+
+    public Timestamp getDataHoraFechamento() {
+        return dataHoraFechamento;
+    }
+
+    public void setDataHoraFechamento(Timestamp dataHoraFechamento) {
+        this.dataHoraFechamento = dataHoraFechamento;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public CriterioAvaliacao getCriterio() {
+        return criterio;
+    }
+
+    public void setCriterio(CriterioAvaliacao criterio) {
+        this.criterio = criterio;
+    }
+
+    public Estande getEstande() {
+        return estande;
+    }
+
+    public void setEstande(Estande estande) {
+        this.estande = estande;
     }
 }
