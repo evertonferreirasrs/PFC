@@ -14,13 +14,15 @@ public class EventoDAO implements BaseDAO<Evento> {
 
     @Override
     public void create(Connection conn, Evento entity) throws Exception {
-        String sql = "INSERT INTO evento (nome, endereco) VALUES (?, ?) RETURNING id;";
+        String sql = "INSERT INTO evento (nome, endereco, dataHoraEventoInicio, dataHoraEventoFim) VALUES (?, ?, ?, ?) RETURNING id;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getEndereco());
+        ps.setTimestamp(++i, entity.getDataHoraEventoInicio());
+        ps.setTimestamp(++i, entity.getDataHoraEventoFim());
 
         ResultSet rs = ps.executeQuery();
 
@@ -47,13 +49,15 @@ public class EventoDAO implements BaseDAO<Evento> {
 
     @Override
     public void update(Connection conn, Evento entity) throws Exception {
-        String sql = "UPDATE evento SET nome=?, endereco=? WHERE id=?;";
+        String sql = "UPDATE evento SET nome=?, endereco=?, dataHoraEventoInicio=?, dataHoraEventoFim=? WHERE id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getEndereco());
+        ps.setTimestamp(++i, entity.getDataHoraEventoInicio());
+        ps.setTimestamp(++i, entity.getDataHoraEventoFim());
         ps.setLong(++i, entity.getId());
 
         ps.execute();
@@ -77,6 +81,8 @@ public class EventoDAO implements BaseDAO<Evento> {
             evento = new Evento();
             evento.setNome(rs.getString("nome"));
             evento.setEndereco(rs.getString("endereco"));
+            evento.setDataHoraEventoInicio(rs.getTimestamp("dataHoraEventoInicio"));
+            evento.setDataHoraEventoFim(rs.getTimestamp("dataHoraEventoFim"));
             evento.setId(rs.getLong("id"));
         }
 
@@ -118,7 +124,10 @@ public class EventoDAO implements BaseDAO<Evento> {
             Evento evento = new Evento();
             evento.setNome(rs.getString("nome"));
             evento.setEndereco(rs.getString("endereco"));
+            evento.setDataHoraEventoInicio(rs.getTimestamp("dataHoraEventoInicio"));
+            evento.setDataHoraEventoFim(rs.getTimestamp("dataHoraEventoFim"));
             evento.setId(rs.getLong("id"));
+            
             eventoList.add(evento);
         }
 

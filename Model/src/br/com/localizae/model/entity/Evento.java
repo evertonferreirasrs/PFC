@@ -1,11 +1,14 @@
 package br.com.localizae.model.entity;
 
 import br.com.localizae.model.base.BaseEntity;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Evento extends BaseEntity{
     private String nome;
     private String endereco;
+    private Timestamp dataHoraEventoInicio;
+    private Timestamp dataHoraEventoFim;
 
     @Override
     public int hashCode() {
@@ -50,5 +53,21 @@ public class Evento extends BaseEntity{
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public Timestamp getDataHoraEventoInicio() {
+        return dataHoraEventoInicio;
+    }
+
+    public void setDataHoraEventoInicio(Timestamp dataHoraEventoInicio) {
+        this.dataHoraEventoInicio = dataHoraEventoInicio;
+    }
+
+    public Timestamp getDataHoraEventoFim() {
+        return dataHoraEventoFim;
+    }
+
+    public void setDataHoraEventoFim(Timestamp dataHoraEventoFim) {
+        this.dataHoraEventoFim = dataHoraEventoFim;
     }
 }
