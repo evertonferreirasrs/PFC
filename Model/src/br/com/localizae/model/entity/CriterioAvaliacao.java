@@ -18,8 +18,9 @@ public class CriterioAvaliacao extends BaseEntity {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.nome);
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.nome);
+        hash = 59 * hash + Objects.hashCode(this.peso);
         return hash;
     }
 
@@ -38,10 +39,11 @@ public class CriterioAvaliacao extends BaseEntity {
         if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
+        if (!Objects.equals(this.peso, other.peso)) {
+            return false;
+        }
         return true;
     }
-    
-    
 
     public String getNome() {
         return nome;
