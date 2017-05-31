@@ -11,15 +11,17 @@ import java.util.Objects;
  *
  * @author Equipe LocalizaÊ
  */
-public class IntegranteEquipe extends Usuario{
+public class IntegranteEquipe{
     private Boolean responsavel;
     private Estande estande;
+    private Usuario usuario;
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.responsavel);
-        hash = 37 * hash + Objects.hashCode(this.estande);
+        hash = 41 * hash + Objects.hashCode(this.responsavel);
+        hash = 41 * hash + Objects.hashCode(this.estande);
+        hash = 41 * hash + Objects.hashCode(this.usuario);
         return hash;
     }
 
@@ -41,6 +43,9 @@ public class IntegranteEquipe extends Usuario{
         if (!Objects.equals(this.estande, other.estande)) {
             return false;
         }
+        if (!Objects.equals(this.usuario, other.usuario)) {
+            return false;
+        }
         return true;
     }
 
@@ -58,5 +63,13 @@ public class IntegranteEquipe extends Usuario{
 
     public void setEstande(Estande estande) {
         this.estande = estande;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

@@ -102,7 +102,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
             Estande estande = new Estande();
             estande.setId(rs.getLong("estande_fk"));
-            estande.setNome(rs.getString("estande"));
+            estande.setTitulo(rs.getString("estande"));
 
             avaliacaoVisitante.setEstande(estande);
             avaliacaoVisitante.setUsuario(usuario);
@@ -154,7 +154,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
             Estande estande = new Estande();
             estande.setId(rs.getLong("estande_fk"));
-            estande.setNome(rs.getString("estande"));
+            estande.setTitulo(rs.getString("estande"));
 
             avaliacaoVisitante.setEstande(estande);
             avaliacaoVisitante.setUsuario(usuario);

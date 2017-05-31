@@ -63,7 +63,7 @@ public class EstandeDAOTest {
         entity.setAreaTematica("Educação");
         entity.setCurso("Pedagogia");
         entity.setDescricao("Descrição do estande em questão");
-        entity.setNome("Um nome para o estande");
+        entity.setTitulo("Um nome para o estande");
         entity.setNumero(45L);
         entity.setPeriodo(4L);
         entity.setEquipe(new ArrayList<>());

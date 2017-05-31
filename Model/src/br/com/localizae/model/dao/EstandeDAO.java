@@ -26,7 +26,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
 
     @Override
     public void create(Connection conn, Estande entity) throws Exception {
-        String sql = "INSERT INTO estande (curso, descricao, periodo, nome, areaTematica, numero) VALUES (?, ?, ?, ?, ?, ?) RETURNING id;";
+        String sql = "INSERT INTO estande (curso, descricao, periodo, titulo, areaTematica, numero) VALUES (?, ?, ?, ?, ?, ?) RETURNING id;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -34,7 +34,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
         ps.setString(++i, entity.getCurso());
         ps.setString(++i, entity.getDescricao());
         ps.setLong(++i, entity.getPeriodo());
-        ps.setString(++i, entity.getNome());
+        ps.setString(++i, entity.getTitulo());
         ps.setString(++i, entity.getAreaTematica());
         ps.setLong(++i, entity.getNumero());
 
@@ -42,21 +42,6 @@ public class EstandeDAO implements BaseDAO<Estande> {
 
         while (rs.next()) {
             entity.setId(rs.getLong("id"));
-        }
-
-        for (IntegranteEquipe integrante : entity.getEquipe()) {
-            String usuarioSQL = "INSERT INTO integranteEquipe (usuario_fk, estande_fk, responsavel) VALUES (?, ?, ?);";
-
-            PreparedStatement usuarioPS = conn.prepareStatement(usuarioSQL);
-
-            int j = 0;
-            usuarioPS.setLong(++j, integrante.getId());
-            usuarioPS.setLong(++j, entity.getId());
-            usuarioPS.setBoolean(++j, integrante.getResponsavel());
-
-            usuarioPS.execute();
-
-            usuarioPS.close();
         }
 
         rs.close();
@@ -86,36 +71,13 @@ public class EstandeDAO implements BaseDAO<Estande> {
         ps.setString(++i, entity.getCurso());
         ps.setString(++i, entity.getDescricao());
         ps.setLong(++i, entity.getPeriodo());
-        ps.setString(++i, entity.getNome());
+        ps.setString(++i, entity.getTitulo());
         ps.setString(++i, entity.getAreaTematica());
         ps.setLong(++i, entity.getNumero());
         ps.setLong(++i, entity.getId());
 
         ps.execute();
-
-        String delUserSQL = "DELETE FROM integranteEquipe WHERE estande_fk=?;";
-
-        PreparedStatement delUserPS = conn.prepareStatement(delUserSQL);
-
-        delUserPS.setLong(1, entity.getId());
-        delUserPS.execute();
-
-        for (IntegranteEquipe integrante : entity.getEquipe()) {
-            String usuarioSQL = "INSERT INTO integranteEquipe (usuario_fk, estande_fk, responsavel) VALUES (?, ?, ?);";
-
-            PreparedStatement usuarioPS = conn.prepareStatement(usuarioSQL);
-
-            int j = 0;
-            usuarioPS.setLong(++j, integrante.getId());
-            usuarioPS.setLong(++j, entity.getId());
-            usuarioPS.setBoolean(++j, integrante.getResponsavel());
-
-            usuarioPS.execute();
-            usuarioPS.close();
-        }
-
         ps.close();
-        delUserPS.close();
     }
 
     @Override
@@ -137,20 +99,21 @@ public class EstandeDAO implements BaseDAO<Estande> {
                 estande.setCurso(rs.getString("curso"));
                 estande.setDescricao(rs.getString("descricao"));
                 estande.setId(rs.getLong("id"));
-                estande.setNome(rs.getString("nome"));
+                estande.setTitulo(rs.getString("nome"));
                 estande.setNumero(rs.getLong("numero"));
                 estande.setPeriodo(rs.getLong("periodo"));
                 estande.setEquipe(new ArrayList<>());
             }            
             
-            IntegranteEquipe usuario = new IntegranteEquipe();
+            IntegranteEquipe integranteEquipe = new IntegranteEquipe();
+            
+            Usuario usuario = new Usuario();
             usuario.setId(rs.getLong("usuario_fk"));
             usuario.setNome(rs.getString("usuario"));
-            usuario.setId(rs.getLong("integrante_id"));
-            usuario.setResponsavel(rs.getBoolean("responsavel"));
+            integranteEquipe.setResponsavel(rs.getBoolean("responsavel"));
 
             if(usuario.getId() != 0){
-                estande.getEquipe().add(usuario);
+                estande.getEquipe().add(integranteEquipe);
             }
         }
 
@@ -189,7 +152,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
             estande.setCurso(rs.getString("curso"));
             estande.setDescricao(rs.getString("descricao"));
             estande.setId(rs.getLong("id"));
-            estande.setNome(rs.getString("nome"));
+            estande.setTitulo(rs.getString("nome"));
             estande.setNumero(rs.getLong("numero"));
             estande.setPeriodo(rs.getLong("periodo"));
             

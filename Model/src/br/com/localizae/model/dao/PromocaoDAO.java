@@ -97,7 +97,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
 
             Estande estande = new Estande();
             estande.setId(rs.getLong("estande_fk"));
-            estande.setNome(rs.getString("estande"));
+            estande.setTitulo(rs.getString("estande"));
             promocao.setEstande(estande);
         }
 
@@ -143,7 +143,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
 
             Estande estande = new Estande();
             estande.setId(rs.getLong("estande_fk"));
-            estande.setNome(rs.getString("estande"));
+            estande.setTitulo(rs.getString("estande"));
             promocao.setEstande(estande);
 
             promocaoList.add(promocao);

@@ -17,7 +17,7 @@ public class Estande extends BaseEntity{
     private String curso;
     private String descricao;
     private Long periodo;
-    private String nome;
+    private String titulo;
     private String areaTematica;
     private Long numero;
     private List<IntegranteEquipe> equipe;
@@ -28,7 +28,7 @@ public class Estande extends BaseEntity{
         hash = 61 * hash + Objects.hashCode(this.curso);
         hash = 61 * hash + Objects.hashCode(this.descricao);
         hash = 61 * hash + Objects.hashCode(this.periodo);
-        hash = 61 * hash + Objects.hashCode(this.nome);
+        hash = 61 * hash + Objects.hashCode(this.titulo);
         hash = 61 * hash + Objects.hashCode(this.areaTematica);
         hash = 61 * hash + Objects.hashCode(this.numero);
         return hash;
@@ -52,7 +52,7 @@ public class Estande extends BaseEntity{
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
-        if (!Objects.equals(this.nome, other.nome)) {
+        if (!Objects.equals(this.titulo, other.titulo)) {
             return false;
         }
         if (!Objects.equals(this.areaTematica, other.areaTematica)) {
@@ -75,7 +75,7 @@ public class Estande extends BaseEntity{
         String toString = "Curso: "+this.curso;
         toString += "\nDescricao: "+this.descricao;
         toString += "\nPeriodo: "+this.periodo;
-        toString += "\nNome: "+this.nome;
+        toString += "\nNome: "+this.titulo;
         toString += "\nArea Tematica: "+this.areaTematica;
         toString += "\nNumero: "+this.numero;
         toString += "\nEquipe: "+this.equipe.size();
@@ -109,12 +109,12 @@ public class Estande extends BaseEntity{
         this.periodo = periodo;
     }
 
-    public String getNome() {
-        return nome;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getAreaTematica() {

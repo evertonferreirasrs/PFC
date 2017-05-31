@@ -111,7 +111,7 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
             usuario.setId(rs.getLong("usuario_fk"));
 
             Estande estande = new Estande();
-            estande.setNome(rs.getString("estande"));
+            estande.setTitulo(rs.getString("estande"));
             estande.setId(rs.getLong("estande_fk"));
 
             CriterioAvaliacao criterio = new CriterioAvaliacao();
@@ -172,7 +172,7 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
             usuario.setId(rs.getLong("usuario_fk"));
 
             Estande estande = new Estande();
-            estande.setNome(rs.getString("estande"));
+            estande.setTitulo(rs.getString("estande"));
             estande.setId(rs.getLong("estande_fk"));
 
             CriterioAvaliacao criterio = new CriterioAvaliacao();
