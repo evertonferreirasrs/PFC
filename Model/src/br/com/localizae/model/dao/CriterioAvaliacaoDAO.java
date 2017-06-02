@@ -151,19 +151,19 @@ public class CriterioAvaliacaoDAO implements BaseDAO<CriterioAvaliacao>{
         Long peso = (Long)criteria.get(CriterioAvaliacaoCriteria.PESO_EQ);
         if(peso != null && peso > 0){
             sql += " AND peso = ?";
-            args.add(nome);
+            args.add(peso);
         }
         
         peso = (Long)criteria.get(CriterioAvaliacaoCriteria.PESO_LT);
         if(peso != null && peso > 0){
             sql += " AND peso < ?";
-            args.add(nome);
+            args.add(peso);
         }
         
         peso = (Long)criteria.get(CriterioAvaliacaoCriteria.PESO_GT);
         if(peso != null && peso > 0){
             sql += " AND peso > ?";
-            args.add(nome);
+            args.add(peso);
         }
         
         return sql;
