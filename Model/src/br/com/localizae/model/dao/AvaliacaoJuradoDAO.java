@@ -10,7 +10,6 @@ import br.com.localizae.model.criteria.AvaliacaoJuradoCriteria;
 import br.com.localizae.model.entity.AvaliacaoJurado;
 import br.com.localizae.model.entity.CriterioAvaliacao;
 import br.com.localizae.model.entity.Estande;
-import br.com.localizae.model.entity.InformacoesParaAvaliacao;
 import br.com.localizae.model.entity.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
