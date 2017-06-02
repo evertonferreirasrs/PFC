@@ -6,20 +6,13 @@
 package br.com.localizae.model.dao;
 
 import br.com.localizae.model.ConnectionManager;
-import br.com.localizae.model.criteria.UsuarioCriteria;
-import br.com.localizae.model.entity.TipoUsuario;
-import br.com.localizae.model.entity.Usuario;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
