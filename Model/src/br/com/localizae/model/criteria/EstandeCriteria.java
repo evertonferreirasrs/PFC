@@ -14,5 +14,6 @@ public enum EstandeCriteria {
     CURSO_EQ,
     PERIODO_EQ,
     NUMERO_EQ,
-    AREATEMATICA_EQ
+    AREATEMATICA_EQ,
+    USUARIO_FK_EQ
 }

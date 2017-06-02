@@ -142,34 +142,37 @@ public class EstandeDAO implements BaseDAO<Estande> {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
+            Estande estande = null;
             Estande ultimoEstande = null;
-            if (!estandeList.isEmpty()) {
+            
+            if(!estandeList.isEmpty()){
                 ultimoEstande = estandeList.get(estandeList.size() - 1);
             }
-
-            Estande estande = new Estande();
-            estande.setAreaTematica(rs.getString("areaTematica"));
-            estande.setCurso(rs.getString("curso"));
-            estande.setDescricao(rs.getString("descricao"));
-            estande.setId(rs.getLong("id"));
-            estande.setTitulo(rs.getString("nome"));
-            estande.setNumero(rs.getLong("numero"));
-            estande.setPeriodo(rs.getLong("periodo"));
             
-            IntegranteEquipe usuario = new IntegranteEquipe();
+            if (ultimoEstande == null || ultimoEstande.getId() != rs.getLong("id")) {
+                estande = new Estande();
+                estande.setAreaTematica(rs.getString("areaTematica"));
+                estande.setCurso(rs.getString("curso"));
+                estande.setDescricao(rs.getString("descricao"));
+                estande.setId(rs.getLong("id"));
+                estande.setTitulo(rs.getString("nome"));
+                estande.setNumero(rs.getLong("numero"));
+                estande.setPeriodo(rs.getLong("periodo"));
+                estande.setEquipe(new ArrayList<>());
+                estandeList.add(estande);
+            }else{
+                estande = ultimoEstande;
+            }            
+            
+            IntegranteEquipe integranteEquipe = new IntegranteEquipe();
+            
+            Usuario usuario = new Usuario();
             usuario.setId(rs.getLong("usuario_fk"));
             usuario.setNome(rs.getString("usuario"));
-            usuario.setId(rs.getLong("integrante_id"));
-            usuario.setResponsavel(rs.getBoolean("responsavel"));
-            
-            if(estande.equals(ultimoEstande)){
-                ultimoEstande.getEquipe().add(usuario);
-            }else{
-                estande.setEquipe(new ArrayList<>());
-                if(usuario.getId() != 0){
-                    estande.getEquipe().add(usuario);
-                }
-                estandeList.add(estande);
+            integranteEquipe.setResponsavel(rs.getBoolean("responsavel"));
+
+            if(usuario.getId() != 0){
+                estande.getEquipe().add(integranteEquipe);
             }
         }
 
@@ -212,6 +215,12 @@ public class EstandeDAO implements BaseDAO<Estande> {
             sql += " AND e.areaTematica ILIKE ?";
             areaTematica = "%"+areaTematica+"%";
             args.add(areaTematica);
+        }
+        
+        Long usuario_fk = (Long)criteria.get(EstandeCriteria.USUARIO_FK_EQ);
+        if(usuario_fk != null && usuario_fk > 0){
+            sql += " AND i.usuario_fk = ?";
+            args.add(usuario_fk);
         }
         
         return sql;
