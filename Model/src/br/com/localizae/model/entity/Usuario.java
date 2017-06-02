@@ -6,6 +6,7 @@
 package br.com.localizae.model.entity;
 
 import br.com.localizae.model.base.BaseEntity;
+import java.security.MessageDigest;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -14,8 +15,8 @@ import java.util.Objects;
  *
  * @author Equipe LocalizaÊ
  */
-public class Usuario extends BaseEntity{
-    
+public class Usuario extends BaseEntity {
+
     private String nome;
     private String email;
     private String senha;
@@ -52,7 +53,7 @@ public class Usuario extends BaseEntity{
         hash = 11 * hash + Objects.hashCode(this.integranteEquipe);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -65,9 +66,6 @@ public class Usuario extends BaseEntity{
             return false;
         }
         final Usuario other = (Usuario) obj;
-        if (this.situacao != other.situacao) {
-            return false;
-        }
         if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
@@ -75,6 +73,9 @@ public class Usuario extends BaseEntity{
             return false;
         }
         if (!Objects.equals(this.senha, other.senha)) {
+            return false;
+        }
+        if (!Objects.equals(this.situacao, other.situacao)) {
             return false;
         }
         if (!Objects.equals(this.motivo, other.motivo)) {
@@ -86,14 +87,13 @@ public class Usuario extends BaseEntity{
         if (!Objects.equals(this.tokenAutenticacao, other.tokenAutenticacao)) {
             return false;
         }
-        if (!Objects.equals(this.tipoUsuario, other.tipoUsuario)) {
-            return false;
-        }
-        if (!Objects.equals(this.dataHoraExpiracaoToken, other.dataHoraExpiracaoToken)) {
+        if (!Objects.equals(this.tipoUsuario.getId(), other.tipoUsuario.getId())) {
             return false;
         }
         return true;
     }
+
+
 
     public String getNome() {
         return nome;
@@ -116,7 +116,7 @@ public class Usuario extends BaseEntity{
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+        this.encryptPasswd(senha);
     }
 
     public TipoUsuario getTipoUsuario() {
@@ -173,5 +173,36 @@ public class Usuario extends BaseEntity{
 
     public void setIntegranteEquipe(IntegranteEquipe integranteEquipe) {
         this.integranteEquipe = integranteEquipe;
+    }
+
+    public void encryptPasswd(String sign) {
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(sign.getBytes());
+
+            byte[] hash = md.digest();
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < hash.length; i++) {
+                if ((0xff & hash[i]) < 0x10) {
+                    hexString.append("0"
+                            + Integer.toHexString((0xFF & hash[i])));
+                } else {
+                    hexString.append(Integer.toHexString(0xFF & hash[i]));
+                }
+            }
+
+            sign = hexString.toString();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        this.senha = sign;
+    }
+
+    public void setSenhaCriptografada(String senhaCriptografada) {
+        this.senha = senhaCriptografada;
     }
 }

@@ -8,7 +8,6 @@ package br.com.localizae.model.dao;
 import br.com.localizae.model.base.BaseDAO;
 import br.com.localizae.model.criteria.UsuarioCriteria;
 import br.com.localizae.model.entity.CriterioAvaliacao;
-import br.com.localizae.model.entity.IntegranteEquipe;
 import br.com.localizae.model.entity.TipoUsuario;
 import br.com.localizae.model.entity.Usuario;
 import java.sql.Connection;
@@ -76,16 +75,15 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
     }
 
     private void createIntegrante(Usuario entity, Connection conn) throws Exception {
-        IntegranteEquipe integrante = (IntegranteEquipe) entity;
-        String sql = "INSERT INTO integranteEquipe (responsavel, usuario_fk, estande_fk) VALUES(?, ?, ?);";
-
+        String sql = "INSERT INTO integranteEquipe(responsavel, usuario_fk, estande_fk) VALUES(?, ?, ?);";
+        
         PreparedStatement ps = conn.prepareStatement(sql);
-
+        
         int i = 0;
-        ps.setBoolean(++i, integrante.getResponsavel());
-        ps.setLong(++i, integrante.getId());
-        ps.setLong(++i, integrante.getEstande().getId());
-
+        ps.setBoolean(++i, entity.getIntegranteEquipe().getResponsavel());
+        ps.setLong(++i, entity.getId());
+        ps.setLong(++i, entity.getIntegranteEquipe().getEstande().getId());
+        
         ps.execute();
         ps.close();
     }
@@ -172,7 +170,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
     @Override
     public Usuario readById(Connection conn, Long id) throws Exception {
         Usuario usuario = null;
-        String sql = "select u.*, tp.nome tipoUsuario, cj.criterioavaliacao_fk, ca.nome criterio, ca.peso, ie.estande_fk, ie.responsavel from usuario u join tipousuario tp on u.tipousuario_fk = tp.id join criteriojurado cj on u.id = cj.usuario_fk join criterioavaliacao ca on cj.criterioavaliacao_fk = ca.id join integranteequipe ie on u.id = ie.usuario_fk where u.id=?;";
+        String sql = "select u.*, tp.nome tipoUsuario, cj.criterioavaliacao_fk, ca.nome criterio, ca.peso, ie.estande_fk, ie.responsavel from usuario u left join tipousuario tp on u.tipousuario_fk = tp.id left join criteriojurado cj on u.id = cj.usuario_fk left join criterioavaliacao ca on cj.criterioavaliacao_fk = ca.id left join integranteequipe ie on u.id = ie.usuario_fk where u.id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -186,10 +184,10 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
                 usuario = new Usuario();
                 usuario.setNome(rs.getString("nome"));
                 usuario.setEmail(rs.getString("email"));
-                usuario.setSenha(rs.getString("senha"));
+                usuario.setSenhaCriptografada(rs.getString("senha"));
                 usuario.setSituacao(rs.getString("situacao"));
                 usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
-                usuario.setMotivo(rs.getString("situacao"));
+                usuario.setMotivo(rs.getString("motivo"));
                 usuario.setId(rs.getLong("id"));
                 usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));
                 usuario.setTokenRedeSocial(rs.getString("tokenRedeSocial"));
@@ -224,7 +222,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
             criteria = new HashMap<>();
         }
         List<Usuario> usuarioList = new ArrayList<>();
-        String sql = "select u.*, tp.nome tipoUsuario, cj.criterioavaliacao_fk, ca.nome criterio, ca.peso, ie.estande_fk, ie.responsavel from usuario u join tipousuario tp on u.tipousuario_fk = tp.id join criteriojurado cj on u.id = cj.usuario_fk join criterioavaliacao ca on cj.criterioavaliacao_fk = ca.id join integranteequipe ie on u.id = ie.usuario_fk where 1=1";
+        String sql = "select u.*, tp.nome tipoUsuario, cj.criterioavaliacao_fk, ca.nome criterio, ca.peso, ie.estande_fk, ie.responsavel from usuario u left join tipousuario tp on u.tipousuario_fk = tp.id left join criteriojurado cj on u.id = cj.usuario_fk left join criterioavaliacao ca on cj.criterioavaliacao_fk = ca.id left join integranteequipe ie on u.id = ie.usuario_fk where 1=1";
 
         List<Object> args = new ArrayList<>();
         sql += this.applyCriteria(criteria, args);
@@ -258,10 +256,10 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
                 usuario = new Usuario();
                 usuario.setNome(rs.getString("nome"));
                 usuario.setEmail(rs.getString("email"));
-                usuario.setSenha(rs.getString("senha"));
+                usuario.setSenhaCriptografada(rs.getString("senha"));
                 usuario.setSituacao(rs.getString("situacao"));
                 usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
-                usuario.setMotivo(rs.getString("situacao"));
+                usuario.setMotivo(rs.getString("motivo"));
                 usuario.setId(rs.getLong("id"));
                 usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));
                 usuario.setTokenRedeSocial(rs.getString("tokenRedeSocial"));
