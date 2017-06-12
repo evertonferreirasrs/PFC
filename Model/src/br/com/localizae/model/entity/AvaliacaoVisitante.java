@@ -19,12 +19,17 @@ public class AvaliacaoVisitante extends BaseEntity {
     private Estande estande;
 
     @Override
+    public String toString() {
+        return "AvaliacaoVisitante{" + "nota=" + nota + ", opiniao=" + opiniao + ", usuario=" + usuario.getNome() + ", estande=" + estande.getTitulo() + '}';
+    }
+
+    @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + Objects.hashCode(this.nota);
-        hash = 89 * hash + Objects.hashCode(this.opiniao);
-        hash = 89 * hash + Objects.hashCode(this.usuario);
-        hash = 89 * hash + Objects.hashCode(this.estande);
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.nota);
+        hash = 67 * hash + Objects.hashCode(this.opiniao);
+        hash = 67 * hash + Objects.hashCode(this.usuario);
+        hash = 67 * hash + Objects.hashCode(this.estande);
         return hash;
     }
 
@@ -54,8 +59,6 @@ public class AvaliacaoVisitante extends BaseEntity {
         }
         return true;
     }
-    
-    
 
     public Long getNota() {
         return nota;

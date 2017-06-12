@@ -21,16 +21,24 @@ public class Estande extends BaseEntity{
     private String areaTematica;
     private Long numero;
     private List<IntegranteEquipe> equipe;
+    private Evento evento;
+
+    @Override
+    public String toString() {
+        return "Estande{" + "curso=" + curso + ", descricao=" + descricao + ", periodo=" + periodo + ", titulo=" + titulo + ", areaTematica=" + areaTematica + ", numero=" + numero + ", equipe=" + equipe + ", evento=" + evento.getNome() + '}';
+    }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + Objects.hashCode(this.curso);
-        hash = 61 * hash + Objects.hashCode(this.descricao);
-        hash = 61 * hash + Objects.hashCode(this.periodo);
-        hash = 61 * hash + Objects.hashCode(this.titulo);
-        hash = 61 * hash + Objects.hashCode(this.areaTematica);
-        hash = 61 * hash + Objects.hashCode(this.numero);
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.curso);
+        hash = 97 * hash + Objects.hashCode(this.descricao);
+        hash = 97 * hash + Objects.hashCode(this.periodo);
+        hash = 97 * hash + Objects.hashCode(this.titulo);
+        hash = 97 * hash + Objects.hashCode(this.areaTematica);
+        hash = 97 * hash + Objects.hashCode(this.numero);
+        hash = 97 * hash + Objects.hashCode(this.equipe);
+        hash = 97 * hash + Objects.hashCode(this.evento);
         return hash;
     }
 
@@ -67,23 +75,11 @@ public class Estande extends BaseEntity{
         if (!Objects.equals(this.equipe.size(), other.equipe.size())) {
             return false;
         }
+        if (!Objects.equals(this.evento.getId(), other.evento.getId())) {
+            return false;
+        }
         return true;
     }
-
-    @Override
-    public String toString() {
-        String toString = "Curso: "+this.curso;
-        toString += "\nDescricao: "+this.descricao;
-        toString += "\nPeriodo: "+this.periodo;
-        toString += "\nNome: "+this.titulo;
-        toString += "\nArea Tematica: "+this.areaTematica;
-        toString += "\nNumero: "+this.numero;
-        toString += "\nEquipe: "+this.equipe.size();
-        
-        return toString;
-    }
-    
-    
 
     public String getCurso() {
         return curso;
@@ -139,5 +135,13 @@ public class Estande extends BaseEntity{
 
     public void setEquipe(List<IntegranteEquipe> equipe) {
         this.equipe = equipe;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
 }

@@ -15,6 +15,8 @@ public class Evento extends BaseEntity{
         int hash = 7;
         hash = 53 * hash + Objects.hashCode(this.nome);
         hash = 53 * hash + Objects.hashCode(this.endereco);
+        hash = 53 * hash + Objects.hashCode(this.dataHoraEventoInicio);
+        hash = 53 * hash + Objects.hashCode(this.dataHoraEventoFim);
         return hash;
     }
 
@@ -36,7 +38,18 @@ public class Evento extends BaseEntity{
         if (!Objects.equals(this.endereco, other.endereco)) {
             return false;
         }
+        if (!Objects.equals(this.dataHoraEventoInicio, other.dataHoraEventoInicio)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataHoraEventoFim, other.dataHoraEventoFim)) {
+            return false;
+        }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Evento{" + "nome=" + nome + ", endereco=" + endereco + ", dataHoraEventoInicio=" + dataHoraEventoInicio + ", dataHoraEventoFim=" + dataHoraEventoFim + '}';
     }
 
     public String getNome() {

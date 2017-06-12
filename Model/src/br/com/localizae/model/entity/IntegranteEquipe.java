@@ -26,6 +26,11 @@ public class IntegranteEquipe{
     }
 
     @Override
+    public String toString() {
+        return "IntegranteEquipe{" + "responsavel=" + responsavel + ", estande=" + estande.getTitulo() + ", usuario=" + usuario.getNome() + '}';
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -40,10 +45,10 @@ public class IntegranteEquipe{
         if (!Objects.equals(this.responsavel, other.responsavel)) {
             return false;
         }
-        if (!Objects.equals(this.estande, other.estande)) {
+        if (!Objects.equals(this.estande.getId(), other.estande.getId())) {
             return false;
         }
-        if (!Objects.equals(this.usuario, other.usuario)) {
+        if (!Objects.equals(this.usuario.getId(), other.usuario.getId())) {
             return false;
         }
         return true;

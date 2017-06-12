@@ -24,16 +24,21 @@ public class AvaliacaoJurado extends BaseEntity {
     private Estande estande;
 
     @Override
+    public String toString() {
+        return "AvaliacaoJurado{" + "nota=" + nota + ", opiniao=" + opiniao + ", status=" + status + ", dataHoraAbertura=" + dataHoraAbertura + ", dataHoraFechamento=" + dataHoraFechamento + ", usuario=" + usuario.getNome() + ", criterio=" + criterio.getNome() + ", estande=" + estande.getTitulo() + '}';
+    }
+
+    @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 79 * hash + Objects.hashCode(this.nota);
-        hash = 79 * hash + Objects.hashCode(this.opiniao);
-        hash = 79 * hash + Objects.hashCode(this.status);
-        hash = 79 * hash + Objects.hashCode(this.dataHoraAbertura);
-        hash = 79 * hash + Objects.hashCode(this.dataHoraFechamento);
-        hash = 79 * hash + Objects.hashCode(this.usuario.getId());
-        hash = 79 * hash + Objects.hashCode(this.criterio.getId());
-        hash = 79 * hash + Objects.hashCode(this.estande.getId());
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.nota);
+        hash = 41 * hash + Objects.hashCode(this.opiniao);
+        hash = 41 * hash + Objects.hashCode(this.status);
+        hash = 41 * hash + Objects.hashCode(this.dataHoraAbertura);
+        hash = 41 * hash + Objects.hashCode(this.dataHoraFechamento);
+        hash = 41 * hash + Objects.hashCode(this.usuario);
+        hash = 41 * hash + Objects.hashCode(this.criterio);
+        hash = 41 * hash + Objects.hashCode(this.estande);
         return hash;
     }
 

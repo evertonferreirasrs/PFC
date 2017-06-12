@@ -26,31 +26,31 @@ public class Usuario extends BaseEntity {
     private String tokenRedeSocial;
     private String tokenAutenticacao;
     private Timestamp dataHoraExpiracaoToken;
-    private List<CriterioAvaliacao> criterioAvaliacaoList;
+    private List<CriterioJurado> criterioAvaliacaoList;
     private IntegranteEquipe integranteEquipe;
 
-    public List<CriterioAvaliacao> getCriterioAvaliacaoList() {
+    public List<CriterioJurado> getCriterioAvaliacaoList() {
         return criterioAvaliacaoList;
     }
 
-    public void setCriterioAvaliacaoList(List<CriterioAvaliacao> criterioAvaliacaoList) {
+    public void setCriterioAvaliacaoList(List<CriterioJurado> criterioAvaliacaoList) {
         this.criterioAvaliacaoList = criterioAvaliacaoList;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 11 * hash + Objects.hashCode(this.nome);
-        hash = 11 * hash + Objects.hashCode(this.email);
-        hash = 11 * hash + Objects.hashCode(this.senha);
-        hash = 11 * hash + Objects.hashCode(this.tipoUsuario);
-        hash = 11 * hash + Objects.hashCode(this.situacao);
-        hash = 11 * hash + Objects.hashCode(this.motivo);
-        hash = 11 * hash + Objects.hashCode(this.tokenRedeSocial);
-        hash = 11 * hash + Objects.hashCode(this.tokenAutenticacao);
-        hash = 11 * hash + Objects.hashCode(this.dataHoraExpiracaoToken);
-        hash = 11 * hash + Objects.hashCode(this.criterioAvaliacaoList);
-        hash = 11 * hash + Objects.hashCode(this.integranteEquipe);
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.nome);
+        hash = 89 * hash + Objects.hashCode(this.email);
+        hash = 89 * hash + Objects.hashCode(this.senha);
+        hash = 89 * hash + Objects.hashCode(this.tipoUsuario);
+        hash = 89 * hash + Objects.hashCode(this.situacao);
+        hash = 89 * hash + Objects.hashCode(this.motivo);
+        hash = 89 * hash + Objects.hashCode(this.tokenRedeSocial);
+        hash = 89 * hash + Objects.hashCode(this.tokenAutenticacao);
+        hash = 89 * hash + Objects.hashCode(this.dataHoraExpiracaoToken);
+        hash = 89 * hash + Objects.hashCode(this.criterioAvaliacaoList);
+        hash = 89 * hash + Objects.hashCode(this.integranteEquipe);
         return hash;
     }
 
@@ -90,10 +90,22 @@ public class Usuario extends BaseEntity {
         if (!Objects.equals(this.tipoUsuario.getId(), other.tipoUsuario.getId())) {
             return false;
         }
+        if (!Objects.equals(this.dataHoraExpiracaoToken, other.dataHoraExpiracaoToken)) {
+            return false;
+        }
+        if (this.getId() == 4 && !Objects.equals(this.criterioAvaliacaoList, other.criterioAvaliacaoList)) {
+            return false;
+        }
+        if (!Objects.equals(this.integranteEquipe, other.integranteEquipe)) {
+            return false;
+        }
         return true;
     }
 
-
+    @Override
+    public String toString() {
+        return "Usuario{" + "nome=" + nome + ", email=" + email + ", tipoUsuario=" + tipoUsuario + ", situacao=" + situacao + ", motivo=" + motivo + ", criterioAvaliacaoList=" + criterioAvaliacaoList + ", integranteEquipe=" + integranteEquipe + '}';
+    }
 
     public String getNome() {
         return nome;

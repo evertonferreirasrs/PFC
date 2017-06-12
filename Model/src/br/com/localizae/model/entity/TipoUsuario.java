@@ -25,8 +25,8 @@ public class TipoUsuario extends BaseEntity{
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 71 * hash + Objects.hashCode(this.nome);
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.nome);
         return hash;
     }
 
@@ -47,6 +47,9 @@ public class TipoUsuario extends BaseEntity{
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "TipoUsuario{" + "nome=" + nome + '}';
+    }
 }

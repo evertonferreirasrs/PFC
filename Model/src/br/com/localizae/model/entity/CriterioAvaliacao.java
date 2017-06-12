@@ -18,9 +18,9 @@ public class CriterioAvaliacao extends BaseEntity {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + Objects.hashCode(this.nome);
-        hash = 59 * hash + Objects.hashCode(this.peso);
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.nome);
+        hash = 17 * hash + Objects.hashCode(this.peso);
         return hash;
     }
 
@@ -43,6 +43,11 @@ public class CriterioAvaliacao extends BaseEntity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "CriterioAvaliacao{" + "nome=" + nome + ", peso=" + peso + '}';
     }
 
     public String getNome() {

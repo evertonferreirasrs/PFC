@@ -26,7 +26,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
 
     @Override
     public void create(Connection conn, Estande entity) throws Exception {
-        String sql = "INSERT INTO estande (curso, descricao, periodo, titulo, areaTematica, numero) VALUES (?, ?, ?, ?, ?, ?) RETURNING id;";
+        String sql = "INSERT INTO estande (curso, descricao, periodo, titulo, areaTematica, numero, evento_fk) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -37,6 +37,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
         ps.setString(++i, entity.getTitulo());
         ps.setString(++i, entity.getAreaTematica());
         ps.setLong(++i, entity.getNumero());
+        ps.setLong(++i, entity.getEvento().getId());
 
         ResultSet rs = ps.executeQuery();
 
@@ -63,7 +64,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
 
     @Override
     public void update(Connection conn, Estande entity) throws Exception {
-        String sql = "UPDATE estande SET curso=?, descricao=?, periodo=?, nome=?, areaTematica=?, numero=? WHERE id=?;";
+        String sql = "UPDATE estande SET curso=?, descricao=?, periodo=?, nome=?, areaTematica=?, numero=?, evento_fk=? WHERE id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -74,6 +75,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
         ps.setString(++i, entity.getTitulo());
         ps.setString(++i, entity.getAreaTematica());
         ps.setLong(++i, entity.getNumero());
+        ps.setLong(++i, entity.getEvento().getId());
         ps.setLong(++i, entity.getId());
 
         ps.execute();
