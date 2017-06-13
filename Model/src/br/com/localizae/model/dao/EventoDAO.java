@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,12 +95,17 @@ public class EventoDAO implements BaseDAO<Evento> {
 
     @Override
     public List<Evento> readByCriteria(Connection conn, Map<Enum, Object> criteria, Long limit, Long offset) throws Exception {
+        if(criteria == null){
+            criteria = new HashMap<>();
+        }
         List<Evento> eventoList = new ArrayList<>();
 
         String sql = "SELECT * FROM evento WHERE 1=1";
         List<Object> args = new ArrayList<>();
         
         sql += this.applyCriteria(criteria, args);
+        
+        sql += "order by evento.id";
         
         if(limit != null && limit > 0){
             sql += " LIMIT ?";
@@ -143,13 +149,15 @@ public class EventoDAO implements BaseDAO<Evento> {
         
         String nome = (String)criteria.get(EventoCriteria.NOME_ILIKE);
         if(nome != null && !nome.isEmpty()){
-            sql += " AND nome ILIKE %?%";
+            sql += " AND nome ILIKE ?";
+            nome = "%"+nome+"%";
             args.add(nome);
         }
         
         String endereco = (String)criteria.get(EventoCriteria.ENDERECO_ILIKE);
-        if(endereco != null && !nome.isEmpty()){
-            sql += " AND endereco ILIKE %?%";
+        if(endereco != null && !endereco.isEmpty()){
+            sql += " AND endereco ILIKE ?";
+            endereco = "%"+endereco+"%";
             args.add(endereco);
         }
         
