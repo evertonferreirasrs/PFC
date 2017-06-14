@@ -46,15 +46,19 @@ public class AvaliacaoVisitante extends BaseEntity {
         }
         final AvaliacaoVisitante other = (AvaliacaoVisitante) obj;
         if (!Objects.equals(this.opiniao, other.opiniao)) {
+            System.out.println("false op");
             return false;
         }
         if (!Objects.equals(this.nota, other.nota)) {
+            System.out.println("false no");
             return false;
         }
         if (!Objects.equals(this.usuario.getId(), other.usuario.getId())) {
+            System.out.println("false us");
             return false;
         }
         if (!Objects.equals(this.estande.getId(), other.estande.getId())) {
+            System.out.println("false es");
             return false;
         }
         return true;

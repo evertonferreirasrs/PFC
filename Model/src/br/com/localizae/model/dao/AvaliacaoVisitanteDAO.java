@@ -81,7 +81,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
     public AvaliacaoVisitante readById(Connection conn, Long id) throws Exception {
         AvaliacaoVisitante avaliacaoVisitante = null;
 
-        String sql = "SELECT a.*, u.nome usuario, e.nome estande FROM avaliacaoVisitante a JOIN usuario u ON a.usuario_fk = u.id JOIN estande e ON a.estande_fk = e.id WHERE a.id=?;";
+        String sql = "SELECT a.*, u.nome usuario, e.titulo estande FROM avaliacaoVisitante a JOIN usuario u ON a.usuario_fk = u.id JOIN estande e ON a.estande_fk = e.id WHERE a.id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -118,10 +118,12 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
         }
         List<AvaliacaoVisitante> avaliacaoVisitanteList = new ArrayList<>();
 
-        String sql = "SELECT a.*, u.nome usuario, e.nome estande FROM avaliacaoVisitante a JOIN usuario u ON a.usuario_fk = u.id JOIN estande e ON a.estande_fk = e.id WHERE 1=1";
+        String sql = "SELECT a.*, u.nome usuario, e.titulo estande FROM avaliacaoVisitante a JOIN usuario u ON a.usuario_fk = u.id JOIN estande e ON a.estande_fk = e.id WHERE 1=1";
         
         List<Object> args = new ArrayList<>();
         sql += this.applyCriteria(criteria, args);
+        
+        sql += " order by a.id";
         
         if(limit != null && limit > 0){
             sql += " LIMIT ?";
