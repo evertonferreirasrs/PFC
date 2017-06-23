@@ -28,7 +28,7 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
 
     @Override
     public void create(Connection conn, AvaliacaoJurado entity) throws Exception {
-        String sql = "INSERT INTO avaliacaoJurado (nota, opiniao, dataHoraAbertura, dataHoraFechamento, usuario_fk, criterioAvaliacao_fk) VALUES (?, ?, ?, ?, ?, ?) RETURNING id;";
+        String sql = "INSERT INTO avaliacaoJurado (nota, opiniao, dataHoraAbertura, dataHoraFechamento, usuario_fk, criterioAvaliacao_fk, status, estande_fk) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -39,6 +39,8 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
         ps.setTimestamp(++i, entity.getDataHoraFechamento());
         ps.setLong(++i, entity.getUsuario().getId());
         ps.setLong(++i, entity.getCriterio().getId());
+        ps.setString(++i, entity.getStatus());
+        ps.setLong(++i, entity.getEstande().getId());
 
         ResultSet rs = ps.executeQuery();
 
@@ -65,7 +67,7 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
 
     @Override
     public void update(Connection conn, AvaliacaoJurado entity) throws Exception {
-        String sql = "UPDATE avaliacaoJurado SET nota=?, opiniao=?, dataHoraAbertura=?, dataHoraFechamento=?, usuario_fk=?, criterioAvaliacao_fk=? WHERE id=?;";
+        String sql = "UPDATE avaliacaoJurado SET nota=?, opiniao=?, dataHoraAbertura=?, dataHoraFechamento=?, usuario_fk=?, criterioAvaliacao_fk=?, status=?, estande_fk=? WHERE id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -76,6 +78,8 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
         ps.setTimestamp(++i, entity.getDataHoraFechamento());
         ps.setLong(++i, entity.getUsuario().getId());
         ps.setLong(++i, entity.getCriterio().getId());
+        ps.setString(++i, entity.getStatus());
+        ps.setLong(++i, entity.getEstande().getId());
         ps.setLong(++i, entity.getId());
 
         ps.execute();
@@ -86,7 +90,7 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
     public AvaliacaoJurado readById(Connection conn, Long id) throws Exception {
         AvaliacaoJurado avaliacaoJurado = null;
 
-        String sql = "select aj.*, u.nome usuario, ca.nome criterio, e.nome evento from avaliacaoJurado aj join usuario u on aj.usuario_fk = u.id join criterioAvaliacao ca on ca.id = aj.criterioAvaliacao_fk join estande e on e.id = aj.evento_fk WHERE a.id=?;";
+        String sql = "select a.*, u.nome usuario, c.nome criterio, e.titulo estande from avaliacaoJurado a join usuario u on a.usuario_fk = u.id join criterioavaliacao c on c.id = a.criterioavaliacao_fk join estande e on e.id = a.estande_fk WHERE a.id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -115,7 +119,7 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
 
             CriterioAvaliacao criterio = new CriterioAvaliacao();
             criterio.setNome(rs.getString("criterio"));
-            criterio.setId(rs.getLong("criterio_fk"));
+            criterio.setId(rs.getLong("criterioavaliacao_fk"));
             
             avaliacaoJurado.setCriterio(criterio);
             avaliacaoJurado.setUsuario(usuario);
@@ -132,10 +136,12 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
         }
         List<AvaliacaoJurado> avaliacaoJuradoList = new ArrayList<>();
 
-        String sql = "SELECT a.*, i.usuario_fk usuario, i.estande_fk estande, i.criterioavaliacao_fk criterio FROM avaliacaoJurado a JOIN informacoesParaAvaliacao i ON a.informacoesParaAvaliacao_fk = i.id WHERE 1=1";
+        String sql = "select a.*, u.nome usuario, c.nome criterio, e.titulo estande from avaliacaoJurado a join usuario u on a.usuario_fk = u.id join criterioavaliacao c on c.id = a.criterioavaliacao_fk join estande e on e.id = a.estande_fk WHERE 1=1";
 
         List<Object> args = new ArrayList<>();
         sql += this.applyCriteria(criteria, args);
+        
+        sql += " order by a.id";
 
         if (limit != null && limit > 0) {
             sql += " LIMIT ?";
@@ -176,7 +182,7 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
 
             CriterioAvaliacao criterio = new CriterioAvaliacao();
             criterio.setNome(rs.getString("criterio"));
-            criterio.setId(rs.getLong("criterio_fk"));
+            criterio.setId(rs.getLong("criterioavaliacao_fk"));
             
             avaliacaoJurado.setCriterio(criterio);
             avaliacaoJurado.setUsuario(usuario);
@@ -195,25 +201,25 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
         //USUARIO_EQ
         Long usuario = (Long) criteria.get(AvaliacaoJuradoCriteria.USUARIO_EQ);
         if (usuario != null && usuario > 0) {
-            sql += " AND aj.usuario_fk = ?";
+            sql += " AND a.usuario_fk = ?";
             args.add(usuario);
         }
         //NOTA_EQ
         Long nota = (Long) criteria.get(AvaliacaoJuradoCriteria.NOTA_EQ);
         if (nota != null && nota > 0) {
-            sql += " AND aj.nota = ?";
+            sql += " AND a.nota = ?";
             args.add(nota);
         }
         //ESTANDE_EQ
         Long estande = (Long) criteria.get(AvaliacaoJuradoCriteria.ESTANDE_EQ);
         if (estande != null && estande > 0) {
-            sql += " AND aj.estande_fk = ?";
+            sql += " AND a.estande_fk = ?";
             args.add(estande);
         }
         //CRITERIO_EQ
         Long criterio = (Long) criteria.get(AvaliacaoJuradoCriteria.CRITERIO_EQ);
         if (criterio != null && criterio > 0) {
-            sql += " AND aj.criterioavaliacao_fk = ?";
+            sql += " AND a.criterioavaliacao_fk = ?";
             args.add(criterio);
         }
 
@@ -223,15 +229,28 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
     //Método responsável por calcular a média de notas dadas por Jurados
     //Retorna para o cliente um mapa contendo como chave o id do estande e como valor a média de notas.
     //Calcula a média de todas as notas independentemente de critério avaliado
-    public Map<Long, Long> calcularMediaDeNotas(Connection conn) throws SQLException {
-        Map<Long, Long> mediaList = new HashMap<>();
-        String sql = "select estande_fk, avg(nota) from avaliacaoJurado aj join informacoesParaAvaliacao ipa on aj.informacoesParaAvaliacao_fk = ipa.id group by estande_fk order by estande_fk";
+    public Map<Long, Double> calcularMediaDeNotas(Connection conn, Map<Enum, Object> criteria) throws SQLException, Exception {
+        if(criteria == null){
+            criteria = new HashMap<>();
+        }
+        Map<Long, Double> mediaList = new HashMap<>();
+        List<Object> args = new ArrayList<>();
+        
+        String sql = "select a.estande_fk, avg(nota) from avaliacaoJurado a where 1 = 1 ";
+        sql += this.applyCriteria(criteria, args);
+        sql += "group by estande_fk order by avg(nota)";
+
         PreparedStatement ps = conn.prepareStatement(sql);
+
+        int i = 0;
+        for (Object arg : args) {
+            ps.setObject(++i, arg);
+        }
 
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            mediaList.put(rs.getLong("estande_fk"), rs.getLong("avg"));
+            mediaList.put(rs.getLong("estande_fk"), rs.getDouble("avg"));
         }
 
         return mediaList;
