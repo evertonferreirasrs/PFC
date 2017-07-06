@@ -6,6 +6,7 @@
 package br.com.localizae.model.entity;
 
 import br.com.localizae.model.base.BaseEntity;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,7 +21,7 @@ public class Estande extends BaseEntity{
     private String titulo;
     private String areaTematica;
     private Long numero;
-    private List<IntegranteEquipe> equipe;
+    private List<IntegranteEquipe> equipe = new ArrayList<>();
     private Evento evento;
 
     @Override
