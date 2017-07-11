@@ -7,8 +7,8 @@ import java.util.Objects;
 public class Evento extends BaseEntity{
     private String nome;
     private String endereco;
-    private Timestamp dataHoraEventoInicio;
-    private Timestamp dataHoraEventoFim;
+    private Long dataHoraEventoInicio;
+    private Long dataHoraEventoFim;
 
     @Override
     public int hashCode() {
@@ -68,19 +68,19 @@ public class Evento extends BaseEntity{
         this.endereco = endereco;
     }
 
-    public Timestamp getDataHoraEventoInicio() {
+    public Long getDataHoraEventoInicio() {
         return dataHoraEventoInicio;
     }
 
-    public void setDataHoraEventoInicio(Timestamp dataHoraEventoInicio) {
+    public void setDataHoraEventoInicio(Long dataHoraEventoInicio) {
         this.dataHoraEventoInicio = dataHoraEventoInicio;
     }
 
-    public Timestamp getDataHoraEventoFim() {
+    public Long getDataHoraEventoFim() {
         return dataHoraEventoFim;
     }
 
-    public void setDataHoraEventoFim(Timestamp dataHoraEventoFim) {
+    public void setDataHoraEventoFim(Long dataHoraEventoFim) {
         this.dataHoraEventoFim = dataHoraEventoFim;
     }
 }

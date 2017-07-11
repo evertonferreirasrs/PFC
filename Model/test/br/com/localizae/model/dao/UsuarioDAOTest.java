@@ -141,8 +141,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -205,8 +205,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -348,8 +348,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -418,8 +418,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -533,8 +533,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -597,8 +597,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -686,8 +686,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -806,8 +806,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -925,8 +925,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -1044,8 +1044,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -1163,8 +1163,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -1283,8 +1283,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         
@@ -1405,8 +1405,8 @@ public class UsuarioDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
         
         estande.setEvento(evento);
         

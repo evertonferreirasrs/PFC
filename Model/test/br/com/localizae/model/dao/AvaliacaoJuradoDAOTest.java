@@ -79,9 +79,9 @@ public class AvaliacaoJuradoDAOTest {
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
         Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
-        evento.setDataHoraEventoFim(dataHoraEventoFim);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
         Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
-        evento.setDataHoraEventoInicio(dataHoraEventoInicio);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
         EventoDAO edao = new EventoDAO();
         edao.create(conn, evento);
@@ -160,9 +160,9 @@ public class AvaliacaoJuradoDAOTest {
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
         Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
-        evento.setDataHoraEventoFim(dataHoraEventoFim);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
         Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
-        evento.setDataHoraEventoInicio(dataHoraEventoInicio);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
         EventoDAO edao = new EventoDAO();
         edao.create(conn, evento);
@@ -242,9 +242,9 @@ public class AvaliacaoJuradoDAOTest {
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
         Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
-        evento.setDataHoraEventoFim(dataHoraEventoFim);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
         Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
-        evento.setDataHoraEventoInicio(dataHoraEventoInicio);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
         EventoDAO edao = new EventoDAO();
         edao.create(conn, evento);
@@ -327,9 +327,9 @@ public class AvaliacaoJuradoDAOTest {
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
         Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
-        evento.setDataHoraEventoFim(dataHoraEventoFim);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
         Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
-        evento.setDataHoraEventoInicio(dataHoraEventoInicio);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
         EventoDAO edao = new EventoDAO();
         edao.create(conn, evento);
@@ -411,9 +411,9 @@ public class AvaliacaoJuradoDAOTest {
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
         Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
-        evento.setDataHoraEventoFim(dataHoraEventoFim);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
         Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
-        evento.setDataHoraEventoInicio(dataHoraEventoInicio);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
         EventoDAO edao = new EventoDAO();
         edao.create(conn, evento);
@@ -523,9 +523,9 @@ public class AvaliacaoJuradoDAOTest {
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
         Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
-        evento.setDataHoraEventoFim(dataHoraEventoFim);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
         Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
-        evento.setDataHoraEventoInicio(dataHoraEventoInicio);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
         EventoDAO edao = new EventoDAO();
         edao.create(conn, evento);
@@ -638,9 +638,9 @@ public class AvaliacaoJuradoDAOTest {
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
         Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
-        evento.setDataHoraEventoFim(dataHoraEventoFim);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
         Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
-        evento.setDataHoraEventoInicio(dataHoraEventoInicio);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
         EventoDAO edao = new EventoDAO();
         edao.create(conn, evento);
@@ -753,9 +753,9 @@ public class AvaliacaoJuradoDAOTest {
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
         Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
-        evento.setDataHoraEventoFim(dataHoraEventoFim);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
         Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
-        evento.setDataHoraEventoInicio(dataHoraEventoInicio);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
         EventoDAO edao = new EventoDAO();
         edao.create(conn, evento);
@@ -869,9 +869,9 @@ public class AvaliacaoJuradoDAOTest {
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
         Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
-        evento.setDataHoraEventoFim(dataHoraEventoFim);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
         Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
-        evento.setDataHoraEventoInicio(dataHoraEventoInicio);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
         EventoDAO edao = new EventoDAO();
         edao.create(conn, evento);
@@ -984,9 +984,9 @@ public class AvaliacaoJuradoDAOTest {
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
         Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
-        evento.setDataHoraEventoFim(dataHoraEventoFim);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
         Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
-        evento.setDataHoraEventoInicio(dataHoraEventoInicio);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
         EventoDAO edao = new EventoDAO();
         edao.create(conn, evento);
@@ -1094,9 +1094,9 @@ public class AvaliacaoJuradoDAOTest {
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão");
         Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
-        evento.setDataHoraEventoFim(dataHoraEventoFim);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
         Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
-        evento.setDataHoraEventoInicio(dataHoraEventoInicio);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
         EventoDAO edao = new EventoDAO();
         edao.create(conn, evento);

@@ -35,7 +35,7 @@ public class EventoController {
         
         EventoService service = new EventoService();
         try {
-            service.readByCriteria(criteria, limit, offset);
+            eventoList = service.readByCriteria(criteria, limit, offset);
         } catch (Exception ex) {
             Logger.getLogger(EventoController.class.getName()).log(Level.SEVERE, null, ex);
         }

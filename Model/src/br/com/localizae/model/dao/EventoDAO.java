@@ -6,6 +6,7 @@ import br.com.localizae.model.entity.Evento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,8 +23,8 @@ public class EventoDAO implements BaseDAO<Evento> {
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getEndereco());
-        ps.setTimestamp(++i, entity.getDataHoraEventoInicio());
-        ps.setTimestamp(++i, entity.getDataHoraEventoFim());
+        ps.setTimestamp(++i, new Timestamp(entity.getDataHoraEventoInicio()));
+        ps.setTimestamp(++i, new Timestamp(entity.getDataHoraEventoFim()));
 
         ResultSet rs = ps.executeQuery();
 
@@ -57,8 +58,8 @@ public class EventoDAO implements BaseDAO<Evento> {
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getEndereco());
-        ps.setTimestamp(++i, entity.getDataHoraEventoInicio());
-        ps.setTimestamp(++i, entity.getDataHoraEventoFim());
+        ps.setTimestamp(++i, new Timestamp(entity.getDataHoraEventoInicio()));
+        ps.setTimestamp(++i, new Timestamp(entity.getDataHoraEventoFim()));
         ps.setLong(++i, entity.getId());
 
         ps.execute();
@@ -82,8 +83,8 @@ public class EventoDAO implements BaseDAO<Evento> {
             evento = new Evento();
             evento.setNome(rs.getString("nome"));
             evento.setEndereco(rs.getString("endereco"));
-            evento.setDataHoraEventoInicio(rs.getTimestamp("dataHoraEventoInicio"));
-            evento.setDataHoraEventoFim(rs.getTimestamp("dataHoraEventoFim"));
+            evento.setDataHoraEventoInicio(rs.getTimestamp("dataHoraEventoInicio").getTime());
+            evento.setDataHoraEventoFim(rs.getTimestamp("dataHoraEventoFim").getTime());
             evento.setId(rs.getLong("id"));
         }
 
@@ -130,8 +131,8 @@ public class EventoDAO implements BaseDAO<Evento> {
             Evento evento = new Evento();
             evento.setNome(rs.getString("nome"));
             evento.setEndereco(rs.getString("endereco"));
-            evento.setDataHoraEventoInicio(rs.getTimestamp("dataHoraEventoInicio"));
-            evento.setDataHoraEventoFim(rs.getTimestamp("dataHoraEventoFim"));
+            evento.setDataHoraEventoInicio(rs.getTimestamp("dataHoraEventoInicio").getTime());
+            evento.setDataHoraEventoFim(rs.getTimestamp("dataHoraEventoFim").getTime());
             evento.setId(rs.getLong("id"));
             
             eventoList.add(evento);

@@ -6,6 +6,7 @@
 package br.net.localizae.webservice.converter;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  *
@@ -13,7 +14,7 @@ import com.google.gson.Gson;
  */
 public class JsonConverter {
     public static Object convertFromJson(String json, Class clazz){
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().create();
         
         Object entity = gson.fromJson(json, clazz);
         

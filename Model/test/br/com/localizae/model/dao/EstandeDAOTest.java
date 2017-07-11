@@ -61,8 +61,8 @@ public class EstandeDAOTest {
     public void testCreate() throws Exception {
         /*Criando cenário para testes*/
         Evento evento = new Evento();
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0));
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0));
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
         evento.setEndereco("Alcidão");
         evento.setNome("FAITEC - 2017");
         
@@ -93,8 +93,8 @@ public class EstandeDAOTest {
     public void testDelete() throws Exception {
         /*Criando cenário para testes*/
         Evento evento = new Evento();
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0));
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0));
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
         evento.setEndereco("Alcidão");
         evento.setNome("FAITEC - 2017");
         
@@ -128,8 +128,8 @@ public class EstandeDAOTest {
     public void testUpdate() throws Exception {
         /*Criando cenário para testes*/
         Evento evento = new Evento();
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0));
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0));
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
         evento.setEndereco("Alcidão");
         evento.setNome("FAITEC - 2017");
         
@@ -166,8 +166,8 @@ public class EstandeDAOTest {
     public void testReadById() throws Exception {
         /*Criando cenário para testes*/
         Evento evento = new Evento();
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0));
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0));
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
         evento.setEndereco("Alcidão");
         evento.setNome("FAITEC - 2017");
         
@@ -198,8 +198,8 @@ public class EstandeDAOTest {
     public void testReadByCriteria() throws Exception {
         /*Criando cenário para testes*/
         Evento evento = new Evento();
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0));
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0));
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
         evento.setEndereco("Alcidão");
         evento.setNome("FAITEC - 2017");
         
@@ -243,8 +243,8 @@ public class EstandeDAOTest {
     public void testReadByNome() throws Exception {
         /*Criando cenário para testes*/
         Evento evento = new Evento();
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0));
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0));
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
         evento.setEndereco("Alcidão");
         evento.setNome("FAITEC - 2017");
         
@@ -290,8 +290,8 @@ public class EstandeDAOTest {
     public void testReadByCurso() throws Exception {
         /*Criando cenário para testes*/
         Evento evento = new Evento();
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0));
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0));
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
         evento.setEndereco("Alcidão");
         evento.setNome("FAITEC - 2017");
         
@@ -337,8 +337,8 @@ public class EstandeDAOTest {
     public void testReadByPeriodo() throws Exception {
         /*Criando cenário para testes*/
         Evento evento = new Evento();
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0));
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0));
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
         evento.setEndereco("Alcidão");
         evento.setNome("FAITEC - 2017");
         
@@ -383,8 +383,8 @@ public class EstandeDAOTest {
     public void testReadByNumero() throws Exception {
         /*Criando cenário para testes*/
         Evento evento = new Evento();
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0));
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0));
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
         evento.setEndereco("Alcidão");
         evento.setNome("FAITEC - 2017");
         
@@ -429,8 +429,8 @@ public class EstandeDAOTest {
     public void testReadByAreaTematica() throws Exception {
         /*Criando cenário para testes*/
         Evento evento = new Evento();
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0));
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0));
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
         evento.setEndereco("Alcidão");
         evento.setNome("FAITEC - 2017");
         

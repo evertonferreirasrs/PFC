@@ -61,8 +61,8 @@ public class EventoDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento);
 
@@ -79,8 +79,8 @@ public class EventoDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento);
 
@@ -99,8 +99,8 @@ public class EventoDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento);
         /*Criando cenário de testes.*/
@@ -123,8 +123,8 @@ public class EventoDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento);
         /*Criando cenário de testes.*/
@@ -143,24 +143,24 @@ public class EventoDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento);
         
         Evento evento2 = new Evento();
         evento2.setNome("FAITEC 2016");
         evento2.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento2.setDataHoraEventoInicio(new Timestamp(2016, 10, 18, 19, 0, 0, 0));
-        evento2.setDataHoraEventoFim(new Timestamp(2016, 10, 20, 23, 0, 0, 0));
+        evento2.setDataHoraEventoInicio(new Timestamp(2016, 10, 18, 19, 0, 0, 0).getTime());
+        evento2.setDataHoraEventoFim(new Timestamp(2016, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento2);
         
         Evento evento3 = new Evento();
         evento3.setNome("FAITEC 2015");
         evento3.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento3.setDataHoraEventoInicio(new Timestamp(2015, 10, 18, 19, 0, 0, 0));
-        evento3.setDataHoraEventoFim(new Timestamp(2015, 10, 20, 23, 0, 0, 0));
+        evento3.setDataHoraEventoInicio(new Timestamp(2015, 10, 18, 19, 0, 0, 0).getTime());
+        evento3.setDataHoraEventoFim(new Timestamp(2015, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento3);
         /*Criando cenário de testes.*/
@@ -182,24 +182,24 @@ public class EventoDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento);
         
         Evento evento2 = new Evento();
         evento2.setNome("FAITEC 2016");
         evento2.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento2.setDataHoraEventoInicio(new Timestamp(2016, 10, 18, 19, 0, 0, 0));
-        evento2.setDataHoraEventoFim(new Timestamp(2016, 10, 20, 23, 0, 0, 0));
+        evento2.setDataHoraEventoInicio(new Timestamp(2016, 10, 18, 19, 0, 0, 0).getTime());
+        evento2.setDataHoraEventoFim(new Timestamp(2016, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento2);
         
         Evento evento3 = new Evento();
         evento3.setNome("FAITEC 2015");
         evento3.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento3.setDataHoraEventoInicio(new Timestamp(2015, 10, 18, 19, 0, 0, 0));
-        evento3.setDataHoraEventoFim(new Timestamp(2015, 10, 20, 23, 0, 0, 0));
+        evento3.setDataHoraEventoInicio(new Timestamp(2015, 10, 18, 19, 0, 0, 0).getTime());
+        evento3.setDataHoraEventoFim(new Timestamp(2015, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento3);
         /*Criando cenário de testes.*/
@@ -221,24 +221,24 @@ public class EventoDAOTest {
         Evento evento = new Evento();
         evento.setNome("FAITEC 2017");
         evento.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0));
-        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0));
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento);
         
         Evento evento2 = new Evento();
         evento2.setNome("FAITEC 2016");
         evento2.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento2.setDataHoraEventoInicio(new Timestamp(2016, 10, 18, 19, 0, 0, 0));
-        evento2.setDataHoraEventoFim(new Timestamp(2016, 10, 20, 23, 0, 0, 0));
+        evento2.setDataHoraEventoInicio(new Timestamp(2016, 10, 18, 19, 0, 0, 0).getTime());
+        evento2.setDataHoraEventoFim(new Timestamp(2016, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento2);
         
         Evento evento3 = new Evento();
         evento3.setNome("FAITEC 2015");
         evento3.setEndereco("Alcidão Santa Rita do Sapucaí");
-        evento3.setDataHoraEventoInicio(new Timestamp(2015, 10, 18, 19, 0, 0, 0));
-        evento3.setDataHoraEventoFim(new Timestamp(2015, 10, 20, 23, 0, 0, 0));
+        evento3.setDataHoraEventoInicio(new Timestamp(2015, 10, 18, 19, 0, 0, 0).getTime());
+        evento3.setDataHoraEventoFim(new Timestamp(2015, 10, 20, 23, 0, 0, 0).getTime());
 
         dao.create(conn, evento3);
         /*Criando cenário de testes.*/
