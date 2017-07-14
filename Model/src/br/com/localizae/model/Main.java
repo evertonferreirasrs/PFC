@@ -5,9 +5,6 @@
  */
 package br.com.localizae.model;
 
-import br.com.localizae.model.dao.AvaliacaoVisitanteDAO;
-import java.sql.Connection;
-
 /**
  *
  * @author marca
@@ -15,12 +12,17 @@ import java.sql.Connection;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Connection conn = ConnectionManager.getInstance().getConnection();
-        AvaliacaoVisitanteDAO dao = new AvaliacaoVisitanteDAO();
+        int n = 6;
+        int[][] mat = {{1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}};
+        int soma = 0;
 
-
-
-        conn.commit();
-        conn.close();
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(j > i && (i+j) < n-1){
+                    soma += mat[i][j];
+                }
+            }
+        }
+        System.out.println(soma);
     }
 }
