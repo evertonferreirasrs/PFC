@@ -112,51 +112,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-body">
-                                <table class="table table-hover table-bordered" id="sampleTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Nome</th>
-                                            <th>Email</th>
-                                            <th>Tipo</th>
-                                            <th>Ação</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Roberto Júnior</td>
-                                            <td>rjunior13@gmail.com</td>
-                                            <td>Administrador</td>
-                                            <td><center><a class="btn btn-info"><i class="fa fa-lg fa-plus"></i></a>&nbsp;
-                                        <a class="btn btn-warning" href="#"><i class="fa fa-edit"></i></a>&nbsp;
-                                        <a class="btn btn-danger" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Marcos Antônio</td>
-                                        <td>marcos@gmail.com</td>
-                                        <td>Expositor</td>
-                                        <td><center><a class="btn btn-info" href="#"><i class="fa fa-lg fa-plus"></i></a>&nbsp;
-                                        <a class="btn btn-warning" href="#"><i class="fa fa-edit"></i></a>&nbsp;
-                                        <a class="btn btn-danger" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lyan Masterson</td>
-                                        <td>lyan@gmail.com</td>
-                                        <td>Jurado</td>
-                                        <td><center><a class="btn btn-info" href="#"><i class="fa fa-lg fa-plus"></i></a>&nbsp;
-                                        <a class="btn btn-warning" href="#"><i class="fa fa-edit"></i></a>&nbsp;
-                                        <a class="btn btn-danger" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Everton Ferreira</td>
-                                        <td>everton@gmail.com</td>
-                                        <td>Visitante</td>
-                                        <td><center><a class="btn btn-info" data-toggle="modal" data-target="#myModalVisualizar"><i class="fa fa-lg fa-plus"></i></a>&nbsp;
-                                        <a class="btn btn-warning" data-toggle="modal" data-target="#myModalEditar"><i class="fa fa-edit"></i></a>&nbsp;
-                                        <a class="btn btn-danger" id="demoSwal" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            <div class="card-body" id="table-users">
+                                
                             </div>
                         </div>
                     </div>
@@ -206,6 +163,20 @@
                 });
             });
         </script>
-
+        <script src="<c:url value="/resources/js/app/view/View.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/view/UsuarioView.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/model/Usuario.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/model/ListaUsuario.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/config/Configuration.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/controller/UsuarioController.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/helper/Bind.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/service/ProxyFactory.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/model/TipoUsuario.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/service/UsuarioService.js"/>"></script>
+        
+        <script>
+            let usuarioController = new UsuarioController();
+            usuarioController.readAll();
+        </script>
     </body>
 </html>

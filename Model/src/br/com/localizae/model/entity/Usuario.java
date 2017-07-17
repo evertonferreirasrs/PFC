@@ -128,7 +128,7 @@ public class Usuario extends BaseEntity {
     }
 
     public void setSenha(String senha) {
-        this.encryptPasswd(senha);
+        this.senha = senha;
     }
 
     public TipoUsuario getTipoUsuario() {
@@ -187,7 +187,7 @@ public class Usuario extends BaseEntity {
         this.integranteEquipe = integranteEquipe;
     }
 
-    public void encryptPasswd(String sign) {
+    public String encryptPasswd(String sign) {
 
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -212,9 +212,6 @@ public class Usuario extends BaseEntity {
         }
 
         this.senha = sign;
-    }
-
-    public void setSenhaCriptografada(String senhaCriptografada) {
-        this.senha = senhaCriptografada;
+        return sign;
     }
 }

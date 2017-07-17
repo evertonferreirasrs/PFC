@@ -8,6 +8,7 @@ class View{
     }
 
     update(model){
+        if(this._elemento != null)
         this._elemento.innerHTML = this.template(model);
     }
 }

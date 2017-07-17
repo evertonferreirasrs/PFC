@@ -37,7 +37,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getEmail());
-        ps.setString(++i, entity.getSenha());
+        ps.setString(++i, entity.encryptPasswd(entity.getSenha()));
         ps.setString(++i, entity.getSituacao());
         ps.setString(++i, entity.getMotivo());
         ps.setString(++i, entity.getTokenRedeSocial());
@@ -191,7 +191,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
                 usuario.setId(rs.getLong("id"));
                 usuario.setNome(rs.getString("nome"));
                 usuario.setEmail(rs.getString("email"));
-                usuario.setSenhaCriptografada(rs.getString("senha"));
+                usuario.setSenha(rs.getString("senha"));
                 usuario.setSituacao(rs.getString("situacao"));
                 usuario.setMotivo(rs.getString("motivo"));
                 usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));
@@ -290,7 +290,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
                 usuario.setId(rs.getLong("id"));
                 usuario.setNome(rs.getString("nome"));
                 usuario.setEmail(rs.getString("email"));
-                usuario.setSenhaCriptografada(rs.getString("senha"));
+                usuario.setSenha(rs.getString("senha"));
                 usuario.setSituacao(rs.getString("situacao"));
                 usuario.setMotivo(rs.getString("motivo"));
                 usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));

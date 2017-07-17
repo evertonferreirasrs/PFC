@@ -1,5 +1,5 @@
 class Configuration{
     static getUrl(){
-        return 'http://localhost/localizae';
+        return 'http://localhost:8084/WebService/';
     }
 }

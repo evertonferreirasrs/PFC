@@ -36,7 +36,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <form>
+                                    <form onsubmit="usuarioController.adiciona(event)">
+                                        <input type="hidden" id="inputTipoUsuario" value="1">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="control-label" for="inputNome">Nome</label>
@@ -55,10 +56,10 @@
 
                                             <br><br>
                                         </div>
+                                        <div class="col-md-12">
+                                            <button class="btn btn-primary pull-right" id="demoSwal" type="submit">Confirmar</button>
+                                        </div>
                                     </form>
-                                    <div class="col-md-12">
-                                        <button class="btn btn-primary pull-right" id="demoSwal" type="submit">Confirmar</button>
-                                    </div>   
                                 </div>
                             </div>
                         </div>
@@ -86,5 +87,21 @@
             });
         </script> 
 
+
+        <script src="<c:url value="/resources/js/app/view/View.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/view/UsuarioView.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/model/Usuario.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/model/ListaUsuario.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/config/Configuration.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/controller/UsuarioController.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/helper/Bind.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/service/ProxyFactory.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/model/TipoUsuario.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/service/UsuarioService.js"/>"></script>
+        
+        <script>
+            let usuarioController = new UsuarioController();
+            //usuarioController.readAll();
+        </script>
     </body>
 </html>

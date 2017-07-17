@@ -15,7 +15,7 @@ class UsuarioView extends View{
                     </tr>
                 </thead>
                 <tbody>
-                    ${model.usuarios.map(
+                    ${model.usuarioList.map(
                         user => `
                             <tr class="user" data-id="${user.id}">
                                 <td class="nome-user">${user.nome}</td>
@@ -23,14 +23,14 @@ class UsuarioView extends View{
                                 <td class="tipo-user">${user.tipoUsuario.nome}</td>
                                 <td class="actions-user">
                                     <center>
-                                        <a class="btn btn-info"><i class="fa fa-lg fa-plus"></i></a>&nbsp;
+                                        <a class="btn btn-info"><i class="fa fa-lg fa-eye"></i></a>&nbsp;
                                         <a class="btn btn-warning" href="#"><i class="fa fa-edit"></i></a>&nbsp;
-                                        <a class="btn btn-danger" href="#"><i class="fa fa-lg fa-trash"></i></a>
+                                        <a class="btn btn-danger" onclick="usuarioController.delete(this)" href="#"><i class="fa fa-lg fa-trash"></i></a>
                                     </center>
                                 </td>
                             </tr>
                         `
-                    )}
+                    ).join('')}
                 </tbody>
             </table>
         `;
