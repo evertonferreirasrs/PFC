@@ -1,5 +1,5 @@
 class Configuration{
     static getUrl(){
-        return 'http://localhost:8084/WebService/';
+        return 'http://localhost:8080/WebService/';
     }
 }

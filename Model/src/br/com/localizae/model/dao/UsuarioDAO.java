@@ -329,7 +329,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
             
             if(usuario.getTipoUsuario().getId() == 3){
                 IntegranteEquipe integrante = new IntegranteEquipe();
-                integrante.setUsuario(usuario);
+                //integrante.setUsuario(usuario);
                 integrante.setResponsavel(rs.getBoolean("responsavel"));
                 
                 Estande estande = new Estande();

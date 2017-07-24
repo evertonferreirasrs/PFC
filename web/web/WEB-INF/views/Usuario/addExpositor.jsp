@@ -35,8 +35,9 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row">
-                                    <form>
+                                <form>
+                                    <div class="row">
+                                        <input type="hidden" id="inputTipoUsuario" value="3">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="control-label" for="inputNome">Nome</label>
@@ -52,14 +53,22 @@
                                                 <label class="control-label" for="inputPassword">Senha</label>
                                                 <input class="form-control" id="inputPassword" type="password">
                                             </div>
-
+                                            <div class="form-group">
+                                                <label class="control-label" for="inputEstande">Estande</label>
+                                                <select class="form-control" id="inputEstande">
+                                                    <option disabled selected>Selecione um estande...</option>
+                                                </select>
+                                            </div>
                                             <br><br>
                                         </div>
-                                    </form>
-                                    <div class="col-md-12">
-                                        <button class="btn btn-primary pull-right" id="demoSwal" type="submit">Confirmar</button>
-                                    </div>   
-                                </div>
+                                        <div class="col-md-12">
+                                            <input type="checkbox" id="inputResponsavel"> Responsável pelo estande<br>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button class="btn btn-primary pull-right" id="demoSwal" onclick="usuarioController.adiciona(event)" type="submit">Confirmar</button>
+                                        </div>   
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -86,5 +95,12 @@
             });
         </script> 
 
+        <jsp:include page="import-scripts-user.jsp"/> 
+        <script src="<c:url value="/resources/js/app/model/Estande.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/model/IntegranteEquipe.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/service/EstandeService.js"/>"></script>
+        <script>
+            usuarioController.loadEstandes();
+        </script>
     </body>
 </html>
