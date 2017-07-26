@@ -94,11 +94,11 @@
                 swal("Confirmado!", "Foi adicionado um Expositor!", "success")
             });
         </script> 
-
-        <jsp:include page="import-scripts-user.jsp"/> 
         <script src="<c:url value="/resources/js/app/model/Estande.js"/>"></script>
         <script src="<c:url value="/resources/js/app/model/IntegranteEquipe.js"/>"></script>
         <script src="<c:url value="/resources/js/app/service/EstandeService.js"/>"></script>
+        <jsp:include page="import-scripts-user.jsp"/> 
+        
         <script>
             usuarioController.loadEstandes();
         </script>

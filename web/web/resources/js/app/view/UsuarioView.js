@@ -4,6 +4,7 @@ class UsuarioView extends View{
     }
 
     template(model){
+        
         return `
             <table class="table table-hover table-bordered" id="sampleTable">
                 <thead>
@@ -23,7 +24,8 @@ class UsuarioView extends View{
                                 <td class="tipo-user">${user.tipoUsuario.nome}</td>
                                 <td class="actions-user">
                                     <center>
-                                        <a class="btn btn-info"><i class="fa fa-lg fa-eye"></i></a>&nbsp;
+                                        <a class="btn btn-danger" onclick="usuarioController.blockUser(this, ${this.isBlock(user.situacao)})"><i class="fa fa-lg fa-${this.isBan(user.situacao)}"></i></a>&nbsp;
+                                        <a class="btn btn-info" onclick="usuarioController.viewData(this)"><i class="fa fa-lg fa-eye"></i></a>&nbsp;
                                         <a class="btn btn-warning" href="#"><i class="fa fa-edit"></i></a>&nbsp;
                                         <a class="btn btn-danger" onclick="usuarioController.delete(this)" href="#"><i class="fa fa-lg fa-trash"></i></a>
                                     </center>
@@ -34,5 +36,21 @@ class UsuarioView extends View{
                 </tbody>
             </table>
         `;
+    }
+
+    isBan(situacao){
+        if(situacao.toUpperCase() == "ATIVO"){
+            return 'unlock'
+        }else{
+            return 'lock'
+        }
+    }
+
+    isBlock(situacao){
+        if(situacao.toUpperCase() == "ATIVO"){
+            return false
+        }else{
+            return true
+        }
     }
 }

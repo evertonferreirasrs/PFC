@@ -54,7 +54,7 @@ public class EstandeController {
         
         EstandeService service = new EstandeService();
         try {
-            service.readById(id);
+            estande = service.readById(id);
         } catch (Exception ex) {
             Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
         }

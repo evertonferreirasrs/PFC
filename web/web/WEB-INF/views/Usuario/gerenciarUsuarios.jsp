@@ -134,35 +134,6 @@
 
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script>
-        <script type="text/javascript">
-            $('#demoNotify').click(function () {
-                $.notify({
-                    title: "Update Complete : ",
-                    message: "Something cool is just updated!",
-                    icon: 'fa fa-check'
-                }, {
-                    type: "info"
-                });
-            });
-            $('#demoSwal').click(function () {
-                swal({
-                    title: "Você tem certeza?",
-                    text: "Você não será capaz de recuperar esses dados!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Sim, deletar!",
-                    cancelButtonText: "Não, cancelar!",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        swal("Deletado!", "Esses dados foram deletados.", "success");
-                    } else {
-                        swal("Cancelado!", "Seus dados estão seguros!", "error");
-                    }
-                });
-            });
-        </script>
         <jsp:include page="import-scripts-user.jsp"/> 
         <script>
             usuarioController.readAll();

@@ -35,8 +35,9 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row">
-                                    <form>
+                                <form onsubmit="usuarioController.adiciona(event)">
+                                    <input type="hidden" id="inputTipoUsuario" value="4">
+                                    <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="control-label" for="inputNome">Nome</label>
@@ -48,10 +49,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label" for="inputTurma">Turma<small> (será avaliado)</small></label>
-                                                <input class="form-control" id="inputTurma" type="text">
-                                            </div>
+
                                             <div class="form-group">
                                                 <label class="control-label" for="inputPassword">Senha</label>
                                                 <input class="form-control" id="inputPassword" type="password">
@@ -59,11 +57,45 @@
 
                                             <br><br>
                                         </div>
-                                    </form>
-                                    <div class="col-md-12">
-                                        <button class="btn btn-primary pull-right" id="demoSwal" type="submit">Confirmar</button>
-                                    </div>   
-                                </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4>Critérios para avaliação</h4>
+                                        </div>
+                                    </div>
+
+                                    <div id="criterio">
+                                        <!--<div class="row criterio">
+                                            <div class="col-md-6 form-group">
+                                                <label class="control-label" for="inputCriterio">Critério:<small> (será avaliado)</small></label>
+                                                <select class="form-control inputCriterio">
+                                                    <option disabled selected>Selecione...</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label class="control-label" for="inputEstandeCriterio">Estande:<small> (será avaliado)</small></label>
+                                                <select class="form-control inputEstandeCriterio">
+                                                    <option disabled selected>Selecione...</option>
+                                                </select>
+                                            </div>
+                                        </div>-->
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <button class="btn" onclick="usuarioController.addCriterio(event)">
+                                                <span class="fa fa-plus-circle fa-lg"></span> Adicionar critério
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-primary pull-right" id="demoSwal" type="submit">Confirmar</button>
+                                        </div> 
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -85,10 +117,21 @@
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script>
         <script type="text/javascript">
-            $('#demoSwal').click(function () {
-                swal("Confirmado!", "Foi adicionado um Jurado!", "success")
-            });
+                                                $('#demoSwal').click(function () {
+//                                                    swal("Confirmado!", "Foi adicionado um Jurado!", "success")
+                                                });
         </script> 
+
+        <jsp:include page="import-scripts-user.jsp"/> 
+        <script src="<c:url value="/resources/js/app/model/CriterioAvaliacao.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/model/Estande.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/service/EstandeService.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/service/CriterioAvaliacaoService.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/model/CriterioJurado.js"/>"></script>
+        
+        <script>
+            usuarioController.addCriterio()
+        </script>
 
     </body>
 </html>

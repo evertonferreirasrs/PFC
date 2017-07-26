@@ -322,7 +322,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
                 CriterioJurado criterioJurado = new CriterioJurado();
                 criterioJurado.setCriterioAvaliacao(criterio);
                 criterioJurado.setEstande(estande);
-                criterioJurado.setUsuario(usuario);
+                //criterioJurado.setUsuario(usuario);
 
                 usuario.getCriterioAvaliacaoList().add(criterioJurado);
             }

@@ -5,7 +5,6 @@ class ListaUsuario{
 
     add(usuario){
         this._usuarioList.push(usuario);
-        console.log('saf')
     }
 
     get usuarioList(){
