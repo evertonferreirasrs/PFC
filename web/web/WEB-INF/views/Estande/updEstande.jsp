@@ -19,13 +19,13 @@
             <div class="content-wrapper">
                 <div class="page-title">
                     <div>
-                        <h1><i class="fa fa-plus-square"></i> Criar Estande</h1>
+                        <h1><i class="fa fa-plus-square"></i> Alterar Estande</h1>
                         <p> LocalizaÊ - Sistema de Posicionamento Interno FAITEC</p>
                     </div>
                     <div>
                         <ul class="breadcrumb">
                             <li><i class="fa fa-home fa-lg"></i></li>
-                            <li><a href="#">Criar Estande</a></li>
+                            <li><a href="#">Alterar Estande</a></li>
                         </ul>
                     </div>
                 </div>
@@ -34,7 +34,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <form onsubmit="estandeController.adiciona(event)">
+                                    <form onsubmit="estandeController.altera(event)">
+                                        <input type="hidden" id="inputId" value="${id}">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="control-label">Título do Projeto</label>
@@ -128,7 +129,7 @@
         
         <script>
             let estandeController = new EstandeController()
-            estandeController.loadSelectEvent()
+            estandeController.loadEstande()
         </script>
     </body>
 </html>

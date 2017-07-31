@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,7 +65,7 @@ public class EstandeController {
     }
     
     @RequestMapping(value="estande", method = RequestMethod.PUT)
-    public Estande update(String json){
+    public Estande update(@RequestBody String json){
         Estande estande = (Estande)JsonConverter.convertFromJson(json, Estande.class);
         
         EstandeService service = new EstandeService();
@@ -90,7 +91,7 @@ public class EstandeController {
     }
     
     @RequestMapping(value="estande", method = RequestMethod.POST)
-    public Estande create(String json){
+    public Estande create(@RequestBody String json){
         Estande estande = (Estande)JsonConverter.convertFromJson(json, Estande.class);
         
         EstandeService service = new EstandeService();

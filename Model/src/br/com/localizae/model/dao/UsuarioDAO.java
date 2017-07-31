@@ -106,14 +106,13 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
 
     @Override
     public void update(Connection conn, Usuario entity) throws Exception {
-        String sql = "UPDATE usuario SET nome=?, email=?, senha=?, situacao=?, motivo=?, tokenRedeSocial=?, tokenAutenticacao=?, dataHoraExpiracaoToken=?, tipoUsuario_fk=? WHERE id=?;";
+        String sql = "UPDATE usuario SET nome=?, email=?, situacao=?, motivo=?, tokenRedeSocial=?, tokenAutenticacao=?, dataHoraExpiracaoToken=?, tipoUsuario_fk=? WHERE id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getEmail());
-        ps.setString(++i, entity.getSenha());
         ps.setString(++i, entity.getSituacao());
         ps.setString(++i, entity.getMotivo());
         ps.setString(++i, entity.getTokenRedeSocial());
@@ -221,14 +220,14 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
                 CriterioJurado criterioJurado = new CriterioJurado();
                 criterioJurado.setCriterioAvaliacao(criterio);
                 criterioJurado.setEstande(estande);
-                criterioJurado.setUsuario(usuario);
+                //criterioJurado.setUsuario(usuario);
 
                 usuario.getCriterioAvaliacaoList().add(criterioJurado);
             }
             
             if(usuario.getTipoUsuario().getId() == 3){
                 IntegranteEquipe integrante = new IntegranteEquipe();
-                integrante.setUsuario(usuario);
+                //integrante.setUsuario(usuario);
                 integrante.setResponsavel(rs.getBoolean("responsavel"));
                 
                 Estande estande = new Estande();

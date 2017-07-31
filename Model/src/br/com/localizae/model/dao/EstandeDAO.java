@@ -86,7 +86,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
     @Override
     public Estande readById(Connection conn, Long id) throws Exception {
         Estande estande = null;
-        String sql = "SELECT e.*, i.usuario_fk, i.responsavel, u.nome usuario, ev.nome evento FROM estande e FULL JOIN integranteEquipe i ON e.id = i.estande_fk LEFT JOIN usuario u ON u.id = i.usuario_fk JOIN evento ev ON ev.id = e.evento_fk WHERE e.id=?";
+        String sql = "SELECT e.*, i.usuario_fk, i.responsavel, u.nome usuario, u.email, ev.nome evento FROM estande e FULL JOIN integranteEquipe i ON e.id = i.estande_fk LEFT JOIN usuario u ON u.id = i.usuario_fk JOIN evento ev ON ev.id = e.evento_fk WHERE e.id=?";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -119,7 +119,9 @@ public class EstandeDAO implements BaseDAO<Estande> {
             Usuario usuario = new Usuario();
             usuario.setId(rs.getLong("usuario_fk"));
             usuario.setNome(rs.getString("usuario"));
+            usuario.setEmail(rs.getString("email"));
             integranteEquipe.setResponsavel(rs.getBoolean("responsavel"));
+            integranteEquipe.setUsuario(usuario);
 
             if (usuario.getId() != 0) {
                 estande.getEquipe().add(integranteEquipe);
@@ -136,7 +138,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
         }
         List<Estande> estandeList = new ArrayList<>();
 
-        String sql = "SELECT e.*, i.usuario_fk, i.responsavel, u.nome usuario, ev.nome evento FROM estande e FULL JOIN integranteEquipe i ON e.id = i.estande_fk LEFT JOIN usuario u ON u.id = i.usuario_fk JOIN evento ev ON ev.id = e.evento_fk WHERE 1=1";
+        String sql = "SELECT e.*, i.usuario_fk, i.responsavel, u.nome usuario, u.email, ev.nome evento FROM estande e FULL JOIN integranteEquipe i ON e.id = i.estande_fk LEFT JOIN usuario u ON u.id = i.usuario_fk JOIN evento ev ON ev.id = e.evento_fk WHERE 1=1";
         List<Object> args = new ArrayList<>();
         sql += this.applyCriteria(criteria, args);
 
@@ -181,6 +183,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
                     Usuario usuario = new Usuario();
                     usuario.setId(rs.getLong("usuario_fk"));
                     usuario.setNome(rs.getString("usuario"));
+                    usuario.setEmail(rs.getString("email"));
                     integranteEquipe.setResponsavel(rs.getBoolean("responsavel"));
 
                     if (usuario.getId() != 0) {
@@ -210,6 +213,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
                     Usuario usuario = new Usuario();
                     usuario.setId(rs.getLong("usuario_fk"));
                     usuario.setNome(rs.getString("usuario"));
+                    usuario.setEmail(rs.getString("email"));
                     integranteEquipe.setResponsavel(rs.getBoolean("responsavel"));
 
                     if (usuario.getId() != 0) {

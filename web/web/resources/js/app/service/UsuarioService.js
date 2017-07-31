@@ -33,13 +33,14 @@ class UsuarioService{
             if(xhr.readyState == 4){
                 if(xhr.status == 200){
                     cb(null, JSON.parse(xhr.responseText));
+                    console.log(xhr.responseText);
                 }else{
                     console.log(xhr.responseText);
                     cb("Impossível atualizar usuário.", null);
                 }
             }
         };
-        console.log(usuario);
+        // console.log(usuario);
         usuario = JSON.stringify(usuario);
         xhr.send(usuario);
     }

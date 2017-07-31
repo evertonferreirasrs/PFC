@@ -11,50 +11,6 @@
         <jsp:include page="../Componentes/cabecalhoAdministrador.jsp"/>
     </head>
 
-    <!-- MODAL -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" style="background: #3c8dbc;">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" style="color: #fff;">LocalizaÊ - Sistema de Posicionamento Interno FAITEC</h4>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="row">
-                                <div class="col-lg-7">
-                                    <h4>Número do Estande: <small>10</small></h4>
-                                    <h4>Área Temática: <small>Gestão</small></h4>
-                                    <h4>Nome do Projeto: <small>LocalizaÊ - Sistema de Posicionamento Interno FAITEC</small></h4>
-                                    <h4>Expositor responsável: <small>Roberto de Souza Porto Júnior</small></h4>
-                                    <h4>Email do responsável: <small>rjunior13@gmail.com</small></h4>
-                                </div>
-                                <div class="col-lg-5">
-                                    <h4>Curso: <small>Sistemas de Informação</small></h4> 
-                                    <h4>Período: <small>4º ano</small></h4>
-                                    <h4>Integrantes: <small>Roberto de Souza Porto Júnior</small></h4>
-                                    <h4 class="text-center"><small>Marcos Antônio dos Santos</small></h4>
-                                    <h4 class="text-center"><small>Lyan Masterson Pereira Miguel</small></h4>
-                                    <h4 class="text-center"><small>Everton Aparecido Ferreira</small></h4>
-
-                                </div>
-                            </div>
-                            <hr>
-                            <h4 align="justify">Descrição: <small>Sistema de localização interno para feiras de diversos setores, incluindo 
-                                    feiras acadêmicas, que é o primeiro foco do projeto. Como na cidade não há um software 
-                                    capaz de realizar as funcionalidades de localização interna, esse projeto pode ajudar a 
-                                    alavancar e expandir as feiras realizadas em Santa Rita do Sapucaí.</small>
-                            </h4>
-                            <button type="button" class="btn btn-default pull-right" style="background: #000;" data-dismiss="modal">Fechar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <body class="sidebar-mini fixed">
         <div class="wrapper">
 
@@ -76,67 +32,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-body">
-                                <table class="table table-hover table-bordered" id="sampleTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Número</th>
-                                            <th>Projeto</th>
-                                            <th>Área Temática</th>
-                                            <th>Ação</th>
+                            <div class="card-body" id="table-estandes">
 
-                                            <!--
-                                            <th>Descrição</th>
-                                            <th>Curso</th>
-                                            <th>Período do Curso</th>
-                                            <th>Expositor responsável</th>
-                                            <th>Imagem</th>
-                                            -->
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>LocalizaÊ</td>
-                                            <td>Gestão</td>
-                                            <td><center><a class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-lg fa-plus"></i></a>&nbsp;
-                                        <a class="btn btn-warning" href="#"><i class="fa fa-edit"></i></a>&nbsp;
-                                        <a class="btn btn-danger" id="demoSwal" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    <tr>
-                                        <td>54</td>
-                                        <td>Encontre Fácil</td>
-                                        <td>Marketing</td>
-                                        <td><center><a class="btn btn-info" href="#"><i class="fa fa-lg fa-plus"></i></a>&nbsp;
-                                        <a class="btn btn-warning" href="#"><i class="fa fa-edit"></i></a>&nbsp;
-                                        <a class="btn btn-danger" id="demoSwal" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    <tr>
-                                        <td>22</td>
-                                        <td>Pare Fácil</td>
-                                        <td>Gestão</td>
-                                        <td><center><a class="btn btn-info" href="#"><i class="fa fa-lg fa-plus"></i></a>&nbsp;
-                                        <a class="btn btn-warning" href="#"><i class="fa fa-edit"></i></a>&nbsp;
-                                        <a class="btn btn-danger" id="demoSwal" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    <tr>
-                                        <td>72</td>
-                                        <td>Learn Automaton</td>
-                                        <td>Educação</td>
-                                        <td><center><a class="btn btn-info" href="#"><i class="fa fa-lg fa-plus"></i></a>&nbsp;
-                                        <a class="btn btn-warning" href="#"><i class="fa fa-edit"></i></a>&nbsp;
-                                        <a class="btn btn-danger" id="demoSwal" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    <tr>
-                                        <td>35</td>
-                                        <td>TecEdu Esportes</td>
-                                        <td>Educação</td>
-                                        <td><center><a class="btn btn-info" href="#"><i class="fa fa-lg fa-plus"></i></a>&nbsp;
-                                        <a class="btn btn-warning" href="#"><i class="fa fa-edit"></i></a>&nbsp;
-                                        <a class="btn btn-danger" id="demoSwal" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -156,34 +53,13 @@
 
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script>
-        <script type="text/javascript">
-            $('#demoNotify').click(function () {
-                $.notify({
-                    title: "Update Complete : ",
-                    message: "Something cool is just updated!",
-                    icon: 'fa fa-check'
-                }, {
-                    type: "info"
-                });
-            });
-            $('#demoSwal').click(function () {
-                swal({
-                    title: "Você tem certeza?",
-                    text: "Você não será capaz de recuperar esses dados!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Sim, deletar!",
-                    cancelButtonText: "Não, cancelar!",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        swal("Deletado!", "Esses dados foram deletados.", "success");
-                    } else {
-                        swal("Cancelado!", "Seus dados estão seguros!", "error");
-                    }
-                });
-            });
+
+        <jsp:include page="import-scripts-estande.jsp"/>
+        <script src="<c:url value="/resources/js/app/model/EstandeInfo.js" />"></script>
+        
+        <script>
+            let estandeController = new EstandeController()
+            estandeController.readAll()
         </script>
     </body>
 </html>

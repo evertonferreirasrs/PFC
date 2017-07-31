@@ -5,6 +5,7 @@ class UsuarioController {
         this._email = $("#inputEmail")
         this._senha = $("#inputPassword")
         this._tipoUsuario = $("#inputTipoUsuario")
+        this._id = $("#inputId")
         this._inputEstande = $("#inputEstande")
         this._responsavel = $("#inputResponsavel")
         this._criterioListDiv = $("#criterio")
@@ -17,7 +18,130 @@ class UsuarioController {
             new ListaUsuario(),
             new UsuarioView($("#table-users")),
             'delete', 'update', 'add'
-        );
+        )
+    }
+
+    async altera(event) {
+        event.preventDefault()
+
+        let service = new UsuarioService()
+        let user = null
+
+        try {
+            let promise = new Promise((resolve, reject) => {
+                service.buscarUsuario(this._id.value, (err, usuario) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(usuario)
+                    }
+                })
+            })
+
+            let user = await promise;
+            let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
+
+            user.nome = this._nome.value
+            user.email = this._email.value
+            user.tipoUsuario = tipoUsuario
+            user.id = this._id.value
+            service.validate(user)
+
+            if (tipoUsuario.id == 3) {
+                let estande = new Estande(this._inputEstande.text)
+                estande.id = this._inputEstande.value
+                let integranteEquipe = new IntegranteEquipe(null, estande, this._responsavel.checked)
+
+                user.integranteEquipe = integranteEquipe
+            }
+
+
+            if (tipoUsuario.id == 4) {
+                let criterioList = this._criterioListDiv.children
+
+                // console.log(this._criterioList.getElementById("id"))
+                user.criterioAvaliacaoList = []
+
+                for (let i = 0; i < criterioList.length; i++) {
+                    let inputCriterio = criterioList[i].getElementsByClassName('inputCriterio')[0]
+                    let inputEstandeCriterio = criterioList[i].getElementsByClassName('inputEstandeCriterio')[0]
+
+                    let criterioAvaliacao = new CriterioAvaliacao()
+                    criterioAvaliacao.id = inputCriterio.value
+
+                    let estande = new Estande()
+                    estande.id = inputEstandeCriterio.value
+
+                    let criterioJurado = new CriterioJurado(criterioAvaliacao, null, estande)
+                    user.criterioAvaliacaoList.push(criterioJurado)
+
+                    // console.log(user.criterioAvaliacaoList)
+                }
+            }
+
+            // console.log(user)
+
+            // console.log(user)
+
+
+            service.update(user, (err, usuario) => {
+                if (err) {
+                    swal("Falha!", err + "\n Tenha certeza de preencher todos os campos.", "error")
+                    return
+                } else {
+                    swal("Confirmado!", "Foi alterado um usuário!", "success")
+                }
+            });
+        } catch (e) {
+            swal("Falha!", e.message, "error")
+        }
+    }
+
+    async readUser() {
+        let id = this._id.value
+        let service = new UsuarioService();
+
+        service.buscarUsuario(id, async (err, user) => {
+            if (err) {
+                swal('Erro!', err, 'error')
+                return
+            } else {
+                this._nome.value = user.nome
+                this._email.value = user.email
+                if (user.tipoUsuario.id == 3) {
+                    if (user.integranteEquipe.responsavel) {
+                        this._responsavel.checked = true
+                    }
+                    let estandeList = await this._loadEstandeList()
+
+                    estandeList.forEach(estande => {
+                        let option = new Option(estande.titulo, estande.id)
+
+                        if (user.integranteEquipe.estande.id == estande.id) {
+                            option.selected = true
+                        }
+
+                        this._inputEstande.add(option)
+                    })
+                }
+
+                if (user.tipoUsuario.id = 4) {
+
+                    let promiseList = []
+                    
+                    user.criterioAvaliacaoList.forEach((criterioJurado) => {
+                        
+                        new Promise((resolve, reject) => {
+                            this.addCriterio(null, criterioJurado.estande.id, criterioJurado.criterioAvaliacao.id)
+                        })
+                        
+
+                    })
+
+                    Promise.all(promiseList).then()
+                }
+            }
+        })
     }
 
     _loadEstandeList() {
@@ -58,12 +182,13 @@ class UsuarioController {
         })
     }
 
-    async addCriterio(event) {
+    async addCriterio(event, idEstande, idCriterio) {
         if (event != null) {
             event.preventDefault()
         }
 
         if (this._estandeList.length == 0) {
+            
             let estandeList = await this._loadEstandeList()
 
             estandeList.forEach((e) => {
@@ -80,6 +205,7 @@ class UsuarioController {
                 )
 
                 this._estandeList.push(estande)
+                
             })
         }
 
@@ -99,6 +225,12 @@ class UsuarioController {
             // console.log(this._criterioList)
         }
 
+        this._createCriterio(idEstande, idCriterio)
+
+        // console.log(criterioList)
+    }
+
+    _createCriterio(idEstande, idCriterio) {
         let divCriterio = document.createElement('div')
         divCriterio.classList.add('row', 'criterio')
 
@@ -125,6 +257,10 @@ class UsuarioController {
         this._criterioList.forEach((criterio) => {
             let option = new Option(criterio.nome, criterio.id)
 
+            if(idCriterio != null && idCriterio == criterio.id){
+                option.selected = true
+            }
+
             selectCriterio.add(option)
         })
 
@@ -141,6 +277,10 @@ class UsuarioController {
         this._estandeList.forEach((estande) => {
             let option = new Option(estande.titulo, estande.id)
 
+            if(idEstande != null && idEstande == estande.id){
+                option.selected = true
+            }
+
             selectEstande.add(option)
         })
 
@@ -156,8 +296,6 @@ class UsuarioController {
         let criterioList = document.getElementById("criterio")
 
         criterioList.appendChild(divCriterio)
-
-        // console.log(criterioList)
     }
 
     adiciona(event) {
@@ -323,9 +461,9 @@ class UsuarioController {
                         swal('Erro!', err, 'error')
                         return
                     } else {
-                        if(unblock == true){
+                        if (unblock == true) {
                             user.situacao = "Ativo"
-                        }else{
+                        } else {
                             user.situacao = "Bloqueado"
                         }
                         user.motivo = inputValue

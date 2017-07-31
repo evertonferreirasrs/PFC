@@ -1,6 +1,7 @@
 package br.net.localizae.web.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +20,15 @@ public class EstandeController {
     public ModelAndView adicionarEstande() {
         ModelAndView mv = new ModelAndView("Estande/addEstande");
         mv.addObject("aba", "adicionarEstande");
+        return mv;
+    }
+    
+    @RequestMapping(value = "/estande/alterar/{id}", method = RequestMethod.GET)
+    public ModelAndView alterarEstande(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView("Estande/updEstande");
+        
+        mv.addObject("id", id);
+        
         return mv;
     }
     
