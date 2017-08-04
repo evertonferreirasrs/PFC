@@ -26,7 +26,7 @@ public class EstandeController {
     @RequestMapping(value = "/estande/alterar/{id}", method = RequestMethod.GET)
     public ModelAndView alterarEstande(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView("Estande/updEstande");
-        
+        mv.addObject("aba", "estande");
         mv.addObject("id", id);
         
         return mv;

@@ -1,6 +1,6 @@
 class EstandeController {
     constructor() {
-        let $ = document.querySelector.bind(document);
+        let $ = document.querySelector.bind(document)
         this._titulo = $("#inputTitulo")
         this._numero = $("#inputNumero")
         this._areaTematica = $("#inputAreaTematica")
@@ -141,7 +141,7 @@ class EstandeController {
 
         estandeList.forEach(estande => {
             this._estandeList.add(estande)
-        });
+        })
     }
 
     async loadSelectEvent() {

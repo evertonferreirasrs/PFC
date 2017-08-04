@@ -44,6 +44,7 @@
         </div>
         <!-- Sidebar Menu-->
         <ul class="sidebar-menu">
+            <li class="treeview <c:if test="${aba eq 'evento'}">active</c:if>"><a href="<c:url value="/evento/gerenciar"/>"><i class="fa fa-university"></i><span>Gerenciar Eventos</span></a></li>
             <li class="treeview <c:if test="${aba eq 'estande'}">active</c:if>"><a href="<c:url value="/estande/gerenciar"/>"><i class="fa fa-university"></i><span>Gerenciar Estandes</span></a></li>
             <li class="treeview <c:if test="${aba eq 'adicionarEstande'}">active</c:if>"><a href="<c:url value="/estande/adicionar"/>"><i class="fa fa-plus-square"></i><span>Adicionar Estande</span></a></li>
             <li class="treeview <c:if test="${aba eq 'estatisticas'}">active</c:if>"><a href="<c:url value="/estande/estatisticas"/>"><i class="fa fa-bar-chart-o"></i><span>Estatísticas Estandes</span></a></li>
