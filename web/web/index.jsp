@@ -257,7 +257,7 @@
             <div class="container">
                 <!--<p>&copy; 2016 Start Bootstrap. All Rights Reserved.</p>-->
                 <div class="col-lg-6">
-                    <p><b>LocalizaÊ - Sistema de Posicionamento Interno FAITEC<b></p>
+                    <p><b>LocalizaÊ - Sistema de Posicionamento Interno para Eventos</b></p>
                                 </div>
                                 <div class="col-lg-6">
                                     <a href="<c:url value="/entrar"/>">Entrar como Administrador</a>
