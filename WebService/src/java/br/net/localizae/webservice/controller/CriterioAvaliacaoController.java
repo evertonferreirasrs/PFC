@@ -6,11 +6,8 @@
 package br.net.localizae.webservice.controller;
 
 import br.com.localizae.model.criteria.CriterioAvaliacaoCriteria;
-import br.com.localizae.model.criteria.EstandeCriteria;
 import br.com.localizae.model.entity.CriterioAvaliacao;
-import br.com.localizae.model.entity.Estande;
 import br.com.localizae.model.service.CriterioAvaliacaoService;
-import br.com.localizae.model.service.EstandeService;
 import br.net.localizae.webservice.converter.JsonConverter;
 import java.util.HashMap;
 import java.util.List;

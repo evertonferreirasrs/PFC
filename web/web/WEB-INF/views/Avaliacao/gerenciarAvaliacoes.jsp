@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body" id="table-avaliacoes">
                                 <table class="table table-hover table-bordered" id="sampleTable">
                                     <thead>
                                         <tr>
@@ -93,25 +93,13 @@
         <script type="text/javascript">$('#sampleTable').DataTable();</script>        
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script>
-        <script type="text/javascript">
-            $('#demoSwal').click(function () {
-                swal({
-                    title: "Você tem certeza?",
-                    text: "Você não será capaz de recuperar esses dados!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Sim, deletar!",
-                    cancelButtonText: "Não, cancelar!",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        swal("Deletado!", "Esses dados foram deletados.", "success");
-                    } else {
-                        swal("Cancelado!", "Seus dados estão seguros!", "error");
-                    }
-                });
-            });
+        
+        <jsp:include page="import-script-avaliacao-visitante.jsp"/> 
+        
+        
+        <script>
+            let avaliacaoVisitanteController = new AvaliacaoVisitanteController()
+            avaliacaoVisitanteController.loadAvaliacoes()
         </script>
     </body>
 </html>

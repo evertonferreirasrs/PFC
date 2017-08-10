@@ -25,8 +25,13 @@
                     <div>
                         <ul class="breadcrumb">
                             <li><i class="fa fa-home fa-lg"></i></li>
-                            <li><a href="#">Estandes</a></li>
+                            <li><a href="<c:url value="/estande/gerenciar" />">Estandes</a></li>
                         </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 text-right">
+                        <a href="<c:url value="/estande/adicionar" />" class="btn btn-primary">Adicionar Estande</a><br><br>
                     </div>
                 </div>
                 <div class="row">

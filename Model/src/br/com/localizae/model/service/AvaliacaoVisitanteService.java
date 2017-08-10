@@ -18,7 +18,7 @@ import java.util.Map;
  *
  * @author Equipe LocalizaÊ
  */
-public class AvaliacaoVistanteService implements BaseAvaliacaoVisitanteService {
+public class AvaliacaoVisitanteService implements BaseAvaliacaoVisitanteService {
 
     @Override
     public void create(AvaliacaoVisitante entity) throws Exception {
