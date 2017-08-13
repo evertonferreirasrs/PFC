@@ -99,12 +99,12 @@
                 <div class="page-title">
                     <div>
                         <h1><i class="fa fa-users"></i> Usuários</h1>
-                        <p> LocalizaÊ - Sistema de Posicionamento Interno FAITEC</p>
+                        <p> LocalizaÊ - Sistema de Posicionamento Interno para Eventos</p>
                     </div>
                     <div>
                         <ul class="breadcrumb">
                             <li><i class="fa fa-home fa-lg"></i></li>
-                            <li>Gerenciar Usuários</li>
+                            <li><a href="<c:url value="usuario/gerenciar" />">Gerenciar Usuários</a></li>
                             <li>Usuários</li>
                         </ul>
                     </div>
