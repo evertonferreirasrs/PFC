@@ -36,7 +36,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <form onsubmit="usuarioController.altera(event)">
+                                    <form onsubmit="usuarioController.alteraAdm(event)">
                                         <input type="hidden" id="inputTipoUsuario" value="1">
                                         <input type="hidden" id="inputId" value="${id}" >
                                         <div class="col-md-6">
@@ -80,7 +80,7 @@
 
         <jsp:include page="import-scripts-user.jsp"/> 
         <script>
-            usuarioController.readUser()
+            usuarioController.readAdm()
         </script>
     </body>
 </html>

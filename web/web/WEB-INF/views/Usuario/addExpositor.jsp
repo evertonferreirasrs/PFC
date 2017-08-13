@@ -35,7 +35,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form>
+                                <form onsubmit="usuarioController.addExpositor(event)">
                                     <div class="row">
                                         <input type="hidden" id="inputTipoUsuario" value="3">
                                         <div class="col-md-6">
@@ -65,7 +65,7 @@
                                             <input type="checkbox" id="inputResponsavel"> Responsável pelo estande<br>
                                         </div>
                                         <div class="col-md-12">
-                                            <button class="btn btn-primary pull-right" id="demoSwal" onclick="usuarioController.adiciona(event)" type="submit">Confirmar</button>
+                                            <button class="btn btn-primary pull-right" id="demoSwal" type="submit">Confirmar</button>
                                         </div>   
                                     </div>
                                 </form>

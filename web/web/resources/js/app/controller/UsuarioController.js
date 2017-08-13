@@ -9,356 +9,327 @@ class UsuarioController {
         this._inputEstande = $("#inputEstande")
         this._responsavel = $("#inputResponsavel")
         this._criterioListDiv = $("#criterio")
-        this._inputCriterio = $("#inputCriterio")
-        this._inputEstandeCriterio = $("#inputEstandeCriterio")
-        this._estandeList = []
-        this._criterioList = []
+        this._criterioJuradoView = new CriterioJuradoView($("#criterio"))
+
 
         this._usuarioList = new Bind(
             new ListaUsuario(),
             new UsuarioView($("#table-users")),
-            'delete', 'update', 'add'
+            'delete', 'update', 'add', 'esvazia'
         )
     }
 
-    async altera(event) {
+    async alteraAdm(event) {
         event.preventDefault()
 
         let service = new UsuarioService()
-        let user = null
+        let user = await service.readUser(this._id.value)
 
-        try {
-            let promise = new Promise((resolve, reject) => {
-                service.buscarUsuario(this._id.value, (err, usuario) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(usuario)
-                    }
-                })
-            })
+        let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
 
-            let user = await promise;
-            let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
+        user.nome = this._nome.value
+        user.email = this._email.value
+        user.tipoUsuario = tipoUsuario
+        user.id = this._id.value
+        service.validate(user)
 
-            user.nome = this._nome.value
-            user.email = this._email.value
-            user.tipoUsuario = tipoUsuario
-            user.id = this._id.value
-            service.validate(user)
+        service.update(user).then(result => {
+            swal("Confirmado!", "Foi alterado um usuário!", "success")
+        })
+    }
 
-            if (tipoUsuario.id == 3) {
-                let estande = new Estande(this._inputEstande.text)
-                estande.id = this._inputEstande.value
-                let integranteEquipe = new IntegranteEquipe(null, estande, this._responsavel.checked)
+    async alteraExpositor(event) {
+        event.preventDefault()
 
-                user.integranteEquipe = integranteEquipe
-            }
+        let service = new UsuarioService()
+        let user = await service.readUser(this._id.value)
 
+        let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
 
-            if (tipoUsuario.id == 4) {
-                let criterioList = this._criterioListDiv.children
+        user.nome = this._nome.value
+        user.email = this._email.value
+        user.tipoUsuario = tipoUsuario
+        user.id = this._id.value
+        service.validate(user)
 
-                // console.log(this._criterioList.getElementById("id"))
-                user.criterioAvaliacaoList = []
+        let estande = new Estande(this._inputEstande.text)
+        estande.id = this._inputEstande.value
+        let integranteEquipe = new IntegranteEquipe(null, estande, this._responsavel.checked)
 
-                for (let i = 0; i < criterioList.length; i++) {
-                    let inputCriterio = criterioList[i].getElementsByClassName('inputCriterio')[0]
-                    let inputEstandeCriterio = criterioList[i].getElementsByClassName('inputEstandeCriterio')[0]
+        user.integranteEquipe = integranteEquipe
 
-                    let criterioAvaliacao = new CriterioAvaliacao()
-                    criterioAvaliacao.id = inputCriterio.value
+        service.update(user).then(result => {
+            swal("Confirmado!", "Foi alterado um usuário!", "success")
+        })
+    }
 
-                    let estande = new Estande()
-                    estande.id = inputEstandeCriterio.value
+    async alteraJurado(event) {
+        event.preventDefault()
 
-                    let criterioJurado = new CriterioJurado(criterioAvaliacao, null, estande)
-                    user.criterioAvaliacaoList.push(criterioJurado)
+        let service = new UsuarioService()
+        let user = await service.readUser(this._id.value)
 
-                    // console.log(user.criterioAvaliacaoList)
-                }
-            }
+        let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
 
-            // console.log(user)
+        user.nome = this._nome.value
+        user.email = this._email.value
+        user.tipoUsuario = tipoUsuario
+        user.id = this._id.value
+        service.validate(user)
 
-            // console.log(user)
+        let criterioList = this._criterioListDiv.children
 
+        // console.log(this._criterioList.getElementById("id"))
+        user.criterioAvaliacaoList = []
 
-            service.update(user, (err, usuario) => {
-                if (err) {
-                    swal("Falha!", err + "\n Tenha certeza de preencher todos os campos.", "error")
-                    return
-                } else {
-                    swal("Confirmado!", "Foi alterado um usuário!", "success")
-                }
-            });
-        } catch (e) {
-            swal("Falha!", e.message, "error")
+        for (let i = 0; i < criterioList.length; i++) {
+            let inputCriterio = criterioList[i].getElementsByClassName('inputCriterio')[0]
+            let inputEstandeCriterio = criterioList[i].getElementsByClassName('inputEstandeCriterio')[0]
+
+            let criterioAvaliacao = new CriterioAvaliacao()
+            criterioAvaliacao.id = inputCriterio.value
+
+            let estande = new Estande()
+            estande.id = inputEstandeCriterio.value
+
+            let criterioJurado = new CriterioJurado(criterioAvaliacao, null, estande)
+            user.criterioAvaliacaoList.push(criterioJurado)
+
+            // console.log(user.criterioAvaliacaoList)
         }
+
+        service.update(user).then(result => {
+            swal("Confirmado!", "Foi alterado um usuário!", "success")
+        })
     }
 
-    async readUser() {
+    async readAdm() {
         let id = this._id.value
-        let service = new UsuarioService();
+        let service = new UsuarioService()
 
-        service.buscarUsuario(id, async (err, user) => {
-            if (err) {
-                swal('Erro!', err, 'error')
-                return
-            } else {
-                this._nome.value = user.nome
-                this._email.value = user.email
-                if (user.tipoUsuario.id == 3) {
-                    if (user.integranteEquipe.responsavel) {
-                        this._responsavel.checked = true
-                    }
-                    let estandeList = await this._loadEstandeList()
+        let user = await service.readUser(id)
 
-                    estandeList.forEach(estande => {
-                        let option = new Option(estande.titulo, estande.id)
+        this._nome.value = user.nome
+        this._email.value = user.email
+    }
 
-                        if (user.integranteEquipe.estande.id == estande.id) {
-                            option.selected = true
-                        }
+    async readExpositor() {
+        let id = this._id.value
+        let service = new UsuarioService()
+        let estandeService = new EstandeService()
 
-                        this._inputEstande.add(option)
-                    })
-                }
+        let user = await service.readUser(id)
 
-                if (user.tipoUsuario.id = 4) {
+        this._nome.value = user.nome
+        this._email.value = user.email
+        this._responsavel.checked = user.integranteEquipe.responsavel
 
-                    let promiseList = []
-                    
-                    user.criterioAvaliacaoList.forEach((criterioJurado) => {
-                        
-                        new Promise((resolve, reject) => {
-                            this.addCriterio(null, criterioJurado.estande.id, criterioJurado.criterioAvaliacao.id)
-                        })
-                        
+        let estandeList = await estandeService.readAll()
 
-                    })
+        estandeList.forEach(estande => {
+            let option = new Option(estande.titulo, estande.id)
 
-                    Promise.all(promiseList).then()
-                }
+            if (estande.id == user.integranteEquipe.estande.id) {
+                option.selected = true
             }
+
+            this._inputEstande.add(option)
         })
     }
 
-    _loadEstandeList() {
-        return new Promise((resolve, reject) => {
-            let service = new EstandeService();
+    async readJurado() {
+        let id = this._id.value
+        let service = new UsuarioService()
+        let estandeService = new EstandeService()
+        let criterioService = new CriterioAvaliacaoService()
 
-            service.buscarTodosEstandes((err, estandeList) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(estandeList)
-                }
-            });
+        let user = await service.readUser(id)
+        let criterioList = await criterioService.readAll()
+        let estandeList = await estandeService.readAll()
+
+        this._nome.value = user.nome
+        this._email.value = user.email
+        user.criterioAvaliacaoList.forEach(criterio => {
+            this._criterioJuradoView.add(
+                criterioList,
+                estandeList,
+                criterio.estande.id,
+                criterio.criterioAvaliacao.id
+            )
         })
     }
 
-    _loadCriterioList() {
-        return new Promise((resolve, reject) => {
-            let service = new CriterioAvaliacaoService();
+    async viewData(element) {
+        let id = $(element).closest('tr').data('id')
+        let service = new UsuarioService()
 
-            service.buscarTodosEstandes((err, criterioList) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(criterioList)
-                }
-            });
+        let user = await service.readUser(id)
+
+        swal({
+            title: "<small>Dados do Usuário!</small>",
+            text: `
+                <div class="text-left">
+                    <br>
+                    Nome: ${user.nome}<br>
+                    Email: ${user.email}<br>
+                    Situação: ${user.situacao}<br>
+                    Motivo: ${user.motivo || '---'}
+                </div>
+            `,
+            html: true
         })
     }
 
-    loadEstandes() {
-        this._loadEstandeList().then((estandeList) => {
-            estandeList.forEach(estande => {
-                let option = new Option(estande.titulo, estande.id)
-
-                this._inputEstande.add(option)
-            })
-        })
-    }
-
-    async addCriterio(event, idEstande, idCriterio) {
+    async addCriterio(event) {
         if (event != null) {
             event.preventDefault()
         }
 
-        if (this._estandeList.length == 0) {
-            
-            let estandeList = await this._loadEstandeList()
+        let criterioService = new CriterioAvaliacaoService()
+        let estandeService = new EstandeService()
 
-            estandeList.forEach((e) => {
-                let estande = new Estande(
-                    e.titulo,
-                    e.curso,
-                    e.periodo,
-                    e.descricao,
-                    e.areaTematica,
-                    e.numero,
-                    e.evento,
-                    e.equipe,
-                    e.id
-                )
+        let criterioList = await criterioService.readAll()
+        let estandeList = await estandeService.readAll()
 
-                this._estandeList.push(estande)
-                
-            })
-        }
-
-        if (this._criterioList.length == 0) {
-            let criterioList = await this._loadCriterioList()
-
-            criterioList.forEach((c) => {
-                let criterio = new CriterioAvaliacao(
-                    c.nome,
-                    c.peso,
-                    c.id
-                )
-
-                this._criterioList.push(criterio)
-            })
-
-            // console.log(this._criterioList)
-        }
-
-        this._createCriterio(idEstande, idCriterio)
-
-        // console.log(criterioList)
+        this._criterioJuradoView.add(criterioList, estandeList)
     }
 
-    _createCriterio(idEstande, idCriterio) {
-        let divCriterio = document.createElement('div')
-        divCriterio.classList.add('row', 'criterio')
-
-
-        let divInputCriterio = document.createElement('div')
-        divInputCriterio.classList.add('col-md-6', 'form-group')
-
-        let divInputEstande = document.createElement('div')
-        divInputEstande.classList.add('col-md-6', 'form-group')
-
-        let labelCriterio = `<label class="control-label" for="inputCriterio">Critério:<small> (será avaliado)</small></label>`
-
-        let labelEstande = `<label class="control-label" for="inputEstande">Estande:<small> (será avaliado)</small></label>`
-
-        let selectCriterio = document.createElement('select')
-        selectCriterio.classList.add('form-control')
-        selectCriterio.classList.add('inputCriterio')
-
-        let option = new Option('Selecione...')
-        option.disabled = true
-        option.selected = true
-
-        selectCriterio.add(option)
-        this._criterioList.forEach((criterio) => {
-            let option = new Option(criterio.nome, criterio.id)
-
-            if(idCriterio != null && idCriterio == criterio.id){
-                option.selected = true
-            }
-
-            selectCriterio.add(option)
-        })
-
-        let selectEstande = document.createElement('select')
-        selectEstande.classList.add('form-control')
-        selectEstande.classList.add('inputEstandeCriterio')
-
-        option = new Option('Selecione...')
-        option.disabled = true
-        option.selected = true
-
-        selectEstande.add(option)
-
-        this._estandeList.forEach((estande) => {
-            let option = new Option(estande.titulo, estande.id)
-
-            if(idEstande != null && idEstande == estande.id){
-                option.selected = true
-            }
-
-            selectEstande.add(option)
-        })
-
-        divInputCriterio.innerHTML = labelCriterio
-        divInputCriterio.appendChild(selectCriterio)
-
-        divInputEstande.innerHTML = labelEstande
-        divInputEstande.appendChild(selectEstande)
-
-        divCriterio.appendChild(divInputCriterio)
-        divCriterio.appendChild(divInputEstande)
-
-        let criterioList = document.getElementById("criterio")
-
-        criterioList.appendChild(divCriterio)
-    }
-
-    adiciona(event) {
+    addAdm(event) {
         event.preventDefault()
 
         let service = new UsuarioService()
 
-        try {
-            let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
-            let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario, 'ativo')
-            service.validate(user)
-            if (tipoUsuario.id == 3) {
-                let estande = new Estande(this._inputEstande.text)
-                estande.id = this._inputEstande.value
-                let integranteEquipe = new IntegranteEquipe(null, estande, this._responsavel.checked)
+        let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
+        let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario, 'ativo')
+        service.validate(user)
 
-                user.integranteEquipe = integranteEquipe
-            }
-
-
-            if (tipoUsuario.id == 4) {
-                let criterioList = this._criterioListDiv.children
-
-                // console.log(this._criterioList.getElementById("id"))
-                user.criterioAvaliacaoList = []
-
-                for (let i = 0; i < criterioList.length; i++) {
-                    let inputCriterio = criterioList[i].getElementsByClassName('inputCriterio')[0]
-                    let inputEstandeCriterio = criterioList[i].getElementsByClassName('inputEstandeCriterio')[0]
-
-                    let criterioAvaliacao = new CriterioAvaliacao()
-                    criterioAvaliacao.id = inputCriterio.value
-
-                    let estande = new Estande()
-                    estande.id = inputEstandeCriterio.value
-
-                    let criterioJurado = new CriterioJurado(criterioAvaliacao, null, estande)
-                    user.criterioAvaliacaoList.push(criterioJurado)
-
-                    // console.log(user.criterioAvaliacaoList)
-                }
-            }
-
-            // console.log(user)
-
-            // console.log(user)
-
-
-            service.add(user, (err, usuario) => {
-                if (err) {
-                    swal("Falha!", err + "\n Tenha certeza de preencher todos os campos.", "error")
-                    return
-                } else {
-                    swal("Confirmado!", "Foi adicionado um Jurado!", "success")
-                }
-            });
-        } catch (e) {
-            swal("Falha!", e.message, "error")
-        }
+        service.add(user).then(result => {
+            swal({
+                title: "Adicionado!",
+                text: "O usuário foi adicionado.",
+                showConfirmButton: true
+            })
+        }).catch(result => {
+            swal("Error", result, "error")
+        })
     }
 
-    readAll() {
+    addExpositor(event) {
+        event.preventDefault()
+
         let service = new UsuarioService()
+
+        let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
+        let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario, 'ativo')
+        service.validate(user)
+
+        let estande = new Estande(this._inputEstande.text)
+        estande.id = this._inputEstande.value
+        let integranteEquipe = new IntegranteEquipe(null, estande, this._responsavel.checked)
+
+        user.integranteEquipe = integranteEquipe
+
+        service.add(user).then(result => {
+            swal({
+                title: "Adicionado!",
+                text: "O usuário foi adicionado.",
+                showConfirmButton: true
+            })
+        }).catch(result => {
+            swal("Error", result, "error")
+        })
+    }
+
+    addJurado(event) {
+        event.preventDefault()
+
+        let service = new UsuarioService()
+
+        let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
+        let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario, 'ativo')
+        service.validate(user)
+
+        let criterioList = this._criterioListDiv.children
+
+        // console.log(this._criterioList.getElementById("id"))
+        user.criterioAvaliacaoList = []
+
+        for (let i = 0; i < criterioList.length; i++) {
+            let inputCriterio = criterioList[i].getElementsByClassName('inputCriterio')[0]
+            let inputEstandeCriterio = criterioList[i].getElementsByClassName('inputEstandeCriterio')[0]
+
+            let criterioAvaliacao = new CriterioAvaliacao()
+            criterioAvaliacao.id = inputCriterio.value
+
+            let estande = new Estande()
+            estande.id = inputEstandeCriterio.value
+
+            let criterioJurado = new CriterioJurado(criterioAvaliacao, null, estande)
+            user.criterioAvaliacaoList.push(criterioJurado)
+
+            // console.log(user.criterioAvaliacaoList)
+        }
+
+        service.add(user).then(result => {
+            swal({
+                title: "Adicionado!",
+                text: "O usuário foi adicionado.",
+                showConfirmButton: true
+            })
+        }).catch(result => {
+            swal("Error", result, "error")
+        })
+    }
+
+    async loadEstandes() {
+        let service = new EstandeService()
+
+        let estandeList = await service.readAll()
+
+        estandeList.forEach(estande => {
+            this._inputEstande.add(new Option(estande.titulo, estande.id))
+        })
+    }
+
+    async delete(element) {
+        let id = $(element).closest('tr').data('id')
+        let service = new UsuarioService()
+        swal(
+            {
+                title: "Você tem certeza disso?",
+                text: "Esta operação não poderá ser desfeita!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Sim, apagar!",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            (isConfirm) => {
+                if (isConfirm) {
+                    service.delete(id).then(result => {
+                        this._usuarioList.delete(id)
+                        swal({
+                            title: "Excluído!",
+                            text: "O usuário foi excluída.",
+                            showConfirmButton: true
+                        })
+                    }).catch(error => {
+                        swal("Erro!", error, "error")
+                    })
+                } else {
+                    swal("Cancelado!", "Usuário não foi apagado.", "error")
+                }
+            }
+        )
+
+    }
+
+    async readAll() {
+        let service = new UsuarioService()
+
+        let usuarioList = await service.readAll();
 
         service.buscarTodosUsuarios((err, usuarioList) => {
             if (err) {
@@ -374,67 +345,7 @@ class UsuarioController {
         });
     }
 
-    delete(element) {
-        swal(
-            {
-                title: "Você tem certeza disso?",
-                text: "Esta operação não poderá ser desfeita!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Sim, apagar!",
-                cancelButtonText: "Cancelar",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            },
-            function (isConfirm) {
-                if (isConfirm) {
-                    let id = $(element).closest('tr').data('id')
-                    console.log(id)
-                    let service = new UsuarioService()
-
-                    service.delete(id, (err) => {
-                        if (err) {
-                            swal("Erro!", err, "error")
-                            return
-                        }
-                    });
-                    swal("Apagado!", "Usuário apagado com sucesso.", "success")
-                } else {
-                    swal("Cancelado!", "Usuário não foi apagado.", "error")
-                }
-            }
-        )
-        this.readAll()
-    }
-
-    viewData(element) {
-        let id = $(element).closest('tr').data('id')
-        let service = new UsuarioService();
-
-        service.buscarUsuario(id, (err, user) => {
-            if (err) {
-                swal('Erro!', err, 'error')
-                return
-            } else {
-                swal({
-                    title: "<small>Dados do Usuário!</small>",
-                    text: `
-                            <div class="text-left">
-                                <br>
-                                Nome: ${user.nome}<br>
-                                Email: ${user.email}<br>
-                                Situação: ${user.situacao}<br>
-                                Motivo: ${user.motivo || '---'}
-                            </div>
-                        `,
-                    html: true
-                })
-            }
-        })
-    }
-
-    blockUser(element, unblock) {
+    async blockUser(element, unblock) {
         let id = $(element).closest('tr').data('id')
         let service = new UsuarioService();
 
@@ -448,7 +359,7 @@ class UsuarioController {
                 animation: "slide-from-top",
                 inputPlaceholder: "Motivo"
             },
-            function (inputValue) {
+            async (inputValue) => {
                 if (inputValue === false) return false;
 
                 if (inputValue === "") {
@@ -456,27 +367,27 @@ class UsuarioController {
                     return false
                 }
 
-                service.buscarUsuario(id, (err, user) => {
-                    if (err) {
-                        swal('Erro!', err, 'error')
-                        return
-                    } else {
-                        if (unblock == true) {
-                            user.situacao = "Ativo"
-                        } else {
-                            user.situacao = "Bloqueado"
-                        }
-                        user.motivo = inputValue
-                        service.update(user, (error, user) => {
-                            swal("OK!", `Usuário ${user.nome} bloqueado com sucesso.`, "success");
-                        })
-                    }
+                let user = await service.readUser(id)
+
+                if (unblock == true) {
+                    user.situacao = "Ativo"
+                } else {
+                    user.situacao = "Bloqueado"
+                }
+
+                user.motivo = inputValue
+
+                service.update(user).then(async result => {
+                    swal("OK!", `Usuário bloqueado/desbloqueado com sucesso.`, "success")
+                    let userList = await service.readAll()
+                    this._usuarioList.update(userList)
+                }).catch(result => {
+                    swal("Erro!", result, "error")
                 })
+
+
             }
         )
-
-
-
 
 
     }

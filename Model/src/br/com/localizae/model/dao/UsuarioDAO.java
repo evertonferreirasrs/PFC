@@ -132,6 +132,14 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
             this.updateJurado(entity, conn);
         }
     }
+    
+    public void patch(Usuario entity, Connection conn) throws SQLException{
+        Map<String, Object> atributos = new HashMap<>();
+        if(!entity.getEmail().isEmpty()){
+            atributos.put("email", entity.getEmail());
+        }
+        
+    }
 
     private void updateIntegrante(Usuario entity, Connection conn) throws SQLException {
         String sql = "UPDATE integranteEquipe SET responsavel=?, estande_fk=? WHERE usuario_fk=?;";

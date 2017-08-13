@@ -14,4 +14,19 @@ class ListaUsuario{
     esvazia(){
         this._usuarioList = [];
     }
+
+    delete(id){
+        let newArray = []
+        this._usuarioList.forEach(avaliacao => {
+            if(id != avaliacao.id){
+                newArray.push(avaliacao)
+            }
+        })
+
+        this._usuarioList = newArray
+    }
+
+    update(userList){
+        this._usuarioList = userList
+    }
 }

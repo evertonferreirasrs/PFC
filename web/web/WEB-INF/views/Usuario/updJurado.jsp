@@ -35,7 +35,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form onsubmit="usuarioController.altera(event)">
+                                <form onsubmit="usuarioController.alteraJurado(event)">
                                     <input type="hidden" id="inputTipoUsuario" value="4">
                                     <input type="hidden" id="inputId" value="${id}">
                                     <div class="row">
@@ -125,7 +125,7 @@
         <script src="<c:url value="/resources/js/app/model/CriterioJurado.js"/>"></script>
         
         <script>
-            usuarioController.readUser()
+            usuarioController.readJurado()
         </script>
 
     </body>

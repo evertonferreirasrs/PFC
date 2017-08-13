@@ -35,7 +35,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form onsubmit="usuarioController.altera(event)">
+                                <form onsubmit="usuarioController.alteraExpositor(event)">
                                     <div class="row">
                                         <input type="hidden" id="inputTipoUsuario" value="3">
                                         <input type="hidden" id="inputId" value="${id}">
@@ -98,7 +98,7 @@
         
         <script>
             
-            usuarioController.readUser();
+            usuarioController.readExpositor();
         </script>
     </body>
 </html>

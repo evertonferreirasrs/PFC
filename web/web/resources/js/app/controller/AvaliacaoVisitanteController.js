@@ -7,7 +7,7 @@ class AvaliacaoVisitanteController{
             new AvaliacaoVisitanteView($("#table-avaliacoes")),
             'delete', 'add'
         )
-        console.log(this._estande)
+        // console.log(this._estande)
     }
 
     async loadAvaliacoes(){
@@ -22,7 +22,8 @@ class AvaliacaoVisitanteController{
 
         list.forEach(avaliacao => {
             this._avaliacaoVisitanteView.add(avaliacao)
-        });
+        })
+        //console.log(list)
     }
 
     async delete(element){

@@ -35,7 +35,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form onsubmit="usuarioController.adiciona(event)">
+                                <form onsubmit="usuarioController.addJurado(event)">
                                     <input type="hidden" id="inputTipoUsuario" value="4">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -121,7 +121,7 @@
 //                                                    swal("Confirmado!", "Foi adicionado um Jurado!", "success")
                                                 });
         </script> 
-
+        
         <jsp:include page="import-scripts-user.jsp"/> 
         <script src="<c:url value="/resources/js/app/model/CriterioAvaliacao.js"/>"></script>
         <script src="<c:url value="/resources/js/app/model/Estande.js"/>"></script>
@@ -129,6 +129,8 @@
         <script src="<c:url value="/resources/js/app/service/CriterioAvaliacaoService.js"/>"></script>
         <script src="<c:url value="/resources/js/app/model/CriterioJurado.js"/>"></script>
         
+
+
         <script>
             usuarioController.addCriterio()
         </script>
