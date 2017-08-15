@@ -331,20 +331,13 @@ class UsuarioController {
     async readAll() {
         let service = new UsuarioService()
 
-        let usuarioList = await service.readAll();
+        let usuarioList = await service.readAll()
 
-        service.buscarTodosUsuarios((err, usuarioList) => {
-            if (err) {
-                console.log(err)
-                return;
-            }
+        this._usuarioList.esvazia()
 
-            this._usuarioList.esvazia()
-
-            usuarioList.forEach(user => {
-                this._usuarioList.add(user)
-            });
-        });
+        usuarioList.forEach(user => {
+            this._usuarioList.add(user)
+        })
     }
 
     async blockUser(element, unblock) {

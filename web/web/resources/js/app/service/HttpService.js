@@ -12,8 +12,7 @@ class HttpService {
                     if (xhr.status == 200) {
                         resolve(JSON.parse(xhr.responseText))
                     } else {
-                        console.log(xhr.responseText);
-                        reject("Impossível obter lista de usuários. Tente novamente mais tarde")
+                        reject(xhr.responseText)
                     }
                 }
             }
