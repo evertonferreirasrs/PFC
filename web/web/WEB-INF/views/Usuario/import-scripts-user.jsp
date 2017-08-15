@@ -10,6 +10,7 @@
 <script src="<c:url value="/resources/js/app/service/ProxyFactory.js"/>"></script>
 <script src="<c:url value="/resources/js/app/model/TipoUsuario.js"/>"></script>
 <script src="<c:url value="/resources/js/app/service/UsuarioService.js"/>"></script>
+<script src="<c:url value="/resources/js/app/service/HttpService.js"/>"></script>
 
 <script>
     let usuarioController = new UsuarioController();

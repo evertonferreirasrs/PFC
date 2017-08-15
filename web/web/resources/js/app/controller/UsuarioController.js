@@ -197,88 +197,89 @@ class UsuarioController {
     addAdm(event) {
         event.preventDefault()
 
-        let service = new UsuarioService()
+        try {
+            let service = new UsuarioService()
 
-        let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
-        let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario, 'ativo')
-        service.validate(user)
+            let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
+            let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario, 'ativo')
+            service.validate(user)
 
-        service.add(user).then(result => {
-            swal({
-                title: "Adicionado!",
-                text: "O usuário foi adicionado.",
-                showConfirmButton: true
-            })
-        }).catch(result => {
-            swal("Error", result, "error")
-        })
+            this.add(user, service)
+        } catch (error) {
+            swal("Erro!", error, "error")
+        }
     }
 
     addExpositor(event) {
         event.preventDefault()
 
-        let service = new UsuarioService()
+        try {
+            let service = new UsuarioService()
 
-        let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
-        let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario, 'ativo')
-        service.validate(user)
+            let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
+            let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario, 'ativo')
+            service.validate(user)
 
-        let estande = new Estande(this._inputEstande.text)
-        estande.id = this._inputEstande.value
-        let integranteEquipe = new IntegranteEquipe(null, estande, this._responsavel.checked)
+            let estande = new Estande(this._inputEstande.text)
+            estande.id = this._inputEstande.value
+            let integranteEquipe = new IntegranteEquipe(null, estande, this._responsavel.checked)
 
-        user.integranteEquipe = integranteEquipe
+            user.integranteEquipe = integranteEquipe
 
-        service.add(user).then(result => {
-            swal({
-                title: "Adicionado!",
-                text: "O usuário foi adicionado.",
-                showConfirmButton: true
-            })
-        }).catch(result => {
-            swal("Error", result, "error")
-        })
+            this.add(user, service)
+        } catch (error) {
+            swal("Erro!", error, "error")
+        }
     }
 
     addJurado(event) {
         event.preventDefault()
 
-        let service = new UsuarioService()
+        try {
+            let service = new UsuarioService()
 
-        let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
-        let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario, 'ativo')
-        service.validate(user)
+            let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
+            let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario, 'ativo')
+            service.validate(user)
 
-        let criterioList = this._criterioListDiv.children
+            let criterioList = this._criterioListDiv.children
 
-        // console.log(this._criterioList.getElementById("id"))
-        user.criterioAvaliacaoList = []
+            // console.log(this._criterioList.getElementById("id"))
+            user.criterioAvaliacaoList = []
 
-        for (let i = 0; i < criterioList.length; i++) {
-            let inputCriterio = criterioList[i].getElementsByClassName('inputCriterio')[0]
-            let inputEstandeCriterio = criterioList[i].getElementsByClassName('inputEstandeCriterio')[0]
+            for (let i = 0; i < criterioList.length; i++) {
+                let inputCriterio = criterioList[i].getElementsByClassName('inputCriterio')[0]
+                let inputEstandeCriterio = criterioList[i].getElementsByClassName('inputEstandeCriterio')[0]
 
-            let criterioAvaliacao = new CriterioAvaliacao()
-            criterioAvaliacao.id = inputCriterio.value
+                let criterioAvaliacao = new CriterioAvaliacao()
+                criterioAvaliacao.id = inputCriterio.value
 
-            let estande = new Estande()
-            estande.id = inputEstandeCriterio.value
+                let estande = new Estande()
+                estande.id = inputEstandeCriterio.value
 
-            let criterioJurado = new CriterioJurado(criterioAvaliacao, null, estande)
-            user.criterioAvaliacaoList.push(criterioJurado)
+                let criterioJurado = new CriterioJurado(criterioAvaliacao, null, estande)
+                user.criterioAvaliacaoList.push(criterioJurado)
 
-            // console.log(user.criterioAvaliacaoList)
+                // console.log(user.criterioAvaliacaoList)
+            }
+
+            this.add(user, service)
+        } catch (error) {
+            swal("Erro!", error, "error")
         }
+    }
 
-        service.add(user).then(result => {
+    add(data, service) {
+        try {
+            service.add(data)
             swal({
                 title: "Adicionado!",
                 text: "O usuário foi adicionado.",
                 showConfirmButton: true
             })
-        }).catch(result => {
-            swal("Error", result, "error")
-        })
+        } catch (error) {
+            swal("Error", error, "error")
+        }
     }
 
     async loadEstandes() {
@@ -308,16 +309,17 @@ class UsuarioController {
             },
             (isConfirm) => {
                 if (isConfirm) {
-                    service.delete(id).then(result => {
+                    try {
+                        service.delete(id)
                         this._usuarioList.delete(id)
                         swal({
                             title: "Excluído!",
                             text: "O usuário foi excluída.",
                             showConfirmButton: true
                         })
-                    }).catch(error => {
+                    } catch (error) {
                         swal("Erro!", error, "error")
-                    })
+                    }
                 } else {
                     swal("Cancelado!", "Usuário não foi apagado.", "error")
                 }
