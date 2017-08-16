@@ -18,5 +18,6 @@ public interface BaseService <E> {
     public void update(E entity) throws Exception;
     public void delete(Long id) throws Exception;
     public E readById(Long id) throws Exception;
+    public void updatePartial(E entity) throws Exception;
     public List<E> readByCriteria(Map<Enum, Object> criteria, Long limit, Long offset) throws Exception;
 }

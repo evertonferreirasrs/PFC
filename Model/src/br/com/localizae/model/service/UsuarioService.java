@@ -10,6 +10,7 @@ import br.com.localizae.model.base.service.BaseUsuarioService;
 import br.com.localizae.model.dao.UsuarioDAO;
 import br.com.localizae.model.entity.Usuario;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +108,22 @@ public class UsuarioService implements BaseUsuarioService{
         }
         
         return usuarioList;
+    }
+
+    @Override
+    public void updatePartial(Usuario entity) throws Exception {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        UsuarioDAO dao = new UsuarioDAO();
+        
+        try{
+            dao.updatePartial(conn, entity);
+            conn.commit();
+        }catch(SQLException e){
+            conn.rollback();
+            throw e;
+        }finally{
+            conn.close();
+        }
     }
     
 }

@@ -109,4 +109,20 @@ public class EstandeService implements BaseEstandeService {
         return estandeList;
     }
 
+    @Override
+    public void updatePartial(Estande entity) throws Exception {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        EstandeDAO dao = new EstandeDAO();
+
+        try {
+            dao.updatePartial(conn, entity);
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.close();
+        }
+    }
+
 }

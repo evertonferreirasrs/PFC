@@ -109,4 +109,20 @@ public class AvaliacaoVisitanteService implements BaseAvaliacaoVisitanteService 
         return avaliacaoList;
     }
 
+    @Override
+    public void updatePartial(AvaliacaoVisitante entity) throws Exception {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        AvaliacaoVisitanteDAO dao = new AvaliacaoVisitanteDAO();
+
+        try {
+            dao.updatePartial(conn, entity);
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.close();
+        }
+    }
+
 }

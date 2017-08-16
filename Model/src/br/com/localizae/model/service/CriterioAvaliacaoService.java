@@ -109,4 +109,20 @@ public class CriterioAvaliacaoService implements BaseCriterioAvaliacaoService {
         return criterioList;
     }
 
+    @Override
+    public void updatePartial(CriterioAvaliacao entity) throws Exception {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        CriterioAvaliacaoDAO dao = new CriterioAvaliacaoDAO();
+
+        try {
+            dao.updatePartial(conn, entity);
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.close();
+        }
+    }
+
 }

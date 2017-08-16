@@ -108,5 +108,21 @@ public class AvaliacaoJuradoService implements BaseAvaliacaoJuradoService{
         
         return avaliacaoList;
     }
+
+    @Override
+    public void updatePartial(AvaliacaoJurado entity) throws Exception {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        AvaliacaoJuradoDAO dao = new AvaliacaoJuradoDAO();
+        
+        try {
+            dao.updatePartial(conn, entity);
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.close();
+        }
+    }
     
 }

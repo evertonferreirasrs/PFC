@@ -108,5 +108,21 @@ public class PromocaoService implements BasePromocaoService{
         
         return promocaoList;
     }
+
+    @Override
+    public void updatePartial(Promocao entity) throws Exception {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        PromocaoDAO dao = new PromocaoDAO();
+        
+        try{
+            dao.updatePartial(conn, entity);
+            conn.commit();
+        }catch(Exception e){
+            conn.rollback();
+            throw e;
+        }finally{
+            conn.close();
+        }
+    }
     
 }

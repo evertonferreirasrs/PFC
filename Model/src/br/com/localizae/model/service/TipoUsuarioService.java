@@ -108,5 +108,21 @@ public class TipoUsuarioService implements BaseTipoUsuarioService{
         
         return tipoUsuarioList;
     }
+
+    @Override
+    public void updatePartial(TipoUsuario entity) throws Exception {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        TipoUsuarioDAO dao = new TipoUsuarioDAO();
+        
+        try{
+            dao.updatePartial(conn, entity);
+            conn.commit();
+        }catch(Exception e){
+            conn.rollback();
+            throw e;
+        }finally{
+            conn.close();
+        }
+    }
     
 }

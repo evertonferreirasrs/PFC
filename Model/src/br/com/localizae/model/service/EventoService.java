@@ -108,5 +108,21 @@ public class EventoService implements BaseService<Evento>{
         
         return eventoList;
     }
+
+    @Override
+    public void updatePartial(Evento entity) throws Exception {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        EventoDAO dao = new EventoDAO();
+
+        try {
+            dao.updatePartial(conn, entity);
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.close();
+        }
+    }
     
 }
