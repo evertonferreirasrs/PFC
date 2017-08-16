@@ -255,4 +255,49 @@ public class AvaliacaoJuradoDAO implements BaseDAO<AvaliacaoJurado> {
 
         return mediaList;
     }
+
+    @Override
+    public void updatePartial(Connection conn, AvaliacaoJurado entity) throws Exception {
+        String sql = "UPDATE avaliacaoJurado SET id=?";
+        List<Object> args = new ArrayList<>();
+        args.add(entity.getId());
+        
+        if(entity.getDataHoraAbertura() != null){
+            sql += ", dataHoraAbertura=?";
+            args.add(entity.getDataHoraAbertura());
+        }
+        
+        if(entity.getDataHoraFechamento() != null){
+            sql += ", dataHoraFechamento=?";
+            args.add(entity.getDataHoraFechamento());
+        }
+        
+        if(entity.getNota() != null){
+            sql += ", nota=?";
+            args.add(entity.getNota());
+        }
+        
+        if(entity.getOpiniao() != null && !entity.getOpiniao().isEmpty()){
+            sql += ", opiniao=?";
+            args.add(entity.getOpiniao());
+        }
+        
+        if(entity.getStatus() != null && !entity.getStatus().isEmpty()){
+            sql += ", status=?";
+            args.add(entity.getStatus());
+        }
+        
+        sql += " WHERE id=?";
+        args.add(entity.getId());
+        
+        PreparedStatement ps = conn.prepareStatement(sql);
+        
+        int i = 0;
+        for(Object arg : args){
+            ps.setObject(++i, arg);
+        }
+        
+        ps.execute();
+        ps.close();
+    }
 }

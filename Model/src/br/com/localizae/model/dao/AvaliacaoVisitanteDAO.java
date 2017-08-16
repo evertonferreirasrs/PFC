@@ -208,4 +208,34 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
         
         return mediaList;
     }
+
+    @Override
+    public void updatePartial(Connection conn, AvaliacaoVisitante entity) throws Exception {
+        String sql = "UPDATE avaliacaoVisitante SET id=?";
+        List<Object> args = new ArrayList<>();
+        args.add(entity.getId());
+        
+        if(entity.getNota() != null){
+            sql += ", nota=?";
+            args.add(entity.getNota());
+        }
+        
+        if(entity.getOpiniao() != null && !entity.getOpiniao().isEmpty()){
+            sql += ", comentario=?";
+            args.add(entity.getOpiniao());
+        }
+        
+        sql += " WHERE id=?";
+        args.add(entity.getId());
+        
+        PreparedStatement ps = conn.prepareStatement(sql);
+        
+        int i = 0;
+        for(Object arg : args){
+            ps.setObject(++i, arg);
+        }
+        
+        ps.execute();
+        ps.close();
+    }
 }

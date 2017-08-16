@@ -273,4 +273,59 @@ public class EstandeDAO implements BaseDAO<Estande> {
         return sql;
     }
 
+    @Override
+    public void updatePartial(Connection conn, Estande entity) throws Exception {
+        String sql = "UPDATE estande SET id=?";
+        List<Object> args = new ArrayList<>();
+        args.add(entity.getId());
+        
+        if(entity.getTitulo() != null && !entity.getTitulo().isEmpty()){
+            sql += ", titulo=?";
+            args.add(entity.getTitulo());
+        }
+        
+        if(entity.getAreaTematica() != null && !entity.getAreaTematica().isEmpty()){
+            sql += ", areaTematica=?";
+            args.add(entity.getAreaTematica());
+        }
+        
+        if(entity.getCurso() != null && !entity.getCurso().isEmpty()){
+            sql += ", curso=?";
+            args.add(entity.getCurso());
+        }
+        
+        if(entity.getDescricao() != null && !entity.getDescricao().isEmpty()){
+            sql += ", descricao=?";
+            args.add(entity.getDescricao());
+        }
+        
+        if(entity.getEvento() != null && entity.getEvento().getId() != null){
+            sql += ", evento_fk=?";
+            args.add(entity.getEvento().getId());
+        }
+        
+        if(entity.getNumero() != null){
+            sql += ", numero=?";
+            args.add(entity.getNumero());
+        }
+        
+        if(entity.getPeriodo() != null){
+            sql += ", periodo=?";
+            args.add(entity.getPeriodo());
+        }
+        
+        sql += " WHERE id=?";
+        args.add(entity.getId());
+        
+        PreparedStatement ps = conn.prepareStatement(sql);
+        
+        int i = 0;
+        for(Object arg : args){
+            ps.setObject(++i, arg);
+        }
+        
+        ps.execute();
+        ps.close();
+    }
+
 }
