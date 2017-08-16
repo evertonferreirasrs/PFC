@@ -105,4 +105,19 @@ public class UsuarioController {
         
         return usuario;
     }
+    
+    @RequestMapping(value="usuario", method=RequestMethod.PATCH)
+    public Usuario updatePartial(@RequestBody String json){
+        Usuario usuario = (Usuario)JsonConverter.convertFromJson(json, Usuario.class);
+        
+        UsuarioService service = new UsuarioService();
+        
+        try {
+            service.updatePartial(usuario);
+        } catch (Exception ex) {
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return usuario;
+    }
 }

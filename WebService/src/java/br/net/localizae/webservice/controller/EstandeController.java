@@ -104,4 +104,19 @@ public class EstandeController {
         
         return estande;
     }
+    
+    @RequestMapping(value="estande", method=RequestMethod.PATCH)
+    public Estande updatePartial(@RequestBody String json){
+        Estande estande = (Estande)JsonConverter.convertFromJson(json, Estande.class);
+        
+        EstandeService service = new EstandeService();
+        
+        try {
+            service.updatePartial(estande);
+        } catch (Exception ex) {
+            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return estande;
+    }
 }

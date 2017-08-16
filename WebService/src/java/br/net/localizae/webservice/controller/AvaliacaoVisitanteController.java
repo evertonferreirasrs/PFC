@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -86,13 +87,28 @@ public class AvaliacaoVisitanteController {
     }
 
     @RequestMapping(value = "avaliacaoVisitante", method = RequestMethod.POST)
-    public AvaliacaoVisitante create(String json) {
+    public AvaliacaoVisitante create(@RequestBody String json) {
         AvaliacaoVisitante criterio = (AvaliacaoVisitante) JsonConverter.convertFromJson(json, AvaliacaoVisitante.class);
 
         AvaliacaoVisitanteService service = new AvaliacaoVisitanteService();
 
         try {
             service.create(criterio);
+        } catch (Exception ex) {
+            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return criterio;
+    }
+    
+    @RequestMapping(value="avaliacaoVisitante", method=RequestMethod.PATCH)
+    public AvaliacaoVisitante updatePartial(@RequestBody String json){
+        AvaliacaoVisitante criterio = (AvaliacaoVisitante) JsonConverter.convertFromJson(json, AvaliacaoVisitante.class);
+
+        AvaliacaoVisitanteService service = new AvaliacaoVisitanteService();
+
+        try {
+            service.updatePartial(criterio);
         } catch (Exception ex) {
             Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
         }

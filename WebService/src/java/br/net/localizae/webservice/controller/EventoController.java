@@ -93,4 +93,18 @@ public class EventoController {
         
         return evento;
     }
+    
+    @RequestMapping(value="evento", method=RequestMethod.PATCH)
+    public Evento updatePartial(@RequestBody String json){
+        Evento evento = (Evento)JsonConverter.convertFromJson(json, Evento.class);
+        
+        EventoService service = new EventoService();
+        try {
+            service.updatePartial(evento);
+        } catch (Exception ex) {
+            Logger.getLogger(EventoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return evento;
+    }
 }

@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -81,17 +82,32 @@ public class CriterioAvaliacaoController {
         } catch (Exception ex) {
             Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-;
+
     }
     
     @RequestMapping(value="criterio", method = RequestMethod.POST)
-    public CriterioAvaliacao create(String json){
+    public CriterioAvaliacao create(@RequestBody String json){
         CriterioAvaliacao criterio = (CriterioAvaliacao)JsonConverter.convertFromJson(json, CriterioAvaliacao.class);
         
         CriterioAvaliacaoService service = new CriterioAvaliacaoService();
         
         try {
             service.create(criterio);
+        } catch (Exception ex) {
+            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return criterio;
+    }
+    
+    @RequestMapping(value="criterio", method=RequestMethod.PATCH)
+    public CriterioAvaliacao updatePartial(@RequestBody String json){
+        CriterioAvaliacao criterio = (CriterioAvaliacao)JsonConverter.convertFromJson(json, CriterioAvaliacao.class);
+        
+        CriterioAvaliacaoService service = new CriterioAvaliacaoService();
+        
+        try {
+            service.updatePartial(criterio);
         } catch (Exception ex) {
             Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
         }
