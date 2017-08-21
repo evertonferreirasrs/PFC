@@ -27,6 +27,7 @@ public class UsuarioService implements BaseUsuarioService{
         UsuarioDAO dao = new UsuarioDAO();
         
         try{
+            this.validate(entity);
             dao.create(conn, entity);
             conn.commit();
         }catch(Exception e){
@@ -43,6 +44,7 @@ public class UsuarioService implements BaseUsuarioService{
         UsuarioDAO dao = new UsuarioDAO();
         
         try{
+            this.validate(entity);
             dao.update(conn, entity);
             conn.commit();
         }catch(Exception e){
@@ -126,4 +128,22 @@ public class UsuarioService implements BaseUsuarioService{
         }
     }
     
+    @Override
+    public void validate(Usuario entity) throws Exception{
+        if(entity.getNome() == null || entity.getNome().isEmpty()){
+            throw new IllegalArgumentException("Campo nome obrigatório!");
+        }
+        
+        if(entity.getEmail() == null || entity.getEmail().isEmpty()){
+            throw new IllegalArgumentException("Campo email obrigatório!");
+        }
+        
+        if(entity.getSenha() == null || entity.getSenha().isEmpty()){
+            throw new IllegalArgumentException("Campo senha obrigatório!");
+        }
+        
+        if(entity.getTipoUsuario() == null){
+            throw new IllegalArgumentException("Campo tipo de usuário obrigatório!");
+        }
+    }
 }

@@ -26,6 +26,7 @@ public class EventoService implements BaseService<Evento>{
         EventoDAO dao = new EventoDAO();
         
         try {
+            this.validate(entity);
             dao.create(conn, entity);
             conn.commit();
         } catch (Exception e) {
@@ -42,6 +43,7 @@ public class EventoService implements BaseService<Evento>{
         EventoDAO dao = new EventoDAO();
 
         try {
+            this.validate(entity);
             dao.update(conn, entity);
             conn.commit();
         } catch (Exception e) {
@@ -122,6 +124,25 @@ public class EventoService implements BaseService<Evento>{
             throw e;
         } finally {
             conn.close();
+        }
+    }
+
+    @Override
+    public void validate(Evento entity) throws Exception {
+        if(entity.getNome() == null || entity.getNome().isEmpty()){
+            throw new IllegalArgumentException("Campo nome obrigatório!");
+        }
+        
+        if(entity.getEndereco() == null || entity.getEndereco().isEmpty()){
+            throw new IllegalArgumentException("Campo endereço obrigatório!");
+        }
+        
+        if(entity.getDataHoraEventoInicio() == null){
+            throw new IllegalArgumentException("Campo data hora de início obrigatório!");
+        }
+        
+        if(entity.getDataHoraEventoFim()== null){
+            throw new IllegalArgumentException("Campo data hora de término obrigatório!");
         }
     }
     

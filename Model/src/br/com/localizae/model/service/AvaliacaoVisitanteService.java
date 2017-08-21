@@ -26,6 +26,7 @@ public class AvaliacaoVisitanteService implements BaseAvaliacaoVisitanteService 
         AvaliacaoVisitanteDAO dao = new AvaliacaoVisitanteDAO();
 
         try {
+            this.validate(entity);
             dao.create(conn, entity);
             conn.commit();
         } catch (Exception e) {
@@ -42,6 +43,7 @@ public class AvaliacaoVisitanteService implements BaseAvaliacaoVisitanteService 
         AvaliacaoVisitanteDAO dao = new AvaliacaoVisitanteDAO();
 
         try {
+            this.validate(entity);
             dao.update(conn, entity);
             conn.commit();
         } catch (Exception e) {
@@ -122,6 +124,25 @@ public class AvaliacaoVisitanteService implements BaseAvaliacaoVisitanteService 
             throw e;
         } finally {
             conn.close();
+        }
+    }
+
+    @Override
+    public void validate(AvaliacaoVisitante entity) throws Exception {
+        if(entity.getEstande() == null){
+            throw new IllegalArgumentException("Campo estande obrigatório!");
+        }
+        
+        if(entity.getNota() == null || entity.getNota() <= 0){
+            throw new IllegalArgumentException("Campo nota obrigatório e deve ser maior que zero!");
+        }
+        
+        if(entity.getOpiniao() == null || entity.getOpiniao().isEmpty()){
+            throw new IllegalArgumentException("Campo opinião obrigatório!");
+        }
+        
+        if(entity.getUsuario() == null){
+            throw new IllegalArgumentException("Campo usuário obrigatório!");
         }
     }
 

@@ -26,6 +26,7 @@ public class CriterioAvaliacaoService implements BaseCriterioAvaliacaoService {
         CriterioAvaliacaoDAO dao = new CriterioAvaliacaoDAO();
 
         try {
+            this.validate(entity);
             dao.create(conn, entity);
             conn.commit();
         } catch (Exception e) {
@@ -42,6 +43,7 @@ public class CriterioAvaliacaoService implements BaseCriterioAvaliacaoService {
         CriterioAvaliacaoDAO dao = new CriterioAvaliacaoDAO();
 
         try {
+            this.validate(entity);
             dao.update(conn, entity);
             conn.commit();
         } catch (Exception e) {
@@ -122,6 +124,17 @@ public class CriterioAvaliacaoService implements BaseCriterioAvaliacaoService {
             throw e;
         } finally {
             conn.close();
+        }
+    }
+
+    @Override
+    public void validate(CriterioAvaliacao entity) throws Exception {
+        if(entity.getNome() == null || entity.getNome().isEmpty()){
+            throw new IllegalArgumentException("Campo nome obrigatório!");
+        }
+        
+        if(entity.getPeso() == null || entity.getPeso() <= 0){
+            throw new IllegalArgumentException("Campo peso obrigatório e deve ser maior que zero!");
         }
     }
 

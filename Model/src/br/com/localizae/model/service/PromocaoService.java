@@ -124,5 +124,10 @@ public class PromocaoService implements BasePromocaoService{
             conn.close();
         }
     }
+
+    @Override
+    public void validate(Promocao entity) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
