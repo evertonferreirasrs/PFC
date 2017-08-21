@@ -110,4 +110,18 @@ class UsuarioService {
             xhr.send(usuario)
         })
     }
+
+    validate(user){
+        if(user.nome == null){
+            throw new Error('Campo Nome obrigatório')
+        }
+
+        if(user.email == null){
+            throw new Error('Campo Email obrigatório')
+        }
+
+        if(user.senha == null){
+            throw new Error('Campo Senha obrigatório')
+        }
+    }
 }

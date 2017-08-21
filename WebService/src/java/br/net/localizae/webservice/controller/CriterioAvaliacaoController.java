@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CriterioAvaliacaoController {
     @RequestMapping(value="criterio", method = RequestMethod.GET)
-    public List<CriterioAvaliacao> readByCriteria(String nome, Long peso, Long limit, Long offset){
+    public ResponseEntity readByCriteria(String nome, Long peso, Long limit, Long offset){
         List<CriterioAvaliacao> criterioAvaliacaoList = null;
         
         CriterioAvaliacaoService service = new CriterioAvaliacaoService();
@@ -38,55 +40,55 @@ public class CriterioAvaliacaoController {
         try {
             criterioAvaliacaoList = service.readByCriteria(criteria, limit, offset);
         } catch (Exception ex) {
-            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
         
-        return criterioAvaliacaoList;
+        return new ResponseEntity(criterioAvaliacaoList, HttpStatus.OK);
     }
     
     @RequestMapping(value="criterio/{id}", method = RequestMethod.GET)
-    public CriterioAvaliacao readById(@PathVariable Long id){
+    public ResponseEntity readById(@PathVariable Long id){
         CriterioAvaliacao criterio = null;
         
         CriterioAvaliacaoService service = new CriterioAvaliacaoService();
         try {
             criterio = service.readById(id);
         } catch (Exception ex) {
-            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
         
-        
-        return criterio;
+        return new ResponseEntity(criterio, HttpStatus.OK);
     }
     
     @RequestMapping(value="criterio", method = RequestMethod.PUT)
-    public CriterioAvaliacao update(String json){
+    public ResponseEntity update(@RequestBody String json){
         CriterioAvaliacao criterio = (CriterioAvaliacao)JsonConverter.convertFromJson(json, CriterioAvaliacao.class);
         
         CriterioAvaliacaoService service = new CriterioAvaliacaoService();
         try {
             service.update(criterio);
         } catch (Exception ex) {
-            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
         
-        return criterio;
+        return new ResponseEntity(criterio, HttpStatus.OK);
     }
     
     @RequestMapping(value="criterio/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable Long id){
+    public ResponseEntity delete(@PathVariable Long id){
         CriterioAvaliacaoService service = new CriterioAvaliacaoService();
         
         try {
             service.delete(id);
         } catch (Exception ex) {
-            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
+        
+        return new ResponseEntity(HttpStatus.OK);
     }
     
     @RequestMapping(value="criterio", method = RequestMethod.POST)
-    public CriterioAvaliacao create(@RequestBody String json){
+    public ResponseEntity create(@RequestBody String json){
         CriterioAvaliacao criterio = (CriterioAvaliacao)JsonConverter.convertFromJson(json, CriterioAvaliacao.class);
         
         CriterioAvaliacaoService service = new CriterioAvaliacaoService();
@@ -94,14 +96,14 @@ public class CriterioAvaliacaoController {
         try {
             service.create(criterio);
         } catch (Exception ex) {
-            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
         
-        return criterio;
+        return new ResponseEntity(criterio, HttpStatus.OK);
     }
     
     @RequestMapping(value="criterio", method=RequestMethod.PATCH)
-    public CriterioAvaliacao updatePartial(@RequestBody String json){
+    public ResponseEntity updatePartial(@RequestBody String json){
         CriterioAvaliacao criterio = (CriterioAvaliacao)JsonConverter.convertFromJson(json, CriterioAvaliacao.class);
         
         CriterioAvaliacaoService service = new CriterioAvaliacaoService();
@@ -109,9 +111,9 @@ public class CriterioAvaliacaoController {
         try {
             service.updatePartial(criterio);
         } catch (Exception ex) {
-            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
         
-        return criterio;
+        return new ResponseEntity(criterio, HttpStatus.OK);
     }
 }
