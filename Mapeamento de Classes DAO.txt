@@ -1,0 +1,29 @@
+Usuário
+
+On Create 
+- Visitante
+	Devem ser cadastrados apenas os dados referentes ao próprio Usuário, ou seja, os atributos da classe Usuário.
+
+- Expositor
+	Além dos dados da Classe Usuário deve ser informado também a qual estande ele pertence e informar se é ou não responsável.
+
+- Administrador
+	Devem ser informados apenas os dados referentes à classe Usuário.
+
+-Jurado
+	Devem ser cadastrados os dados da classe Usuário. Podendo ou não cadastrar lista de critérios e lista de estandes para cada critério, ou seja, criar a avaliação com dados nulos.
+
+On Update
+- Visitante
+	Atualizar apenas os dados do Usuário.
+- Expositor
+	Atualizar os dados do Usuário, sua equipe e se é responsável ou não.
+- Administrador
+	Apenas os dados do Usuário.
+- Jurado
+	Dados do Usuário e lista de critérios.
+
+On read
+	Retorna os usuários com lista de critérios, e estande.
+
+

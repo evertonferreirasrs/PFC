@@ -10,9 +10,10 @@ package br.com.localizae.model.criteria;
  * @author Equipe LocalizaÊ
  */
 public enum EstandeCriteria {
-    NOME_EQ,
+    TITULO_EQ,
     CURSO_EQ,
     PERIODO_EQ,
     NUMERO_EQ,
-    AREATEMATICA_EQ
+    AREATEMATICA_EQ,
+    USUARIO_FK_EQ
 }

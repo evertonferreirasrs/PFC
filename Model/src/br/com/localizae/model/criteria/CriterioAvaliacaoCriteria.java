@@ -10,5 +10,8 @@ package br.com.localizae.model.criteria;
  * @author Equipe LocalizaÊ
  */
 public enum CriterioAvaliacaoCriteria {
-    NOME_EQ
+    NOME_EQ,
+    PESO_LT,
+    PESO_EQ,
+    PESO_GT
 }

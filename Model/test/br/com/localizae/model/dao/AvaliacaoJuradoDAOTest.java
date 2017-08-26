@@ -9,20 +9,24 @@ import br.com.localizae.model.ConnectionManager;
 import br.com.localizae.model.criteria.AvaliacaoJuradoCriteria;
 import br.com.localizae.model.entity.AvaliacaoJurado;
 import br.com.localizae.model.entity.CriterioAvaliacao;
+import br.com.localizae.model.entity.CriterioJurado;
 import br.com.localizae.model.entity.Estande;
-import br.com.localizae.model.entity.InformacoesParaAvaliacao;
+import br.com.localizae.model.entity.Evento;
+import br.com.localizae.model.entity.TipoUsuario;
 import br.com.localizae.model.entity.Usuario;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -61,20 +65,80 @@ public class AvaliacaoJuradoDAOTest {
      */
     @Test
     public void testCreate() throws Exception {
-        System.out.println("create");
-
-        AvaliacaoJurado entity = new AvaliacaoJurado();
-        entity.setNota(5L);
-        entity.setOpiniao("Boa comunicação com os visitantes");
-
-        InformacoesParaAvaliacao informacoesParaAvaliacao = new InformacoesParaAvaliacao();
-        informacoesParaAvaliacao.setId(1L);
-
-        entity.setInformacoesParaAvaliacao(informacoesParaAvaliacao);
-
-        dao.create(conn, entity);
-        AvaliacaoJurado readById = dao.readById(conn, entity.getId());
-        assertEquals(entity, readById);
+        /*Criando cenário para testes.*/
+        //Criterio Avaliacao
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("Explanação");
+        criterio.setPeso(4l);
+        
+        CriterioAvaliacaoDAO cdao = new CriterioAvaliacaoDAO();
+        cdao.create(conn, criterio);
+        
+        //Evento
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidão");
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
+        
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        //Estande
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacao");
+        estande.setDescricao("Descricao do estande.");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
+        
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
+        
+        //Tipo Usuario
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setNome("Jurado");
+        tipo.setId(4l);
+        
+        //Usuario jurado
+        Usuario jurado = new Usuario();
+        jurado.setNome("Marcos");
+        jurado.setEmail("marcos@localizae.br");
+        jurado.setSenha("123456");
+        jurado.setSituacao("ativo");
+        jurado.setTipoUsuario(tipo);
+        
+        List<CriterioJurado> criterioJuradoList = new ArrayList<>();
+        jurado.setCriterioAvaliacaoList(criterioJuradoList);
+        
+        CriterioJurado criterioJurado = new CriterioJurado();
+        criterioJurado.setCriterioAvaliacao(criterio);
+        criterioJurado.setEstande(estande);
+        criterioJurado.setUsuario(jurado);
+        
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, jurado);
+        
+        /*Criando cenário para testes.*/
+        
+        AvaliacaoJurado avaliacao = new AvaliacaoJurado();
+        avaliacao.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao.setEstande(estande);
+        avaliacao.setCriterio(criterio);
+        avaliacao.setUsuario(jurado);
+        avaliacao.setNota(4l);
+        avaliacao.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao.setStatus("aberta");
+        
+        dao.create(conn, avaliacao);
+        
+        AvaliacaoJurado readById = dao.readById(conn, avaliacao.getId());
+        
+        assertEquals(avaliacao, readById);
     }
 
     /**
@@ -82,12 +146,80 @@ public class AvaliacaoJuradoDAOTest {
      */
     @Test
     public void testDelete() throws Exception {
-        System.out.println("delete");
-        AvaliacaoJurado get = dao.readByCriteria(conn, null, 1L, null).get(0);
-        Long id = get.getId();
-
-        dao.delete(conn, id);
-        AvaliacaoJurado readById = dao.readById(conn, id);
+        /*Criando cenário para testes.*/
+        //Criterio Avaliacao
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("Explanação");
+        criterio.setPeso(4l);
+        
+        CriterioAvaliacaoDAO cdao = new CriterioAvaliacaoDAO();
+        cdao.create(conn, criterio);
+        
+        //Evento
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidão");
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
+        
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        //Estande
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacao");
+        estande.setDescricao("Descricao do estande.");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
+        
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
+        
+        //Tipo Usuario
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setNome("Jurado");
+        tipo.setId(4l);
+        
+        //Usuario jurado
+        Usuario jurado = new Usuario();
+        jurado.setNome("Marcos");
+        jurado.setEmail("marcos@localizae.br");
+        jurado.setSenha("123456");
+        jurado.setSituacao("ativo");
+        jurado.setTipoUsuario(tipo);
+        
+        List<CriterioJurado> criterioJuradoList = new ArrayList<>();
+        jurado.setCriterioAvaliacaoList(criterioJuradoList);
+        
+        CriterioJurado criterioJurado = new CriterioJurado();
+        criterioJurado.setCriterioAvaliacao(criterio);
+        criterioJurado.setEstande(estande);
+        criterioJurado.setUsuario(jurado);
+        
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, jurado);
+        
+        AvaliacaoJurado avaliacao = new AvaliacaoJurado();
+        avaliacao.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao.setEstande(estande);
+        avaliacao.setCriterio(criterio);
+        avaliacao.setUsuario(jurado);
+        avaliacao.setNota(4l);
+        avaliacao.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao.setStatus("aberta");
+        
+        dao.create(conn, avaliacao);
+        /*Criando cenário para testes.*/
+        
+        dao.delete(conn, avaliacao.getId());
+        
+        AvaliacaoJurado readById = dao.readById(conn, avaliacao.getId());
+        
         assertNull(readById);
     }
 
@@ -96,14 +228,84 @@ public class AvaliacaoJuradoDAOTest {
      */
     @Test
     public void testUpdate() throws Exception {
-        System.out.println("update");
-
-        AvaliacaoJurado entity = dao.readByCriteria(conn, null, 1L, null).get(0);
-        entity.setOpiniao("Primeira opinião alterada no Banco");
-
-        dao.update(conn, entity);
-        AvaliacaoJurado readById = dao.readById(conn, entity.getId());
-        assertEquals(entity, readById);
+        /*Criando cenário para testes.*/
+        //Criterio Avaliacao
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("Explanação");
+        criterio.setPeso(4l);
+        
+        CriterioAvaliacaoDAO cdao = new CriterioAvaliacaoDAO();
+        cdao.create(conn, criterio);
+        
+        //Evento
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidão");
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
+        
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        //Estande
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacao");
+        estande.setDescricao("Descricao do estande.");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
+        
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
+        
+        //Tipo Usuario
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setNome("Jurado");
+        tipo.setId(4l);
+        
+        //Usuario jurado
+        Usuario jurado = new Usuario();
+        jurado.setNome("Marcos");
+        jurado.setEmail("marcos@localizae.br");
+        jurado.setSenha("123456");
+        jurado.setSituacao("ativo");
+        jurado.setTipoUsuario(tipo);
+        
+        List<CriterioJurado> criterioJuradoList = new ArrayList<>();
+        jurado.setCriterioAvaliacaoList(criterioJuradoList);
+        
+        CriterioJurado criterioJurado = new CriterioJurado();
+        criterioJurado.setCriterioAvaliacao(criterio);
+        criterioJurado.setEstande(estande);
+        criterioJurado.setUsuario(jurado);
+        
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, jurado);
+        
+        AvaliacaoJurado avaliacao = new AvaliacaoJurado();
+        avaliacao.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao.setEstande(estande);
+        avaliacao.setCriterio(criterio);
+        avaliacao.setUsuario(jurado);
+        avaliacao.setNota(4l);
+        avaliacao.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao.setStatus("aberta");
+        
+        dao.create(conn, avaliacao);
+        /*Criando cenário para testes.*/
+        
+        avaliacao.setStatus("fechada");
+        avaliacao.setDataHoraFechamento(new Timestamp(2017, 10, 27, 22, 0, 0, 0));
+        
+        dao.update(conn, avaliacao);
+        
+        AvaliacaoJurado readById = dao.readById(conn, avaliacao.getId());
+        
+        assertEquals(avaliacao, readById);
     }
 
     /**
@@ -111,12 +313,78 @@ public class AvaliacaoJuradoDAOTest {
      */
     @Test
     public void testReadById() throws Exception {
-        System.out.println("readById");
-        AvaliacaoJurado expResult = dao.readByCriteria(conn, null, 1L, null).get(0);
-        Long id = expResult.getId();
-
-        AvaliacaoJurado result = dao.readById(conn, id);
-        assertEquals(expResult, result);
+        /*Criando cenário para testes.*/
+        //Criterio Avaliacao
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("Explanação");
+        criterio.setPeso(4l);
+        
+        CriterioAvaliacaoDAO cdao = new CriterioAvaliacaoDAO();
+        cdao.create(conn, criterio);
+        
+        //Evento
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidão");
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
+        
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        //Estande
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacao");
+        estande.setDescricao("Descricao do estande.");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
+        
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
+        
+        //Tipo Usuario
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setNome("Jurado");
+        tipo.setId(4l);
+        
+        //Usuario jurado
+        Usuario jurado = new Usuario();
+        jurado.setNome("Marcos");
+        jurado.setEmail("marcos@localizae.br");
+        jurado.setSenha("123456");
+        jurado.setSituacao("ativo");
+        jurado.setTipoUsuario(tipo);
+        
+        List<CriterioJurado> criterioJuradoList = new ArrayList<>();
+        jurado.setCriterioAvaliacaoList(criterioJuradoList);
+        
+        CriterioJurado criterioJurado = new CriterioJurado();
+        criterioJurado.setCriterioAvaliacao(criterio);
+        criterioJurado.setEstande(estande);
+        criterioJurado.setUsuario(jurado);
+        
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, jurado);
+        
+        AvaliacaoJurado avaliacao = new AvaliacaoJurado();
+        avaliacao.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao.setEstande(estande);
+        avaliacao.setCriterio(criterio);
+        avaliacao.setUsuario(jurado);
+        avaliacao.setNota(4l);
+        avaliacao.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao.setStatus("aberta");
+        
+        dao.create(conn, avaliacao);
+        /*Criando cenário para testes.*/
+        AvaliacaoJurado readById = dao.readById(conn, avaliacao.getId());
+        
+        assertEquals(avaliacao, readById);
     }
 
     /**
@@ -124,15 +392,111 @@ public class AvaliacaoJuradoDAOTest {
      */
     @Test
     public void testReadByCriteria() throws Exception {
-        System.out.println("readByCriteria");
-
-        Map<Enum, Object> criteria = null;
-        Long limit = null;
-        Long offset = null;
-
-        int expResult = 3;
-        List<AvaliacaoJurado> result = dao.readByCriteria(conn, criteria, limit, offset);
-        assertEquals(expResult, result.size());
+        /*Criando cenário para testes.*/
+        //Criterio Avaliacao
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("Explanação");
+        criterio.setPeso(4l);
+        
+        CriterioAvaliacao criterio2 = new CriterioAvaliacao();
+        criterio2.setNome("Documentação");
+        criterio2.setPeso(5l);
+        
+        CriterioAvaliacaoDAO cdao = new CriterioAvaliacaoDAO();
+        cdao.create(conn, criterio);
+        cdao.create(conn, criterio2);
+        
+        //Evento
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidão");
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
+        
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        //Estande
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacao");
+        estande.setDescricao("Descricao do estande.");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
+        
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
+        
+        //Tipo Usuario
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setNome("Jurado");
+        tipo.setId(4l);
+        
+        //Usuario jurado
+        Usuario jurado = new Usuario();
+        jurado.setNome("Marcos");
+        jurado.setEmail("marcos@localizae.br");
+        jurado.setSenha("123456");
+        jurado.setSituacao("ativo");
+        jurado.setTipoUsuario(tipo);
+        
+        Usuario jurado2 = new Usuario();
+        jurado2.setNome("Roberto");
+        jurado2.setEmail("roberto@localizae.br");
+        jurado2.setSenha("123456");
+        jurado2.setSituacao("ativo");
+        jurado2.setTipoUsuario(tipo);
+        
+        List<CriterioJurado> criterioJuradoList = new ArrayList<>();
+        jurado.setCriterioAvaliacaoList(criterioJuradoList);
+        
+        CriterioJurado criterioJurado = new CriterioJurado();
+        criterioJurado.setCriterioAvaliacao(criterio);
+        criterioJurado.setEstande(estande);
+        criterioJurado.setUsuario(jurado);
+        
+        List<CriterioJurado> criterioJuradoList2 = new ArrayList<>();
+        jurado2.setCriterioAvaliacaoList(criterioJuradoList2);
+        
+        CriterioJurado criterioJurado2 = new CriterioJurado();
+        criterioJurado2.setCriterioAvaliacao(criterio2);
+        criterioJurado2.setEstande(estande);
+        criterioJurado2.setUsuario(jurado2);
+        
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, jurado);
+        udao.create(conn, jurado2);
+        
+        AvaliacaoJurado avaliacao = new AvaliacaoJurado();
+        avaliacao.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao.setEstande(estande);
+        avaliacao.setCriterio(criterio);
+        avaliacao.setUsuario(jurado);
+        avaliacao.setNota(4l);
+        avaliacao.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao.setStatus("aberta");
+        
+        AvaliacaoJurado avaliacao2 = new AvaliacaoJurado();
+        avaliacao2.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao2.setEstande(estande);
+        avaliacao2.setCriterio(criterio2);
+        avaliacao2.setUsuario(jurado2);
+        avaliacao2.setNota(4l);
+        avaliacao2.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao2.setStatus("aberta");
+        
+        dao.create(conn, avaliacao);
+        dao.create(conn, avaliacao2);
+        /*Criando cenário para testes.*/
+        List<AvaliacaoJurado> list = dao.readByCriteria(conn, null, 0l, 0l);
+        
+        assertEquals(2, list.size());
+        assertEquals(avaliacao, list.get(0));
+        assertEquals(avaliacao2, list.get(1));
     }
     
     /**
@@ -140,16 +504,114 @@ public class AvaliacaoJuradoDAOTest {
      */
     @Test
     public void testReadByUsuario() throws Exception {
-        System.out.println("readByCriteria");
-
+        /*Criando cenário para testes.*/
+        //Criterio Avaliacao
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("Explanação");
+        criterio.setPeso(4l);
+        
+        CriterioAvaliacao criterio2 = new CriterioAvaliacao();
+        criterio2.setNome("Documentação");
+        criterio2.setPeso(5l);
+        
+        CriterioAvaliacaoDAO cdao = new CriterioAvaliacaoDAO();
+        cdao.create(conn, criterio);
+        cdao.create(conn, criterio2);
+        
+        //Evento
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidão");
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
+        
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        //Estande
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacao");
+        estande.setDescricao("Descricao do estande.");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
+        
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
+        
+        //Tipo Usuario
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setNome("Jurado");
+        tipo.setId(4l);
+        
+        //Usuario jurado
+        Usuario jurado = new Usuario();
+        jurado.setNome("Marcos");
+        jurado.setEmail("marcos@localizae.br");
+        jurado.setSenha("123456");
+        jurado.setSituacao("ativo");
+        jurado.setTipoUsuario(tipo);
+        
+        Usuario jurado2 = new Usuario();
+        jurado2.setNome("Roberto");
+        jurado2.setEmail("roberto@localizae.br");
+        jurado2.setSenha("123456");
+        jurado2.setSituacao("ativo");
+        jurado2.setTipoUsuario(tipo);
+        
+        List<CriterioJurado> criterioJuradoList = new ArrayList<>();
+        jurado.setCriterioAvaliacaoList(criterioJuradoList);
+        
+        CriterioJurado criterioJurado = new CriterioJurado();
+        criterioJurado.setCriterioAvaliacao(criterio);
+        criterioJurado.setEstande(estande);
+        criterioJurado.setUsuario(jurado);
+        
+        List<CriterioJurado> criterioJuradoList2 = new ArrayList<>();
+        jurado2.setCriterioAvaliacaoList(criterioJuradoList2);
+        
+        CriterioJurado criterioJurado2 = new CriterioJurado();
+        criterioJurado2.setCriterioAvaliacao(criterio2);
+        criterioJurado2.setEstande(estande);
+        criterioJurado2.setUsuario(jurado2);
+        
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, jurado);
+        udao.create(conn, jurado2);
+        
+        AvaliacaoJurado avaliacao = new AvaliacaoJurado();
+        avaliacao.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao.setEstande(estande);
+        avaliacao.setCriterio(criterio);
+        avaliacao.setUsuario(jurado);
+        avaliacao.setNota(4l);
+        avaliacao.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao.setStatus("aberta");
+        
+        AvaliacaoJurado avaliacao2 = new AvaliacaoJurado();
+        avaliacao2.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao2.setEstande(estande);
+        avaliacao2.setCriterio(criterio2);
+        avaliacao2.setUsuario(jurado2);
+        avaliacao2.setNota(4l);
+        avaliacao2.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao2.setStatus("aberta");
+        
+        dao.create(conn, avaliacao);
+        dao.create(conn, avaliacao2);
+        /*Criando cenário para testes.*/
+        
         Map<Enum, Object> criteria = new HashMap<>();
-        criteria.put(AvaliacaoJuradoCriteria.USUARIO_EQ, 4L);
-        Long limit = null;
-        Long offset = null;
-
-        int expResult = 3;
-        List<AvaliacaoJurado> result = dao.readByCriteria(conn, criteria, limit, offset);
-        assertEquals(expResult, result.size());
+        criteria.put(AvaliacaoJuradoCriteria.USUARIO_EQ, jurado.getId());
+        
+        List<AvaliacaoJurado> list = dao.readByCriteria(conn, criteria, 0l, 0l);
+        
+        assertEquals(1, list.size());
+        assertEquals(avaliacao, list.get(0));
     }
     
     /**
@@ -157,16 +619,114 @@ public class AvaliacaoJuradoDAOTest {
      */
     @Test
     public void testReadByNota() throws Exception {
-        System.out.println("readByCriteria");
-
+        /*Criando cenário para testes.*/
+        //Criterio Avaliacao
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("Explanação");
+        criterio.setPeso(4l);
+        
+        CriterioAvaliacao criterio2 = new CriterioAvaliacao();
+        criterio2.setNome("Documentação");
+        criterio2.setPeso(5l);
+        
+        CriterioAvaliacaoDAO cdao = new CriterioAvaliacaoDAO();
+        cdao.create(conn, criterio);
+        cdao.create(conn, criterio2);
+        
+        //Evento
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidão");
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
+        
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        //Estande
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacao");
+        estande.setDescricao("Descricao do estande.");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
+        
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
+        
+        //Tipo Usuario
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setNome("Jurado");
+        tipo.setId(4l);
+        
+        //Usuario jurado
+        Usuario jurado = new Usuario();
+        jurado.setNome("Marcos");
+        jurado.setEmail("marcos@localizae.br");
+        jurado.setSenha("123456");
+        jurado.setSituacao("ativo");
+        jurado.setTipoUsuario(tipo);
+        
+        Usuario jurado2 = new Usuario();
+        jurado2.setNome("Roberto");
+        jurado2.setEmail("roberto@localizae.br");
+        jurado2.setSenha("123456");
+        jurado2.setSituacao("ativo");
+        jurado2.setTipoUsuario(tipo);
+        
+        List<CriterioJurado> criterioJuradoList = new ArrayList<>();
+        jurado.setCriterioAvaliacaoList(criterioJuradoList);
+        
+        CriterioJurado criterioJurado = new CriterioJurado();
+        criterioJurado.setCriterioAvaliacao(criterio);
+        criterioJurado.setEstande(estande);
+        criterioJurado.setUsuario(jurado);
+        
+        List<CriterioJurado> criterioJuradoList2 = new ArrayList<>();
+        jurado2.setCriterioAvaliacaoList(criterioJuradoList2);
+        
+        CriterioJurado criterioJurado2 = new CriterioJurado();
+        criterioJurado2.setCriterioAvaliacao(criterio2);
+        criterioJurado2.setEstande(estande);
+        criterioJurado2.setUsuario(jurado2);
+        
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, jurado);
+        udao.create(conn, jurado2);
+        
+        AvaliacaoJurado avaliacao = new AvaliacaoJurado();
+        avaliacao.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao.setEstande(estande);
+        avaliacao.setCriterio(criterio);
+        avaliacao.setUsuario(jurado);
+        avaliacao.setNota(4l);
+        avaliacao.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao.setStatus("aberta");
+        
+        AvaliacaoJurado avaliacao2 = new AvaliacaoJurado();
+        avaliacao2.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao2.setEstande(estande);
+        avaliacao2.setCriterio(criterio2);
+        avaliacao2.setUsuario(jurado2);
+        avaliacao2.setNota(3l);
+        avaliacao2.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao2.setStatus("aberta");
+        
+        dao.create(conn, avaliacao);
+        dao.create(conn, avaliacao2);
+        /*Criando cenário para testes.*/
+        
         Map<Enum, Object> criteria = new HashMap<>();
-        criteria.put(AvaliacaoJuradoCriteria.NOTA_EQ, 2L);
-        Long limit = null;
-        Long offset = null;
-
-        int expResult = 1;
-        List<AvaliacaoJurado> result = dao.readByCriteria(conn, criteria, limit, offset);
-        assertEquals(expResult, result.size());
+        criteria.put(AvaliacaoJuradoCriteria.NOTA_EQ, avaliacao.getNota());
+        
+        List<AvaliacaoJurado> list = dao.readByCriteria(conn, criteria, 0l, 0l);
+        
+        assertEquals(1, list.size());
+        assertEquals(avaliacao, list.get(0));
     }
     
     /**
@@ -174,16 +734,115 @@ public class AvaliacaoJuradoDAOTest {
      */
     @Test
     public void testReadByEstande() throws Exception {
-        System.out.println("readByCriteria");
-
+        /*Criando cenário para testes.*/
+        //Criterio Avaliacao
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("Explanação");
+        criterio.setPeso(4l);
+        
+        CriterioAvaliacao criterio2 = new CriterioAvaliacao();
+        criterio2.setNome("Documentação");
+        criterio2.setPeso(5l);
+        
+        CriterioAvaliacaoDAO cdao = new CriterioAvaliacaoDAO();
+        cdao.create(conn, criterio);
+        cdao.create(conn, criterio2);
+        
+        //Evento
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidão");
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
+        
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        //Estande
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacao");
+        estande.setDescricao("Descricao do estande.");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
+        
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
+        
+        //Tipo Usuario
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setNome("Jurado");
+        tipo.setId(4l);
+        
+        //Usuario jurado
+        Usuario jurado = new Usuario();
+        jurado.setNome("Marcos");
+        jurado.setEmail("marcos@localizae.br");
+        jurado.setSenha("123456");
+        jurado.setSituacao("ativo");
+        jurado.setTipoUsuario(tipo);
+        
+        Usuario jurado2 = new Usuario();
+        jurado2.setNome("Roberto");
+        jurado2.setEmail("roberto@localizae.br");
+        jurado2.setSenha("123456");
+        jurado2.setSituacao("ativo");
+        jurado2.setTipoUsuario(tipo);
+        
+        List<CriterioJurado> criterioJuradoList = new ArrayList<>();
+        jurado.setCriterioAvaliacaoList(criterioJuradoList);
+        
+        CriterioJurado criterioJurado = new CriterioJurado();
+        criterioJurado.setCriterioAvaliacao(criterio);
+        criterioJurado.setEstande(estande);
+        criterioJurado.setUsuario(jurado);
+        
+        List<CriterioJurado> criterioJuradoList2 = new ArrayList<>();
+        jurado2.setCriterioAvaliacaoList(criterioJuradoList2);
+        
+        CriterioJurado criterioJurado2 = new CriterioJurado();
+        criterioJurado2.setCriterioAvaliacao(criterio2);
+        criterioJurado2.setEstande(estande);
+        criterioJurado2.setUsuario(jurado2);
+        
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, jurado);
+        udao.create(conn, jurado2);
+        
+        AvaliacaoJurado avaliacao = new AvaliacaoJurado();
+        avaliacao.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao.setEstande(estande);
+        avaliacao.setCriterio(criterio);
+        avaliacao.setUsuario(jurado);
+        avaliacao.setNota(4l);
+        avaliacao.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao.setStatus("aberta");
+        
+        AvaliacaoJurado avaliacao2 = new AvaliacaoJurado();
+        avaliacao2.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao2.setEstande(estande);
+        avaliacao2.setCriterio(criterio2);
+        avaliacao2.setUsuario(jurado2);
+        avaliacao2.setNota(3l);
+        avaliacao2.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao2.setStatus("aberta");
+        
+        dao.create(conn, avaliacao);
+        dao.create(conn, avaliacao2);
+        /*Criando cenário para testes.*/
+        
         Map<Enum, Object> criteria = new HashMap<>();
-        criteria.put(AvaliacaoJuradoCriteria.ESTANDE_EQ, 2L);
-        Long limit = null;
-        Long offset = null;
-
-        int expResult = 1;
-        List<AvaliacaoJurado> result = dao.readByCriteria(conn, criteria, limit, offset);
-        assertEquals(expResult, result.size());
+        criteria.put(AvaliacaoJuradoCriteria.ESTANDE_EQ, estande.getId());
+        
+        List<AvaliacaoJurado> list = dao.readByCriteria(conn, criteria, 0l, 0l);
+        
+        assertEquals(2, list.size());
+        assertEquals(avaliacao, list.get(0));
+        assertEquals(avaliacao2, list.get(1));
     }
     
     /**
@@ -191,16 +850,114 @@ public class AvaliacaoJuradoDAOTest {
      */
     @Test
     public void testReadByCriterio() throws Exception {
-        System.out.println("readByCriteria");
-
+        /*Criando cenário para testes.*/
+        //Criterio Avaliacao
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("Explanação");
+        criterio.setPeso(4l);
+        
+        CriterioAvaliacao criterio2 = new CriterioAvaliacao();
+        criterio2.setNome("Documentação");
+        criterio2.setPeso(5l);
+        
+        CriterioAvaliacaoDAO cdao = new CriterioAvaliacaoDAO();
+        cdao.create(conn, criterio);
+        cdao.create(conn, criterio2);
+        
+        //Evento
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidão");
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
+        
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        //Estande
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacao");
+        estande.setDescricao("Descricao do estande.");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
+        
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
+        
+        //Tipo Usuario
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setNome("Jurado");
+        tipo.setId(4l);
+        
+        //Usuario jurado
+        Usuario jurado = new Usuario();
+        jurado.setNome("Marcos");
+        jurado.setEmail("marcos@localizae.br");
+        jurado.setSenha("123456");
+        jurado.setSituacao("ativo");
+        jurado.setTipoUsuario(tipo);
+        
+        Usuario jurado2 = new Usuario();
+        jurado2.setNome("Roberto");
+        jurado2.setEmail("roberto@localizae.br");
+        jurado2.setSenha("123456");
+        jurado2.setSituacao("ativo");
+        jurado2.setTipoUsuario(tipo);
+        
+        List<CriterioJurado> criterioJuradoList = new ArrayList<>();
+        jurado.setCriterioAvaliacaoList(criterioJuradoList);
+        
+        CriterioJurado criterioJurado = new CriterioJurado();
+        criterioJurado.setCriterioAvaliacao(criterio);
+        criterioJurado.setEstande(estande);
+        criterioJurado.setUsuario(jurado);
+        
+        List<CriterioJurado> criterioJuradoList2 = new ArrayList<>();
+        jurado2.setCriterioAvaliacaoList(criterioJuradoList2);
+        
+        CriterioJurado criterioJurado2 = new CriterioJurado();
+        criterioJurado2.setCriterioAvaliacao(criterio2);
+        criterioJurado2.setEstande(estande);
+        criterioJurado2.setUsuario(jurado2);
+        
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, jurado);
+        udao.create(conn, jurado2);
+        
+        AvaliacaoJurado avaliacao = new AvaliacaoJurado();
+        avaliacao.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao.setEstande(estande);
+        avaliacao.setCriterio(criterio);
+        avaliacao.setUsuario(jurado);
+        avaliacao.setNota(4l);
+        avaliacao.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao.setStatus("aberta");
+        
+        AvaliacaoJurado avaliacao2 = new AvaliacaoJurado();
+        avaliacao2.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao2.setEstande(estande);
+        avaliacao2.setCriterio(criterio2);
+        avaliacao2.setUsuario(jurado2);
+        avaliacao2.setNota(3l);
+        avaliacao2.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao2.setStatus("aberta");
+        
+        dao.create(conn, avaliacao);
+        dao.create(conn, avaliacao2);
+        /*Criando cenário para testes.*/
+        
         Map<Enum, Object> criteria = new HashMap<>();
-        criteria.put(AvaliacaoJuradoCriteria.CRITERIO_EQ, 3L);
-        Long limit = null;
-        Long offset = null;
-
-        int expResult = 1;
-        List<AvaliacaoJurado> result = dao.readByCriteria(conn, criteria, limit, offset);
-        assertEquals(expResult, result.size());
+        criteria.put(AvaliacaoJuradoCriteria.CRITERIO_EQ, criterio.getId());
+        
+        List<AvaliacaoJurado> list = dao.readByCriteria(conn, criteria, 0l, 0l);
+        
+        assertEquals(1, list.size());
+        assertEquals(avaliacao, list.get(0));
     }
     
         /**
@@ -208,24 +965,109 @@ public class AvaliacaoJuradoDAOTest {
      */
     @Test
     public void testCalcularMediaDeNotas() throws Exception {
-        System.out.println("calcularMediaDeNotas");
+        /*Criando cenário para testes.*/
+        //Criterio Avaliacao
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("Explanação");
+        criterio.setPeso(4l);
         
-        Map<Long, Long> mediaDeNotas = dao.calcularMediaDeNotas(conn);
-        //Verifica a quantidade de respostas
-        assertEquals(mediaDeNotas.size(), 3);
+        CriterioAvaliacao criterio2 = new CriterioAvaliacao();
+        criterio2.setNome("Documentação");
+        criterio2.setPeso(5l);
         
-        //Verifica todos os valores contidos no mapa        
-        Long media = mediaDeNotas.get(2L);
-        Long expeted = 2L;
-        assertEquals(media, expeted);
+        CriterioAvaliacaoDAO cdao = new CriterioAvaliacaoDAO();
+        cdao.create(conn, criterio);
+        cdao.create(conn, criterio2);
         
-        media = mediaDeNotas.get(3L);
-        expeted = 5L;
-        assertEquals(media, expeted);
+        //Evento
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidão");
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
-        media = mediaDeNotas.get(4L);
-        expeted = 3L;
-        assertEquals(media, expeted);
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        //Estande
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacao");
+        estande.setDescricao("Descricao do estande.");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
+        
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
+        
+        //Tipo Usuario
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setNome("Jurado");
+        tipo.setId(4l);
+        
+        //Usuario jurado
+        Usuario jurado = new Usuario();
+        jurado.setNome("Marcos");
+        jurado.setEmail("marcos@localizae.br");
+        jurado.setSenha("123456");
+        jurado.setSituacao("ativo");
+        jurado.setTipoUsuario(tipo);
+        
+        Usuario jurado2 = new Usuario();
+        jurado2.setNome("Roberto");
+        jurado2.setEmail("roberto@localizae.br");
+        jurado2.setSenha("123456");
+        jurado2.setSituacao("ativo");
+        jurado2.setTipoUsuario(tipo);
+        
+        List<CriterioJurado> criterioJuradoList = new ArrayList<>();
+        jurado.setCriterioAvaliacaoList(criterioJuradoList);
+        
+        CriterioJurado criterioJurado = new CriterioJurado();
+        criterioJurado.setCriterioAvaliacao(criterio);
+        criterioJurado.setEstande(estande);
+        criterioJurado.setUsuario(jurado);
+        
+        List<CriterioJurado> criterioJuradoList2 = new ArrayList<>();
+        jurado2.setCriterioAvaliacaoList(criterioJuradoList2);
+        
+        CriterioJurado criterioJurado2 = new CriterioJurado();
+        criterioJurado2.setCriterioAvaliacao(criterio2);
+        criterioJurado2.setEstande(estande);
+        criterioJurado2.setUsuario(jurado2);
+        
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, jurado);
+        udao.create(conn, jurado2);
+        
+        AvaliacaoJurado avaliacao = new AvaliacaoJurado();
+        avaliacao.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao.setEstande(estande);
+        avaliacao.setCriterio(criterio);
+        avaliacao.setUsuario(jurado);
+        avaliacao.setNota(4l);
+        avaliacao.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao.setStatus("aberta");
+        
+        AvaliacaoJurado avaliacao2 = new AvaliacaoJurado();
+        avaliacao2.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao2.setEstande(estande);
+        avaliacao2.setCriterio(criterio2);
+        avaliacao2.setUsuario(jurado2);
+        avaliacao2.setNota(3l);
+        avaliacao2.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao2.setStatus("aberta");
+        
+        dao.create(conn, avaliacao);
+        dao.create(conn, avaliacao2);
+        /*Criando cenário para testes.*/
+        Map<Long, Double> calcularMediaDeNotas = dao.calcularMediaDeNotas(conn, null);
+        
+        assertEquals(3.5, calcularMediaDeNotas.get(estande.getId()), 0.00000001);
     }
     
     /**
@@ -233,57 +1075,112 @@ public class AvaliacaoJuradoDAOTest {
      */
     @Test
     public void testCalcularMediaDeNotasByCriterio() throws Exception {
-        System.out.println("calcularMediaDeNotasByCriterio");
+        /*Criando cenário para testes.*/
+        //Criterio Avaliacao
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("Explanação");
+        criterio.setPeso(4l);
         
-        Map<InformacoesParaAvaliacao, Long> mediaDeNotas = dao.calcularMediaDeNotasByCriterio(conn);
-
-        //Verifica a quantidade de respostas
-        assertEquals(mediaDeNotas.size(), 3);
+        CriterioAvaliacao criterio2 = new CriterioAvaliacao();
+        criterio2.setNome("Documentação");
+        criterio2.setPeso(5l);
         
-        //Verifica todos os valores contidos no mapa
-        InformacoesParaAvaliacao info = new InformacoesParaAvaliacao();
+        CriterioAvaliacaoDAO cdao = new CriterioAvaliacaoDAO();
+        cdao.create(conn, criterio);
+        cdao.create(conn, criterio2);
         
-        CriterioAvaliacao criterioAvaliacao = new CriterioAvaliacao();
-        criterioAvaliacao.setId(2L);
-        info.setCriterioAvaliacao(criterioAvaliacao);
+        //Evento
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidão");
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
         
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        //Estande
         Estande estande = new Estande();
-        estande.setId(2L);
-        info.setEstande(estande);
-        info.setUsuario(new Usuario());
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacao");
+        estande.setDescricao("Descricao do estande.");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
         
-        Long media = mediaDeNotas.get(info);
-        Long expeted = 2L;
-        assertEquals(media, expeted);
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
         
+        //Tipo Usuario
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setNome("Jurado");
+        tipo.setId(4l);
         
-        info = new InformacoesParaAvaliacao();
-        criterioAvaliacao = new CriterioAvaliacao();
-        criterioAvaliacao.setId(3L);
-        info.setCriterioAvaliacao(criterioAvaliacao);
+        //Usuario jurado
+        Usuario jurado = new Usuario();
+        jurado.setNome("Marcos");
+        jurado.setEmail("marcos@localizae.br");
+        jurado.setSenha("123456");
+        jurado.setSituacao("ativo");
+        jurado.setTipoUsuario(tipo);
         
-        estande = new Estande();
-        estande.setId(3L);
-        info.setEstande(estande);
-        info.setUsuario(new Usuario());
+        Usuario jurado2 = new Usuario();
+        jurado2.setNome("Roberto");
+        jurado2.setEmail("roberto@localizae.br");
+        jurado2.setSenha("123456");
+        jurado2.setSituacao("ativo");
+        jurado2.setTipoUsuario(tipo);
         
-        media = mediaDeNotas.get(info);
-        expeted = 5L;
-        assertEquals(media, expeted);
+        List<CriterioJurado> criterioJuradoList = new ArrayList<>();
+        jurado.setCriterioAvaliacaoList(criterioJuradoList);
         
+        CriterioJurado criterioJurado = new CriterioJurado();
+        criterioJurado.setCriterioAvaliacao(criterio);
+        criterioJurado.setEstande(estande);
+        criterioJurado.setUsuario(jurado);
         
-        info = new InformacoesParaAvaliacao();
-        criterioAvaliacao = new CriterioAvaliacao();
-        criterioAvaliacao.setId(2L);
-        info.setCriterioAvaliacao(criterioAvaliacao);
+        List<CriterioJurado> criterioJuradoList2 = new ArrayList<>();
+        jurado2.setCriterioAvaliacaoList(criterioJuradoList2);
         
-        estande = new Estande();
-        estande.setId(4L);
-        info.setEstande(estande);
-        info.setUsuario(new Usuario());
+        CriterioJurado criterioJurado2 = new CriterioJurado();
+        criterioJurado2.setCriterioAvaliacao(criterio2);
+        criterioJurado2.setEstande(estande);
+        criterioJurado2.setUsuario(jurado2);
         
-        media = mediaDeNotas.get(info);
-        expeted = 3L;
-        assertEquals(media, expeted);
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, jurado);
+        udao.create(conn, jurado2);
+        
+        AvaliacaoJurado avaliacao = new AvaliacaoJurado();
+        avaliacao.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao.setEstande(estande);
+        avaliacao.setCriterio(criterio);
+        avaliacao.setUsuario(jurado);
+        avaliacao.setNota(4l);
+        avaliacao.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao.setStatus("aberta");
+        
+        AvaliacaoJurado avaliacao2 = new AvaliacaoJurado();
+        avaliacao2.setDataHoraAbertura(new Timestamp(2017,10,23,20,0,0,0));
+        avaliacao2.setEstande(estande);
+        avaliacao2.setCriterio(criterio2);
+        avaliacao2.setUsuario(jurado2);
+        avaliacao2.setNota(3l);
+        avaliacao2.setOpiniao("Explanacao um pouco a desejar.");
+        avaliacao2.setStatus("aberta");
+        
+        dao.create(conn, avaliacao);
+        dao.create(conn, avaliacao2);
+        /*Criando cenário para testes.*/
+        
+        Map<Enum, Object> criteria = new HashMap<>();
+        criteria.put(AvaliacaoJuradoCriteria.CRITERIO_EQ, criterio.getId());
+        
+        Map<Long, Double> calcularMediaDeNotas = dao.calcularMediaDeNotas(conn, criteria);
+        
+        assertEquals(4.0, calcularMediaDeNotas.get(estande.getId()), 0.00000001);
     }
 }

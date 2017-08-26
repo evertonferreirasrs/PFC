@@ -1,1 +1,8 @@
 /Model/nbproject/private/
+/Model/build/
+/WebService/nbproject/private/
+/WebService/build/
+/Model/dist/
+/WebService/dist/
+/web/build/
+/web/dist/

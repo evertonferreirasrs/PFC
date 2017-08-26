@@ -14,17 +14,22 @@ import java.util.Objects;
  */
 public class AvaliacaoVisitante extends BaseEntity {
     private Long nota;
-    private String comentario;
+    private String opiniao;
     private Usuario usuario;
     private Estande estande;
 
     @Override
+    public String toString() {
+        return "AvaliacaoVisitante{" + "nota=" + nota + ", opiniao=" + opiniao + ", usuario=" + usuario.getNome() + ", estande=" + estande.getTitulo() + '}';
+    }
+
+    @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + Objects.hashCode(this.nota);
-        hash = 89 * hash + Objects.hashCode(this.comentario);
-        hash = 89 * hash + Objects.hashCode(this.usuario);
-        hash = 89 * hash + Objects.hashCode(this.estande);
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.nota);
+        hash = 67 * hash + Objects.hashCode(this.opiniao);
+        hash = 67 * hash + Objects.hashCode(this.usuario);
+        hash = 67 * hash + Objects.hashCode(this.estande);
         return hash;
     }
 
@@ -40,22 +45,24 @@ public class AvaliacaoVisitante extends BaseEntity {
             return false;
         }
         final AvaliacaoVisitante other = (AvaliacaoVisitante) obj;
-        if (!Objects.equals(this.comentario, other.comentario)) {
+        if (!Objects.equals(this.opiniao, other.opiniao)) {
+            System.out.println("false op");
             return false;
         }
         if (!Objects.equals(this.nota, other.nota)) {
+            System.out.println("false no");
             return false;
         }
         if (!Objects.equals(this.usuario.getId(), other.usuario.getId())) {
+            System.out.println("false us");
             return false;
         }
         if (!Objects.equals(this.estande.getId(), other.estande.getId())) {
+            System.out.println("false es");
             return false;
         }
         return true;
     }
-    
-    
 
     public Long getNota() {
         return nota;
@@ -65,12 +72,12 @@ public class AvaliacaoVisitante extends BaseEntity {
         this.nota = nota;
     }
 
-    public String getComentario() {
-        return comentario;
+    public String getOpiniao() {
+        return opiniao;
     }
 
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
+    public void setOpiniao(String opiniao) {
+        this.opiniao = opiniao;
     }
 
     public Usuario getUsuario() {

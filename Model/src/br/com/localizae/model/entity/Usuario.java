@@ -6,6 +6,7 @@
 package br.com.localizae.model.entity;
 
 import br.com.localizae.model.base.BaseEntity;
+import java.security.MessageDigest;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -14,38 +15,42 @@ import java.util.Objects;
  *
  * @author Equipe LocalizaÊ
  */
-public class Usuario extends BaseEntity{
+public class Usuario extends BaseEntity {
+
     private String nome;
     private String email;
     private String senha;
     private TipoUsuario tipoUsuario;
-    private boolean situacao;
+    private String situacao;
     private String motivo;
     private String tokenRedeSocial;
     private String tokenAutenticacao;
     private Timestamp dataHoraExpiracaoToken;
-    private List<CriterioAvaliacao> criterioAvaliacaoList;
+    private List<CriterioJurado> criterioAvaliacaoList;
+    private IntegranteEquipe integranteEquipe;
 
-    public List<CriterioAvaliacao> getCriterioAvaliacaoList() {
+    public List<CriterioJurado> getCriterioAvaliacaoList() {
         return criterioAvaliacaoList;
     }
 
-    public void setCriterioAvaliacaoList(List<CriterioAvaliacao> criterioAvaliacaoList) {
+    public void setCriterioAvaliacaoList(List<CriterioJurado> criterioAvaliacaoList) {
         this.criterioAvaliacaoList = criterioAvaliacaoList;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.nome);
-        hash = 41 * hash + Objects.hashCode(this.email);
-        hash = 41 * hash + Objects.hashCode(this.senha);
-        hash = 41 * hash + Objects.hashCode(this.tipoUsuario);
-        hash = 41 * hash + (this.situacao ? 1 : 0);
-        hash = 41 * hash + Objects.hashCode(this.motivo);
-        hash = 41 * hash + Objects.hashCode(this.tokenRedeSocial);
-        hash = 41 * hash + Objects.hashCode(this.tokenAutenticacao);
-        hash = 41 * hash + Objects.hashCode(this.dataHoraExpiracaoToken);
+        hash = 89 * hash + Objects.hashCode(this.nome);
+        hash = 89 * hash + Objects.hashCode(this.email);
+        hash = 89 * hash + Objects.hashCode(this.senha);
+        hash = 89 * hash + Objects.hashCode(this.tipoUsuario);
+        hash = 89 * hash + Objects.hashCode(this.situacao);
+        hash = 89 * hash + Objects.hashCode(this.motivo);
+        hash = 89 * hash + Objects.hashCode(this.tokenRedeSocial);
+        hash = 89 * hash + Objects.hashCode(this.tokenAutenticacao);
+        hash = 89 * hash + Objects.hashCode(this.dataHoraExpiracaoToken);
+        hash = 89 * hash + Objects.hashCode(this.criterioAvaliacaoList);
+        hash = 89 * hash + Objects.hashCode(this.integranteEquipe);
         return hash;
     }
 
@@ -61,9 +66,6 @@ public class Usuario extends BaseEntity{
             return false;
         }
         final Usuario other = (Usuario) obj;
-        if (this.situacao != other.situacao) {
-            return false;
-        }
         if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
@@ -71,6 +73,9 @@ public class Usuario extends BaseEntity{
             return false;
         }
         if (!Objects.equals(this.senha, other.senha)) {
+            return false;
+        }
+        if (!Objects.equals(this.situacao, other.situacao)) {
             return false;
         }
         if (!Objects.equals(this.motivo, other.motivo)) {
@@ -82,16 +87,25 @@ public class Usuario extends BaseEntity{
         if (!Objects.equals(this.tokenAutenticacao, other.tokenAutenticacao)) {
             return false;
         }
-        if (!Objects.equals(this.tipoUsuario, other.tipoUsuario)) {
+        if (!Objects.equals(this.tipoUsuario.getId(), other.tipoUsuario.getId())) {
             return false;
         }
         if (!Objects.equals(this.dataHoraExpiracaoToken, other.dataHoraExpiracaoToken)) {
             return false;
         }
+        if (this.getId() == 4 && !Objects.equals(this.criterioAvaliacaoList, other.criterioAvaliacaoList)) {
+            return false;
+        }
+        if (!Objects.equals(this.integranteEquipe, other.integranteEquipe)) {
+            return false;
+        }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "nome=" + nome + ", email=" + email + ", tipoUsuario=" + tipoUsuario + ", situacao=" + situacao + ", motivo=" + motivo + ", criterioAvaliacaoList=" + criterioAvaliacaoList + ", integranteEquipe=" + integranteEquipe + '}';
+    }
 
     public String getNome() {
         return nome;
@@ -125,11 +139,11 @@ public class Usuario extends BaseEntity{
         this.tipoUsuario = tipoUsuario;
     }
 
-    public boolean getSituacao() {
+    public String getSituacao() {
         return situacao;
     }
 
-    public void setSituacao(boolean situacao) {
+    public void setSituacao(String situacao) {
         this.situacao = situacao;
     }
 
@@ -163,5 +177,41 @@ public class Usuario extends BaseEntity{
 
     public void setDataHoraExpiracaoToken(Timestamp dataHoraExpiracaoToken) {
         this.dataHoraExpiracaoToken = dataHoraExpiracaoToken;
+    }
+
+    public IntegranteEquipe getIntegranteEquipe() {
+        return integranteEquipe;
+    }
+
+    public void setIntegranteEquipe(IntegranteEquipe integranteEquipe) {
+        this.integranteEquipe = integranteEquipe;
+    }
+
+    public String encryptPasswd(String sign) {
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(sign.getBytes());
+
+            byte[] hash = md.digest();
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < hash.length; i++) {
+                if ((0xff & hash[i]) < 0x10) {
+                    hexString.append("0"
+                            + Integer.toHexString((0xFF & hash[i])));
+                } else {
+                    hexString.append(Integer.toHexString(0xFF & hash[i]));
+                }
+            }
+
+            sign = hexString.toString();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        this.senha = sign;
+        return sign;
     }
 }

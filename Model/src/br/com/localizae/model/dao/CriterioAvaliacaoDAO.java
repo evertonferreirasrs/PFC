@@ -24,12 +24,13 @@ public class CriterioAvaliacaoDAO implements BaseDAO<CriterioAvaliacao>{
 
     @Override
     public void create(Connection conn, CriterioAvaliacao entity) throws Exception {
-        String sql = "INSERT INTO criterioAvaliacao (nome) VALUES (?) RETURNING id;";
+        String sql = "INSERT INTO criterioAvaliacao (nome, peso) VALUES (?, ?) RETURNING id;";
         
         PreparedStatement ps = conn.prepareStatement(sql);
         
         int i = 0;
         ps.setString(++i, entity.getNome());
+        ps.setLong(++i, entity.getPeso());
         
         ResultSet rs = ps.executeQuery();
         
@@ -56,12 +57,13 @@ public class CriterioAvaliacaoDAO implements BaseDAO<CriterioAvaliacao>{
 
     @Override
     public void update(Connection conn, CriterioAvaliacao entity) throws Exception {
-        String sql = "UPDATE criterioAvaliacao SET nome=? WHERE id=?;";
+        String sql = "UPDATE criterioAvaliacao SET nome=?, peso=? WHERE id=?;";
         
         PreparedStatement ps = conn.prepareStatement(sql);
         
         int i = 0;
         ps.setString(++i, entity.getNome());
+        ps.setLong(++i, entity.getPeso());
         ps.setLong(++i, entity.getId());
         
         ps.execute();
@@ -86,6 +88,7 @@ public class CriterioAvaliacaoDAO implements BaseDAO<CriterioAvaliacao>{
             
             criterioAvaliacao.setId(rs.getLong("id"));
             criterioAvaliacao.setNome(rs.getString("nome"));
+            criterioAvaliacao.setPeso(rs.getLong("peso"));
         }
         
         return criterioAvaliacao;
@@ -126,6 +129,7 @@ public class CriterioAvaliacaoDAO implements BaseDAO<CriterioAvaliacao>{
             
             criterioAvaliacao.setId(rs.getLong("id"));
             criterioAvaliacao.setNome(rs.getString("nome"));
+            criterioAvaliacao.setPeso(rs.getLong("peso"));
             
             criterioAvaliacaoList.add(criterioAvaliacao);
         }
@@ -142,6 +146,24 @@ public class CriterioAvaliacaoDAO implements BaseDAO<CriterioAvaliacao>{
             sql += " AND nome ILIKE ?";
             nome = "%"+nome+"%";
             args.add(nome);
+        }
+        
+        Long peso = (Long)criteria.get(CriterioAvaliacaoCriteria.PESO_EQ);
+        if(peso != null && peso > 0){
+            sql += " AND peso = ?";
+            args.add(peso);
+        }
+        
+        peso = (Long)criteria.get(CriterioAvaliacaoCriteria.PESO_LT);
+        if(peso != null && peso > 0){
+            sql += " AND peso < ?";
+            args.add(peso);
+        }
+        
+        peso = (Long)criteria.get(CriterioAvaliacaoCriteria.PESO_GT);
+        if(peso != null && peso > 0){
+            sql += " AND peso > ?";
+            args.add(peso);
         }
         
         return sql;
