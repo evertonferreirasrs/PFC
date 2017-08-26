@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/login_id"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Login" />
+        <item
+            android:id="@+id/mapa_id"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Mapa da FAITEC" />
+        <item
+            android:id="@+id/alterar_senha_id"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Alterar Senha" />
+        <item
+            android:id="@+id/minhas_avaliacoes_id"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Minhas Avaliações" />
+
+    </group>
+
+    <item android:title="Visão Expositor">
+        <menu>
+            <item
+                android:id="@+id/meu_estande_id"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Meu Estande" />
+            <item
+                android:id="@+id/qualificacao_comentarios_id"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Qualificação e Comentários" />
+
+        </menu>
+    </item>
+
+    <item android:title="Visão Jurado">
+        <menu>
+            <item
+                android:id="@+id/avaliar_estande_id"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Avaliar Estande" />
+            <item
+                android:id="@+id/minhas_avaliacoes_jurado_id"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Minhas Avaliações" />
+
+        </menu>
+    </item>
+
+    <item android:title="Informações">
+        <menu>
+            <item
+                android:id="@+id/localizae_id"
+                android:icon="@drawable/ic_menu_send"
+                android:title="LocalizaÊ" />
+            <item
+                android:id="@+id/politicas_de_uso_id"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Politicas de Uso" />
+            <item
+                android:id="@+id/enviar_feedback_id"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Enviar FeedBack" />
+            <item
+                android:id="@+id/ajuda_id"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Ajuda" />
+            <item
+                android:id="@+id/sobre_id"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Sobre" />
+            <item
+                android:id="@+id/sair_id"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Sair" />
+        </menu>
+    </item>
+
+</menu>
