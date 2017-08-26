@@ -105,7 +105,7 @@ public class UsuarioController {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
         
-        return new ResponseEntity(usuario, HttpStatus.CREATED);
+        return new ResponseEntity(usuario, HttpStatus.OK);
     }
     
     @RequestMapping(value="usuario", method=RequestMethod.PATCH)

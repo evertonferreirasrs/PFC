@@ -33,29 +33,28 @@ class UsuarioService {
             })
     }
 
-    add(usuario) {
+    async add(usuario) {
         let httpService = new HttpService()
 
-        httpService.post(Configuration.getUrl() + "usuario", usuario)
-            .then(u => {
-                return new Usuario(
-                    u.nome,
-                    u.email,
-                    u.senha,
-                    u.tipoUsuario,
-                    u.situacao,
-                    u.motivo,
-                    u.tokenRedeSocial,
-                    u.tokenAutenticacao,
-                    u.dataHoraExpiracaoToken,
-                    u.criterioAvaliacaoList,
-                    u.integranteEquipe,
-                    u.id
-                )
-            }).catch(result => {
-                console.log(result)
-                throw new Error("Impossível cadastrar usuário.")
-            })
+        try {
+            let u = await httpService.post(Configuration.getUrl() + "usuario", usuario)
+            return new Usuario(
+                u.nome,
+                u.email,
+                u.senha,
+                u.tipoUsuario,
+                u.situacao,
+                u.motivo,
+                u.tokenRedeSocial,
+                u.tokenAutenticacao,
+                u.dataHoraExpiracaoToken,
+                u.criterioAvaliacaoList,
+                u.integranteEquipe,
+                u.id
+            )
+        } catch (error) {
+            throw error
+        }
     }
 
     async readUser(id) {
@@ -111,16 +110,16 @@ class UsuarioService {
         })
     }
 
-    validate(user){
-        if(user.nome == null){
+    validate(user) {
+        if (user.nome == null) {
             throw new Error('Campo Nome obrigatório')
         }
 
-        if(user.email == null){
+        if (user.email == null) {
             throw new Error('Campo Email obrigatório')
         }
 
-        if(user.senha == null){
+        if (user.senha == null) {
             throw new Error('Campo Senha obrigatório')
         }
     }

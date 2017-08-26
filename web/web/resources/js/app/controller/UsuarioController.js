@@ -269,9 +269,10 @@ class UsuarioController {
         }
     }
 
-    add(data, service) {
+    async add(data, service) {
         try {
-            service.add(data)
+            let result = await service.add(data)
+
             swal({
                 title: "Adicionado!",
                 text: "O usuário foi adicionado.",
