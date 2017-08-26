@@ -1,139 +1,94 @@
 class UsuarioService {
+    async readAll() {
+        let httpService = new HttpService()
 
+        let uList = await httpService.get(Configuration.getUrl() + "usuario")
 
-    readAll() {
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest()
-
-            xhr.open('GET', Configuration.getUrl() + "usuario")
-
-            xhr.onreadystatechange = () => {
-                //Se a requisicao estiver concluida e a resposta estivar pronta
-                if (xhr.readyState == 4) {
-                    //Se a requisico foi executada com sucesso
-                    if (xhr.status == 200) {
-                        let uList = JSON.parse(xhr.responseText)
-
-                        resolve(uList.map(u => new Usuario(
-                            u.nome,
-                            u.email,
-                            u.senha,
-                            u.tipoUsuario,
-                            u.situacao,
-                            u.motivo,
-                            u.tokenRedeSocial,
-                            u.tokenAutenticacao,
-                            u.dataHoraExpiracaoToken,
-                            u.criterioAvaliacaoList,
-                            u.integranteEquipe,
-                            u.id
-                        )))
-                    } else {
-                        console.log(xhr.responseText);
-                        reject("Impossível obter lista de usuários. Tente novamente mais tarde")
-                    }
-                }
-            }
-
-            xhr.send()
-        })
+        return uList.map(u => new Usuario(
+            u.nome,
+            u.email,
+            u.senha,
+            u.tipoUsuario,
+            u.situacao,
+            u.motivo,
+            u.tokenRedeSocial,
+            u.tokenAutenticacao,
+            u.dataHoraExpiracaoToken,
+            u.criterioAvaliacaoList,
+            u.integranteEquipe,
+            u.id
+        ))
     }
 
     delete(id) {
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest()
+        let httpService = new HttpService()
 
-            xhr.open('DELETE', Configuration.getUrl() + "usuario/" + id)
-
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        resolve(true)
-                    } else {
-                        console.log(xhr.responseText);
-                        reject(false)
-                    }
-                }
-            }
-
-            xhr.send()
-        })
+        httpService.delete(Configuration.getUrl() + `usuario/${id}`)
+            .then(result => {
+                return result
+            })
+            .catch(result => {
+                throw new Error("Impossível deletar Usuário.")
+                console.log(result)
+            })
     }
 
-    add(usuario) {
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest()
+    async add(usuario) {
+        let httpService = new HttpService()
 
-            xhr.open('POST', Configuration.getUrl() + "usuario")
-            xhr.setRequestHeader("Content-type", "application/json")
-
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        let u = JSON.parse(xhr.responseText)
-                        resolve(new Usuario(
-                            u.nome,
-                            u.email,
-                            u.senha,
-                            u.tipoUsuario,
-                            u.situacao,
-                            u.motivo,
-                            u.tokenRedeSocial,
-                            u.tokenAutenticacao,
-                            u.dataHoraExpiracaoToken,
-                            u.criterioAvaliacaoList,
-                            u.integranteEquipe,
-                            u.id
-                        ))
-                    } else {
-                        console.log(xhr.responseText)
-                        reject("Impossível cadastrar usuário.")
-                    }
-                }
-            }
-            usuario = JSON.stringify(usuario)
-            xhr.send(usuario)
-        })
+        try {
+            let u = await httpService.post(Configuration.getUrl() + "usuario", usuario)
+            return new Usuario(
+                u.nome,
+                u.email,
+                u.senha,
+                u.tipoUsuario,
+                u.situacao,
+                u.motivo,
+                u.tokenRedeSocial,
+                u.tokenAutenticacao,
+                u.dataHoraExpiracaoToken,
+                u.criterioAvaliacaoList,
+                u.integranteEquipe,
+                u.id
+            )
+        } catch (error) {
+            throw error
+        }
     }
 
-    readUser(id) {
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest()
+    async readUser(id) {
+        let httpService = new HttpService()
 
-            xhr.open('GET', Configuration.getUrl() + "usuario/" + id)
+        let u = await httpService.get(Configuration.getUrl() + `usuario/${id}`)
 
-            xhr.onreadystatechange = () => {
-                //Se a requisicao estiver concluida e a resposta estivar pronta
-                if (xhr.readyState == 4) {
-                    //Se a requisico foi executada com sucesso
-                    if (xhr.status == 200) {
-                        let u = JSON.parse(xhr.responseText)
-                        resolve(new Usuario(
-                            u.nome,
-                            u.email,
-                            u.senha,
-                            u.tipoUsuario,
-                            u.situacao,
-                            u.motivo,
-                            u.tokenRedeSocial,
-                            u.tokenAutenticacao,
-                            u.dataHoraExpiracaoToken,
-                            u.criterioAvaliacaoList,
-                            u.integranteEquipe,
-                            u.id
-                        ))
-                    } else {
-                        console.log(xhr.responseText)
-                        reject("Impossível obter usuário. Tente novamente mais tarde")
-                    }
-                }
-            }
-
-            xhr.send();
-        })
+        return new Usuario(
+            u.nome,
+            u.email,
+            u.senha,
+            u.tipoUsuario,
+            u.situacao,
+            u.motivo,
+            u.tokenRedeSocial,
+            u.tokenAutenticacao,
+            u.dataHoraExpiracaoToken,
+            u.criterioAvaliacaoList,
+            u.integranteEquipe,
+            u.id
+        )
     }
 
     update(usuario) {
+        let httpService = new HttpService()
+
+        httpService.put(Configuration.getUrl() + "usuario", usuario)
+            .then(result => {
+                return result
+            })
+            .catch(result => {
+                console.log(result)
+                throw new Error("Impossível salvar usuário")
+            })
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest()
 
@@ -155,125 +110,17 @@ class UsuarioService {
         })
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //Nos métodos desta classe cb significa CallBack, onde recebe uma funcao de callback do chamador.
-
-    // add(usuario, cb) {
-    //     let xhr = new XMLHttpRequest();
-
-    //     xhr.open('POST', Configuration.getUrl() + "usuario");
-    //     xhr.setRequestHeader("Content-type", "application/json");
-
-    //     xhr.onreadystatechange = () => {
-    //         if (xhr.readyState == 4) {
-    //             if (xhr.status == 200) {
-    //                 cb(null, JSON.parse(xhr.responseText));
-    //             } else {
-    //                 console.log(xhr.responseText);
-    //                 cb("Impossível cadastrar usuário.", null);
-    //             }
-    //         }
-    //     };
-    //     console.log(usuario);
-    //     usuario = JSON.stringify(usuario);
-    //     xhr.send(usuario);
-    // }
-
-
-
-    buscarTodosUsuarios(cb) {
-        let xhr = new XMLHttpRequest();
-
-        xhr.open('GET', Configuration.getUrl() + "usuario");
-
-        xhr.onreadystatechange = () => {
-            //Se a requisicao estiver concluida e a resposta estivar pronta
-            if (xhr.readyState == 4) {
-                //Se a requisico foi executada com sucesso
-                if (xhr.status == 200) {
-                    cb(null, JSON.parse(xhr.responseText)
-                        .map(u => new Usuario(
-                            u.nome,
-                            u.email,
-                            u.senha,
-                            u.tipoUsuario,
-                            u.situacao,
-                            u.motivo,
-                            u.tokenRedeSocial,
-                            u.tokenAutenticacao,
-                            u.dataHoraExpiracaoToken,
-                            u.criterioAvaliacaoList,
-                            u.integranteEquipe,
-                            u.id
-                        )));
-                } else {
-                    console.log(xhr.responseText);
-                    cb("Impossível obter lista de usuários. Tente novamente mais tarde");
-                }
-            }
-        }
-
-        xhr.send();
-    }
-
-    buscarUsuario(id, cb) {
-        let xhr = new XMLHttpRequest();
-
-        xhr.open('GET', Configuration.getUrl() + "usuario/" + id);
-
-        xhr.onreadystatechange = () => {
-            //Se a requisicao estiver concluida e a resposta estivar pronta
-            if (xhr.readyState == 4) {
-                //Se a requisico foi executada com sucesso
-                if (xhr.status == 200) {
-                    let u = JSON.parse(xhr.responseText)
-                    cb(null, new Usuario(
-                        u.nome,
-                        u.email,
-                        u.senha,
-                        u.tipoUsuario,
-                        u.situacao,
-                        u.motivo,
-                        u.tokenRedeSocial,
-                        u.tokenAutenticacao,
-                        u.dataHoraExpiracaoToken,
-                        u.criterioAvaliacaoList,
-                        u.integranteEquipe,
-                        u.id
-                    ))
-                } else {
-                    console.log(xhr.responseText);
-                    cb("Impossível obter usuário. Tente novamente mais tarde");
-                }
-            }
-        }
-
-        xhr.send();
-    }
-
     validate(user) {
-        if (!user.nome) {
-            throw new Error("Preencha o campo Nome")
+        if (user.nome == null) {
+            throw new Error('Campo Nome obrigatório')
         }
 
-        if (!user.email) {
-            throw new Error("Preencha o campo Email")
+        if (user.email == null) {
+            throw new Error('Campo Email obrigatório')
         }
 
-        if (!user.senha) {
-            throw new Error("Preencha o campo Senha")
+        if (user.senha == null) {
+            throw new Error('Campo Senha obrigatório')
         }
     }
 }

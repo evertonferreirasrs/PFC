@@ -108,5 +108,10 @@ public class TipoUsuarioDAO implements BaseDAO<TipoUsuario> {
         
         return sql;
     }
+
+    @Override
+    public void updatePartial(Connection conn, TipoUsuario entity) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -12,9 +12,10 @@ import br.net.localizae.webservice.converter.JsonConverter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AvaliacaoVisitanteController {
 
     @RequestMapping(value = "avaliacaoVisitante", method = RequestMethod.GET)
-    public List<AvaliacaoVisitante> readByCriteria(Long nota, Long usuario, Long estande, Long limit, Long offset) {
+    public ResponseEntity readByCriteria(Long nota, Long usuario, Long estande, Long limit, Long offset) {
         List<AvaliacaoVisitante> avaliacaoVisitanteList = null;
 
         AvaliacaoVisitanteService service = new AvaliacaoVisitanteService();
@@ -39,64 +40,80 @@ public class AvaliacaoVisitanteController {
         try {
             avaliacaoVisitanteList = service.readByCriteria(criteria, limit, offset);
         } catch (Exception ex) {
-            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        return avaliacaoVisitanteList;
+        return new ResponseEntity(avaliacaoVisitanteList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "avaliacaoVisitante/{id}", method = RequestMethod.GET)
-    public AvaliacaoVisitante readById(@PathVariable Long id) {
+    public ResponseEntity readById(@PathVariable Long id) {
         AvaliacaoVisitante avaliacaoVisitante = null;
 
         AvaliacaoVisitanteService service = new AvaliacaoVisitanteService();
         try {
             avaliacaoVisitante = service.readById(id);
         } catch (Exception ex) {
-            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        return avaliacaoVisitante;
+        return new ResponseEntity(avaliacaoVisitante, HttpStatus.OK);
     }
 
     @RequestMapping(value = "avaliacaoVisitante", method = RequestMethod.PUT)
-    public AvaliacaoVisitante update(String json) {
+    public ResponseEntity update(@RequestBody String json) {
         AvaliacaoVisitante avaliacaoVisitante = (AvaliacaoVisitante) JsonConverter.convertFromJson(json, AvaliacaoVisitante.class);
 
         AvaliacaoVisitanteService service = new AvaliacaoVisitanteService();
         try {
             service.update(avaliacaoVisitante);
         } catch (Exception ex) {
-            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        return avaliacaoVisitante;
+        return new ResponseEntity(avaliacaoVisitante, HttpStatus.OK);
     }
 
     @RequestMapping(value = "avaliacaoVisitante/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         AvaliacaoVisitanteService service = new AvaliacaoVisitanteService();
 
         try {
             service.delete(id);
         } catch (Exception ex) {
-            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        ;
+        
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @RequestMapping(value = "avaliacaoVisitante", method = RequestMethod.POST)
-    public AvaliacaoVisitante create(String json) {
-        AvaliacaoVisitante criterio = (AvaliacaoVisitante) JsonConverter.convertFromJson(json, AvaliacaoVisitante.class);
+    public ResponseEntity create(@RequestBody String json) {
+        AvaliacaoVisitante avaliacaoVisitante = (AvaliacaoVisitante) JsonConverter.convertFromJson(json, AvaliacaoVisitante.class);
 
         AvaliacaoVisitanteService service = new AvaliacaoVisitanteService();
 
         try {
-            service.create(criterio);
+            service.create(avaliacaoVisitante);
         } catch (Exception ex) {
-            Logger.getLogger(EstandeController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        return criterio;
+        return new ResponseEntity(avaliacaoVisitante, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value="avaliacaoVisitante", method=RequestMethod.PATCH)
+    public ResponseEntity updatePartial(@RequestBody String json){
+        AvaliacaoVisitante avaliacaoVisitante = (AvaliacaoVisitante) JsonConverter.convertFromJson(json, AvaliacaoVisitante.class);
+
+        AvaliacaoVisitanteService service = new AvaliacaoVisitanteService();
+
+        try {
+            service.updatePartial(avaliacaoVisitante);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(avaliacaoVisitante, HttpStatus.OK);
     }
 }

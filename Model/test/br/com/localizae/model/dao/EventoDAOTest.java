@@ -252,4 +252,25 @@ public class EventoDAOTest {
         assertEquals(evento2, list.get(1));
         assertEquals(evento3, list.get(2));
     }
+    
+    @Test
+    public void testUpdatePartial()throws Exception{
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidao SRS");
+        evento.setDataHoraEventoInicio(new Timestamp(2015, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2015, 10, 20, 23, 0, 0, 0).getTime());
+        
+        dao.create(conn, evento);
+        
+        Evento newEvento = new Evento();
+        newEvento.setNome("Feira de Tecnologia da FAI - 2017");
+        newEvento.setId(evento.getId());
+        
+        dao.updatePartial(conn, newEvento);
+        
+        Evento readById = dao.readById(conn, evento.getId());
+        
+        assertEquals(newEvento.getNome(), readById.getNome());
+    }
 }

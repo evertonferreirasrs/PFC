@@ -108,5 +108,26 @@ public class TipoUsuarioService implements BaseTipoUsuarioService{
         
         return tipoUsuarioList;
     }
+
+    @Override
+    public void updatePartial(TipoUsuario entity) throws Exception {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        TipoUsuarioDAO dao = new TipoUsuarioDAO();
+        
+        try{
+            dao.updatePartial(conn, entity);
+            conn.commit();
+        }catch(Exception e){
+            conn.rollback();
+            throw e;
+        }finally{
+            conn.close();
+        }
+    }
+
+    @Override
+    public void validate(TipoUsuario entity) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -188,4 +188,39 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
         return sql;
     }
 
+    @Override
+    public void updatePartial(Connection conn, Promocao entity) throws Exception {
+        String sql = "UPDATE promocao SET id=?";
+        List<Object> args = new ArrayList<>();
+        args.add(entity.getId());
+        
+        if(entity.getNome() != null && !entity.getNome().isEmpty()){
+            sql += ", nome=?";
+            args.add(entity.getNome());
+        }
+        
+        if(entity.getDataHora() != null){
+            sql += ", dataHora=?";
+            args.add(entity.getDataHora());
+        }
+        
+        if(entity.getDescricao() != null && !entity.getDescricao().isEmpty()){
+            sql += ", descricao=?";
+            args.add(entity.getDescricao());
+        }
+        
+        sql += " WHERE id=?";
+        args.add(entity.getId());
+        
+        PreparedStatement ps = conn.prepareStatement(sql);
+        
+        int i = 0;
+        for(Object arg : args){
+            ps.setObject(++i, arg);
+        }
+        
+        ps.execute();
+        ps.close();
+    }
+
 }

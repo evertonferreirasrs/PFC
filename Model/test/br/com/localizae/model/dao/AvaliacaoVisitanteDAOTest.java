@@ -740,4 +740,62 @@ public class AvaliacaoVisitanteDAOTest {
         assertEquals(5l, (long) medias.get(estande.getId()));
         assertEquals(2l, (long) medias.get(estande2.getId()));
     }
+    
+    @Test
+    public void testUpdatePartial()throws Exception{
+        Evento evento = new Evento();
+        Timestamp dataHoraEventoFim = new Timestamp(2017, 10, 23, 19, 0, 0, 0);
+        evento.setDataHoraEventoFim(dataHoraEventoFim.getTime());
+        Timestamp dataHoraEventoInicio = new Timestamp(2017, 10, 27, 23, 0, 0, 0);
+        evento.setDataHoraEventoInicio(dataHoraEventoInicio.getTime());
+        evento.setEndereco("Alcidao");
+        evento.setNome("FAITEC 2017");
+
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        TipoUsuario tipoUsuario = new TipoUsuario();
+        tipoUsuario.setNome("Visitante");
+        tipoUsuario.setId(2l);
+        
+        Usuario visitante = new Usuario();
+        visitante.setNome("Lyan");
+        visitante.setEmail("lyan@localizae.br");
+        visitante.setSenha("123456");
+        visitante.setSituacao("ativo");
+        visitante.setTipoUsuario(tipoUsuario);
+        
+        UsuarioDAO udao = new UsuarioDAO();
+        udao.create(conn, visitante);
+        
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localizacao");
+        estande.setCurso("Sistemas de Informacão");
+        estande.setDescricao("Descricao do estande");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("LocalizaE");
+        
+        EstandeDAO esdao = new EstandeDAO();
+        esdao.create(conn, estande);
+        
+        AvaliacaoVisitante avaliacao = new AvaliacaoVisitante();
+        avaliacao.setNota(5l);
+        avaliacao.setOpiniao("teste de opiniao");
+        avaliacao.setEstande(estande);
+        avaliacao.setUsuario(visitante);
+        
+        dao.create(conn, avaliacao);
+        
+        AvaliacaoVisitante newAvaliacao = new AvaliacaoVisitante();
+        newAvaliacao.setId(avaliacao.getId());
+        newAvaliacao.setOpiniao("Minha opinião sobre o estande");
+        
+        dao.updatePartial(conn, newAvaliacao);
+        
+        AvaliacaoVisitante readById = dao.readById(conn, avaliacao.getId());
+        
+        assertEquals(newAvaliacao.getOpiniao(), readById.getOpiniao());
+    }
 }
