@@ -13,9 +13,6 @@ public enum UsuarioCriteria {
     NOME_EQ,
     EMAIL_EQ,
     SENHA_EQ,
-    IS_VISITANTE,
-    IS_ADMINISTRADOR,
-    IS_EXPOSITOR,
-    IS_JURADO,
-    IS_BLOQUEADO
+    TIPO_USUARIO_EQ,
+    SITUACAO_ILIKE
 }

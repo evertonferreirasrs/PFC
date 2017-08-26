@@ -5,31 +5,24 @@
  */
 package br.com.localizae.model;
 
-import br.com.localizae.model.criteria.UsuarioCriteria;
-import br.com.localizae.model.dao.UsuarioDAO;
-import br.com.localizae.model.entity.Usuario;
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  *
  * @author marca
  */
 public class Main {
-    public static void main(String[] args) throws Exception{
-        Connection conn = ConnectionManager.getInstance().getConnection();
-        UsuarioDAO dao = new UsuarioDAO();
-        Map<Enum, Object> criteria = new HashMap<>();
-        criteria.put(UsuarioCriteria.NOME_EQ, "Marcos Antônio");
-        List<Usuario> usuarioList = dao.readByCriteria(conn, criteria, 1L, 0L);
-        Usuario entity = usuarioList.get(0);
-        entity.setEmail("marcos@localizae.net.br");
-        
-        dao.update(conn, entity);
-        
-        
-        
+
+    public static void main(String[] args) throws Exception {
+        int n = 6;
+        int[][] mat = {{1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}};
+        int soma = 0;
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(j > i && (i+j) < n-1){
+                    soma += mat[i][j];
+                }
+            }
+        }
+        System.out.println(soma);
     }
 }

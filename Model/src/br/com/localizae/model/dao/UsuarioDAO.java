@@ -8,6 +8,8 @@ package br.com.localizae.model.dao;
 import br.com.localizae.model.base.BaseDAO;
 import br.com.localizae.model.criteria.UsuarioCriteria;
 import br.com.localizae.model.entity.CriterioAvaliacao;
+import br.com.localizae.model.entity.CriterioJurado;
+import br.com.localizae.model.entity.Estande;
 import br.com.localizae.model.entity.IntegranteEquipe;
 import br.com.localizae.model.entity.TipoUsuario;
 import br.com.localizae.model.entity.Usuario;
@@ -35,8 +37,8 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getEmail());
-        ps.setString(++i, entity.getSenha());
-        ps.setBoolean(++i, entity.getSituacao());
+        ps.setString(++i, entity.encryptPasswd(entity.getSenha()));
+        ps.setString(++i, entity.getSituacao());
         ps.setString(++i, entity.getMotivo());
         ps.setString(++i, entity.getTokenRedeSocial());
         ps.setString(++i, entity.getTokenAutenticacao());
@@ -51,7 +53,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         rs.close();
         ps.close();
 
-        if (entity instanceof IntegranteEquipe) {
+        if (entity.getTipoUsuario().getId() == 3) {
             this.createIntegrante(entity, conn);
         }
 
@@ -61,14 +63,15 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
     }
 
     private void createJurado(Usuario entity, Connection conn) throws SQLException {
-        for (CriterioAvaliacao criterio : entity.getCriterioAvaliacaoList()) {
-            String sql = "INSERT INTO criterioJurado (usuario_fk, criterio_fk) VALUES (?, ?);";
+        for (CriterioJurado criterio : entity.getCriterioAvaliacaoList()) {
+            String sql = "INSERT INTO criterioJurado (usuario_fk, criterioavaliacao_fk, estande_fk) VALUES (?, ?, ?);";
 
             PreparedStatement ps = conn.prepareStatement(sql);
 
             int i = 0;
             ps.setLong(++i, entity.getId());
-            ps.setLong(++i, criterio.getId());
+            ps.setLong(++i, criterio.getCriterioAvaliacao().getId());
+            ps.setLong(++i, criterio.getEstande().getId());
 
             ps.execute();
             ps.close();
@@ -76,16 +79,15 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
     }
 
     private void createIntegrante(Usuario entity, Connection conn) throws Exception {
-        IntegranteEquipe integrante = (IntegranteEquipe) entity;
-        String sql = "INSERT INTO integranteEquipe (responsavel, usuario_fk, estande_fk) VALUES(?, ?, ?);";
-
+        String sql = "INSERT INTO integranteEquipe(responsavel, usuario_fk, estande_fk) VALUES(?, ?, ?);";
+        
         PreparedStatement ps = conn.prepareStatement(sql);
-
+        
         int i = 0;
-        ps.setBoolean(++i, integrante.getResponsavel());
-        ps.setLong(++i, integrante.getId());
-        ps.setLong(++i, integrante.getEstande().getId());
-
+        ps.setBoolean(++i, entity.getIntegranteEquipe().getResponsavel());
+        ps.setLong(++i, entity.getId());
+        ps.setLong(++i, entity.getIntegranteEquipe().getEstande().getId());
+        
         ps.execute();
         ps.close();
     }
@@ -104,15 +106,14 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
 
     @Override
     public void update(Connection conn, Usuario entity) throws Exception {
-        String sql = "UPDATE usuario SET nome=?, email=?, senha=?, situacao=?, motivo=?, tokenRedeSocial=?, tokenAutenticacao=?, dataHoraExpiracaoToken=?, tipoUsuario_fk=? WHERE id=?;";
+        String sql = "UPDATE usuario SET nome=?, email=?, situacao=?, motivo=?, tokenRedeSocial=?, tokenAutenticacao=?, dataHoraExpiracaoToken=?, tipoUsuario_fk=? WHERE id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getEmail());
-        ps.setString(++i, entity.getSenha());
-        ps.setBoolean(++i, entity.getSituacao());
+        ps.setString(++i, entity.getSituacao());
         ps.setString(++i, entity.getMotivo());
         ps.setString(++i, entity.getTokenRedeSocial());
         ps.setString(++i, entity.getTokenAutenticacao());
@@ -122,12 +123,67 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
 
         ps.execute();
         ps.close();
+
+        if (entity.getTipoUsuario().getId() == 3) {
+            this.updateIntegrante(entity, conn);
+        }
+
+        if (entity.getTipoUsuario().getId() == 4) {
+            this.updateJurado(entity, conn);
+        }
+    }
+    
+    public void patch(Usuario entity, Connection conn) throws SQLException{
+        Map<String, Object> atributos = new HashMap<>();
+        if(!entity.getEmail().isEmpty()){
+            atributos.put("email", entity.getEmail());
+        }
+        
+    }
+
+    private void updateIntegrante(Usuario entity, Connection conn) throws SQLException {
+        String sql = "UPDATE integranteEquipe SET responsavel=?, estande_fk=? WHERE usuario_fk=?;";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+
+        int i = 0;
+        ps.setBoolean(++i, entity.getIntegranteEquipe().getResponsavel());
+        ps.setLong(++i, entity.getIntegranteEquipe().getEstande().getId());
+        ps.setLong(++i, entity.getId());
+
+        ps.execute();
+        ps.close();
+    }
+
+    private void updateJurado(Usuario entity, Connection conn) throws SQLException {
+        String sql = "DELETE FROM criterioJurado WHERE usuario_fk = ?";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+
+        ps.setLong(1, entity.getId());
+
+        ps.execute();
+        ps.close();
+
+        for (CriterioJurado criterio : entity.getCriterioAvaliacaoList()) {
+            sql = "INSERT INTO criterioJurado (usuario_fk, criterioavaliacao_fk, estande_fk) VALUES (?, ?, ?);";
+
+            PreparedStatement psUpdate = conn.prepareStatement(sql);
+
+            int i = 0;
+            psUpdate.setLong(++i, entity.getId());
+            psUpdate.setLong(++i, criterio.getCriterioAvaliacao().getId());
+            psUpdate.setLong(++i, criterio.getEstande().getId());
+
+            psUpdate.execute();
+            psUpdate.close();
+        }
     }
 
     @Override
     public Usuario readById(Connection conn, Long id) throws Exception {
         Usuario usuario = null;
-        String sql = "SELECT * FROM usuario WHERE id=?;";
+        String sql = "select u.*, tp.nome tipoUsuario, cj.criterioavaliacao_fk, ca.nome criterio, ca.peso, ie.estande_fk estande_ie, cj.estande_fk estande_cj, ie.responsavel from usuario u left join tipousuario tp on u.tipousuario_fk = tp.id left join criteriojurado cj on u.id = cj.usuario_fk left join criterioavaliacao ca on cj.criterioavaliacao_fk = ca.id left join integranteequipe ie on u.id = ie.usuario_fk where u.id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -137,21 +193,59 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            usuario = new Usuario();
-            usuario.setNome(rs.getString("nome"));
-            usuario.setEmail(rs.getString("email"));
-            usuario.setSenha(rs.getString("senha"));
-            usuario.setSituacao(rs.getBoolean("situacao"));
-            usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
-            usuario.setMotivo(rs.getString("motivo"));
-            usuario.setId(rs.getLong("id"));
-            usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));
-            usuario.setTokenRedeSocial(rs.getString("tokenRedeSocial"));
+            if (usuario == null) {
+                usuario = new Usuario();
+                usuario.setId(rs.getLong("id"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setSituacao(rs.getString("situacao"));
+                usuario.setMotivo(rs.getString("motivo"));
+                usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));
+                usuario.setTokenRedeSocial(rs.getString("tokenRedeSocial"));
+                usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
+                
+                TipoUsuario tipoUsuario = new TipoUsuario();
+                tipoUsuario.setId(rs.getLong("tipoUsuario_fk"));
+                tipoUsuario.setNome(rs.getString("tipousuario"));
 
-            TipoUsuario tipoUsuario = new TipoUsuario();
-            tipoUsuario.setId(rs.getLong("tipoUsuario_fk"));
+                usuario.setTipoUsuario(tipoUsuario);
+            }
 
-            usuario.setTipoUsuario(tipoUsuario);
+            if (usuario.getTipoUsuario().getId() == 4) {
+                if (usuario.getCriterioAvaliacaoList() == null) {
+                    usuario.setCriterioAvaliacaoList(new ArrayList<>());
+                }
+
+                CriterioAvaliacao criterio = new CriterioAvaliacao();
+                criterio.setId(rs.getLong("criterioavaliacao_fk"));
+                criterio.setNome(rs.getString("criterio"));
+                criterio.setPeso(rs.getLong("peso"));
+                
+                Estande estande = new Estande();
+                estande.setId(rs.getLong("estande_cj"));
+                
+                CriterioJurado criterioJurado = new CriterioJurado();
+                criterioJurado.setCriterioAvaliacao(criterio);
+                criterioJurado.setEstande(estande);
+                //criterioJurado.setUsuario(usuario);
+
+                usuario.getCriterioAvaliacaoList().add(criterioJurado);
+            }
+            
+            if(usuario.getTipoUsuario().getId() == 3){
+                IntegranteEquipe integrante = new IntegranteEquipe();
+                //integrante.setUsuario(usuario);
+                integrante.setResponsavel(rs.getBoolean("responsavel"));
+                
+                Estande estande = new Estande();
+                estande.setId(rs.getLong("estande_ie"));
+                
+                integrante.setEstande(estande);
+                
+                usuario.setIntegranteEquipe(integrante);
+            }
+
         }
         return usuario;
     }
@@ -162,11 +256,13 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
             criteria = new HashMap<>();
         }
         List<Usuario> usuarioList = new ArrayList<>();
-        String sql = "SELECT * FROM usuario WHERE 1=1";
+        String sql = "select u.*, tp.nome tipoUsuario, cj.criterioavaliacao_fk, ca.nome criterio, ca.peso, ie.estande_fk estande_ie, cj.estande_fk estande_cj, ie.responsavel from usuario u left join tipousuario tp on u.tipousuario_fk = tp.id left join criteriojurado cj on u.id = cj.usuario_fk left join criterioavaliacao ca on cj.criterioavaliacao_fk = ca.id left join integranteequipe ie on u.id = ie.usuario_fk where 1=1";
 
         List<Object> args = new ArrayList<>();
         sql += this.applyCriteria(criteria, args);
 
+        sql += "order by u.id";
+        
         if (limit != null && limit > 0) {
             sql += " LIMIT ?";
             args.add(limit);
@@ -187,23 +283,69 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            Usuario usuario = new Usuario();
-            usuario.setNome(rs.getString("nome"));
-            usuario.setEmail(rs.getString("email"));
-            usuario.setSenha(rs.getString("senha"));
-            usuario.setSituacao(rs.getBoolean("situacao"));
-            usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
-            usuario.setMotivo(rs.getString("motivo"));
-            usuario.setId(rs.getLong("id"));
-            usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));
-            usuario.setTokenRedeSocial(rs.getString("tokenRedeSocial"));
+            Usuario usuario = null;
+            Usuario ultimoUsuario = null;
+            
+            if(!usuarioList.isEmpty()){
+                 ultimoUsuario = usuarioList.get(usuarioList.size() - 1);
+            }
 
-            TipoUsuario tipoUsuario = new TipoUsuario();
-            tipoUsuario.setId(rs.getLong("tipoUsuario_fk"));
+            if (!usuarioList.isEmpty() && ultimoUsuario.getId() == rs.getLong("id")) {
+                usuario = ultimoUsuario;
+            } else {
+                usuario = new Usuario();
+                usuario.setId(rs.getLong("id"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setSituacao(rs.getString("situacao"));
+                usuario.setMotivo(rs.getString("motivo"));
+                usuario.setTokenAutenticacao(rs.getString("tokenAutenticacao"));
+                usuario.setTokenRedeSocial(rs.getString("tokenRedeSocial"));
+                usuario.setDataHoraExpiracaoToken(rs.getTimestamp("dataHoraExpiracaoToken"));
+                
+                TipoUsuario tipoUsuario = new TipoUsuario();
+                tipoUsuario.setId(rs.getLong("tipoUsuario_fk"));
+                tipoUsuario.setNome(rs.getString("tipousuario"));
 
-            usuario.setTipoUsuario(tipoUsuario);
+                usuario.setTipoUsuario(tipoUsuario);
 
-            usuarioList.add(usuario);
+                usuarioList.add(usuario);
+            }
+
+            if (usuario.getTipoUsuario().getId() == 4) {
+                if (usuario.getCriterioAvaliacaoList() == null) {
+                    usuario.setCriterioAvaliacaoList(new ArrayList<>());
+                }
+
+                CriterioAvaliacao criterio = new CriterioAvaliacao();
+                criterio.setId(rs.getLong("criterioavaliacao_fk"));
+                criterio.setNome(rs.getString("criterio"));
+                criterio.setPeso(rs.getLong("peso"));
+                
+                Estande estande = new Estande();
+                estande.setId(rs.getLong("estande_cj"));
+                
+                CriterioJurado criterioJurado = new CriterioJurado();
+                criterioJurado.setCriterioAvaliacao(criterio);
+                criterioJurado.setEstande(estande);
+                //criterioJurado.setUsuario(usuario);
+
+                usuario.getCriterioAvaliacaoList().add(criterioJurado);
+            }
+            
+            if(usuario.getTipoUsuario().getId() == 3){
+                IntegranteEquipe integrante = new IntegranteEquipe();
+                //integrante.setUsuario(usuario);
+                integrante.setResponsavel(rs.getBoolean("responsavel"));
+                
+                Estande estande = new Estande();
+                estande.setId(rs.getLong("estande_ie"));
+                
+                integrante.setEstande(estande);
+                
+                usuario.setIntegranteEquipe(integrante);
+            }
         }
         return usuarioList;
     }
@@ -214,54 +356,37 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
 
         String nome = (String) criteria.get(UsuarioCriteria.NOME_EQ);
         if (nome != null && !nome.isEmpty()) {
-            sql += " AND nome ILIKE ?";
+            sql += " AND u.nome ILIKE ?";
             nome = "%" + nome + "%";
             args.add(nome);
         }
 
         String email = (String) criteria.get(UsuarioCriteria.EMAIL_EQ);
         if (email != null && !email.isEmpty()) {
-            sql += " AND email ILIKE ?";
+            sql += " AND u.email ILIKE ?";
             email = "%" + email + "%";
             args.add(email);
         }
 
         String senha = (String) criteria.get(UsuarioCriteria.SENHA_EQ);
         if (senha != null && !senha.isEmpty()) {
-            sql += " AND senha ILIKE ?";
+            sql += " AND u.senha ILIKE ?";
             senha = "%" + senha + "%";
             args.add(senha);
         }
 
-//        boolean is_visitante = (boolean)criteria.get(UsuarioCriteria.IS_VISITANTE);
-//        if(is_visitante != false){
-//            sql = " AND tipoUsuario_fk = ?";
-//            args.add(2);
-//        }
-//        
-//        boolean is_administrador = (boolean)criteria.get(UsuarioCriteria.IS_ADMINISTRADOR);
-//        if(is_administrador != false){
-//            sql = " AND tipoUsuario_fk = ?";
-//            args.add(1);
-//        }
-//        
-//        boolean is_expositor = (boolean)criteria.get(UsuarioCriteria.IS_EXPOSITOR);
-//        if(is_expositor != false){
-//            sql = " AND tipoUsuario_fk = ?";
-//            args.add(3);
-//        }
-//        
-//        boolean is_jurado = (boolean)criteria.get(UsuarioCriteria.IS_JURADO);
-//        if(is_jurado != false){
-//            sql = " AND tipo_usuario_fk = ?";
-//            args.add(4);
-//        }
-//        
-//        boolean is_bloqueado = (boolean)criteria.get(UsuarioCriteria.IS_BLOQUEADO);
-//        if(is_bloqueado != false){
-//            sql = " AND bloqueado is ?";
-//            args.add(true);
-//        }
+        Long tipoUsuario = (Long) criteria.get(UsuarioCriteria.TIPO_USUARIO_EQ);
+        if (tipoUsuario != null && tipoUsuario > 0) {
+            sql += " AND u.tipoUsuario_fk = ?";
+            args.add(tipoUsuario);
+        }
+
+        String situacao = (String) criteria.get(UsuarioCriteria.SITUACAO_ILIKE);
+        if (situacao != null && !situacao.isEmpty()) {
+            sql = " AND u.situacao ILIKE ?";
+            situacao = "%" + situacao + "%";
+            args.add(situacao);
+        }
         return sql;
     }
 }

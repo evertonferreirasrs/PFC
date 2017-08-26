@@ -8,18 +8,20 @@ package br.com.localizae.model.dao;
 import br.com.localizae.model.ConnectionManager;
 import br.com.localizae.model.criteria.EstandeCriteria;
 import br.com.localizae.model.entity.Estande;
+import br.com.localizae.model.entity.Evento;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -57,24 +59,31 @@ public class EstandeDAOTest {
      */
     @Test
     public void testCreate() throws Exception {
-        System.out.println("create");
+        /*Criando cenário para testes*/
+        Evento evento = new Evento();
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
+        evento.setEndereco("Alcidão");
+        evento.setNome("FAITEC - 2017");
         
-        Estande entity = new Estande();
-        entity.setAreaTematica("Educação");
-        entity.setCurso("Pedagogia");
-        entity.setDescricao("Descrição do estande em questão");
-        entity.setNome("Um nome para o estande");
-        entity.setNumero(45L);
-        entity.setPeriodo(4L);
-        entity.setEquipe(new ArrayList<>());
-        System.out.println(entity);
-
-        dao.create(conn, entity);
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        /*Criando cenário para testes*/
         
-        Estande readById = dao.readById(conn, entity.getId());
-        System.out.println(readById);
-        assertEquals(entity, readById);
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localização");
+        estande.setCurso("Sistemas de Informação");
+        estande.setDescricao("Descrição qualquer");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(7l);
+        estande.setTitulo("LocalizaÊ");
         
+        dao.create(conn, estande);
+        
+        Estande readById = dao.readById(conn, estande.getId());
+        
+        assertNotNull(readById);
     }
 
     /**
@@ -82,18 +91,33 @@ public class EstandeDAOTest {
      */
     @Test
     public void testDelete() throws Exception {
-        System.out.println("delete");
+        /*Criando cenário para testes*/
+        Evento evento = new Evento();
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
+        evento.setEndereco("Alcidão");
+        evento.setNome("FAITEC - 2017");
         
-        Long id = 0L;
-        List<Estande> estandeList = dao.readByCriteria(conn, null, 1L, null);
-        Estande entity = estandeList.get(0);
-        if(entity != null){
-            id = entity.getId();
-        }
-
-        dao.delete(conn, id);
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
         
-        Estande readById = dao.readById(conn, id);
+        
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localização");
+        estande.setCurso("Sistemas de Informação");
+        estande.setDescricao("Descrição qualquer");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(7l);
+        estande.setTitulo("LocalizaÊ");
+        
+        dao.create(conn, estande);
+        /*Criando cenário para testes*/
+        
+        dao.delete(conn, estande.getId());
+        
+        Estande readById = dao.readById(conn, estande.getId());
+        
         assertNull(readById);
     }
 
@@ -102,17 +126,37 @@ public class EstandeDAOTest {
      */
     @Test
     public void testUpdate() throws Exception {
-        System.out.println("update");
-
-        Estande entity = dao.readByCriteria(conn, null, 1L, null).get(0);
-        if(entity != null){
-            entity.setCurso("Sistemas de Informação");
-        }
-
-        dao.update(conn, entity);
-        Estande readById = dao.readById(conn, entity.getId());
+        /*Criando cenário para testes*/
+        Evento evento = new Evento();
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
+        evento.setEndereco("Alcidão");
+        evento.setNome("FAITEC - 2017");
         
-        assertEquals(entity, readById);
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localização");
+        estande.setCurso("Sistemas de Informação");
+        estande.setDescricao("Descrição qualquer");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(7l);
+        estande.setTitulo("LocalizaÊ");
+        estande.setEquipe(new ArrayList<>());
+        
+        dao.create(conn, estande);
+        /*Criando cenário para testes*/
+        
+        estande.setTitulo("LocalizaÊ - Sistema de Posicionamento para FAITEC");
+        
+        dao.update(conn, estande);
+        
+        Estande readById = dao.readById(conn, estande.getId());
+        
+        assertEquals(estande, readById);
     }
 
     /**
@@ -120,15 +164,31 @@ public class EstandeDAOTest {
      */
     @Test
     public void testReadById() throws Exception {
-        System.out.println("readById");
+        /*Criando cenário para testes*/
+        Evento evento = new Evento();
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
+        evento.setEndereco("Alcidão");
+        evento.setNome("FAITEC - 2017");
         
-        Long id = null;
-        List<Estande> estandeList = dao.readByCriteria(conn, null, 1L, 0L);
-        Estande entity = estandeList.get(0);
-
-        Estande result = dao.readById(conn, entity.getId());
-        assertEquals(entity, result);
-
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        /*Criando cenário para testes*/
+        
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localização");
+        estande.setCurso("Sistemas de Informação");
+        estande.setDescricao("Descrição qualquer");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(7l);
+        estande.setTitulo("LocalizaÊ");
+        
+        dao.create(conn, estande);
+        
+        Estande readById = dao.readById(conn, estande.getId());
+        
+        assertEquals(estande, readById);
     }
 
     /**
@@ -136,15 +196,44 @@ public class EstandeDAOTest {
      */
     @Test
     public void testReadByCriteria() throws Exception {
-        System.out.println("readByCriteria");
+        /*Criando cenário para testes*/
+        Evento evento = new Evento();
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
+        evento.setEndereco("Alcidão");
+        evento.setNome("FAITEC - 2017");
         
-        Map<Enum, Object> criteria = null;
-        Long limit = null;
-        Long offset = null;
-
-        int expResult = 4;
-        List<Estande> result = dao.readByCriteria(conn, criteria, limit, offset);
-        assertEquals(expResult, result.size());
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localização");
+        estande.setCurso("Sistemas de Informação");
+        estande.setDescricao("Descrição qualquer");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(7l);
+        estande.setTitulo("LocalizaÊ");
+        
+        dao.create(conn, estande);
+        
+        Estande estande2 = new Estande();
+        estande2.setAreaTematica("Localização Master");
+        estande2.setCurso("Sistemas de Informação");
+        estande2.setDescricao("Descrição qualquer Master Pop");
+        estande2.setEvento(evento);
+        estande2.setNumero(47l);
+        estande2.setPeriodo(8l);
+        estande2.setTitulo("LocalizaMaster");
+        
+        dao.create(conn, estande2);
+        /*Criando cenário para testes*/
+        List<Estande> readByCriteria = dao.readByCriteria(conn, null, 0l, 0l);
+        
+        assertEquals(2, readByCriteria.size());
+        assertEquals(estande, readByCriteria.get(0));
+        assertEquals(estande2, readByCriteria.get(1));
     }
     
     /**
@@ -152,16 +241,46 @@ public class EstandeDAOTest {
      */
     @Test
     public void testReadByNome() throws Exception {
-        System.out.println("readByCriteria");
+        /*Criando cenário para testes*/
+        Evento evento = new Evento();
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
+        evento.setEndereco("Alcidão");
+        evento.setNome("FAITEC - 2017");
         
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localização");
+        estande.setCurso("Sistemas de Informação");
+        estande.setDescricao("Descrição qualquer");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(7l);
+        estande.setTitulo("LocalizaÊ");
+        
+        dao.create(conn, estande);
+        
+        Estande estande2 = new Estande();
+        estande2.setAreaTematica("Localização Master");
+        estande2.setCurso("Sistemas de Informação");
+        estande2.setDescricao("Descrição qualquer Master Pop");
+        estande2.setEvento(evento);
+        estande2.setNumero(47l);
+        estande2.setPeriodo(8l);
+        estande2.setTitulo("LocalizaMaster");
+        
+        dao.create(conn, estande2);
+        /*Criando cenário para testes*/
         Map<Enum, Object> criteria = new HashMap<>();
-        criteria.put(EstandeCriteria.NOME_EQ, "Old Game");
-        Long limit = null;
-        Long offset = null;
-
-        int expResult = 1;
-        List<Estande> result = dao.readByCriteria(conn, criteria, limit, offset);
-        assertEquals(expResult, result.size());
+        criteria.put(EstandeCriteria.TITULO_EQ, estande.getTitulo());
+        List<Estande> readByCriteria = dao.readByCriteria(conn, criteria, 0l, 0l);
+        
+        assertEquals(1, readByCriteria.size());
+        assertEquals(estande, readByCriteria.get(0));
+        
     }
     
     /**
@@ -169,16 +288,46 @@ public class EstandeDAOTest {
      */
     @Test
     public void testReadByCurso() throws Exception {
-        System.out.println("readByCriteria");
+        /*Criando cenário para testes*/
+        Evento evento = new Evento();
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
+        evento.setEndereco("Alcidão");
+        evento.setNome("FAITEC - 2017");
         
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localização");
+        estande.setCurso("Sistemas de Informação");
+        estande.setDescricao("Descrição qualquer");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(7l);
+        estande.setTitulo("LocalizaÊ");
+        
+        dao.create(conn, estande);
+        
+        Estande estande2 = new Estande();
+        estande2.setAreaTematica("Localização Master");
+        estande2.setCurso("Sistemas de Informação");
+        estande2.setDescricao("Descrição qualquer Master Pop");
+        estande2.setEvento(evento);
+        estande2.setNumero(47l);
+        estande2.setPeriodo(8l);
+        estande2.setTitulo("LocalizaMaster");
+        
+        dao.create(conn, estande2);
+        /*Criando cenário para testes*/
         Map<Enum, Object> criteria = new HashMap<>();
-        criteria.put(EstandeCriteria.CURSO_EQ, "Sistemas de Informação");
-        Long limit = null;
-        Long offset = null;
-
-        int expResult = 2;
-        List<Estande> result = dao.readByCriteria(conn, criteria, limit, offset);
-        assertEquals(expResult, result.size());
+        criteria.put(EstandeCriteria.CURSO_EQ, estande.getCurso());
+        List<Estande> readByCriteria = dao.readByCriteria(conn, criteria, 0l, 0l);
+        
+        assertEquals(2, readByCriteria.size());
+        assertEquals(estande, readByCriteria.get(0));
+        assertEquals(estande2, readByCriteria.get(1));
     }
     
     /**
@@ -186,16 +335,45 @@ public class EstandeDAOTest {
      */
     @Test
     public void testReadByPeriodo() throws Exception {
-        System.out.println("readByCriteria");
+        /*Criando cenário para testes*/
+        Evento evento = new Evento();
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
+        evento.setEndereco("Alcidão");
+        evento.setNome("FAITEC - 2017");
         
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localização");
+        estande.setCurso("Sistemas de Informação");
+        estande.setDescricao("Descrição qualquer");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(7l);
+        estande.setTitulo("LocalizaÊ");
+        
+        dao.create(conn, estande);
+        
+        Estande estande2 = new Estande();
+        estande2.setAreaTematica("Localização Master");
+        estande2.setCurso("Sistemas de Informação");
+        estande2.setDescricao("Descrição qualquer Master Pop");
+        estande2.setEvento(evento);
+        estande2.setNumero(47l);
+        estande2.setPeriodo(8l);
+        estande2.setTitulo("LocalizaMaster");
+        
+        dao.create(conn, estande2);
+        /*Criando cenário para testes*/
         Map<Enum, Object> criteria = new HashMap<>();
-        criteria.put(EstandeCriteria.PERIODO_EQ, 2L);
-        Long limit = null;
-        Long offset = null;
-
-        int expResult = 4;
-        List<Estande> result = dao.readByCriteria(conn, criteria, limit, offset);
-        assertEquals(expResult, result.size());
+        criteria.put(EstandeCriteria.PERIODO_EQ, estande.getPeriodo());
+        List<Estande> readByCriteria = dao.readByCriteria(conn, criteria, 0l, 0l);
+        
+        assertEquals(1, readByCriteria.size());
+        assertEquals(estande, readByCriteria.get(0));
     }
     
     /**
@@ -203,16 +381,45 @@ public class EstandeDAOTest {
      */
     @Test
     public void testReadByNumero() throws Exception {
-        System.out.println("readByCriteria");
+        /*Criando cenário para testes*/
+        Evento evento = new Evento();
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
+        evento.setEndereco("Alcidão");
+        evento.setNome("FAITEC - 2017");
         
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localização");
+        estande.setCurso("Sistemas de Informação");
+        estande.setDescricao("Descrição qualquer");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(7l);
+        estande.setTitulo("LocalizaÊ");
+        
+        dao.create(conn, estande);
+        
+        Estande estande2 = new Estande();
+        estande2.setAreaTematica("Localização Master");
+        estande2.setCurso("Sistemas de Informação");
+        estande2.setDescricao("Descrição qualquer Master Pop");
+        estande2.setEvento(evento);
+        estande2.setNumero(47l);
+        estande2.setPeriodo(8l);
+        estande2.setTitulo("LocalizaMaster");
+        
+        dao.create(conn, estande2);
+        /*Criando cenário para testes*/
         Map<Enum, Object> criteria = new HashMap<>();
-        criteria.put(EstandeCriteria.NUMERO_EQ, 43L);
-        Long limit = null;
-        Long offset = null;
-
-        int expResult = 1;
-        List<Estande> result = dao.readByCriteria(conn, criteria, limit, offset);
-        assertEquals(expResult, result.size());
+        criteria.put(EstandeCriteria.NUMERO_EQ, estande.getNumero());
+        List<Estande> readByCriteria = dao.readByCriteria(conn, criteria, 0l, 0l);
+        
+        assertEquals(1, readByCriteria.size());
+        assertEquals(estande, readByCriteria.get(0));
     }
     
     /**
@@ -220,15 +427,45 @@ public class EstandeDAOTest {
      */
     @Test
     public void testReadByAreaTematica() throws Exception {
-        System.out.println("readByCriteria");
+        /*Criando cenário para testes*/
+        Evento evento = new Evento();
+        evento.setDataHoraEventoFim(new Timestamp(2017, 10, 23, 23, 20, 0, 0).getTime());
+        evento.setDataHoraEventoInicio(new Timestamp(2017, 10, 19, 19, 20, 0, 0).getTime());
+        evento.setEndereco("Alcidão");
+        evento.setNome("FAITEC - 2017");
         
+        EventoDAO edao = new EventoDAO();
+        edao.create(conn, evento);
+        
+        
+        Estande estande = new Estande();
+        estande.setAreaTematica("Localização");
+        estande.setCurso("Sistemas de Informação");
+        estande.setDescricao("Descrição qualquer");
+        estande.setEvento(evento);
+        estande.setNumero(45l);
+        estande.setPeriodo(7l);
+        estande.setTitulo("LocalizaÊ");
+        
+        dao.create(conn, estande);
+        
+        Estande estande2 = new Estande();
+        estande2.setAreaTematica("Localização Master");
+        estande2.setCurso("Sistemas de Informação");
+        estande2.setDescricao("Descrição qualquer Master Pop");
+        estande2.setEvento(evento);
+        estande2.setNumero(47l);
+        estande2.setPeriodo(8l);
+        estande2.setTitulo("LocalizaMaster");
+        
+        dao.create(conn, estande2);
+        /*Criando cenário para testes*/
         Map<Enum, Object> criteria = new HashMap<>();
-        criteria.put(EstandeCriteria.AREATEMATICA_EQ, "Educação");
-        Long limit = null;
-        Long offset = null;
-
-        int expResult = 2;
-        List<Estande> result = dao.readByCriteria(conn, criteria, limit, offset);
-        assertEquals(expResult, result.size());
+        criteria.put(EstandeCriteria.AREATEMATICA_EQ, estande.getAreaTematica());
+        List<Estande> readByCriteria = dao.readByCriteria(conn, criteria, 0l, 0l);
+        
+        assertEquals(2, readByCriteria.size());
+        assertEquals(estande, readByCriteria.get(0));
+        assertEquals(estande2, readByCriteria.get(1));
     }
 }

@@ -20,12 +20,17 @@ public class Promocao extends BaseEntity{
     private Estande estande;
 
     @Override
+    public String toString() {
+        return "Promocao{" + "nome=" + nome + ", descricao=" + descricao + ", dataHora=" + dataHora + ", estande=" + estande.getTitulo() + '}';
+    }
+
+    @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.nome);
-        hash = 67 * hash + Objects.hashCode(this.descricao);
-        hash = 67 * hash + Objects.hashCode(this.dataHora);
-        hash = 67 * hash + Objects.hashCode(this.estande);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.nome);
+        hash = 37 * hash + Objects.hashCode(this.descricao);
+        hash = 37 * hash + Objects.hashCode(this.dataHora);
+        hash = 37 * hash + Objects.hashCode(this.estande);
         return hash;
     }
 
@@ -53,18 +58,7 @@ public class Promocao extends BaseEntity{
         if (!Objects.equals(this.estande.getId(), other.estande.getId())) {
             return false;
         }
-        
         return true;
-    }
-
-    @Override
-    public String toString() {
-        String toString = "Nome: "+this.nome;
-        toString += "\nDescrição: "+this.descricao;
-        toString += "\nDataHora: "+this.dataHora.toString();
-        toString += "\nEstande: "+this.estande.getId();
-        
-        return toString;
     }
 
     public String getNome() {

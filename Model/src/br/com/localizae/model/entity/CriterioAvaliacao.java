@@ -14,11 +14,13 @@ import java.util.Objects;
  */
 public class CriterioAvaliacao extends BaseEntity {
     private String nome;
+    private Long peso;
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.nome);
+        hash = 17 * hash + Objects.hashCode(this.nome);
+        hash = 17 * hash + Objects.hashCode(this.peso);
         return hash;
     }
 
@@ -37,10 +39,16 @@ public class CriterioAvaliacao extends BaseEntity {
         if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
+        if (!Objects.equals(this.peso, other.peso)) {
+            return false;
+        }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "CriterioAvaliacao{" + "nome=" + nome + ", peso=" + peso + '}';
+    }
 
     public String getNome() {
         return nome;
@@ -48,5 +56,13 @@ public class CriterioAvaliacao extends BaseEntity {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Long getPeso() {
+        return peso;
+    }
+
+    public void setPeso(Long peso) {
+        this.peso = peso;
     }
 }

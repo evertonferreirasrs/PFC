@@ -33,7 +33,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
         int i = 0;
         ps.setLong(++i, entity.getNota());
-        ps.setString(++i, entity.getComentario());
+        ps.setString(++i, entity.getOpiniao());
         ps.setLong(++i, entity.getUsuario().getId());
         ps.setLong(++i, entity.getEstande().getId());
 
@@ -68,7 +68,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
         int i = 0;
         ps.setLong(++i, entity.getNota());
-        ps.setString(++i, entity.getComentario());
+        ps.setString(++i, entity.getOpiniao());
         ps.setLong(++i, entity.getUsuario().getId());
         ps.setLong(++i, entity.getEstande().getId());
         ps.setLong(++i, entity.getId());
@@ -81,7 +81,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
     public AvaliacaoVisitante readById(Connection conn, Long id) throws Exception {
         AvaliacaoVisitante avaliacaoVisitante = null;
 
-        String sql = "SELECT a.*, u.nome usuario, e.nome estande FROM avaliacaoVisitante a JOIN usuario u ON a.usuario_fk = u.id JOIN estande e ON a.estande_fk = e.id WHERE a.id=?;";
+        String sql = "SELECT a.*, u.nome usuario, e.titulo estande FROM avaliacaoVisitante a JOIN usuario u ON a.usuario_fk = u.id JOIN estande e ON a.estande_fk = e.id WHERE a.id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -92,7 +92,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
         while (rs.next()) {
             avaliacaoVisitante = new AvaliacaoVisitante();
-            avaliacaoVisitante.setComentario(rs.getString("comentario"));
+            avaliacaoVisitante.setOpiniao(rs.getString("comentario"));
             avaliacaoVisitante.setNota(rs.getLong("nota"));
             avaliacaoVisitante.setId(rs.getLong("id"));
 
@@ -102,7 +102,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
             Estande estande = new Estande();
             estande.setId(rs.getLong("estande_fk"));
-            estande.setNome(rs.getString("estande"));
+            estande.setTitulo(rs.getString("estande"));
 
             avaliacaoVisitante.setEstande(estande);
             avaliacaoVisitante.setUsuario(usuario);
@@ -118,10 +118,12 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
         }
         List<AvaliacaoVisitante> avaliacaoVisitanteList = new ArrayList<>();
 
-        String sql = "SELECT a.*, u.nome usuario, e.nome estande FROM avaliacaoVisitante a JOIN usuario u ON a.usuario_fk = u.id JOIN estande e ON a.estande_fk = e.id WHERE 1=1";
+        String sql = "SELECT a.*, u.nome usuario, e.titulo estande FROM avaliacaoVisitante a JOIN usuario u ON a.usuario_fk = u.id JOIN estande e ON a.estande_fk = e.id WHERE 1=1";
         
         List<Object> args = new ArrayList<>();
         sql += this.applyCriteria(criteria, args);
+        
+        sql += " order by a.id";
         
         if(limit != null && limit > 0){
             sql += " LIMIT ?";
@@ -144,7 +146,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
         while (rs.next()) {
             AvaliacaoVisitante avaliacaoVisitante = new AvaliacaoVisitante();
-            avaliacaoVisitante.setComentario(rs.getString("comentario"));
+            avaliacaoVisitante.setOpiniao(rs.getString("comentario"));
             avaliacaoVisitante.setNota(rs.getLong("nota"));
             avaliacaoVisitante.setId(rs.getLong("id"));
 
@@ -154,7 +156,7 @@ public class AvaliacaoVisitanteDAO implements BaseDAO<AvaliacaoVisitante> {
 
             Estande estande = new Estande();
             estande.setId(rs.getLong("estande_fk"));
-            estande.setNome(rs.getString("estande"));
+            estande.setTitulo(rs.getString("estande"));
 
             avaliacaoVisitante.setEstande(estande);
             avaliacaoVisitante.setUsuario(usuario);
