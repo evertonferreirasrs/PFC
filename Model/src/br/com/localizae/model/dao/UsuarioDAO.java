@@ -133,11 +133,62 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         }
     }
     
-    public void patch(Usuario entity, Connection conn) throws SQLException{
-        Map<String, Object> atributos = new HashMap<>();
-        if(!entity.getEmail().isEmpty()){
-            atributos.put("email", entity.getEmail());
+    public void updatePartial(Connection conn, Usuario entity) throws SQLException{
+        String sql = "UPDATE usuario SET id=?";
+        List<Object> args = new ArrayList<>();
+        args.add(entity.getId());
+        if(entity.getNome() != null && !entity.getNome().isEmpty()){
+            sql += ", nome=?";
+            args.add(entity.getNome());
         }
+        
+        if(entity.getDataHoraExpiracaoToken() != null && entity.getDataHoraExpiracaoToken() != null){
+            sql += ", dataHoraExpiracaoToken=?";
+            args.add(entity.getDataHoraExpiracaoToken());
+        }
+        
+        if(entity.getEmail() != null && !entity.getEmail().isEmpty()){
+            sql += ", email=?";
+            args.add(entity.getEmail());
+        }
+        
+        if(entity.getMotivo() != null && !entity.getMotivo().isEmpty()){
+            sql += ", motivo=?";
+            args.add(entity.getMotivo());
+        }
+        
+        if(entity.getSenha() != null && !entity.getSenha().isEmpty()){
+            sql += ", senha=?";
+            args.add(entity.getSenha());
+        }
+        
+        if(entity.getSituacao() != null &&!entity.getSituacao().isEmpty()){
+            sql += ", situacao=?";
+            args.add(entity.getSituacao());
+        }
+        
+        if(entity.getTokenAutenticacao() != null && !entity.getTokenAutenticacao().isEmpty()){
+            sql += ", tokenAutenticacao=?";
+            args.add(entity.getTokenRedeSocial());
+        }
+        
+        if(entity.getTokenRedeSocial() != null && !entity.getTokenRedeSocial().isEmpty()){
+            sql += ", tokenRedeSocial=?";
+            args.add(entity.getTokenRedeSocial());
+        }
+        
+        sql += " WHERE id=?";
+        args.add(entity.getId());
+        
+        PreparedStatement ps = conn.prepareStatement(sql);
+        
+        int i = 0;
+        for(Object arg : args){
+            ps.setObject(++i, arg);
+        }
+        
+        ps.execute();
+        ps.close();
         
     }
 

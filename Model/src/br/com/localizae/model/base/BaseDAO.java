@@ -17,6 +17,7 @@ public interface BaseDAO <E extends BaseEntity>{
     public void create(Connection conn, E entity) throws Exception;
     public void delete(Connection conn, Long id) throws Exception;
     public void update(Connection conn, E entity) throws Exception;
+    public void updatePartial(Connection conn, E entity) throws Exception;
     public E readById(Connection conn, Long id) throws Exception;
     public List<E> readByCriteria(Connection conn, Map<Enum, Object> criteria, Long limit, Long offset) throws Exception;
     public String applyCriteria(Map<Enum, Object> criteria, List<Object> args) throws Exception;

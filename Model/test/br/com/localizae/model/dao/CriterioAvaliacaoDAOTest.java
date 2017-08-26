@@ -291,4 +291,23 @@ public class CriterioAvaliacaoDAOTest {
         assertEquals(qtdeExpResult, result.size());
         assertEquals(criterio2, result.get(0));
     }
+    
+    @Test 
+    public void testUpdatePartial()throws Exception{
+        CriterioAvaliacao criterio = new CriterioAvaliacao();
+        criterio.setNome("explanacao");
+        criterio.setPeso(5l);
+        
+        dao.create(conn, criterio);
+        
+        CriterioAvaliacao newCriterio = new CriterioAvaliacao();
+        newCriterio.setId(criterio.getId());
+        newCriterio.setNome("Explanação");
+        
+        dao.updatePartial(conn, newCriterio);
+        
+        CriterioAvaliacao readById = dao.readById(conn, criterio.getId());
+        
+        assertEquals(newCriterio.getNome(), readById.getNome());
+    }
 }

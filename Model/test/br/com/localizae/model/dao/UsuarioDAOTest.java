@@ -1462,4 +1462,35 @@ public class UsuarioDAOTest {
         assertEquals(4, list.size());
         assertEquals(administrador, list.get(0));
     }
+    
+    @Test
+    public void testUpdatePartial() throws Exception{
+        /*Criando Usuário*/
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setId(1l);
+        tipo.setNome("Administrador");
+        
+        Usuario usuario = new Usuario();
+        usuario.setNome("Marcos Antonio");
+        usuario.setEmail("marcosantonio@localizae.net");
+        usuario.setSenha("123456");
+        usuario.setSituacao("Ativo");
+        usuario.setMotivo("");
+        usuario.setDataHoraExpiracaoToken(null);
+        usuario.setTokenAutenticacao(null);
+        usuario.setTokenRedeSocial(null);
+        usuario.setTipoUsuario(tipo);
+        
+        dao.create(conn, usuario);
+        
+        Usuario newUsuario = new Usuario();
+        newUsuario.setId(usuario.getId());
+        newUsuario.setNome("Marcos Antonio dos Santos");
+        
+        dao.updatePartial(conn, newUsuario);
+        
+        Usuario readById = dao.readById(conn, usuario.getId());
+        
+        assertEquals(readById.getNome(), newUsuario.getNome());
+    }
 }

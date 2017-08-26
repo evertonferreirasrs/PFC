@@ -168,5 +168,35 @@ public class CriterioAvaliacaoDAO implements BaseDAO<CriterioAvaliacao>{
         
         return sql;
     }
+
+    @Override
+    public void updatePartial(Connection conn, CriterioAvaliacao entity) throws Exception {
+        String sql = "UPDATE criterioAvaliacao SET id=?";
+        List<Object> args = new ArrayList<>();
+        args.add(entity.getId());
+        
+        if(entity.getNome() != null && !entity.getNome().isEmpty()){
+            sql += ", nome=?";
+            args.add(entity.getNome());
+        }
+        
+        if(entity.getPeso() != null){
+            sql += ", peso=?";
+            args.add(entity.getPeso());
+        }
+        
+        sql += " WHERE id=?";
+        args.add(entity.getId());
+        
+        PreparedStatement ps = conn.prepareStatement(sql);
+        
+        int i = 0;
+        for(Object arg : args){
+            ps.setObject(++i, arg);
+        }
+        
+        ps.execute();
+        ps.close();
+    }
     
 }

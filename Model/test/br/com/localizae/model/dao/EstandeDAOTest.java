@@ -468,4 +468,38 @@ public class EstandeDAOTest {
         assertEquals(estande, readByCriteria.get(0));
         assertEquals(estande2, readByCriteria.get(1));
     }
+    
+    @Test
+    public void testUpdatePartial()throws Exception{
+        Evento evento = new Evento();
+        evento.setNome("FAITEC 2017");
+        evento.setEndereco("Alcidao SRS");
+        evento.setDataHoraEventoInicio(new Timestamp(2015, 10, 18, 19, 0, 0, 0).getTime());
+        evento.setDataHoraEventoFim(new Timestamp(2015, 10, 20, 23, 0, 0, 0).getTime());
+        
+        EventoDAO daoEvento = new EventoDAO();
+        
+        daoEvento.create(conn, evento);
+        
+        Estande estande = new Estande();
+        estande.setAreaTematica("area tematica");
+        estande.setCurso("sistemas de informacao");
+        estande.setDescricao("descricao");
+        estande.setEvento(evento);
+        estande.setNumero(48l);
+        estande.setPeriodo(4l);
+        estande.setTitulo("um projeto qualquer");
+        
+        dao.create(conn, estande);
+        
+        Estande newEstande = new Estande();
+        newEstande.setId(estande.getId());
+        newEstande.setTitulo("LocalizaE");
+        
+        dao.updatePartial(conn, newEstande);
+        
+        Estande readById = dao.readById(conn, estande.getId());
+        
+        assertEquals(newEstande.getTitulo(), readById.getTitulo());
+    }
 }

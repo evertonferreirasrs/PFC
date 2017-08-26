@@ -108,5 +108,26 @@ public class PromocaoService implements BasePromocaoService{
         
         return promocaoList;
     }
+
+    @Override
+    public void updatePartial(Promocao entity) throws Exception {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        PromocaoDAO dao = new PromocaoDAO();
+        
+        try{
+            dao.updatePartial(conn, entity);
+            conn.commit();
+        }catch(Exception e){
+            conn.rollback();
+            throw e;
+        }finally{
+            conn.close();
+        }
+    }
+
+    @Override
+    public void validate(Promocao entity) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
