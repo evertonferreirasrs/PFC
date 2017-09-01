@@ -10,5 +10,7 @@ package br.com.localizae.model.criteria;
  * @author marca
  */
 public enum FileCriteria {
-    URI_ILIKE
+    URI_ILIKE,
+    ESTANDE_EQ,
+    PROMO_EQ
 }
