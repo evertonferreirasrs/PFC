@@ -6,6 +6,8 @@
 package br.com.localizae.model.entity;
 
 import br.com.localizae.model.base.BaseEntity;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  *
@@ -16,6 +18,42 @@ public class File extends BaseEntity{
     private byte[] File;
     private Estande estande;
     private Promocao promocao;
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.uri);
+        hash = 89 * hash + Arrays.hashCode(this.File);
+        hash = 89 * hash + Objects.hashCode(this.estande);
+        hash = 89 * hash + Objects.hashCode(this.promocao);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final File other = (File) obj;
+        if (!Objects.equals(this.uri, other.uri)) {
+            return false;
+        }
+       
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "File{" + "uri=" + uri + ", File=" + File + ", estande=" + estande + ", promocao=" + promocao + '}';
+    }
+    
+    
 
     public String getUri() {
         return uri;
