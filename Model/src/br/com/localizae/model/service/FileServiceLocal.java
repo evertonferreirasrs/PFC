@@ -10,10 +10,12 @@ import br.com.localizae.model.base.service.FileServiceBase;
 import br.com.localizae.model.dao.FileDAO;
 import br.com.localizae.model.entity.File;
 import br.com.localizae.model.utils.Constantes;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -24,6 +26,7 @@ public class FileServiceLocal implements FileServiceBase {
     @Override
     public void upload(File file) throws Exception {
         Connection conn = null;
+        
         try {
             conn = ConnectionManager.getInstance().getConnection();
             FileDAO dao = new FileDAO();
@@ -32,11 +35,14 @@ public class FileServiceLocal implements FileServiceBase {
 
             FileOutputStream fos = new FileOutputStream(Constantes.PATH_FILE + file.getUri());
             fos.write(file.getFile());
+            
             fos.close();
 
             conn.commit();
         } catch (Exception e) {
             conn.rollback();
+            
+            throw e;
         } finally {
             conn.close();
         }
@@ -52,6 +58,8 @@ public class FileServiceLocal implements FileServiceBase {
 
             Map<Enum, Object> criteria = new HashMap<>();
             File arq = dao.readByCriteria(conn, criteria, 0l, 0l).get(0);
+            FileInputStream fis = new FileInputStream(Constantes.PATH_FILE + arq.getUri());
+            arq.setFile(IOUtils.toByteArray(fis));
             file = arq.getFile();
         } catch (Exception ex) {
             throw ex;
@@ -69,7 +77,10 @@ public class FileServiceLocal implements FileServiceBase {
             conn = ConnectionManager.getInstance().getConnection();
             FileDAO dao = new FileDAO();
 
-            file = dao.readById(conn, id).getFile();
+            File arq = dao.readById(conn, id);
+            FileInputStream fis = new FileInputStream(Constantes.PATH_FILE + arq.getUri());
+            arq.setFile(IOUtils.toByteArray(fis));
+            file = arq.getFile();
         } catch (Exception ex) {
             throw ex;
         }

@@ -60,6 +60,9 @@ public class File extends BaseEntity{
     }
 
     public void setUri(String uri) {
+        if(!uri.contains(".jpg")){
+            uri += ".jpg";
+        }
         this.uri = uri;
     }
 
