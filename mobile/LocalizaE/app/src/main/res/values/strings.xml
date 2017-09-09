@@ -24,6 +24,8 @@
         completions."
     </string>
 
+    <string name="password_mismatch">Senhas não conferem!</string>
+
     <string-array name="array_list">
         <item>aaa</item>
         <item>bbb</item>

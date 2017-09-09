@@ -19,11 +19,23 @@ public class Usuario extends BaseEntity{
 
     @SerializedName("tipoUsuario")
     @Expose
-    private Long tipoUsuario;
+    private tipoUsuario tipoUsuario = new tipoUsuario();
+
+    private class tipoUsuario {
+        @SerializedName("id")
+        @Expose
+        private Long id = 1L;
+    }
 
     @SerializedName("situacao")
     @Expose
     private String situacao;
+
+    public Usuario(String nome, String email, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
 
     public String getNome() {
         return nome;
@@ -49,11 +61,11 @@ public class Usuario extends BaseEntity{
         this.senha = senha;
     }
 
-    public Long getTipoUsuario() {
+    public tipoUsuario getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipoUsuario(Long tipoUsuario) {
+    public void setTipoUsuario(tipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 
