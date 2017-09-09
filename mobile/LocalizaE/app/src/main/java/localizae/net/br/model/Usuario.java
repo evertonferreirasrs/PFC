@@ -1,11 +1,28 @@
 package localizae.net.br.model;
 
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.Expose;
+
 public class Usuario extends BaseEntity{
 
+    @SerializedName("nome")
+    @Expose
     private String nome;
+
+    @SerializedName("email")
+    @Expose
     private String email;
+
+    @SerializedName("senha")
+    @Expose
     private String senha;
+
+    @SerializedName("tipoUsuario")
+    @Expose
     private Long tipoUsuario;
+
+    @SerializedName("situacao")
+    @Expose
     private String situacao;
 
     public String getNome() {

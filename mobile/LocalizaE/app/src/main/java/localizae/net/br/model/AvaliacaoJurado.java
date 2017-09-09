@@ -1,9 +1,20 @@
 package localizae.net.br.model;
 
-public class AvaliacaoJurado extends BaseEntity{
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
+public class AvaliacaoJurado extends BaseEntity{
+//TODO: PEDIR PRO MARCAO MUDAR SERVICO DE RETORNO DA AVALIACAO DO JURADO
+    @SerializedName("nomeUsuario")
+    @Expose
     private String nomeUsuario;
+
+    @SerializedName("nota")
+    @Expose
     private Long nota;
+
+    @SerializedName("criterio")
+    @Expose
     private String criterio;
 
     public String getNomeUsuario() {

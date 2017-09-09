@@ -1,9 +1,17 @@
 package localizae.net.br.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Evento extends BaseEntity{
 
+    @SerializedName("nome")
+    @Expose
     private String nome;
-    private String endereço;
+
+    @SerializedName("endereco")
+    @Expose
+    private String endereco;
 
     public String getNome() {
         return nome;
@@ -14,10 +22,10 @@ public class Evento extends BaseEntity{
     }
 
     public String getEndereço() {
-        return endereço;
+        return endereco;
     }
 
-    public void setEndereço(String endereço) {
-        this.endereço = endereço;
+    public void setEndereço(String endereco) {
+        this.endereco = endereco;
     }
 }

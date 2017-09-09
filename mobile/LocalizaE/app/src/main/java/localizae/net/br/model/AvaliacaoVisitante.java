@@ -1,16 +1,25 @@
 package localizae.net.br.model;
 
-public class AvaliacaoVisitante {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    private String usuario;
+public class AvaliacaoVisitante {
+//TODO: PEDIR PRO MARCAO MUDAR O SERVICO DE AVALIACAO DE VISITANTE
+
+    @SerializedName("nomeUsuario")
+    @Expose
+    private String nomeUsuario;
+
+    @SerializedName("nota")
+    @Expose
     private Long nota;
 
     public String getUsuario() {
-        return usuario;
+        return nomeUsuario;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
     }
 
     public Long getNota() {

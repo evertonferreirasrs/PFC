@@ -1,11 +1,28 @@
 package localizae.net.br.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Estande extends BaseEntity{
 
+    @SerializedName("titulo")
+    @Expose
     private String titulo;
+
+    @SerializedName("curso")
+    @Expose
     private String curso;
+
+    @SerializedName("periodo")
+    @Expose
     private Long periodo;
+
+    @SerializedName("numero")
+    @Expose
     private Long numero;
+
+    @SerializedName("areaTematica")
+    @Expose
     private String areaTematica;
 
     public String getTitulo() {
