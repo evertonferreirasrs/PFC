@@ -24,6 +24,10 @@
         completions."
     </string>
 
+    <string name="account_created">Conta criada</string>
+    <string name="password_mismatch">Senhas não conferem!</string>
+    <string name="fill_entries">Preencha os campos!</string>
+
     <string-array name="array_list">
         <item>aaa</item>
         <item>bbb</item>
