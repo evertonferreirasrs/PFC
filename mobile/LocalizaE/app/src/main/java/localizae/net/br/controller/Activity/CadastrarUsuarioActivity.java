@@ -21,19 +21,26 @@ import localizae.net.br.utils.ResponseCodeValidator;
 
 public class CadastrarUsuarioActivity extends AppCompatActivity {
 
+    // Variavel para armazenar o contexto
     private Context context;
 
+    // Variavel broadcastReceiber para receber chamadas de outras telas/classes
     public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            // Identifica a origem do intent
             if (intent.getAction().equals(Constants.CREATE_USER_ACTIVITY_TAG)) {
+                // Pega o codigo de resposta recebido da service
                 int responseCode = intent.getIntExtra(Constants.RESPONSE_CODE_KEY, 500);
                 Log.d(Constants.CREATE_USER_ACTIVITY_TAG, "Recebeu resposta " + responseCode);
+                // Switch case pelo codigo de resposta
                 switch (responseCode) {
                     case 200:
+                        // 200 sempre é sucesso enviado pelo servidor
                         Toast.makeText(context, getString(R.string.account_created), Toast.LENGTH_LONG).show();
                         break;
                     default:
+                        // Caso outro erro aconteca
                         String text = ResponseCodeValidator.validateResponseCode(responseCode);
                         Toast.makeText(context, text, Toast.LENGTH_LONG).show();
                         break;
@@ -49,6 +56,7 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Cadastrar");
 
+        // Salva o contexto
         context = this;
 
         Button cadastrar_id = (Button) findViewById(R.id.botao_cadastar_id);
@@ -57,19 +65,22 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //startActivity(new Intent(CadastrarUsuarioActivity.this,LoginActivity.class));
 
-                //Realizar o cadastro
+                //Realizar o cadastro recebendo informacoes do usuario
                 String nome = ((EditText) findViewById(R.id.campo_nome_id)).getText().toString();
                 String email = ((EditText) findViewById(R.id.campo_email_id)).getText().toString();
                 String senha = ((EditText) findViewById(R.id.campo_senha_id)).getText().toString();
                 String confirmaSenha = ((EditText) findViewById(R.id.campo_confirmar_senha_id)).getText().toString();
 
+                // Validacao basica do campo
                 if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || confirmaSenha.isEmpty()) {
                     Toast.makeText(context, getString(R.string.fill_entries), Toast.LENGTH_LONG).show();
                 } else {
+                    // Validacao de senha
                     if (senha.equals(confirmaSenha)) {
-
+                        // Registrar o broadcast receiver para receber chamadas de outros atores
                         registerBroadcast();
 
+                        // Instancia de uma user service para criar o usuario
                         UserService userService = new UserService();
                         userService.CreateUser(new Usuario(nome, email, senha), context);
                     } else {
