@@ -10,9 +10,9 @@ public class WebRequest {
     public static final String TAG = "WEB_REQUEST";
     public static final String BASE_URL = "http://18.220.190.201:8080/localizae/";
 
-    public Retrofit retrofit = null;
+    public static Retrofit retrofit = null;
 
-    public Retrofit getRetrofitInstance() {
+    public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();

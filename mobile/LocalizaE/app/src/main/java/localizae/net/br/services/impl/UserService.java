@@ -16,7 +16,7 @@ import retrofit2.Response;
 public class UserService {
 
     // Pega uma instancia do retrofit para fazer a comunicacao com o web service
-    private UserEndpointInterface userServiceEndpoint = new WebRequest().getRetrofitInstance().create(UserEndpointInterface.class);
+    private UserEndpointInterface userServiceEndpoint = WebRequest.getRetrofitInstance().create(UserEndpointInterface.class);
 
     /**
      * Metodo para criar usuario

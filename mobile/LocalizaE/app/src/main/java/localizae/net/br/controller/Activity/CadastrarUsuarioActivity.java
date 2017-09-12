@@ -99,7 +99,7 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
         lbm.unregisterReceiver(broadcastReceiver);
     }
-    
+
     private void registerBroadcast() {
         //Resgister broadcast receiver
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
