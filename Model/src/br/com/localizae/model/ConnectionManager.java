@@ -4,7 +4,7 @@ import java.sql.Connection;
 import org.postgresql.ds.PGPoolingDataSource;
 
 public class ConnectionManager {
-    private PGPoolingDataSource dataSource;
+    private final PGPoolingDataSource dataSource;
     public Connection getConnection() throws Exception {
         Connection conn = dataSource.getConnection();
         conn.setAutoCommit(false);
