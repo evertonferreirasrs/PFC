@@ -6,13 +6,11 @@
 package br.net.localizae.webservice.controller;
 
 import br.com.localizae.model.entity.File;
-import br.com.localizae.model.entity.FileBase;
 import br.com.localizae.model.service.FileServiceLocal;
 import br.net.localizae.webservice.converter.JsonConverter;
 import java.io.IOException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import static org.springframework.http.converter.json.Jackson2ObjectMapperBuilder.json;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +27,7 @@ public class UploadController {
     
     @RequestMapping(value = "imagem", method = RequestMethod.POST)
     public ResponseEntity post(@RequestBody String json) throws IOException{
-        File file = (File) JsonConverter.convertFromJson(json, FileBase.class);
+        File file = (File) JsonConverter.convertFromJson(json, File.class);
         
         FileServiceLocal service = new FileServiceLocal();
         try {
