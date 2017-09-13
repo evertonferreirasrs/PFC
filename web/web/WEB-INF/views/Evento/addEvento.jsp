@@ -20,7 +20,7 @@
                 <div class="page-title">
                     <div>
                         <h1><i class="fa fa-plus-square"></i> Criar Evento</h1>
-                        <p> LocalizaÊ - Sistema de Posicionamento Interno FAITEC</p>
+                        <p> LocalizaÊ - Sistema de Posicionamento Interno Para Eventos</p>
                     </div>
                     <div>
                         <ul class="breadcrumb">
@@ -81,6 +81,7 @@
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script>
 
+        <!-- Importa os scripts necessários para as fucnionalidades relacionadas à entidade evento -->
         <jsp:include page="import-scripts-evento.jsp"/>
         
         <script>

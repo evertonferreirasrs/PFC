@@ -36,7 +36,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <form onsubmit="usuarioController.addAdm(event)">
+                                    <form onsubmit="usuarioController.submitForm(event)">
                                         <input type="hidden" id="inputTipoUsuario" value="1">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -56,6 +56,7 @@
 
                                             <br><br>
                                         </div>
+                                        
                                         <div class="col-md-12">
                                             <button class="btn btn-primary pull-right" id="demoSwal" type="submit">Confirmar</button>
                                         </div>
