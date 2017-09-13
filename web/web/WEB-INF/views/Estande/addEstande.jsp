@@ -20,7 +20,7 @@
                 <div class="page-title">
                     <div>
                         <h1><i class="fa fa-plus-square"></i> Criar Estande</h1>
-                        <p> LocalizaÊ - Sistema de Posicionamento Interno FAITEC</p>
+                        <p> LocalizaÊ - Sistema de Posicionamento Interno Para Eventos</p>
                     </div>
                     <div>
                         <ul class="breadcrumb">

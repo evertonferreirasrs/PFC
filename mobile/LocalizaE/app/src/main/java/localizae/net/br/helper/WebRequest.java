@@ -10,13 +10,20 @@ public class WebRequest {
     public static final String TAG = "WEB_REQUEST";
     public static final String BASE_URL = "http://18.220.190.201:8080/localizae/";
 
-    private HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
-    private OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+    public static Retrofit retrofit = null;
 
-    public Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+    public static Retrofit getRetrofitInstance() {
+        if (retrofit == null) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .client(client)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+        return retrofit;
+    }
 }

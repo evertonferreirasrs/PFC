@@ -19,6 +19,40 @@ class UsuarioController {
         )
     }
 
+    submitForm(event) {
+        event.preventDefault()
+        // console.log('sflhbms')
+        var fileList = document.getElementById("image").files;
+        var fileReader = new FileReader()
+        if (fileReader && fileList && fileList.length) {
+            fileReader.readAsDataURL(fileList[0])
+            fileReader.onload = function () {
+                var imageData = fileReader.result;
+                let json = {
+                    base64: imageData.split(',')[1]
+                }
+                console.log()
+                let xhr = new XMLHttpRequest()
+
+                xhr.open('POST', 'http://localhost:8080/WebService/upload')
+                xhr.setRequestHeader("Content-type", "application/json")
+
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            console.log(
+                                xhr.responseText)
+                        } else {
+                            console.log(xhr.responseText)
+                        }
+                    }
+                }
+                let data = JSON.stringify(json)
+                xhr.send(data)
+            }
+        }
+    }
+
     async alteraAdm(event) {
         event.preventDefault()
 
