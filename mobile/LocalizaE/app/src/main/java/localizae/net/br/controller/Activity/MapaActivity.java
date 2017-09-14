@@ -30,7 +30,7 @@ public class MapaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
 
-        getSupportActionBar().setTitle("Mapa");
+        getSupportActionBar().setTitle(" Mapa");
 
         ListView listView = (ListView)findViewById(R.id.listView_id);
         ArrayList<String> arrayList = new ArrayList<>();

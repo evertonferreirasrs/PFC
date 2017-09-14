@@ -11,11 +11,13 @@
     tools:context="localizae.net.br.controller.Activity.MapaActivity">
 
     <ImageView
+        android:id="@+id/mapa_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/mapa_id"
         android:layout_gravity="center"
+        android:scaleType="fitXY"
         android:src="@drawable/mapa" />
+
 
     <ListView
         android:layout_width="wrap_content"

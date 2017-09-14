@@ -54,7 +54,8 @@ public class MenuActivity extends AppCompatActivity
 
 
        // ABRIR MENSAGEM DE BOAS-VINDAS
-        setTitle("LocalizaÊ");
+        getSupportActionBar().setIcon(R.drawable.icone_logo);
+        setTitle(" LocalizaÊ");
         InicioFragment inicioFragment = new InicioFragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_id, inicioFragment).commit();
@@ -90,6 +91,7 @@ public class MenuActivity extends AppCompatActivity
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -99,30 +101,23 @@ public class MenuActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        // LOGAR NO SISTEMA
-        if(id == R.id.login_id) {
-            setTitle("Login");
-            Intent i = new Intent(getBaseContext(),LoginActivity.class);
-            startActivity(i);
-
-
         // MAPA DA FAITEC
-        }else if (id == R.id.mapa_id) {
-            setTitle("Mapa");
+        if (id == R.id.mapa_id) {
+            setTitle(" Mapa");
             Intent i = new Intent(getBaseContext(),MapaActivity.class);
             startActivity(i);
 
 
             // ALTERAR SENHA
         }else if (id == R.id.alterar_senha_id) {
-            setTitle("Alterar Senha");
+            setTitle(" Alterar Senha");
             Intent i = new Intent(getBaseContext(),AlterarSenhaActivity.class);
             startActivity(i);
 
 
             // MINHAS AVALIAÇÕES
         }else if (id == R.id.minhas_avaliacoes_id) {
-            setTitle("Minhas Avaliações");
+            setTitle(" Minhas Avaliações");
             MinhasAvaliacoesFragment minhasAvaliacoesFragment = new MinhasAvaliacoesFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, minhasAvaliacoesFragment).commit();
@@ -130,21 +125,21 @@ public class MenuActivity extends AppCompatActivity
 
         // MEU ESTANDE
         } else if (id == R.id.meu_estande_id) {
-            setTitle("Meu Estande");
+            setTitle(" Meu Estande");
             MeuEstandeFragment meuEstandeFragment = new MeuEstandeFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, meuEstandeFragment).commit();
 
             // COMENTÁRIOS E QUALIFICAÇÕES DO MEU ESTANDE
         } else if (id == R.id.qualificacao_comentarios_id) {
-            setTitle("Qualificações e Comentários");
+            setTitle(" Qualificações e Comentários");
             QualificacaoComentariosFragment qualificacaoComentariosFragment = new QualificacaoComentariosFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, qualificacaoComentariosFragment).commit();
 
         // AVALIAR ESTANDES
         }else if (id == R.id.avaliar_estande_id) {
-            setTitle("Avaliar Estande");
+            setTitle(" Avaliar Estande");
             AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, avaliarEstandeFragment).commit();
@@ -152,7 +147,7 @@ public class MenuActivity extends AppCompatActivity
 
         // MINHAS AVALIAÇÕES
         } else if (id == R.id.minhas_avaliacoes_jurado_id) {
-            setTitle("Minhas Avaliações");
+            setTitle(" Minhas Avaliações");
             MinhasAvaliacoesJuradoFragment minhasAvaliacoesJuradoFragment = new MinhasAvaliacoesJuradoFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, minhasAvaliacoesJuradoFragment).commit();
@@ -160,7 +155,7 @@ public class MenuActivity extends AppCompatActivity
 
         // SOBRE O LOCALIZAÊ
         } else if (id == R.id.localizae_id) {
-            setTitle("LocalizaÊ");
+            setTitle(" LocalizaÊ");
             LocalizaeFragment localizaeFragment = new LocalizaeFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, localizaeFragment).commit();
@@ -168,7 +163,7 @@ public class MenuActivity extends AppCompatActivity
 
         // POLÍTICAS DE USO
         } else if (id == R.id.politicas_de_uso_id) {
-            setTitle("Políticas de Uso");
+            setTitle(" Políticas de Uso");
             PoliticasDeUsoFragment politicasDeUsoFragment = new PoliticasDeUsoFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, politicasDeUsoFragment).commit();
@@ -176,7 +171,7 @@ public class MenuActivity extends AppCompatActivity
 
         // ENVIAR FEEDBACK
         } else if (id == R.id.enviar_feedback_id) {
-            setTitle("Enviar Feedback");
+            setTitle(" Enviar Feedback");
             EnviarFeedbackFragment enviarFeedbackFragment = new EnviarFeedbackFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, enviarFeedbackFragment).commit();
@@ -184,21 +179,21 @@ public class MenuActivity extends AppCompatActivity
 
         // AJUDA
         } else if (id == R.id.ajuda_id) {
-            setTitle("Ajuda");
+            setTitle(" Ajuda");
             AjudaFragment ajuda = new AjudaFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, ajuda).commit();
 
         // SOBRE
         }else if (id == R.id.sobre_id) {
-            setTitle("Sobre");
+            setTitle(" Sobre");
             SobreFragment sobre = new SobreFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, sobre).commit();
 
         // SAIR
         } else if (id == R.id.sair_id) {
-            setTitle("Sair");
+            setTitle(" Sair");
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Sair");

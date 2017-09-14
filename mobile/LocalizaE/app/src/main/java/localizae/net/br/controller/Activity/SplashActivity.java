@@ -31,7 +31,7 @@ public class SplashActivity extends Activity {
             public void onAnimationEnd(Animation animation) {
                 iv_logo.startAnimation(an2_logo);
                 finish();
-                Intent i = new Intent(getBaseContext(),MenuActivity.class);
+                Intent i = new Intent(getBaseContext(),LoginActivity.class);
                 startActivity(i);
             }
 

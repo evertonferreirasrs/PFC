@@ -11,5 +11,7 @@ public class ComentarQualificarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comentar_qualificar);
+
+        getSupportActionBar().setIcon(R.drawable.icone_logo);
     }
 }

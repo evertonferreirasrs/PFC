@@ -12,7 +12,8 @@ public class AlterarSenhaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alterar_senha);
 
-        getSupportActionBar().setTitle("Alterar Senha");
+        getSupportActionBar().setIcon(R.drawable.icone_logo);
+        getSupportActionBar().setTitle(" Alterar Senha");
 
     }
 }
