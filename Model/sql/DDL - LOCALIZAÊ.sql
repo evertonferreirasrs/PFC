@@ -1,9 +1,9 @@
 ﻿CREATE TABLE usuario(
 	id BIGSERIAL NOT NULL,
-	email VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL UNIQUE,
 	nome VARCHAR(255) NOT NULL,
 	senha VARCHAR(32) NOT NULL,
-	situacao VARCHAR(50) NOT NULL DEFAULT false,
+	situacao VARCHAR(50) NOT NULL DEFAULT 'ativo',
 	motivo TEXT NULL,
 	tokenRedeSocial VARCHAR(32),
 	tokenAutenticacao VARCHAR(32),
@@ -30,7 +30,7 @@ CREATE TABLE estande(
 	curso VARCHAR(255) NOT NULL,
 	descricao TEXT NULL,
 	periodo BIGINT NOT NULL,
-	titulo VARCHAR(255) NOT NULL,
+	titulo VARCHAR(255) NOT NULL UNIQUE,
 	areaTematica VARCHAR(255) NOT NULL,
 	numero BIGINT NOT NULL,
         evento_fk BIGINT NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE integranteEquipe(
 
 CREATE TABLE imagem(
 	id BIGSERIAL NOT NULL,
-	uri VARCHAR(255) NOT NULL,
+	uri VARCHAR(255) NOT NULL UNIQUE,
 	estande_fk BIGINT,
         promocao_fk BIGINT,
 	PRIMARY KEY(id)
