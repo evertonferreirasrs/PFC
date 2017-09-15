@@ -7,11 +7,14 @@ public class Constants {
 
     // TAGS
     public static final String USER_SERVICE_TAG = "USER_SERVICE";
+    public static final String BOOTH_SERVICE_TAG = "BOOTH_SERVICE";
 
     public static final String CREATE_USER_ACTIVITY_TAG = "CADASTRAR_USUARIO_ACT";
+    public static final String MAP_ACTIVITY_TAG = "MAP_ACT";
 
     // Intent keys
     public static final String RESPONSE_CODE_KEY = "response_code";
+    public static final String DATA_KEY = "data";
 
     // Texts
     public static final String RESPONSE_VALUE_200  = "Sucesso";

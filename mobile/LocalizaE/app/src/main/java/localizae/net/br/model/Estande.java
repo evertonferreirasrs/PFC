@@ -3,7 +3,9 @@ package localizae.net.br.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Estande extends BaseEntity{
+import java.io.Serializable;
+
+public class Estande extends BaseEntity implements Serializable{
 
     @SerializedName("titulo")
     @Expose
@@ -24,6 +26,14 @@ public class Estande extends BaseEntity{
     @SerializedName("areaTematica")
     @Expose
     private String areaTematica;
+
+    @SerializedName("posicaoX")
+    @Expose
+    private Long posicaoX;
+
+    @SerializedName("posicaoY")
+    @Expose
+    private Long posicaoY;
 
     public String getTitulo() {
         return titulo;
