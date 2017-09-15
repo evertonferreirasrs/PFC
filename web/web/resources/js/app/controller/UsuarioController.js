@@ -235,7 +235,7 @@ class UsuarioController {
             let service = new UsuarioService()
 
             let tipoUsuario = new TipoUsuario(null, this._tipoUsuario.value)
-            let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario, 'ativo')
+            let user = new Usuario(this._nome.value, this._email.value, this._senha.value, tipoUsuario)
             service.validate(user)
 
             this.add(user, service)
