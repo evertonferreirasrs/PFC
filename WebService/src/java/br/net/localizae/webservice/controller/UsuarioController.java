@@ -27,10 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author marca
  */
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class UsuarioController {
     
-    @CrossOrigin(origins = "http://localhost:8080")
+    
     @RequestMapping(value = "usuario", method = RequestMethod.GET)
     public ResponseEntity readByCriteria(String nome, String email, String senha, Long tipoUsuario, String situacao, Long limit, Long offset){
         List<Usuario> usuarioList = null;
