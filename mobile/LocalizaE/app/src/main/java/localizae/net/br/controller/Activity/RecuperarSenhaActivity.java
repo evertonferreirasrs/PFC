@@ -17,6 +17,8 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recuperar_senha);
 
+        getSupportActionBar().setIcon(R.drawable.icone_logo);
+
         enviar_id = (Button) findViewById(R.id.botao_enviar_id);
 
         enviar_id.setOnClickListener(new View.OnClickListener() {
