@@ -41,12 +41,13 @@ public class MapaActivity extends AppCompatActivity {
     public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Constants.CREATE_USER_ACTIVITY_TAG)) {
+            if (intent.getAction().equals(Constants.MAP_ACTIVITY_TAG)) {
                 int responseCode = intent.getIntExtra(Constants.RESPONSE_CODE_KEY, 500);
                 Log.d(Constants.MAP_ACTIVITY_TAG, "Recebeu resposta " + responseCode);
                 switch (responseCode) {
                     case 200:
                         Toast.makeText(context, getString(R.string.account_created), Toast.LENGTH_LONG).show();
+                        estandeList = (List<Estande>)intent.getSerializableExtra(Constants.DATA_KEY);
                         break;
                     default:
                         String text = ResponseCodeValidator.validateResponseCode(responseCode);
@@ -115,6 +116,6 @@ public class MapaActivity extends AppCompatActivity {
     private void registerBroadcast() {
         //Resgister broadcast receiver
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
-        lbm.registerReceiver(broadcastReceiver, new IntentFilter(Constants.CREATE_USER_ACTIVITY_TAG));
+        lbm.registerReceiver(broadcastReceiver, new IntentFilter(Constants.MAP_ACTIVITY_TAG));
     }
 }
