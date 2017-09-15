@@ -39,8 +39,8 @@ public class EstandeDAO implements BaseDAO<Estande> {
         ps.setString(++i, entity.getAreaTematica());
         ps.setLong(++i, entity.getNumero());
         ps.setLong(++i, entity.getEvento().getId());
-        ps.setLong(+i, entity.getPosicaoX());
-        ps.setLong(+i, entity.getPosicaoY());
+        ps.setLong(++i, entity.getPosicaoX());
+        ps.setLong(++i, entity.getPosicaoY());
 
         ResultSet rs = ps.executeQuery();
 

@@ -7,14 +7,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
+
     <head>
-        <jsp:include page="../Componentes/cabecalhoAdministrador.jsp"/>
+        <jsp:include page="../Componentes/cabecalhoAdministrador.jsp" />
     </head>
 
     <body class="sidebar-mini fixed">
         <div class="wrapper">
 
-            <jsp:include page="../Componentes/menuAdministrador.jsp"/> 
+            <jsp:include page="../Componentes/menuAdministrador.jsp" />
 
             <div class="content-wrapper">
                 <div class="page-title">
@@ -55,7 +56,7 @@
                                                             <option>Gestão</option>
                                                             <option>Educação</option>
                                                             <option>Sustentabilidade</option>
-                                                        </select>  
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,7 +75,7 @@
                                                     <option>Pedagogia</option>
                                                     <option>Engenharia de Produção</option>
                                                     <option>Ciências Contábeis</option>
-                                                </select>  
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label" for="select">Período</label>
@@ -89,7 +90,21 @@
                                                     <option value="8">8º período</option>
                                                     <option value="9">9º período</option>
                                                     <option value="10">10º período</option>
-                                                </select>  
+                                                </select>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label for="inputPosicaoX">Posição X:</label>
+                                                        <input type="text" id="inputPosicaoX" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label for="inputPosicaoY">Posição Y:</label>
+                                                        <input type="text" id="inputPosicaoY" class="form-control">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
@@ -111,24 +126,25 @@
         </div>
 
         <!-- Javascripts-->
-        <script src="<c:url value="/resources/js/jquery-2.1.4.min.js"/>"></script>
-        <script src="<c:url value="/resources/js/essential-plugins.js"/>"></script>
-        <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-        <script src="<c:url value="/resources/js/plugins/pace.min.js"/>"></script>
-        <script src="<c:url value="/resources/js/main.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/resources/js/plugins/chart.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/resources/js/plugins/jquery.vmap.min.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/resources/js/plugins/jquery.vmap.world.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/resources/js/plugins/jquery.vmap.sampledata.js"/>"></script>     
-        <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script>
-        
-        
-        <jsp:include page="import-scripts-estande.jsp"/>
-        
+        <script src="<c:url value="/resources/js/jquery-2.1.4.min.js "/>"></script>
+        <script src="<c:url value="/resources/js/essential-plugins.js "/>"></script>
+        <script src="<c:url value="/resources/js/bootstrap.min.js "/>"></script>
+        <script src="<c:url value="/resources/js/plugins/pace.min.js "/>"></script>
+        <script src="<c:url value="/resources/js/main.js "/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/plugins/chart.js "/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/plugins/jquery.vmap.min.js "/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/plugins/jquery.vmap.world.js "/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/plugins/jquery.vmap.sampledata.js "/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js "/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js "/>"></script>
+
+
+        <jsp:include page="import-scripts-estande.jsp" />
+
         <script>
             let estandeController = new EstandeController()
             estandeController.loadSelectEvent()
         </script>
     </body>
+
 </html>
