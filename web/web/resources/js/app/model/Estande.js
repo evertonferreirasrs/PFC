@@ -1,5 +1,5 @@
 class Estande{
-    constructor(titulo, curso, periodo, descricao, areaTematica, numero, evento, equipe, id){
+    constructor(titulo, curso, periodo, descricao, areaTematica, numero, evento, equipe, id, posicaoX, posicaoY){
         this.titulo = titulo;
         this.curso = curso;
         this.periodo = periodo;
@@ -9,5 +9,7 @@ class Estande{
         this.evento = evento;
         this.equipe = equipe;
         this.id = id;
+        this.posicaoX = posicaoX
+        this.posicaoY = posicaoY
     }
 }

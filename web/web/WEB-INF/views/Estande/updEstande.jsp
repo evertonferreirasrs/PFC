@@ -92,6 +92,20 @@
                                                     <option value="10">10º período</option>
                                                 </select>  
                                             </div>
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label for="inputPosicaoX">Posição X:</label>
+                                                        <input type="text" id="inputPosicaoX" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label for="inputPosicaoY">Posição Y:</label>
+                                                        <input type="text" id="inputPosicaoY" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-xs-12">
                                             <div class="form-group">

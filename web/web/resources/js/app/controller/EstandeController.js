@@ -8,6 +8,8 @@ class EstandeController {
         this._periodo = $("#inputPeriodo")
         this._descricao = $("#inputDescricao")
         this._evento = $("#inputEvento")
+        this._posicaoX = $("#inputPosicaoX")
+        this._posicaoY = $("#inputPosicaoY")
         this._estandeInfoView = new EstandeInfoView();
         this._id = $("#inputId")
 
@@ -25,7 +27,7 @@ class EstandeController {
         evento.id = this._evento.value
 
         let estande = new Estande(this._titulo.value, this._curso.value, this._periodo.value, 
-            this._descricao.value, this._areaTematica.value, this._numero.value, evento, null, this._id.value)
+            this._descricao.value, this._areaTematica.value, this._numero.value, evento, null, this._id.value, this._posicaoX.value, this._posicaoY.value)
 
         let service = new EstandeService()
 
@@ -46,6 +48,8 @@ class EstandeController {
         this._titulo.value = estande.titulo
         this._numero.value = estande.numero
         this._descricao.value = estande.descricao
+        this._posicaoX.value = estande.posicaoX
+        this._posicaoY.value = estande.posicaoY
 
         let areaTematicaList = this._areaTematica.getElementsByTagName('option')
         
@@ -83,7 +87,7 @@ class EstandeController {
             }
         }
 
-        console.log(estande)
+        // console.log(estande)
     }
 
     async delete(element) {
@@ -171,7 +175,7 @@ class EstandeController {
         evento.id = this._evento.value
 
         let estande = new Estande(this._titulo.value, this._curso.value, this._periodo.value,
-            this._descricao.value, this._areaTematica.value, this._numero.value, evento)
+            this._descricao.value, this._areaTematica.value, this._numero.value, evento, null, null, this._posicaoX.value, this._posicaoY.value)
 
         // console.log(estande)
 

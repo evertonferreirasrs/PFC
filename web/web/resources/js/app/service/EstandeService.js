@@ -19,7 +19,9 @@ class EstandeService {
                             e.numero,
                             e.evento,
                             e.equipe,
-                            e.id
+                            e.id,
+                            e.posicaoX,
+                            e.posicaoY
                         )));
                 } else {
                     console.log(xhr.responseText);
@@ -75,7 +77,9 @@ class EstandeService {
                                 e.numero,
                                 e.evento,
                                 e.equipe,
-                                e.id
+                                e.id,
+                                e.posicaoX,
+                                e.posicaoY
                             )
                         )
                     } else {
@@ -111,7 +115,9 @@ class EstandeService {
                                     e.numero,
                                     e.evento,
                                     e.equipe,
-                                    e.id
+                                    e.id,
+                                    e.posicaoX,
+                                    e.posicaoY
                                 ))
                         )
                     } else {
