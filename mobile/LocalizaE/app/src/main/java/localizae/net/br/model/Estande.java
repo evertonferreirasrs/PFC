@@ -21,7 +21,7 @@ public class Estande extends BaseEntity implements Serializable{
 
     @SerializedName("numero")
     @Expose
-    private Long numero;
+    private Integer numero;
 
     @SerializedName("areaTematica")
     @Expose
@@ -29,11 +29,11 @@ public class Estande extends BaseEntity implements Serializable{
 
     @SerializedName("posicaoX")
     @Expose
-    private Long posicaoX;
+    private Integer posicaoX;
 
     @SerializedName("posicaoY")
     @Expose
-    private Long posicaoY;
+    private Integer posicaoY;
 
     public String getTitulo() {
         return titulo;
@@ -59,11 +59,11 @@ public class Estande extends BaseEntity implements Serializable{
         this.periodo = periodo;
     }
 
-    public Long getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(Long numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 
@@ -73,5 +73,21 @@ public class Estande extends BaseEntity implements Serializable{
 
     public void setAreaTematica(String areaTematica) {
         this.areaTematica = areaTematica;
+    }
+
+    public Integer getPosicaoX() {
+        return posicaoX;
+    }
+
+    public void setPosicaoX(Integer posicaoX) {
+        this.posicaoX = posicaoX;
+    }
+
+    public Integer getPosicaoY() {
+        return posicaoY;
+    }
+
+    public void setPosicaoY(Integer posicaoY) {
+        this.posicaoY = posicaoY;
     }
 }
