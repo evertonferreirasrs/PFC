@@ -113,16 +113,18 @@ class EstandeController {
                     try {
                         service.delete(id)
                         this._estandeList.delete(id)
-                        swal({
-                            title: "Excluído!",
-                            text: "O estande foi excluída.",
-                            showConfirmButton: true
-                        })
+                        // swal({
+                        //     title: "Excluído!",
+                        //     text: "O estande foi excluída.",
+                        //     showConfirmButton: true
+                        // })
+                        this._mensagemView.exibirMensagemDeSucesso('Excluído!', 'O Estande Foi Excluído Com Sucesso.')
                     } catch (error) {
-                        swal("Erro!", error, "error")
+                        this._mensagemView.exibirMensagemDeErro(error)
                     }
                 } else {
-                    swal("Cancelado!", "Usuário não foi apagado.", "error")
+                    // swal("Cancelado!", "Usuário não foi apagado.", "error")
+                    this._mensagemView.exibirMensagemDeErro('Estando Não Excluído.')
                 }
             }
         )
@@ -187,9 +189,11 @@ class EstandeController {
 
         service.add(estande)
             .then(result => {
-                swal('Cadastrado!', 'Estande Cadastrado com sucesso.', 'success')
+                // swal('Cadastrado!', 'Estande Cadastrado com sucesso.', 'success')
+                this._mensagemView.exibirMensagemDeSucesso('Cadastrado!', 'Estande Cadastrado Com Sucesso.')
             }).catch(error => {
-                swal('Erro!', error, 'error')
+                // swal('Erro!', error, 'error')
+                this._mensagemView.exibirMensagemDeErro(error)
             })
     }
 }
