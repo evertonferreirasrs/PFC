@@ -10,8 +10,9 @@ class EstandeController {
         this._evento = $("#inputEvento")
         this._posicaoX = $("#inputPosicaoX")
         this._posicaoY = $("#inputPosicaoY")
-        this._estandeInfoView = new EstandeInfoView();
+        this._estandeInfoView = new EstandeInfoView()
         this._id = $("#inputId")
+        this._mensagemView = new MensagemView()
 
         this._estandeList = new Bind(
             new ListaEstande(),
@@ -32,9 +33,11 @@ class EstandeController {
         let service = new EstandeService()
 
         service.update(estande).then(result => {
-            swal('Atualizado!', 'Estande atualizado com sucesso.', 'success')
+            // swal('Atualizado!', 'Estande atualizado com sucesso.', 'success')
+            this._mensagemView.exibirMensagemDeSucesso('Atualizado!', 'Estande Atualizado Com Sucesso.')
         }).catch(error => {
-            swal('Erro!', error, 'error')
+            // swal('Erro!', error, 'error')
+            this._mensagemView.exibirMensagemDeErro(error)
         })
     }
 
