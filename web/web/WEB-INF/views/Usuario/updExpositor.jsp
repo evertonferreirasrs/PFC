@@ -2,7 +2,6 @@
     Document   : addExpositor
     Author     : LocalizaÊ - Sistema de Posicionamento Interno FAITEC
 --%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,12 +9,9 @@
     <head>
         <jsp:include page="../Componentes/cabecalhoAdministrador.jsp"/>
     </head>
-
     <body class="sidebar-mini fixed">
         <div class="wrapper">
-
             <jsp:include page="../Componentes/menuAdministrador.jsp"/> 
-
             <div class="content-wrapper">
                 <div class="page-title">
                     <div>
@@ -70,7 +66,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -86,18 +81,12 @@
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/jquery.vmap.sampledata.js"/>"></script>     
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script>
-        <script type="text/javascript">
-            $('#demoSwal').click(function () {
-                swal("Confirmado!", "Foi adicionado um Expositor!", "success")
-            });
-        </script> 
         <script src="<c:url value="/resources/js/app/model/Estande.js"/>"></script>
         <script src="<c:url value="/resources/js/app/model/IntegranteEquipe.js"/>"></script>
         <script src="<c:url value="/resources/js/app/service/EstandeService.js"/>"></script>
         <jsp:include page="import-scripts-user.jsp"/> 
         
         <script>
-            
             usuarioController.readExpositor();
         </script>
     </body>

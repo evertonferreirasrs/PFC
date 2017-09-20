@@ -160,7 +160,6 @@ class EstandeService {
 
             xhr.open('PUT', Configuration.getUrl() + "estande")
             xhr.setRequestHeader("Content-type", "application/json")
-
             xhr.onreadystatechange = () => {
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
@@ -170,7 +169,6 @@ class EstandeService {
                     }
                 }
             }
-
             estande = JSON.stringify(estande)
             xhr.send(estande)
         })
