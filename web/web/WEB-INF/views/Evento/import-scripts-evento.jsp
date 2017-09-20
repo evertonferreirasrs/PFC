@@ -14,3 +14,4 @@
 <script src="<c:url value="/resources/js/app/view/View.js" />"></script>
 <script src="<c:url value="/resources/js/app/view/EventoView.js" />"></script>
 <script src="<c:url value="/resources/js/app/view/EventoInfoView.js" />"></script>
+<script src="<c:url value="/resources/js/app/view/MensagemView.js" />"></script>

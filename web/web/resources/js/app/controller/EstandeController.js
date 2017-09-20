@@ -10,13 +10,14 @@ class EstandeController {
         this._evento = $("#inputEvento")
         this._posicaoX = $("#inputPosicaoX")
         this._posicaoY = $("#inputPosicaoY")
-        this._estandeInfoView = new EstandeInfoView();
+        this._estandeInfoView = new EstandeInfoView()
         this._id = $("#inputId")
+        this._mensagemView = new MensagemView()
 
         this._estandeList = new Bind(
             new ListaEstande(),
             new EstandeView($("#table-estandes")),
-            'delete', 'update', 'add'
+            'delete', 'update', 'add', 'esvazia'
         )
     }
 
@@ -32,9 +33,11 @@ class EstandeController {
         let service = new EstandeService()
 
         service.update(estande).then(result => {
-            swal('Atualizado!', 'Estande atualizado com sucesso.', 'success')
+            // swal('Atualizado!', 'Estande atualizado com sucesso.', 'success')
+            this._mensagemView.exibirMensagemDeSucesso('Atualizado!', 'Estande Atualizado Com Sucesso.')
         }).catch(error => {
-            swal('Erro!', error, 'error')
+            // swal('Erro!', error, 'error')
+            this._mensagemView.exibirMensagemDeErro(error)
         })
     }
 
@@ -92,32 +95,37 @@ class EstandeController {
 
     async delete(element) {
         let id = $(element).closest('tr').data('id')
-        let service = new EstandeService();
-
+        let service = new EstandeService()
         swal(
             {
-                title: "Tem certeza que deseja excluir este estande?",
-                text: "O estande excluído não poderá ser recuperado!",
+                title: "Você tem certeza disso?",
+                text: "Esta operação não poderá ser desfeita!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Sim, excluir!",
-                closeOnConfirm: false
+                confirmButtonText: "Sim, apagar!",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false,
+                closeOnCancel: false
             },
-            function () {
-                service.delete(id).then(result => {
-                    swal({
-                        title: "Excluído!",
-                        text: "O estande foi excluído. A página será recarregada em 2 segundos.",
-                        timer: 2000,
-                        showConfirmButton: false
-                    })
-                    setTimeout(function () {
-                        location.reload()
-                    }, 2000)
-                }).catch(error => {
-                    swal("Erro!", error, "error")
-                })
+            (isConfirm) => {
+                if (isConfirm) {
+                    try {
+                        service.delete(id)
+                        this._estandeList.delete(id)
+                        // swal({
+                        //     title: "Excluído!",
+                        //     text: "O estande foi excluída.",
+                        //     showConfirmButton: true
+                        // })
+                        this._mensagemView.exibirMensagemDeSucesso('Excluído!', 'O Estande Foi Excluído Com Sucesso.')
+                    } catch (error) {
+                        this._mensagemView.exibirMensagemDeErro(error)
+                    }
+                } else {
+                    // swal("Cancelado!", "Usuário não foi apagado.", "error")
+                    this._mensagemView.exibirMensagemDeErro('Estando Não Excluído.')
+                }
             }
         )
 
@@ -181,9 +189,11 @@ class EstandeController {
 
         service.add(estande)
             .then(result => {
-                swal('Cadastrado!', 'Estande Cadastrado com sucesso.', 'success')
+                // swal('Cadastrado!', 'Estande Cadastrado com sucesso.', 'success')
+                this._mensagemView.exibirMensagemDeSucesso('Cadastrado!', 'Estande Cadastrado Com Sucesso.')
             }).catch(error => {
-                swal('Erro!', error, 'error')
+                // swal('Erro!', error, 'error')
+                this._mensagemView.exibirMensagemDeErro(error)
             })
     }
 }

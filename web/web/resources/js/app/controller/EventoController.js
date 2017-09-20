@@ -1,27 +1,28 @@
-class EventoController{
-    constructor(){
+class EventoController {
+    constructor() {
         let $ = document.querySelector.bind(document)
         this._nome = $("#inputNome")
         this._endereco = $("#inputEndereco")
         this._dataHoraEventoInicio = $("#inputDataHoraEventoInicio")
         this._dataHoraEventoFim = $("#inputDataHoraEventoFim")
         this._id = $("#inputId")
+        this._mensagemView = new MensagemView()
 
         this._eventoList = new Bind(
             new ListaEvento(),
             new EventoView($("#table-eventos")),
-            'delete', 'update', 'add'
+            'delete', 'update', 'add', 'esvazia'
         )
 
         this._eventoInfoView = new EstandeInfoView()
     }
 
-    async openEventoInfo(element){
+    async openEventoInfo(element) {
         let id = $(element).closest('tr').data('id')
         let service = new EventoService()
 
         let evento = await service.readById(id)
-        
+
         swal({
             title: evento.nome,
             text: this._eventoInfoView.template(evento),
@@ -29,30 +30,36 @@ class EventoController{
         })
     }
 
-    async altera(event){
+    async altera(event) {
         event.preventDefault()
+        // let view = new MensagemView()
 
-        let service = new EventoService()
-        console.log(this._dataHoraEventoInicio.value)
+        try {
+            let service = new EventoService()
 
-        let evento = new Evento(this._nome.value, this._endereco.value, 
-                                DateHelper.getTimeFromString(this._dataHoraEventoInicio.value), 
-                                DateHelper.getTimeFromString(this._dataHoraEventoFim.value),
-                                this._id.value
-                            )
+            let evento = new Evento(this._nome.value, this._endereco.value,
+                DateHelper.getTimeFromString(this._dataHoraEventoInicio.value),
+                DateHelper.getTimeFromString(this._dataHoraEventoFim.value),
+                this._id.value
+            )
 
-        service.update(evento)
-            .then(result => {
-                swal('Atualizado!', 'Evento atualizado com sucesso.', 'success')
-            }).catch(error => {
-                swal('Erro!', error, 'error')
-            })
+            service.update(evento)
+                .then(result => {
+                    // swal('Atualizado!', 'Evento atualizado com sucesso.', 'success')
+                    this._mensagemView.exibirMensagemDeSucesso('Atualizado!', 'Evento Atualizado Com Sucesso.')
+                }).catch(error => {
+                    // swal('Erro!', error, 'error')
+                    this._mensagemView.exibirMensagemDeErro(error)
+                })
+        }catch(error){
+            this._mensagemView.exibirMensagemDeErro(error)
+        }
     }
 
-    async loadEvento(){
+    async loadEvento() {
         let service = new EventoService()
         let id = this._id.value
-        
+
 
         let evento = await service.readById(id)
 
@@ -62,25 +69,32 @@ class EventoController{
         this._dataHoraEventoFim.value = DateHelper.getStringFromDate(evento.dataHoraEventoFim)
     }
 
-    async adiciona(event){
+    async adiciona(event) {
         event.preventDefault()
+        // let view = new MensagemView()
 
-        let service = new EventoService()
+        try {
+            let service = new EventoService()
 
-        let evento = new Evento(this._nome.value, this._endereco.value, 
-                                DateHelper.getTimeFromString(this._dataHoraEventoInicio.value), 
-                                DateHelper.getTimeFromString(this._dataHoraEventoFim.value)
-                            )
+            let evento = new Evento(this._nome.value, this._endereco.value,
+                DateHelper.getTimeFromString(this._dataHoraEventoInicio.value),
+                DateHelper.getTimeFromString(this._dataHoraEventoFim.value)
+            )
 
-        service.add(evento)
-            .then(result => {
-                swal('Cadastrado!', 'Evento Cadastrado com sucesso.', 'success')
-            }).catch(error => {
-                swal('Erro!', error, 'error')
-            })
+            service.add(evento)
+                .then(result => {
+                    this._mensagemView.exibirMensagemDeSucesso('Cadastrado!', 'Evento Cadastrado Com Sucesso.')
+                    // swal('Cadastrado!', 'Evento Cadastrado com sucesso.', 'success')
+                }).catch(error => {
+                    this._mensagemView.exibirMensagemDeErro(error)
+                    // swal('Erro!', error, 'error')
+                })
+        } catch (error) {
+            this._mensagemView.exibirMensagemDeSucesso(error.message)
+        }
     }
 
-    async delete(element){
+    async delete(element) {
         let id = $(element).closest('tr').data('id')
 
         let service = new EventoService()
@@ -95,25 +109,23 @@ class EventoController{
                 confirmButtonText: "Sim, excluir!",
                 closeOnConfirm: false
             },
-            function () {
-                service.delete(id).then(result => {
-                    swal({
-                        title: "Excluído!",
-                        text: "O evento foi excluído. A página será recarregada em 2 segundos.",
-                        timer: 2000,
-                        showConfirmButton: false
-                    })
-                    setTimeout(function () {
-                        location.reload()
-                    }, 2000)
-                }).catch(error => {
-                    swal("Erro!", error, "error")
-                })
+            (isConfirm) => {
+                if (isConfirm) {
+                    try {
+                        service.delete(id)
+                        this._eventoList.delete(id)
+                        this._mensagemView.exibirMensagemDeSucesso('Excluído!', 'Registro Excluído Com Sucesso!')
+                    } catch (error) {
+                        this._mensagemView.exibirMensagemDeErro(error)
+                    }
+                } else {
+                    this._mensagemView.exibirMensagemDeErro('Evento não foi apagado.')
+                }
             }
         )
     }
 
-    async loadEventos(){
+    async loadEventos() {
         let service = new EventoService()
 
         let eventoList = await service.readAll()
