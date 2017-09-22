@@ -25,7 +25,7 @@
                     <div>
                         <ul class="breadcrumb">
                             <li><i class="fa fa-home fa-lg"></i></li>
-                            <li><a href="#">Estatísticas Estandes</a></li>
+                            <li><a href="#">Estatísticas</a></li>
                         </ul>
                     </div>
                 </div>
@@ -33,23 +33,24 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-md-offset-3">
                                     <div class="card">
-                                        <h3 class="card-title">Line Chart</h3>
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
+                                        <!-- <h3 class="card-title">Número de visitantes</h3> -->
+                                        <div class="text-center">
+                                            <img class="img-stat" src="<c:url value="/resources/img/multi-user.svg" />" alt="Multi User">
+                                            <h3 id="number-visitors"></h3>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="card">
                                         <h3 class="card-title">Bar Chart</h3>
                                         <div class="embed-responsive embed-responsive-16by9">
                                             <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="clearfix"></div>
+                                </div> -->
+                                <!-- <div class="clearfix"></div> -->
                                 <div class="col-md-6">
                                     <div class="card">
                                         <h3 class="card-title">Radar Chart</h3>
@@ -95,7 +96,7 @@
         <script src="<c:url value="/resources/js/essential-plugins.js"/>"></script>
         <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
         <script src="<c:url value="/resources/js/plugins/pace.min.js"/>"></script>
-        <script src="<c:url value="/resources/js/main.js"/>"></script>       
+        <script src="<c:url value="/resources/js/main.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/chart.js"/>"></script>
         <script type="text/javascript">
             var data = {
@@ -144,11 +145,8 @@
                 }
             ]
 
-            var ctxl = $("#lineChartDemo").get(0).getContext("2d");
-            var lineChart = new Chart(ctxl).Line(data);
-
-            var ctxb = $("#barChartDemo").get(0).getContext("2d");
-            var barChart = new Chart(ctxb).Bar(data);
+            // var ctxb = $("#barChartDemo").get(0).getContext("2d");
+            // var barChart = new Chart(ctxb).Bar(data);
 
             var ctxr = $("#radarChartDemo").get(0).getContext("2d");
             var barChart = new Chart(ctxr).Radar(data);
@@ -162,6 +160,14 @@
             var ctxd = $("#doughnutChartDemo").get(0).getContext("2d");
             var barChart = new Chart(ctxd).Doughnut(pdata);
         </script>
-
+        <script src="<c:url value="/resources/js/app/controller/StatisticController.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/config/Configuration.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/service/HttpService.js"/>"></script>
+        <script src="<c:url value="/resources/js/app/service/StatisticService.js"/>"></script>
+        
+        <script>
+            let controller = new StatisticController()
+            controller.loadNumberVisitors()
+        </script>
     </body>
 </html>

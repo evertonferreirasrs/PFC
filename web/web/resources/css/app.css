@@ -1,3 +1,7 @@
 .sub-menu-active > a{
     background-color: #000 !important;
 }
+
+.img-stat{
+    max-width: 25%;
+}
