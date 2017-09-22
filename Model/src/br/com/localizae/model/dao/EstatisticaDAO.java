@@ -24,7 +24,7 @@ public class EstatisticaDAO implements BaseDAO<Estatistica>{
 
     @Override
     public void create(Connection conn, Estatistica entity) throws Exception {
-        String sql = "INSERT INTO (posicaoX, posicaoY, dataHora, usuario_fk) VALUES(?,?,?,?) RETURNING id;";
+        String sql = "INSERT INTO estatistica(posicaoX, posicaoY, dataHora, usuario_fk) VALUES(?,?,?,?) RETURNING id;";
         
         PreparedStatement ps = conn.prepareStatement(sql);
         
@@ -70,7 +70,7 @@ public class EstatisticaDAO implements BaseDAO<Estatistica>{
     public Estatistica readById(Connection conn, Long id) throws Exception {
         Estatistica estatistica = null;
         
-        String sql = "SELECT * FROM estatistica WHERE id=?;";
+        String sql = "SELECT * FROM estatistica WHERE id=?";
         
         PreparedStatement ps = conn.prepareStatement(sql);
         
@@ -92,12 +92,23 @@ public class EstatisticaDAO implements BaseDAO<Estatistica>{
 
     @Override
     public List<Estatistica> readByCriteria(Connection conn, Map<Enum, Object> criteria, Long limit, Long offset) throws Exception {
-        List<Estatistica> estatisticaList = null;
+        List<Estatistica> estatisticaList = new ArrayList<>();
         
         String sql = "SELECT * FROM estatistica WHERE 1=1";
         List<Object> args = new ArrayList<>();
         
         sql += this.applyCriteria(criteria, args);
+        sql += " ORDER BY id";
+        
+        if(limit != null && limit > 0){
+            sql += " LIMIT ?";
+            args.add(limit);
+        }
+        
+        if(offset != null && offset > 0){
+            sql += " OFFSET ?";
+            args.add(offset);
+        }
         
         PreparedStatement ps = conn.prepareStatement(sql);
         
