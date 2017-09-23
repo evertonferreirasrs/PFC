@@ -6,7 +6,7 @@
 package br.com.localizae.model.entity;
 
 import br.com.localizae.model.base.BaseEntity;
-import java.security.MessageDigest;
+import br.com.localizae.model.utils.Criptografia;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +28,7 @@ public class Usuario extends BaseEntity {
     private Timestamp dataHoraExpiracaoToken;
     private List<CriterioJurado> criterioAvaliacaoList;
     private IntegranteEquipe integranteEquipe;
+    private String hash;
 
     public List<CriterioJurado> getCriterioAvaliacaoList() {
         return criterioAvaliacaoList;
@@ -189,29 +190,17 @@ public class Usuario extends BaseEntity {
 
     public String encryptPasswd(String sign) {
 
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(sign.getBytes());
-
-            byte[] hash = md.digest();
-            StringBuffer hexString = new StringBuffer();
-
-            for (int i = 0; i < hash.length; i++) {
-                if ((0xff & hash[i]) < 0x10) {
-                    hexString.append("0"
-                            + Integer.toHexString((0xFF & hash[i])));
-                } else {
-                    hexString.append(Integer.toHexString(0xFF & hash[i]));
-                }
-            }
-
-            sign = hexString.toString();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        sign = new Criptografia().criptografarComMD5(sign);
 
         this.senha = sign;
         return sign;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 }
