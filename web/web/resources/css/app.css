@@ -5,3 +5,11 @@
 .img-stat{
     max-width: 25%;
 }
+
+.background-success{
+    background-color: #5cb85c;
+}
+
+.background-danger{
+    background-color: #F00;
+}
