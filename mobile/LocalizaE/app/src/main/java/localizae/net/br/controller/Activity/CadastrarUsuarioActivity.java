@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import localizae.net.br.utils.ResponseCodeValidator;
 
 public class CadastrarUsuarioActivity extends AppCompatActivity {
 
+    private Button voltar_id;
     // Variavel para armazenar o contexto
     private Context context;
 
@@ -49,13 +51,13 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
 
-        getSupportActionBar().setIcon(R.drawable.icone_logo);
-        getSupportActionBar().setTitle(" Cadastrar");
+        getSupportActionBar().hide();
 
         // Salva o contexto
         context = this;
@@ -88,6 +90,16 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
                         Toast.makeText(context, getString(R.string.password_mismatch), Toast.LENGTH_LONG).show();
                     }
                 }
+            }
+        });
+
+        voltar_id = (Button) findViewById(R.id.botao_voltar_id);
+
+        voltar_id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(CadastrarUsuarioActivity.this,LoginActivity.class));
             }
         });
     }

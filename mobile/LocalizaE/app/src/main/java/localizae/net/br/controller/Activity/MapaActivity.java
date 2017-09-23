@@ -1,27 +1,17 @@
 package localizae.net.br.controller.Activity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SearchView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import localizae.net.br.controller.Fragments.EstandeFragment;
 import localizae.net.br.controller.R;
 
 public class MapaActivity extends AppCompatActivity {
 
-    ArrayAdapter<String> adapter;
     private ImageView botaoMapa;
     private AlertDialog alerta;
 
@@ -30,16 +20,8 @@ public class MapaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
 
-        getSupportActionBar().setTitle(" Mapa");
-
-        ListView listView = (ListView)findViewById(R.id.listView_id);
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.addAll(Arrays.asList(getResources().getStringArray(R.array.array_list)));
-
-        adapter = new ArrayAdapter<String>(MapaActivity.this, android.R.layout.simple_list_item_1, arrayList);
-
-        listView.setAdapter(adapter);
-
+//        getSupportActionBar().setTitle(" Mapa");
+        getSupportActionBar().hide();
 
         botaoMapa = (ImageView) findViewById(R.id.mapa_id);
 
@@ -53,7 +35,11 @@ public class MapaActivity extends AppCompatActivity {
                 builder.setCancelable(false);
                 builder.setPositiveButton("+ Informações", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
-                        startActivity(new Intent(MapaActivity.this,EstandeActivity.class));
+
+                        EstandeFragment estandeFragment = new EstandeFragment();
+                        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.fragment_id, estandeFragment).commit();
+
                     }
                 });
 
@@ -67,30 +53,5 @@ public class MapaActivity extends AppCompatActivity {
                 alerta.show();
             }
         });
-
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_pesquisar, menu);
-        MenuItem item = menu.findItem(R.id.menuSearch);
-        SearchView searchView = (SearchView)item.getActionView();
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                adapter.getFilter().filter(s);
-                return false;
-            }
-        });
-
-        return super.onCreateOptionsMenu(menu);
     }
 }
