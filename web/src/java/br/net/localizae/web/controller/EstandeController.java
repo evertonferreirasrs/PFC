@@ -32,12 +32,7 @@ public class EstandeController {
         return mv;
     }
     
-    @RequestMapping(value = "/estande/estatisticas", method = RequestMethod.GET)
-    public ModelAndView estatisticas() {
-        ModelAndView mv = new ModelAndView("Estande/estatisticasEstande");
-        mv.addObject("aba", "estatisticas");
-        return mv;
-    }
+    
     
     @RequestMapping(value = "/estande/{id}/avaliacao", method = RequestMethod.GET)
     public ModelAndView pegarAvaliacoes(@PathVariable("id") Long id) {

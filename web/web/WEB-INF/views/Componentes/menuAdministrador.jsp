@@ -46,7 +46,7 @@
         <ul class="sidebar-menu">
             <li class="treeview <c:if test="${aba eq 'evento'}">active</c:if>"><a href="<c:url value="/evento/gerenciar"/>"><i class="fa fa-university"></i><span>Gerenciar Eventos</span></a></li>
             <li class="treeview <c:if test="${aba eq 'estande'}">active</c:if>"><a href="<c:url value="/estande/gerenciar"/>"><i class="fa fa-graduation-cap"></i><span>Gerenciar Estandes</span></a></li>
-            <li class="treeview <c:if test="${aba eq 'estatisticas'}">active</c:if>"><a href="<c:url value="/estande/estatisticas"/>"><i class="fa fa-bar-chart-o"></i><span>Estatísticas</span></a></li>
+            <li class="treeview <c:if test="${aba eq 'estatisticas'}">active</c:if>"><a href="<c:url value="/estatisticas"/>"><i class="fa fa-bar-chart-o"></i><span>Estatísticas</span></a></li>
             <li class="treeview <c:if test="${aba eq 'avaliacaoVisitantes'}">active</c:if>"><a href="<c:url value="/avaliacao/visitantes"/>"><i class="fa fa-commenting-o"></i><span>Avaliações de Visitantes</span></a></li>
             <li class="treeview <c:if test="${aba eq 'avaliacaoJurados'}">active</c:if>"><a href="<c:url value="/jurado/avaliacoes"/>"><i class="fa fa-commenting"></i><span>Avaliações de Jurados</span></a></li>
             <li class="treeview <c:if test="${aba eq 'addExpositor'}">active</c:if> <c:if test="${aba eq 'addJurado'}">active</c:if><c:if test="${aba eq 'addAdministrador'}">active</c:if> <c:if test="${aba eq 'gerenciarUsuarios'}">active</c:if>"><a href="#"><i class="fa fa-laptop"></i><span>Gerenciar Usuários</span><i class="fa fa-angle-right"></i></a>
