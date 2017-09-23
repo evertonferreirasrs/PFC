@@ -117,6 +117,8 @@ public class EstatisticaDAO implements BaseDAO<Estatistica>{
             ps.setObject(++i, arg);
         }
         
+        System.out.println(ps);
+        
         ResultSet rs = ps.executeQuery();
         
         while(rs.next()){
@@ -161,14 +163,14 @@ public class EstatisticaDAO implements BaseDAO<Estatistica>{
             //DATAHORA_LT,
             Long datahora_lt = (Long) criteria.get(EstatisticaCriteria.DATAHORA_LT);
             if(datahora_lt != null && datahora_lt >= 0){
-                sql += " AND datahora = ?";
+                sql += " AND datahora < ?";
                 args.add(new Timestamp(datahora_lt));
             }
             
             //DATAHORA_GT
             Long datahora_gt = (Long) criteria.get(EstatisticaCriteria.DATAHORA_GT);
             if(datahora_gt != null && datahora_gt >= 0){
-                sql += " AND datahora = ?";
+                sql += " AND datahora > ?";
                 args.add(new Timestamp(datahora_gt));
             }
         }

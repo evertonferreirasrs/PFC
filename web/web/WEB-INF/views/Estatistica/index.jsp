@@ -53,9 +53,16 @@
                                 <!-- <div class="clearfix"></div> -->
                                 <div class="col-md-6">
                                     <div class="card">
-                                        <h3 class="card-title">Radar Chart</h3>
+                                        <h3 class="card-title">Quantidade de Visitantes por Hora</h3>
                                         <div class="embed-responsive embed-responsive-16by9">
-                                            <canvas class="embed-responsive-item" id="radarChartDemo"></canvas>
+                                            <div id="visitantesHora"></div>
+                                            <div class="row">
+                                                <div class="col-xs-12 text-center">
+                                                    <button class="btn btn-primary" id="btn-day1">Dia 1</button>
+                                                    <button class="btn btn-primary" id="btn-day2">Dia 2</button>
+                                                    <button class="btn btn-primary" id="btn-day3">Dia 3</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -98,6 +105,7 @@
         <script src="<c:url value="/resources/js/plugins/pace.min.js"/>"></script>
         <script src="<c:url value="/resources/js/main.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/chart.js"/>"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             var data = {
                 labels: ["January", "February", "March", "April", "May"],
@@ -148,8 +156,8 @@
             // var ctxb = $("#barChartDemo").get(0).getContext("2d");
             // var barChart = new Chart(ctxb).Bar(data);
 
-            var ctxr = $("#radarChartDemo").get(0).getContext("2d");
-            var barChart = new Chart(ctxr).Radar(data);
+            // var ctxr = $("#radarChartDemo").get(0).getContext("2d");
+            // var barChart = new Chart(ctxr).Radar(data);
 
             var ctxpo = $("#polarChartDemo").get(0).getContext("2d");
             var barChart = new Chart(ctxpo).PolarArea(pdata);
@@ -168,6 +176,54 @@
         <script>
             let controller = new StatisticController()
             controller.loadNumberVisitors()
+            drawChartNumberVisitors(18)
+
+            $("#btn-day1").click((event) => {
+                event.preventDefault()
+                
+                drawChartNumberVisitors(18)
+            })
+
+            $("#btn-day2").click((event) => {
+                event.preventDefault()
+
+                drawChartNumberVisitors(19)
+            })
+
+            $("#btn-day3").click((event) => {
+                event.preventDefault()
+
+                drawChartNumberVisitors(20)
+            })
+            
+            function drawChartNumberVisitors(day){
+                google.charts.load('current', {packages: ['corechart', 'bar']});
+                google.charts.setOnLoadCallback(drawBasic);
+
+                async function drawBasic(){
+                    let dataChart = await controller.loadDataBarChart(day)
+
+                    var data = google.visualization.arrayToDataTable(dataChart)
+
+                    var options = {
+                        title: 'Quantidade de visitantes por hora/dia',
+                        chartArea: {width: '80%'},
+                        hAxis: {
+                        title: 'Número de Visitantes',
+                        minValue: 0
+                        },
+                        vAxis: {
+                        title: 'Hora'
+                        }
+                    }
+
+                    var chart = new google.visualization.BarChart(document.getElementById('visitantesHora'))
+
+                    chart.draw(data, options)
+
+                    // console.log(teste)
+                }
+            }
         </script>
     </body>
 </html>
