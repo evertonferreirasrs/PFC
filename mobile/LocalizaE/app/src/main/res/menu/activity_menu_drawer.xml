@@ -3,20 +3,16 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/login_id"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Login" />
-        <item
             android:id="@+id/mapa_id"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/ic_location_on_black_24dp"
             android:title="Mapa da FAITEC" />
         <item
             android:id="@+id/alterar_senha_id"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/ic_vpn_key_black_24dp"
             android:title="Alterar Senha" />
         <item
             android:id="@+id/minhas_avaliacoes_id"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/ic_chat_black_24dp"
             android:title="Minhas Avaliações" />
 
     </group>
@@ -25,12 +21,16 @@
         <menu>
             <item
                 android:id="@+id/meu_estande_id"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_pin_drop_black_24dp"
                 android:title="Meu Estande" />
             <item
                 android:id="@+id/qualificacao_comentarios_id"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Qualificação e Comentários" />
+                android:icon="@drawable/ic_star_black_24dp"
+                android:title="Avaliações do Estande" />
+            <item
+                android:id="@+id/minhas_promocoes_id"
+                android:icon="@drawable/ic_insert_invitation_black_24dp"
+                android:title="Minhas Promoções" />
 
         </menu>
     </item>
@@ -39,11 +39,11 @@
         <menu>
             <item
                 android:id="@+id/avaliar_estande_id"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Avaliar Estande" />
+                android:icon="@drawable/ic_speaker_notes_black_24dp"
+                android:title="Avaliar Estandes" />
             <item
                 android:id="@+id/minhas_avaliacoes_jurado_id"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_chat_black_24dp"
                 android:title="Minhas Avaliações" />
 
         </menu>
@@ -52,28 +52,16 @@
     <item android:title="Informações">
         <menu>
             <item
-                android:id="@+id/localizae_id"
-                android:icon="@drawable/ic_menu_send"
-                android:title="LocalizaÊ" />
-            <item
-                android:id="@+id/politicas_de_uso_id"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Politicas de Uso" />
-            <item
                 android:id="@+id/enviar_feedback_id"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_feedback_black_24dp"
                 android:title="Enviar FeedBack" />
             <item
-                android:id="@+id/ajuda_id"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Ajuda" />
-            <item
                 android:id="@+id/sobre_id"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_school_black_24dp"
                 android:title="Sobre" />
             <item
                 android:id="@+id/sair_id"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_arrow_back_black_24dp"
                 android:title="Sair" />
         </menu>
     </item>

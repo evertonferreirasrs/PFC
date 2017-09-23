@@ -23,6 +23,8 @@ public class Estande extends BaseEntity{
     private Long numero;
     private List<IntegranteEquipe> equipe = new ArrayList<>();
     private Evento evento;
+    private Long posicaoX;
+    private Long posicaoY;
 
     @Override
     public String toString() {
@@ -40,6 +42,8 @@ public class Estande extends BaseEntity{
         hash = 97 * hash + Objects.hashCode(this.numero);
         hash = 97 * hash + Objects.hashCode(this.equipe);
         hash = 97 * hash + Objects.hashCode(this.evento);
+        hash = 97 * hash + Objects.hashCode(this.posicaoX);
+        hash = 97 * hash + Objects.hashCode(this.posicaoY);
         return hash;
     }
 
@@ -56,6 +60,12 @@ public class Estande extends BaseEntity{
         }
         final Estande other = (Estande) obj;
         if (!Objects.equals(this.curso, other.curso)) {
+            return false;
+        }
+        if (!Objects.equals(this.posicaoX, other.posicaoX)) {
+            return false;
+        }
+        if (!Objects.equals(this.posicaoY, other.posicaoY)) {
             return false;
         }
         if (!Objects.equals(this.descricao, other.descricao)) {
@@ -144,5 +154,21 @@ public class Estande extends BaseEntity{
 
     public void setEvento(Evento evento) {
         this.evento = evento;
+    }
+
+    public Long getPosicaoX() {
+        return posicaoX;
+    }
+
+    public void setPosicaoX(Long posicaoX) {
+        this.posicaoX = posicaoX;
+    }
+
+    public Long getPosicaoY() {
+        return posicaoY;
+    }
+
+    public void setPosicaoY(Long posicaoY) {
+        this.posicaoY = posicaoY;
     }
 }

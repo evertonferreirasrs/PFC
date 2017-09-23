@@ -1,7 +1,6 @@
 class UsuarioService {
     async readAll() {
         let httpService = new HttpService()
-
         let uList = await httpService.get(Configuration.getUrl() + "usuario")
 
         return uList.map(u => new Usuario(
@@ -22,14 +21,13 @@ class UsuarioService {
 
     delete(id) {
         let httpService = new HttpService()
-
         httpService.delete(Configuration.getUrl() + `usuario/${id}`)
             .then(result => {
                 return result
             })
             .catch(result => {
-                throw new Error("Impossível deletar Usuário.")
-                console.log(result)
+                throw new Error(result)
+                // console.log(result)
             })
     }
 
@@ -59,7 +57,6 @@ class UsuarioService {
 
     async readUser(id) {
         let httpService = new HttpService()
-
         let u = await httpService.get(Configuration.getUrl() + `usuario/${id}`)
 
         return new Usuario(
@@ -80,34 +77,7 @@ class UsuarioService {
 
     update(usuario) {
         let httpService = new HttpService()
-
-        httpService.put(Configuration.getUrl() + "usuario", usuario)
-            .then(result => {
-                return result
-            })
-            .catch(result => {
-                console.log(result)
-                throw new Error("Impossível salvar usuário")
-            })
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest()
-
-            xhr.open('PUT', Configuration.getUrl() + "usuario")
-            xhr.setRequestHeader("Content-type", "application/json")
-
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        resolve(JSON.parse(xhr.responseText))
-                    } else {
-                        console.log(xhr.responseText)
-                        reject("Impossível atualizar usuário.")
-                    }
-                }
-            }
-            usuario = JSON.stringify(usuario)
-            xhr.send(usuario)
-        })
+        return httpService.put(Configuration.getUrl() + "usuario", usuario)
     }
 
     validate(user) {

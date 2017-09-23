@@ -49,11 +49,11 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="control-label" for="select">Data/Hora de início do evento:</label>
-                                                <input type="text" id="inputDataHoraEventoInicio" class="form-control">
+                                                <input type="text" placeholder="dd/mm/aaaa - HH:mm" id="inputDataHoraEventoInicio" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label" for="select">Data/Hora de término do vento:</label>
-                                                <input type="text" id="inputDataHoraEventoFim" class="form-control">  
+                                                <input type="text" placeholder="dd/mm/aaaa - HH:mm" id="inputDataHoraEventoFim" class="form-control">  
                                             </div>
                                         </div>
                                         <div class="col-lg-12">

@@ -38,7 +38,11 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getEmail());
         ps.setString(++i, entity.encryptPasswd(entity.getSenha()));
-        ps.setString(++i, entity.getSituacao());
+        String situacao = "ativo";
+        if(entity.getSituacao() != null && !entity.getSituacao().isEmpty()){
+            situacao = entity.getSituacao();
+        }
+        ps.setString(++i, situacao);
         ps.setString(++i, entity.getMotivo());
         ps.setString(++i, entity.getTokenRedeSocial());
         ps.setString(++i, entity.getTokenAutenticacao());

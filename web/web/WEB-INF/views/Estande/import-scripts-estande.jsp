@@ -14,4 +14,5 @@
 
 <script src="<c:url value="/resources/js/app/view/View.js"/>"></script>
 <script src="<c:url value="/resources/js/app/view/EstandeView.js"/>"></script>
+<script src="<c:url value="/resources/js/app/view/MensagemView.js"/>"></script>
 <script src="<c:url value="/resources/js/app/view/EstandeInfoView.js" />"></script>

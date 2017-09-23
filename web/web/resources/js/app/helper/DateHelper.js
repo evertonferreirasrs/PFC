@@ -19,7 +19,7 @@ class DateHelper{
 
     static getTimeFromString(stringDate){
         if(!/\d{2}\/\d{2}\/\d{4}\s-\s\d{2}:\d{2}/.test(stringDate)) 
-            throw new Error('Deve estar no formato dd/mm/aaaa - HH:mm')
+            throw new Error('A data deve estar no formato dd/mm/aaaa - HH:mm')
 
         let dateTime = stringDate.split(' ')
 
