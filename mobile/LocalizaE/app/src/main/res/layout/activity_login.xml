@@ -35,14 +35,14 @@
             android:layout_marginLeft="20dp" />
 
         <EditText
+            android:id="@+id/campo_email_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:id="@+id/campo_email_id"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Email" />
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
 
     </LinearLayout>
 

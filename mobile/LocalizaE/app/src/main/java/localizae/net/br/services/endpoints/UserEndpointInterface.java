@@ -20,4 +20,7 @@ public interface UserEndpointInterface {
     @POST("usuario")
     Call<Usuario> createUser(@Body Usuario usuario);
 
+    @POST("usuario/login")
+    Call<Usuario> login(@Body Usuario usuario);
+
 }

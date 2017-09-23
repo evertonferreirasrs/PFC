@@ -52,7 +52,33 @@ public class UserService {
                 lbm.sendBroadcast(intent);
             }
         });
+    }
 
+    public void login(Usuario usuario, final Context context){
+        Call<Usuario> call = userServiceEndpoint.login(usuario);
+        call.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                Log.d(Constants.USER_SERVICE_TAG, response.toString());
+
+                Intent intent = new Intent(Constants.LOGIN_ACTIVITY_TAG);
+                intent.putExtra(Constants.RESPONSE_CODE_KEY, response.code());
+
+                LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
+                lbm.sendBroadcast(intent);
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Log.d(Constants.USER_SERVICE_TAG, t.toString());
+
+                Intent intent = new Intent(Constants.LOGIN_ACTIVITY_TAG);
+                intent.putExtra(Constants.RESPONSE_CODE_KEY, Constants.RETROFIT_FAILURE);
+
+                LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
+                lbm.sendBroadcast(intent);
+            }
+        });
     }
 
 }

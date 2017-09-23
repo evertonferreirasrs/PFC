@@ -19,8 +19,14 @@ public class ResponseCodeValidator {
             case 404:
                 text = Constants.RESPONSE_VALUE_404;
                 break;
+            case 405:
+                text = Constants.RESPONSE_VALUE_405;
+                break;
             case 500:
                 text = Constants.RESPONSE_VALUE_500;
+                break;
+            default:
+                text = Constants.RESPONSE_UNKNOWN;
                 break;
         }
         return  text;
