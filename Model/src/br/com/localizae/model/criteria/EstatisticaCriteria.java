@@ -11,7 +11,11 @@ package br.com.localizae.model.criteria;
  */
 public enum EstatisticaCriteria {
     POSX_EQ,
+    POSX_LT,
+    POSX_GT,
     POSY_EQ,
+    POSY_LT,
+    POSY_GT,
     DATAHORA_EQ,
     DATAHORA_LT,
     DATAHORA_GT

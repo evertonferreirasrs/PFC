@@ -65,13 +65,17 @@ public class EstatisticaController {
     }
 
     @RequestMapping(value = "estatistica/count", method = RequestMethod.GET)
-    public ResponseEntity count(Long posicaoX, Long posicaoY, Long usuario, Long datahora_eq, Long datahora_lt, Long datahora_gt, Long limit, Long offset) {
+    public ResponseEntity count(Long posicaoX_lt, Long posicaoX_gt,Long posicaoX, Long posicaoY_lt, Long posicaoY_gt, Long posicaoY, Long usuario, Long datahora_eq, Long datahora_lt, Long datahora_gt, Long limit, Long offset) {
         try {
             List<Estatistica> estatisticaList = null;
 
             Map<Enum, Object> criteria = new HashMap<>();
             criteria.put(EstatisticaCriteria.POSX_EQ, posicaoX);
+            criteria.put(EstatisticaCriteria.POSX_LT, posicaoX_lt);
+            criteria.put(EstatisticaCriteria.POSX_GT, posicaoX_gt);
             criteria.put(EstatisticaCriteria.POSY_EQ, posicaoY);
+            criteria.put(EstatisticaCriteria.POSY_LT, posicaoY_lt);
+            criteria.put(EstatisticaCriteria.POSY_GT, posicaoY_gt);
             criteria.put(EstatisticaCriteria.DATAHORA_EQ, datahora_eq);
             criteria.put(EstatisticaCriteria.DATAHORA_LT, datahora_lt);
             criteria.put(EstatisticaCriteria.DATAHORA_GT, datahora_gt);

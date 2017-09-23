@@ -140,17 +140,45 @@ public class EstatisticaDAO implements BaseDAO<Estatistica>{
         
         if(criteria != null){
             //POSX_EQ,
-            Long posX = (Long) criteria.get(EstatisticaCriteria.POSX_EQ);
-            if(posX != null && posX >= 0){
+            Long posX_eq = (Long) criteria.get(EstatisticaCriteria.POSX_EQ);
+            if(posX_eq != null && posX_eq >= 0){
                 sql += " AND posicaoX = ?";
-                args.add(posX);
+                args.add(posX_eq);
+            }
+            
+            //POSX_LT,
+            Long posX_lt = (Long) criteria.get(EstatisticaCriteria.POSX_LT);
+            if(posX_lt != null && posX_lt >= 0){
+                sql += " AND posicaoX < ?";
+                args.add(posX_lt);
+            }
+            
+            //POSX_GT,
+            Long posX_gt = (Long) criteria.get(EstatisticaCriteria.POSX_GT);
+            if(posX_gt != null && posX_gt >= 0){
+                sql += " AND posicaoX > ?";
+                args.add(posX_gt);
             }
             
             //POSY_EQ,
-            Long posY = (Long) criteria.get(EstatisticaCriteria.POSY_EQ);
-            if(posY != null && posY >= 0){
+            Long posY_eq = (Long) criteria.get(EstatisticaCriteria.POSY_EQ);
+            if(posY_eq != null && posY_eq >= 0){
                 sql += " AND posicaoY = ?";
-                args.add(posY);
+                args.add(posY_eq);
+            }
+            
+            //POSY_LT,
+            Long posY_lt = (Long) criteria.get(EstatisticaCriteria.POSY_LT);
+            if(posY_lt != null && posY_lt >= 0){
+                sql += " AND posicaoY < ?";
+                args.add(posY_lt);
+            }
+            
+            //POSY_GT,
+            Long posY_gt = (Long) criteria.get(EstatisticaCriteria.POSY_GT);
+            if(posY_gt != null && posY_gt >= 0){
+                sql += " AND posicaoY > ?";
+                args.add(posY_gt);
             }
             
             //DATAHORA_EQ,
