@@ -56,8 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_login);
 
-        getSupportActionBar().setIcon(R.drawable.icone_logo);
-        getSupportActionBar().setTitle(" Login");
+        getSupportActionBar().hide();
 
         texto_esqueceu_senha = (TextView) findViewById(R.id.texto_esqueceu_senha_id);
         texto_criar_conta = (TextView) findViewById(R.id.texto_criar_conta_id);
@@ -88,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 startActivity(new Intent(LoginActivity.this,RecuperarSenhaActivity.class));
-
 
 //                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 //                builder.setTitle("Recuperar Senha");

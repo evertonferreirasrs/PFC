@@ -29,16 +29,5 @@
     <string name="fill_entries">Preencha os campos!</string>
     <string name="successful_login">Login realizado</string>
 
-    <string-array name="array_list">
-        <item>aaa</item>
-        <item>bbb</item>
-        <item>ccc</item>
-        <item>ddd</item>
-        <item>eee</item>
-        <item>fff</item>
-        <item>ggg</item>
-        <item>hhh</item>
-        <item>iii</item>
-    </string-array>
 
 </resources>
