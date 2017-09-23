@@ -20,4 +20,14 @@ class StatisticController{
         
         return dia1
     }
+
+    async loadDataByQuadrant(x1, x2, y1, y2){
+        let service = new StatisticService()
+
+        let quadrantList = []
+
+        let count = await service.count({'posicaoX_gt':x1, 'posicaoX_lt':x2, 'posicaoY_gt':y1, 'posicaoY_lt':y2})
+
+        return count
+    }
 }

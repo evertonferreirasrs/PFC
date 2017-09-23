@@ -68,13 +68,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card">
-                                        <h3 class="card-title">Polar Chart</h3>
+                                        <h3 class="card-title">Visitantes por setor</h3>
+                                        <img class="img-responsive" src="<c:url value="resources/img/mapa.png" />" alt="Mapa da FAITEC 2018"><br>
                                         <div class="embed-responsive embed-responsive-16by9">
-                                            <canvas class="embed-responsive-item" id="polarChartDemo"></canvas>
+                                            
+                                            <canvas class="embed-responsive-item" id="polarChartDemo"></canvas> 
                                         </div>
                                     </div>
                                 </div>
-                                <div class="clearfix"></div>
+                                <!-- <div class="clearfix"></div>
                                 <div class="col-md-6">
                                     <div class="card">
                                         <h3 class="card-title">Pie Chart</h3>
@@ -90,7 +92,7 @@
                                             <canvas class="embed-responsive-item" id="doughnutChartDemo"></canvas>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -132,26 +134,7 @@
                     }
                 ]
             };
-            var pdata = [
-                {
-                    value: 300,
-                    color: "#F7464A",
-                    highlight: "#FF5A5E",
-                    label: "Red"
-                },
-                {
-                    value: 50,
-                    color: "#46BFBD",
-                    highlight: "#5AD3D1",
-                    label: "Green"
-                },
-                {
-                    value: 100,
-                    color: "#FDB45C",
-                    highlight: "#FFC870",
-                    label: "Yellow"
-                }
-            ]
+            
 
             // var ctxb = $("#barChartDemo").get(0).getContext("2d");
             // var barChart = new Chart(ctxb).Bar(data);
@@ -159,14 +142,13 @@
             // var ctxr = $("#radarChartDemo").get(0).getContext("2d");
             // var barChart = new Chart(ctxr).Radar(data);
 
-            var ctxpo = $("#polarChartDemo").get(0).getContext("2d");
-            var barChart = new Chart(ctxpo).PolarArea(pdata);
+            
 
-            var ctxp = $("#pieChartDemo").get(0).getContext("2d");
-            var barChart = new Chart(ctxp).Pie(pdata);
+            // var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+            // var barChart = new Chart(ctxp).Pie(pdata);
 
-            var ctxd = $("#doughnutChartDemo").get(0).getContext("2d");
-            var barChart = new Chart(ctxd).Doughnut(pdata);
+            // var ctxd = $("#doughnutChartDemo").get(0).getContext("2d");
+            // var barChart = new Chart(ctxd).Doughnut(pdata);
         </script>
         <script src="<c:url value="/resources/js/app/controller/StatisticController.js"/>"></script>
         <script src="<c:url value="/resources/js/app/config/Configuration.js"/>"></script>
@@ -177,6 +159,7 @@
             let controller = new StatisticController()
             controller.loadNumberVisitors()
             drawChartNumberVisitors(18)
+            loadChartQuadrant()
 
             $("#btn-day1").click((event) => {
                 event.preventDefault()
@@ -195,6 +178,48 @@
 
                 drawChartNumberVisitors(20)
             })
+
+            async function loadChartQuadrant(){
+                let countQ1 = await controller.loadDataByQuadrant(0, 600, 0, 800)
+                let countQ2 = await controller.loadDataByQuadrant(600, 1200, 0, 800)
+                let countQ3 = await controller.loadDataByQuadrant(0, 600, 800, 1600)
+                let countQ4 = await controller.loadDataByQuadrant(600, 1200, 800, 1600)
+
+                // console.log(countQ1)
+                // console.log(countQ2)
+                // console.log(countQ3)
+                // console.log(countQ4)
+
+                let pdata = [
+                    {
+                        value: countQ1,
+                        color: "#F7464A",
+                        highlight: "#FF5A5E",
+                        label: "Quadrante 01"
+                    },
+                    {
+                        value: countQ2,
+                        color: "#46BFBD",
+                        highlight: "#5AD3D1",
+                        label: "Quadrante 02"
+                    },
+                    {
+                        value: countQ3,
+                        color: "#FDB45C",
+                        highlight: "#FFC870",
+                        label: "Quadrante 03"
+                    },
+                    {
+                        value: countQ4,
+                        color: "#FDFF5C",
+                        highlight: "#FFC870",
+                        label: "Quadrante 04"
+                    }
+                ]
+
+                let ctxpo = $("#polarChartDemo").get(0).getContext("2d")
+                let barChart = new Chart(ctxpo).PolarArea(pdata)
+            }
             
             function drawChartNumberVisitors(day){
                 google.charts.load('current', {packages: ['corechart', 'bar']});
