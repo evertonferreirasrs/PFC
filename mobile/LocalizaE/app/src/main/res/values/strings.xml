@@ -27,6 +27,7 @@
     <string name="account_created">Conta criada</string>
     <string name="password_mismatch">Senhas não conferem!</string>
     <string name="fill_entries">Preencha os campos!</string>
+    <string name="successful_login">Login realizado</string>
 
 
 </resources>

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import localizae.net.br.controller.R;
+import localizae.net.br.model.TipoUsuario;
 import localizae.net.br.model.Usuario;
 import localizae.net.br.services.impl.UserService;
 import localizae.net.br.utils.Constants;
@@ -85,7 +86,7 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
 
                         // Instancia de uma user service para criar o usuario
                         UserService userService = new UserService();
-                        userService.CreateUser(new Usuario(nome, email, senha), context);
+                        userService.CreateUser(new Usuario(nome, email, senha, new TipoUsuario(Constants.USER_VISITANT)), context);
                     } else {
                         Toast.makeText(context, getString(R.string.password_mismatch), Toast.LENGTH_LONG).show();
                     }
