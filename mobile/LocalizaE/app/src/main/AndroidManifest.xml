@@ -44,9 +44,6 @@
             android:name="localizae.net.br.controller.Activity.CadastrarUsuarioActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="localizae.net.br.controller.Activity.AlterarSenhaActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="localizae.net.br.controller.Activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -55,8 +52,6 @@
         <activity
             android:name="localizae.net.br.controller.Activity.RecuperarSenhaActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="localizae.net.br.controller.Activity.EstandeActivity" />
-        <activity android:name="localizae.net.br.controller.Activity.ComentarQualificarActivity"></activity>
     </application>
 
 </manifest>

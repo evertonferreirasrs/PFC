@@ -5,6 +5,8 @@
  */
 package br.com.localizae.model;
 
+import br.com.localizae.model.utils.Criptografia;
+
 /**
  *
  * @author marca
@@ -12,17 +14,8 @@ package br.com.localizae.model;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        int n = 6;
-        int[][] mat = {{1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}, {1,1,1,1,1,1}};
-        int soma = 0;
-
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                if(j > i && (i+j) < n-1){
-                    soma += mat[i][j];
-                }
-            }
-        }
-        System.out.println(soma);
+        Criptografia c = new Criptografia();
+        
+        System.out.println(c.criptografarComMD5("123456"));
     }
 }

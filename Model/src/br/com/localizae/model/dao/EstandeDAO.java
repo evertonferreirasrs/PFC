@@ -27,7 +27,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
 
     @Override
     public void create(Connection conn, Estande entity) throws Exception {
-        String sql = "INSERT INTO estande (curso, descricao, periodo, titulo, areaTematica, numero, evento_fk) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id;";
+        String sql = "INSERT INTO estande (curso, descricao, periodo, titulo, areaTematica, numero, evento_fk, posicaoX, posicaoY) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -39,6 +39,8 @@ public class EstandeDAO implements BaseDAO<Estande> {
         ps.setString(++i, entity.getAreaTematica());
         ps.setLong(++i, entity.getNumero());
         ps.setLong(++i, entity.getEvento().getId());
+        ps.setLong(++i, entity.getPosicaoX());
+        ps.setLong(++i, entity.getPosicaoY());
 
         ResultSet rs = ps.executeQuery();
 
@@ -65,7 +67,7 @@ public class EstandeDAO implements BaseDAO<Estande> {
 
     @Override
     public void update(Connection conn, Estande entity) throws Exception {
-        String sql = "UPDATE estande SET curso=?, descricao=?, periodo=?, titulo=?, areaTematica=?, numero=?, evento_fk=? WHERE id=?;";
+        String sql = "UPDATE estande SET curso=?, descricao=?, periodo=?, titulo=?, areaTematica=?, numero=?, evento_fk=?, posicaoX=?, posicaoY=? WHERE id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -77,6 +79,8 @@ public class EstandeDAO implements BaseDAO<Estande> {
         ps.setString(++i, entity.getAreaTematica());
         ps.setLong(++i, entity.getNumero());
         ps.setLong(++i, entity.getEvento().getId());
+        ps.setLong(++i, entity.getPosicaoX());
+        ps.setLong(++i, entity.getPosicaoY());
         ps.setLong(++i, entity.getId());
 
         ps.execute();
@@ -105,6 +109,8 @@ public class EstandeDAO implements BaseDAO<Estande> {
                 estande.setTitulo(rs.getString("titulo"));
                 estande.setNumero(rs.getLong("numero"));
                 estande.setPeriodo(rs.getLong("periodo"));
+                estande.setPosicaoX(rs.getLong("posicaoX"));
+                estande.setPosicaoY(rs.getLong("posicaoY"));
                 estande.setEquipe(new ArrayList<>());
 
                 Evento evento = new Evento();
@@ -165,6 +171,8 @@ public class EstandeDAO implements BaseDAO<Estande> {
                 estande.setTitulo(rs.getString("titulo"));
                 estande.setNumero(rs.getLong("numero"));
                 estande.setPeriodo(rs.getLong("periodo"));
+                estande.setPosicaoX(rs.getLong("posicaoX"));
+                estande.setPosicaoY(rs.getLong("posicaoY"));
                 estande.setEquipe(new ArrayList<>());
 
                 Evento evento = new Evento();
@@ -302,6 +310,16 @@ public class EstandeDAO implements BaseDAO<Estande> {
         if(entity.getEvento() != null && entity.getEvento().getId() != null){
             sql += ", evento_fk=?";
             args.add(entity.getEvento().getId());
+        }
+        
+        if(entity.getPosicaoX()!= null){
+            sql += ", posicaoX=?";
+            args.add(entity.getPosicaoX());
+        }
+        
+        if(entity.getPosicaoY()!= null){
+            sql += ", posicaoY=?";
+            args.add(entity.getPosicaoY());
         }
         
         if(entity.getNumero() != null){
