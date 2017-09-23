@@ -20,7 +20,7 @@
                 <div class="page-title">
                     <div>
                         <h1><i class="fa fa-plus-square"></i> Criar Evento</h1>
-                        <p> LocalizaÊ - Sistema de Posicionamento Interno FAITEC</p>
+                        <p> LocalizaÊ - Sistema de Posicionamento Interno Para Eventos</p>
                     </div>
                     <div>
                         <ul class="breadcrumb">
@@ -49,11 +49,11 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="control-label" for="select">Data/Hora de início do evento:</label>
-                                                <input type="text" id="inputDataHoraEventoInicio" class="form-control">
+                                                <input type="text" placeholder="dd/mm/aaaa - HH:mm" id="inputDataHoraEventoInicio" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label" for="select">Data/Hora de término do vento:</label>
-                                                <input type="text" id="inputDataHoraEventoFim" class="form-control">  
+                                                <input type="text" placeholder="dd/mm/aaaa - HH:mm" id="inputDataHoraEventoFim" class="form-control">  
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -81,6 +81,7 @@
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script>
 
+        <!-- Importa os scripts necessários para as fucnionalidades relacionadas à entidade evento -->
         <jsp:include page="import-scripts-evento.jsp"/>
         
         <script>

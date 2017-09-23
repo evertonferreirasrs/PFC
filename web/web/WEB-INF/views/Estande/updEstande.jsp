@@ -20,7 +20,7 @@
                 <div class="page-title">
                     <div>
                         <h1><i class="fa fa-plus-square"></i> Alterar Estande</h1>
-                        <p> LocalizaÊ - Sistema de Posicionamento Interno FAITEC</p>
+                        <p> LocalizaÊ - Sistema de Posicionamento Interno Para Eventos</p>
                     </div>
                     <div>
                         <ul class="breadcrumb">
@@ -91,6 +91,20 @@
                                                     <option value="9">9º período</option>
                                                     <option value="10">10º período</option>
                                                 </select>  
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label for="inputPosicaoX">Posição X:</label>
+                                                        <input type="text" id="inputPosicaoX" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label for="inputPosicaoY">Posição Y:</label>
+                                                        <input type="text" id="inputPosicaoY" class="form-control">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-12">

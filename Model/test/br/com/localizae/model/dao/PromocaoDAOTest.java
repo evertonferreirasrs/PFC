@@ -52,7 +52,7 @@ public class PromocaoDAOTest {
      */
     @Test
     public void testCreate() throws Exception {
-
+        
     }
 
     /**
