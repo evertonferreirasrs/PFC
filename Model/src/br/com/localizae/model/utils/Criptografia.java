@@ -12,7 +12,7 @@ import java.security.MessageDigest;
  * @author marca
  */
 public class Criptografia {
-    public String criptografarComMD5(String texto){
+    public static String criptografarComMD5(String texto){
         String textoCriptografado = "";
         
         try {

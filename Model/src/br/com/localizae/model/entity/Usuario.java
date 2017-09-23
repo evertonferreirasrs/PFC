@@ -190,7 +190,7 @@ public class Usuario extends BaseEntity {
 
     public String encryptPasswd(String sign) {
 
-        sign = new Criptografia().criptografarComMD5(sign);
+        sign = Criptografia.criptografarComMD5(sign);
 
         this.senha = sign;
         return sign;

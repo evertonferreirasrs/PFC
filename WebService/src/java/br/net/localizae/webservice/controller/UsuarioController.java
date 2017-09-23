@@ -55,7 +55,7 @@ public class UsuarioController {
             
             Usuario userRead = usuarioList.get(0);
             
-            if(usuario.getHash() == null ? new Criptografia().criptografarComMD5(userRead.getEmail()+userRead.getSenha()) != null : !usuario.getHash().equals(new Criptografia().criptografarComMD5(userRead.getEmail()+userRead.getSenha()))){
+            if(usuario.getHash() == null ? Criptografia.criptografarComMD5(userRead.getEmail()+userRead.getSenha()) != null : !usuario.getHash().equals(Criptografia.criptografarComMD5(userRead.getEmail()+userRead.getSenha()))){
                 throw new IllegalArgumentException("Email ou senha incorretos.");
             }
             
