@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import localizae.net.br.controller.R;
-import localizae.net.br.model.TipoUsuario;
 import localizae.net.br.model.Usuario;
 import localizae.net.br.services.impl.UserService;
 import localizae.net.br.utils.Constants;
@@ -40,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                 switch (responseCode) {
                     case 200:
                         Toast.makeText(context, getString(R.string.successful_login), Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(LoginActivity.this,MenuActivity.class));
                         break;
                     default:
                         String text = ResponseCodeValidator.validateResponseCode(responseCode);
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                     Usuario usuario = new Usuario(email,hash);
 
                     UserService userService = new UserService();
-                    userService.login(usuario,context);
+                   userService.login(usuario,context);
                 }
             }
         });

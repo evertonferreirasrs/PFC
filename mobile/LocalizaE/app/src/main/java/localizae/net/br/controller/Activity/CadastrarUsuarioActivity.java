@@ -83,7 +83,6 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
                     if (senha.equals(confirmaSenha)) {
                         // Registrar o broadcast receiver para receber chamadas de outros atores
                         registerBroadcast();
-
                         // Instancia de uma user service para criar o usuario
                         UserService userService = new UserService();
                         userService.CreateUser(new Usuario(nome, email, senha, new TipoUsuario(Constants.USER_VISITANT)), context);

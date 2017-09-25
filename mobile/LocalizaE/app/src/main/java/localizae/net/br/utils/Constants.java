@@ -10,11 +10,16 @@ public class Constants {
 
     public static final String CREATE_USER_ACTIVITY_TAG = "CADASTRAR_USUARIO_ACT";
     public static final String LOGIN_ACTIVITY_TAG = "LOGIN_ACT";
+    public static final String COMENTS_TAG = "COMENTS_ACT";
+    public static final String COMENTAR_QUALIFICAR_FRAGMENT_TAG = "COMENTAR_QUALIFICAR_FRAGMENT_TAG";
+
 
     public static final Long USER_VISITANT = 2L;
 
     // Intent keys
     public static final String RESPONSE_CODE_KEY = "response_code";
+    public static final String DATA_KEY = "data";
+    public static final String USER_ID_KEY = "usuario";
 
     // Texts
     public static final String RESPONSE_VALUE_200  = "Sucesso";

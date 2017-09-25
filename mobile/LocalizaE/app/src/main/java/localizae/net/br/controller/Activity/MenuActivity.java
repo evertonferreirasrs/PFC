@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import localizae.net.br.controller.Fragments.AlterarSenhaFragment;
 import localizae.net.br.controller.Fragments.AvaliarEstandeFragment;
+import localizae.net.br.controller.Fragments.ComentarQualificarFragment;
 import localizae.net.br.controller.Fragments.EnviarFeedbackFragment;
 import localizae.net.br.controller.Fragments.InicioFragment;
 import localizae.net.br.controller.Fragments.MeuEstandeFragment;
