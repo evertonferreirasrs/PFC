@@ -23,4 +23,5 @@ public interface UserEndpointInterface {
     @POST("usuario/login")
     Call<Usuario> login(@Body Usuario usuario);
 
+
 }

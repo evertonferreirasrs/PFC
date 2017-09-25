@@ -25,6 +25,10 @@ public class Estande extends BaseEntity{
     @Expose
     private String areaTematica;
 
+    public Estande(Long id){
+        this.setId(id);
+    }
+
     public String getTitulo() {
         return titulo;
     }
@@ -64,4 +68,6 @@ public class Estande extends BaseEntity{
     public void setAreaTematica(String areaTematica) {
         this.areaTematica = areaTematica;
     }
+
 }
+
