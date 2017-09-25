@@ -20,7 +20,7 @@
                 <div class="page-title">
                     <div>
                         <h1><i class="fa fa-commenting-o"></i> Gerenciar Avaliações</h1>
-                        <p> LocalizaÊ - Sistema de Posicionamento Interno FAITEC</p>
+                        <p> LocalizaÊ - Sistema de Posicionamento Interno para Eventos</p>
                     </div>
                     <div>
                         <ul class="breadcrumb">
@@ -33,48 +33,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body" id="table-avaliacoes">
-                                <table class="table table-hover table-bordered" id="sampleTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Projeto</th>
-                                            <th style="width: 2px;">Avaliação</th>
-                                            <th>Comentário</th>
-                                            <th>Ação</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>LocalizaÊ</td>
-                                            <td><center><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></center></td>
-                                            <td>Excelente projeto! Parabéns!</td>
-                                            <td><center><a class="btn btn-danger" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    <tr>
-                                            <td>Pare Fácil</td>
-                                            <td><center><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></center></td>
-                                            <td>Excelente projeto! Parabéns!</td>
-                                            <td><center><a class="btn btn-danger" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    <tr>
-                                            <td>Encontre Fácil</td>
-                                            <td><center><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></center></td>
-                                            <td>Excelente projeto! Parabéns!</td>
-                                            <td><center><a class="btn btn-danger" id="demoSwal" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    <tr>
-                                            <td>TecEdu Esportes</td>
-                                            <td><center><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></center></td>
-                                            <td>Excelente projeto! Parabéns!</td>
-                                            <td><center><a class="btn btn-danger" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    <tr>
-                                            <td>Learn Automaton</td>
-                                            <td><center><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></center></td>
-                                            <td>Excelente projeto! Parabéns!</td>
-                                            <td><center><a class="btn btn-danger" href="#"><i class="fa fa-lg fa-trash"></i></a></center></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                
                             </div>
                         </div>
                     </div>

@@ -49,13 +49,16 @@
     </center>
     <br>
     <div class="login-block">
-        <a href="<c:url value="/"/>" class="pull-left">Voltar</a>
-        <h1>Login</h1>
-        <input type="text" value="" placeholder="Email" id="username" />
-        <input type="password" value="" placeholder="Senha" id="password" />
-        <a id="demoSwal" href="#" class="pull-right" >Recuperar Senha</a>
-        <br><br><br>
-        <a href="<c:url value="/gerenciador"/>"><button>Entrar</button></a>
+        <form onsubmit="controller.login(event)">
+            <p id="msg"></p>
+            <a href="<c:url value="/"/>" class="pull-left">Voltar</a>
+            <h1>Login</h1>
+            <input type="text" value="" placeholder="Email" id="inputUsername" />
+            <input type="password" value="" placeholder="Senha" id="inputPassword" />
+            <a id="demoSwal" href="#" class="pull-right" >Recuperar Senha</a>
+            <br><br><br>
+            <button type="submit" id="btn-entrar">Entrar</button>
+        </form>
     </div>
 
     <!-- Javascripts-->
@@ -90,7 +93,27 @@
                         swal("Senha enviada!", "Acesse seu email: " + inputValue, "success");
                     });
         });
-    </script>
+</script>
+<script src="<c:url value="/resources/js/app/controller/LoginController.js" />"></script>
+<script src="<c:url value="/resources/js/app/config/Configuration.js" />"></script>
+<script src="<c:url value="/resources/js/app/service/LoginService.js" />"></script>
+<script src="<c:url value="/resources/js/app/service/HttpService.js" />"></script>
+<script src="<c:url value="/resources/js/app/helper/md5.js" />"></script>
+<script>
+    let controller = new LoginController()
+    $("#msg").hide()
+
+    if(localStorage['msg-localizae'] != null && localStorage['msg-localizae'] != 'null'){
+        let msgP = $("#msg")
+        let json = JSON.parse(localStorage['msg-localizae'])
+        msgP.text(json.msg)
+        msgP.addClass('text-'+json.type)
+        msgP.show()
+
+        localStorage['msg-localizae'] = null
+    }
+
+</script>
 
 </body>
 </html>
