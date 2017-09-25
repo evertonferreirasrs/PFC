@@ -102,8 +102,8 @@ public class MenuActivity extends AppCompatActivity
 
         // MAPA DA FAITEC
         if (id == R.id.mapa_id) {
-            Intent i = new Intent(getBaseContext(),MapaActivity.class);
-            startActivity(i);
+            Intent intentAbrirMapa = new Intent(getBaseContext(),MapaActivity.class);
+            startActivity(intentAbrirMapa);
 
 
             // ALTERAR SENHA
