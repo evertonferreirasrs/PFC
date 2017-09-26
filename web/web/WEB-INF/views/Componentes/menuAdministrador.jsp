@@ -45,21 +45,21 @@
         <ul class="sidebar-menu">
             <li class="treeview <c:if test="${aba eq 'evento'}">active</c:if>"><a href="<c:url value="/evento/gerenciar"/>"><i class="fa fa-university"></i><span>Gerenciar Eventos</span></a></li>
             <li class="treeview <c:if test="${aba eq 'estande'}">active</c:if>"><a href="<c:url value="/estande/gerenciar"/>"><i class="fa fa-graduation-cap"></i><span>Gerenciar Estandes</span></a></li>
-            <li class="treeview <c:if test="${aba eq 'estatisticas'}">active</c:if>"><a href="<c:url value="/estatisticas"/>"><i class="fa fa-bar-chart-o"></i><span>Estatï¿½sticas</span></a></li>
-            <li class="treeview <c:if test="${aba eq 'avaliacaoVisitantes'}">active</c:if>"><a href="<c:url value="/avaliacao/visitantes"/>"><i class="fa fa-commenting-o"></i><span>Avaliaï¿½ï¿½es de Visitantes</span></a></li>
-            <li class="treeview <c:if test="${aba eq 'avaliacaoJurados'}">active</c:if>"><a href="<c:url value="/jurado/avaliacoes"/>"><i class="fa fa-commenting"></i><span>Avaliaï¿½ï¿½es de Jurados</span></a></li>
-            <li class="treeview <c:if test="${aba eq 'addExpositor'}">active</c:if> <c:if test="${aba eq 'addJurado'}">active</c:if><c:if test="${aba eq 'addAdministrador'}">active</c:if> <c:if test="${aba eq 'gerenciarUsuarios'}">active</c:if>"><a href="#"><i class="fa fa-laptop"></i><span>Gerenciar Usuï¿½rios</span><i class="fa fa-angle-right"></i></a>
+            <li class="treeview <c:if test="${aba eq 'estatisticas'}">active</c:if>"><a href="<c:url value="/estatisticas"/>"><i class="fa fa-bar-chart-o"></i><span>Estatísticas</span></a></li>
+            <li class="treeview <c:if test="${aba eq 'avaliacaoVisitantes'}">active</c:if>"><a href="<c:url value="/avaliacao/visitantes"/>"><i class="fa fa-commenting-o"></i><span>Avaliações de Visitantes</span></a></li>
+            <li class="treeview <c:if test="${aba eq 'avaliacaoJurados'}">active</c:if>"><a href="<c:url value="/jurado/avaliacoes"/>"><i class="fa fa-commenting"></i><span>Avaliações de Jurados</span></a></li>
+            <li class="treeview <c:if test="${aba eq 'addExpositor'}">active</c:if> <c:if test="${aba eq 'addJurado'}">active</c:if><c:if test="${aba eq 'addAdministrador'}">active</c:if> <c:if test="${aba eq 'gerenciarUsuarios'}">active</c:if>"><a href="#"><i class="fa fa-laptop"></i><span>Gerenciar Usuários</span><i class="fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
-                    <li <c:if test="${aba eq 'gerenciarUsuarios'}"> class="sub-menu-active"</c:if>><a href="<c:url value="/usuario/gerenciar"/>"><i class="fa fa-circle-o"></i> Usuï¿½rios</a></li>
+                    <li <c:if test="${aba eq 'gerenciarUsuarios'}"> class="sub-menu-active"</c:if>><a href="<c:url value="/usuario/gerenciar"/>"><i class="fa fa-circle-o"></i> Usuários</a></li>
                     <li <c:if test="${aba eq 'addAdministrador'}"> class="sub-menu-active"</c:if>><a href="<c:url value="/usuario/adicionar/administrador"/>"><i class="fa fa-circle-o"></i> Adicionar Administrador</a></li>
                     <li <c:if test="${aba eq 'addExpositor'}"> class="sub-menu-active"</c:if>><a href="<c:url value="/usuario/adicionar/expositor"/>"><i class="fa fa-circle-o"></i> Adicionar Expositor</a></li>
                     <li <c:if test="${aba eq 'addJurado'}"> class="sub-menu-active"</c:if>><a href="<c:url value="/usuario/adicionar/jurado"/>"><i class="fa fa-circle-o"></i> Adicionar Jurado</a></li>
                 </ul>
             </li>
-            <li class="treeview <c:if test="${aba eq 'porVisitantes'}">active</c:if> <c:if test="${aba eq 'avaliacoesEstandes'}">active</c:if>"><a href="#"><i class="fa fa-laptop"></i><span>Gerar Relatï¿½rios</span><i class="fa fa-angle-right"></i></a>
+            <li class="treeview <c:if test="${aba eq 'porVisitantes'}">active</c:if> <c:if test="${aba eq 'avaliacoesEstandes'}">active</c:if>"><a href="#"><i class="fa fa-laptop"></i><span>Gerar Relatórios</span><i class="fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
                     <li <c:if test="${aba eq 'porVisitantes'}"> class="sub-menu-active"</c:if>><a href="<c:url value="/relatorio/visitantePorEstande"/>"><i class="fa fa-circle-o"></i> Visitantes por Estande</a></li>
-                    <li <c:if test="${aba eq 'avaliacoesEstandes'}"> class="sub-menu-active"</c:if>><a href="<c:url value="/relatorio/avaliacoesEstandes"/>"><i class="fa fa-circle-o"></i> Avaliaï¿½ï¿½es dos Visitantes</a></li>
+                    <li <c:if test="${aba eq 'avaliacoesEstandes'}"> class="sub-menu-active"</c:if>><a href="<c:url value="/relatorio/avaliacoesEstandes"/>"><i class="fa fa-circle-o"></i> Avaliações dos Visitantes</a></li>
                 </ul>
             </li>
         </ul>
