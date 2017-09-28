@@ -4,6 +4,6 @@ class Configuration{
     }
 
     static getUrlWebApp(){
-        return 'http://localhost:8080/localizae/'
+        return 'http://18.220.190.201:8080/web/'
     }
 }
