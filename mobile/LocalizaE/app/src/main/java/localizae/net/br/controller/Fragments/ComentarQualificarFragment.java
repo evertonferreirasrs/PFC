@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class ComentarQualificarFragment extends Fragment {
     private Button botao_enviar;
     private Button botao_voltar;
     private EditText comentarioEditText;
+    private RatingBar nota_ratingbar;
 
     public ComentarQualificarFragment() {
         // Required empty public constructor
@@ -73,6 +75,7 @@ public class ComentarQualificarFragment extends Fragment {
         botao_enviar = (Button) view.findViewById(R.id.botao_entrar_id);
         botao_voltar = (Button) view.findViewById(R.id.botao_voltar_id);
         comentarioEditText = (EditText) view.findViewById(R.id.comentario_editText_comentario) ;
+        nota_ratingbar = (RatingBar) view.findViewById(R.id.comentarQualificar_nota);
 
         botao_enviar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +92,8 @@ public class ComentarQualificarFragment extends Fragment {
                     registerBroadcast();
                     SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                     long userId = sharedPref.getLong(Constants.USER_ID_KEY, 0);
-                    AvaliacaoVisitante avaliacaoVisitante = new AvaliacaoVisitante(5L, comentario, new Usuario(21L), new Estande(18L));
+                    final long nota = (long) nota_ratingbar.getProgress();
+                    AvaliacaoVisitante avaliacaoVisitante = new AvaliacaoVisitante(nota, comentario, new Usuario(21L), new Estande(19L));
 
                     BoothService boothService = new BoothService();
                     boothService.avaliacao(avaliacaoVisitante, getActivity());
