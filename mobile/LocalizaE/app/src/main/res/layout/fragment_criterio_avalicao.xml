@@ -17,11 +17,12 @@
 
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/criterio_avaliacao_fragment_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.05"
-            android:hint="Critério" />
+            android:hint="Critério"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,12 +33,18 @@
             android:text="Nota"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <ImageView
-            android:id="@+id/imagem_nota_id"
+        <TextView
+            android:id="@+id/criterio_avaliacao_fragment_nota_textView"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/n0" />
+            android:background="@drawable/circle_blue"
+            android:text="50"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            />
 
 
         <LinearLayout
@@ -66,12 +73,12 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <SeekBar
-                android:id="@+id/seekBar_id"
+                android:id="@+id/criterio_avaliacao_fragment_seekbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:max="11" />
+                android:max="100" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -93,7 +100,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/criterio_avaliacao_fragment_opiniao_textView"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
@@ -102,7 +109,9 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="#e8e8e8"
-            android:gravity="top|left" />
+            android:gravity="top|left"
+            android:padding="10dp"
+            android:justificationMode="inter_word"/>
 
 
         <!--<LinearLayout-->
@@ -123,16 +132,35 @@
         <!--android:text="CONCLUIR AVALIAÇÃO"-->
         <!--android:textColor="@color/texto_botao" />-->
 
-        <Button
-            android:id="@+id/botao_entrar_id"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#2196F3"
-            android:text="CONCLUIR AVALIAÇÃO"
-            android:textColor="@color/texto_botao" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/criterio_avaliacao_fragment_button_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#2196F3"
+                android:text="SALVAR"
+                android:textColor="@color/texto_botao" />
+
+            <Button
+                android:id="@+id/criterio_avaliacao_fragment_button_close"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#0F0"
+                android:text="FECHAR AVALIAÇÃO"
+                android:textColor="#000000" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/botao_voltar_id"

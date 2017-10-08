@@ -17,6 +17,30 @@ public class AvaliacaoJurado extends BaseEntity{
     @Expose
     private String criterio;
 
+    @SerializedName("opiniao")
+    @Expose
+    private String opiniao;
+
+    public String getOpiniao() {
+        return opiniao;
+    }
+
+    public void setOpiniao(String opiniao) {
+        this.opiniao = opiniao;
+    }
+
+    @SerializedName("status")
+    @Expose
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getNomeUsuario() {
         return nomeUsuario;
     }
