@@ -1,5 +1,7 @@
 package localizae.net.br.retrofit;
 
+import localizae.net.br.model.AvaliacaoJurado;
+import localizae.net.br.services.endpoints.AvaliacaoJuradoInterface;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -25,7 +27,7 @@ public class RetrofitInicializador {
                 .addConverterFactory(GsonConverterFactory.create()).build();
     }
 
-    public getAvaliacaoJuradoService(){
-        
+    public AvaliacaoJuradoInterface getAvaliacaoJuradoService(){
+        return retrofit.create(AvaliacaoJuradoInterface.class);
     }
 }

@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class AvaliacaoJurado extends BaseEntity{
 //TODO: PEDIR PRO MARCAO MUDAR SERVICO DE RETORNO DA AVALIACAO DO JURADO
-    @SerializedName("nomeUsuario")
+    @SerializedName("usuario")
     @Expose
-    private String nomeUsuario;
+    private Usuario usuario;
 
     @SerializedName("nota")
     @Expose
@@ -15,23 +15,45 @@ public class AvaliacaoJurado extends BaseEntity{
 
     @SerializedName("criterio")
     @Expose
-    private String criterio;
+    private CriterioAvaliacao criterio;
 
     @SerializedName("opiniao")
     @Expose
     private String opiniao;
 
+    @SerializedName("status")
+    @Expose
+    private String status;
+
     public String getOpiniao() {
         return opiniao;
+    }
+
+    @SerializedName("estande")
+    @Expose
+    private Estande estande;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Estande getEstande() {
+        return estande;
+    }
+
+    public void setEstande(Estande estande) {
+        this.estande = estande;
     }
 
     public void setOpiniao(String opiniao) {
         this.opiniao = opiniao;
     }
 
-    @SerializedName("status")
-    @Expose
-    private String status;
+
 
     public String getStatus() {
         return status;
@@ -41,12 +63,12 @@ public class AvaliacaoJurado extends BaseEntity{
         this.status = status;
     }
 
-    public String getNomeUsuario() {
-        return nomeUsuario;
+    public Usuario getNomeUsuario() {
+        return usuario;
     }
 
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
+    public void setNomeUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Long getNota() {
@@ -57,11 +79,11 @@ public class AvaliacaoJurado extends BaseEntity{
         this.nota = nota;
     }
 
-    public String getCriterio() {
+    public CriterioAvaliacao getCriterio() {
         return criterio;
     }
 
-    public void setCriterio(String criterio) {
+    public void setCriterio(CriterioAvaliacao criterio) {
         this.criterio = criterio;
     }
 }

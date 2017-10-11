@@ -30,7 +30,11 @@ import localizae.net.br.model.CriterioJurado;
 import localizae.net.br.model.Estande;
 import localizae.net.br.model.TipoUsuario;
 import localizae.net.br.model.Usuario;
+import localizae.net.br.retrofit.RetrofitInicializador;
 import localizae.net.br.utils.Cryptographer;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,6 +93,20 @@ public class AvaliarEstandeFragment extends Fragment {
         usuario.setCriterioAvaliacaoList(criterioAvaliacaoList);
 
         ListView listaEstandes = (ListView) view.findViewById(R.id.fragment_avaliar_estande_listaEstandes);
+
+        Call buscarCriteriosJuradoCall = new RetrofitInicializador().getAvaliacaoJuradoService().getAll();
+
+        buscarCriteriosJuradoCall.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Toast.makeText(getContext(), "ERRO", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         List<CriterioJurado> criterioJuradoList = usuario.getCriterioAvaliacaoList();
         //Montar um mapa com chave sendo titulo do estande e valor a lista de criterios daquele estande.
