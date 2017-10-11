@@ -94,12 +94,13 @@ public class AvaliarEstandeFragment extends Fragment {
 
         ListView listaEstandes = (ListView) view.findViewById(R.id.fragment_avaliar_estande_listaEstandes);
 
-        Call buscarCriteriosJuradoCall = new RetrofitInicializador().getAvaliacaoJuradoService().getAll();
+        Call buscarCriteriosJuradoCall = new RetrofitInicializador().getCriterioJuradoService().getAll();
 
         buscarCriteriosJuradoCall.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                
+                Object criterioJuradoList = response.body();
+                Toast.makeText(getContext(), criterioJuradoList.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
