@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -91,6 +92,8 @@ public class CriterioAvalicaoFragment extends Fragment {
                         botaoConfirmar.setEnabled(false);
                         botaoConfirmar.setText("Avaliação Fechada");
 
+                        Button botaoFecharAvaliacao = (Button) fragment.findViewById(R.id.criterio_avaliacao_fragment_button_close);
+                        botaoFecharAvaliacao.setVisibility(View.INVISIBLE);
                     }
 
                     //preencher dados
