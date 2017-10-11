@@ -17,11 +17,11 @@ public class ConnectionManager {
     private ConnectionManager() {
         dataSource = new PGPoolingDataSource();
         dataSource.setDataSourceName("localizae");
-        dataSource.setServerName("localhost");
+        dataSource.setServerName("localizaedb.cwvogw9jt7ia.us-east-2.rds.amazonaws.com");
         dataSource.setPortNumber(5432);
         dataSource.setDatabaseName("localizae");
-        dataSource.setUser("postgres");
-        dataSource.setPassword("marcao1996");
+        dataSource.setUser("localizae");
+        dataSource.setPassword("elmrfai2017");
         dataSource.setMaxConnections(30);
         dataSource.setInitialConnections(2);
     }

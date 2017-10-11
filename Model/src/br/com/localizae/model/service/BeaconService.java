@@ -59,6 +59,7 @@ public class BeaconService implements BaseBeaconService {
             conn.commit();
         } catch (Exception ex) {
             conn.rollback();
+            throw ex;
         }finally{
             conn.close();
         }
