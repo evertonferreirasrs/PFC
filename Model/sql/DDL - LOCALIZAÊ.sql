@@ -99,6 +99,14 @@ CREATE TABLE criterioJurado(
     PRIMARY KEY(usuario_fk, criterioAvaliacao_fk, estande_fk)
 );
 
+CREATE TABLE beacon(
+    id BIGSERIAL NOT NULL,
+    xCoordinate DOUBLE NOT NULL,
+    yCoordinate DOUBLE NOT NULL,
+    mac VARCHAR(255) NOT NULL,
+    PRIMARY KEY(id)
+);
+
 ALTER TABLE usuario ADD CONSTRAINT usuario_tipoUsuario_fk FOREIGN KEY (tipoUsuario_fk) REFERENCES tipoUsuario(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE avaliacaoVisitante ADD CONSTRAINT avaliacaoVisitante_usuario_fk FOREIGN KEY (usuario_fk) REFERENCES usuario(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE avaliacaoVisitante ADD CONSTRAINT avaliacaoVisitante_estande_fk FOREIGN KEY (estande_fk) REFERENCES estande(id) ON UPDATE CASCADE ON DELETE CASCADE;
