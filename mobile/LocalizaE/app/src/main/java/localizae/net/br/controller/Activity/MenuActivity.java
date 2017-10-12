@@ -164,9 +164,14 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.minhas_avaliacoes_jurado_id) {
             setTitle(" Minhas Avaliações");
 //            getSupportActionBar().setIcon(R.drawable.ic_chat_black_24dp);
-            MinhasAvaliacoesJuradoFragment minhasAvaliacoesJuradoFragment = new MinhasAvaliacoesJuradoFragment();
+
+            ComentarQualificarFragment comentarQualificarFragment = new ComentarQualificarFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, minhasAvaliacoesJuradoFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragment_id, comentarQualificarFragment).commit();
+
+            //MinhasAvaliacoesJuradoFragment minhasAvaliacoesJuradoFragment = new MinhasAvaliacoesJuradoFragment();
+            //android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            //fragmentManager.beginTransaction().replace(R.id.fragment_id, minhasAvaliacoesJuradoFragment).commit();
 
 
         // ENVIAR FEEDBACK
