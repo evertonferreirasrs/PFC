@@ -15,6 +15,8 @@ public class Constants {
 
     // Intent keys
     public static final String RESPONSE_CODE_KEY = "response_code";
+    public static final String DATA_KEY = "data";
+
 
     // Texts
     public static final String RESPONSE_VALUE_200  = "Sucesso";

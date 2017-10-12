@@ -13,14 +13,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import localizae.net.br.controller.R;
 import localizae.net.br.model.TipoUsuario;
 import localizae.net.br.model.Usuario;
 import localizae.net.br.services.impl.UserService;
+import localizae.net.br.utils.ArmazenadorDadosUsuario;
 import localizae.net.br.utils.Constants;
 import localizae.net.br.utils.Cryptographer;
 import localizae.net.br.utils.ResponseCodeValidator;
@@ -42,6 +45,13 @@ public class LoginActivity extends AppCompatActivity {
                 switch (responseCode) {
                     case 200:
                         Toast.makeText(context, getString(R.string.successful_login), Toast.LENGTH_LONG).show();
+
+                        Usuario usuario = (Usuario) intent.getSerializableExtra(Constants.DATA_KEY);
+
+                        ArmazenadorDadosUsuario armazenadorDadosUsuario = new ArmazenadorDadosUsuario();
+
+                        armazenadorDadosUsuario.aramazenarDados(usuario,context);
+
                         startActivity(new Intent(LoginActivity.this,MenuActivity.class));
                         break;
                     default:

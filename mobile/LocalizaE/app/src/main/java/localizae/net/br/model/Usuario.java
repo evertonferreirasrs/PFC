@@ -3,7 +3,9 @@ package localizae.net.br.model;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.annotations.Expose;
 
-public class Usuario extends BaseEntity{
+import java.io.Serializable;
+
+public class Usuario extends BaseEntity implements Serializable{
 
     @SerializedName("nome")
     @Expose
@@ -39,6 +41,10 @@ public class Usuario extends BaseEntity{
     public Usuario(String email, String hash){
         this.email = email;
         this.hash = hash;
+    }
+
+    public Usuario(){
+
     }
 
     public String getNome() {
