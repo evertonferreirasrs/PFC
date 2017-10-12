@@ -7,7 +7,9 @@ package br.com.localizae.model.service;
 
 import br.com.localizae.model.ConnectionManager;
 import br.com.localizae.model.base.service.BaseBeaconService;
+import br.com.localizae.model.dao.AvaliacaoVisitanteDAO;
 import br.com.localizae.model.dao.BeaconDAO;
+import br.com.localizae.model.entity.AvaliacaoVisitante;
 import br.com.localizae.model.entity.Beacon;
 import java.sql.Connection;
 import java.util.HashMap;
@@ -22,22 +24,71 @@ public class BeaconService implements BaseBeaconService {
 
     @Override
     public void create(Beacon entity) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        BeaconDAO dao = new BeaconDAO();
+
+        try {
+            this.validate(entity);
+            dao.create(conn, entity);
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.close();
+        }
     }
 
     @Override
     public void update(Beacon entity) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        BeaconDAO dao = new BeaconDAO();
+
+        try {
+            this.validate(entity);
+            dao.update(conn, entity);
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.close();
+        }
     }
 
     @Override
     public void delete(Long id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        BeaconDAO dao = new BeaconDAO();
+
+        try {
+            dao.delete(conn, id);
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.close();
+        }
     }
 
     @Override
     public Beacon readById(Long id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        BeaconDAO dao = new BeaconDAO();
+        Beacon beacon = null;
+        
+        try {
+            beacon = dao.readById(conn, id);
+            conn.commit();
+        } catch (Exception e) {
+            conn.rollback();
+            throw e;
+        } finally {
+            conn.close();
+        }
+        
+        return beacon;
     }
 
     @Override
@@ -69,7 +120,17 @@ public class BeaconService implements BaseBeaconService {
 
     @Override
     public void validate(Beacon entity) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(entity.getMac() == null || entity.getMac().isEmpty()){
+            throw new IllegalArgumentException("Campo MAC obrigatório!");
+        }
+        
+        if(entity.getxCoordinate() == null || entity.getxCoordinate() < 0){
+            throw new IllegalArgumentException("Campo Coordenada X obrigatório e deve ser maior ou igual a zero!");
+        }
+        
+        if(entity.getyCoordinate() == null || entity.getyCoordinate() < 0){
+            throw new IllegalArgumentException("Campo Coordenada Y obrigatório e deve ser maior ou igual a zero!");
+        }
     }
 
 }

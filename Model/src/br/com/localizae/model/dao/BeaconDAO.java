@@ -22,17 +22,52 @@ public class BeaconDAO implements BaseDAO<Beacon>{
 
     @Override
     public void create(Connection conn, Beacon entity) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "INSERT INTO beacon(mac, xCoordinate, yCoordinate) VALUES (?,?,?) RETURNING id;";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+
+        int i = 0;
+        ps.setString(++i, entity.getMac());
+        ps.setDouble(++i, entity.getyCoordinate());
+        ps.setDouble(++i, entity.getyCoordinate());
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            entity.setId(rs.getLong("id"));
+        }
+
+        rs.close();
+        ps.close();
     }
 
     @Override
     public void delete(Connection conn, Long id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "DELETE FROM beacon WHERE id=?;";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+
+        int i = 0;
+        ps.setLong(++i, id);
+
+        ps.execute();
+        ps.close();
     }
 
     @Override
     public void update(Connection conn, Beacon entity) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "UPDATE beacon SET mac=?, xCoordinate=?, yCoordinate=? WHERE id=?;";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+
+        int i = 0;
+        ps.setString(++i, entity.getMac());
+        ps.setDouble(++i, entity.getxCoordinate());
+        ps.setDouble(++i, entity.getyCoordinate());
+        ps.setLong(++i, entity.getId());
+
+        ps.execute();
+        ps.close();
     }
 
     @Override
@@ -42,7 +77,25 @@ public class BeaconDAO implements BaseDAO<Beacon>{
 
     @Override
     public Beacon readById(Connection conn, Long id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Beacon beacon = null;
+        
+        String sql = "SELECT * FROM beacon WHERE id = ?;";
+        
+        PreparedStatement ps = conn.prepareStatement(sql);
+        int i = 0;
+        ps.setLong(++i, id);
+        
+        ResultSet rs = ps.executeQuery();
+        
+        while(rs.next()){
+            beacon = new Beacon();
+            beacon.setId(rs.getLong("id"));
+            beacon.setMac(rs.getString("mac"));
+            beacon.setxCoordinate(rs.getDouble("xCoordinate"));
+            beacon.setyCoordinate(rs.getDouble("yCoordinate"));
+        }
+        
+        return beacon;
     }
 
     @Override
