@@ -16,25 +16,25 @@ import org.springframework.web.servlet.ModelAndView;
  * @author marca
  */
 @Controller
-public class EventoController {
-    @RequestMapping(value = "/evento/gerenciar", method = RequestMethod.GET)
+public class BeaconController {
+    @RequestMapping(value = "/beacon/gerenciar", method = RequestMethod.GET)
     public ModelAndView estandes() {
-        ModelAndView mv = new ModelAndView("Evento/gerenciarEventos");
-        mv.addObject("aba", "evento");
+        ModelAndView mv = new ModelAndView("Beacon/gerenciarBeacon");
+        mv.addObject("aba", "beacon");
         return mv;
     }
     
-    @RequestMapping(value = "/evento/adicionar", method = RequestMethod.GET)
+    @RequestMapping(value = "/beacon/adicionar", method = RequestMethod.GET)
     public ModelAndView adicionarEstandes() {
-        ModelAndView mv = new ModelAndView("Evento/addEvento");
-        mv.addObject("aba", "evento");
+        ModelAndView mv = new ModelAndView("Beacon/addBeacon");
+        mv.addObject("aba", "beacon");
         return mv;
     }
     
-    @RequestMapping(value = "/evento/alterar/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/beacon/alterar/{id}", method = RequestMethod.GET)
     public ModelAndView alterarEstandes(@PathVariable("id") Long id) {
-        ModelAndView mv = new ModelAndView("Evento/updEvento");
-        mv.addObject("aba", "evento");
+        ModelAndView mv = new ModelAndView("Beacon/updBeacon");
+        mv.addObject("aba", "beacon");
         mv.addObject("id", id);
         return mv;
     }
