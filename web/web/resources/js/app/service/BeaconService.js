@@ -42,7 +42,7 @@ class BeaconService {
                     if (xhr.status == 200) {
                         resolve(
                             JSON.parse(xhr.responseText)
-                            .map(b => new Evento(
+                            .map(b => new Beacon(
                                 b.mac,
                                 b.xCoordinate,
                                 b.yCoordinate,
