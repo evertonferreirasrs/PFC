@@ -108,6 +108,14 @@ create table estatistica(
 	primary key(id)
 );
 
+create table beacon(
+    id BIGSERIAL NOT NULL,
+    xCoordiante FLOAT NOT NULL,
+    yCoordinate FLOAT NOT NULL,
+    mac VARCHAR(255) NOT NULL,
+    PRIMARY KEY(id)
+);
+
 alter table estatistica add constraint usuario_fk_estatistica foreign key (usuario_fk) references usuario(id) on update cascade on delete no action;
 ALTER TABLE usuario ADD CONSTRAINT usuario_tipoUsuario_fk FOREIGN KEY (tipoUsuario_fk) REFERENCES tipoUsuario(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE avaliacaoVisitante ADD CONSTRAINT avaliacaoVisitante_usuario_fk FOREIGN KEY (usuario_fk) REFERENCES usuario(id) ON UPDATE CASCADE ON DELETE CASCADE;
