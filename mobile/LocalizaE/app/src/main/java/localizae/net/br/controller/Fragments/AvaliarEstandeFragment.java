@@ -98,7 +98,7 @@ public class AvaliarEstandeFragment extends Fragment {
 
         final ListView listaEstandes = (ListView) view.findViewById(R.id.fragment_avaliar_estande_listaEstandes);
 
-        Call buscarCriteriosJuradoCall = new RetrofitInicializador().getCriterioJuradoService().getAll();
+        Call buscarCriteriosJuradoCall = new RetrofitInicializador().getCriterioJuradoService().getByParameters(71L);
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         //progressDialog.setTitle("Carregando");
         progressDialog.setMessage("Carregando... por favor aguarde.");
