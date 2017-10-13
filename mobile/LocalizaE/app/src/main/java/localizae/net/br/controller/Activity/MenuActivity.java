@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import localizae.net.br.controller.Fragments.AlterarSenhaFragment;
 import localizae.net.br.controller.Fragments.AvaliarEstandeFragment;
@@ -23,6 +25,8 @@ import localizae.net.br.controller.Fragments.MinhasPromocoesFragment;
 import localizae.net.br.controller.Fragments.QualificacaoComentariosFragment;
 import localizae.net.br.controller.Fragments.SobreFragment;
 import localizae.net.br.controller.R;
+import localizae.net.br.model.Usuario;
+import localizae.net.br.utils.LerDadosUsuario;
 import localizae.net.br.utils.VerificadorUsuario;
 
 public class MenuActivity extends AppCompatActivity
@@ -96,6 +100,15 @@ public class MenuActivity extends AppCompatActivity
 
         }
 
+
+        // NOME E EMAIL do usuário logado ==========================================================
+        Usuario usuarioLogado = LerDadosUsuario.lerDados(this);
+        View header = navigationView.getHeaderView(0);
+        TextView nome = (TextView)header.findViewById(R.id.textView_nome);
+        TextView email = (TextView)header.findViewById(R.id.textView_email);
+        nome.setText(usuarioLogado.getNome());
+        email.setText(usuarioLogado.getEmail());
+        // =========================================================================================
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
