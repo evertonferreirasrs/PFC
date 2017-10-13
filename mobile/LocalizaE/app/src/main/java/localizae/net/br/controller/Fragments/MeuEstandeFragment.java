@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import localizae.net.br.Adapter.IntegranteEquipeAdapter;
 import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Estande;
@@ -38,7 +40,7 @@ public class MeuEstandeFragment extends Fragment {
         final TextView campoAreaTematica = (TextView) view.findViewById(R.id.fragment_meuEstande_vAreaTematica);
         final TextView campoCurso = (TextView) view.findViewById(R.id.fragment_meuEstande_Vcurso);
         final TextView campoDescricao = (TextView) view.findViewById(R.id.fragment_meuEstande_vDescricao);
-        final TextView campoIntegrantes = (TextView) view.findViewById(R.id.fragment_meuEstande_vIntegrantes);
+        final ListView campoIntegrantes = (ListView) view.findViewById(R.id.fragment_integrantesequipe_listView);
 
         final Call<Estande> estandeCall = new RetrofitInicializador().getEstandeService().getEstande(19L);
 
@@ -51,9 +53,8 @@ public class MeuEstandeFragment extends Fragment {
                 campoAreaTematica.setText(estande.getAreaTematica());
                 campoCurso.setText(estande.getCurso());
                 campoDescricao.setText(estande.getDescricao());
-                //campoIntegrantes.setText(estande.setEquipe());
-
-                Toast.makeText(getContext(), "Toaqui", Toast.LENGTH_SHORT).show();
+                IntegranteEquipeAdapter adapter = new IntegranteEquipeAdapter(estande.getEquipe(), getContext());
+                campoIntegrantes.setAdapter(adapter);
             }
 
             @Override
