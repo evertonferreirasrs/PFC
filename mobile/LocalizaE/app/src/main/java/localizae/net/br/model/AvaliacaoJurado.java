@@ -86,4 +86,5 @@ public class AvaliacaoJurado extends BaseEntity{
     public void setCriterio(CriterioAvaliacao criterio) {
         this.criterio = criterio;
     }
+
 }

@@ -65,7 +65,6 @@ public class CriterioAvalicaoFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-//                Toast.makeText(getContext(), String.valueOf(seekBar.getProgress()), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -86,6 +85,7 @@ public class CriterioAvalicaoFragment extends Fragment {
                 notaValueTextView.setText("00");
                 opiniaoTextView.setText(LerDadosUsuario.lerDados(getContext()).getNome());
                 botaoConfirmar.setText("Salvar");
+                seekBar.setProgress(0);
 
                 final CriterioJurado criterioSelecionado = (CriterioJurado)adapterView.getItemAtPosition(position);
 
@@ -103,16 +103,14 @@ public class CriterioAvalicaoFragment extends Fragment {
                         }
 
                         if(avaliacaoBuscadaNoBanco != null){
-                            if(avaliacaoBuscadaNoBanco.getStatus().toLowerCase() == "fechada"){
+                            if(avaliacaoBuscadaNoBanco.getStatus().equals("fechada")){
                                 botaoConfirmar.setEnabled(false);
                                 botaoConfirmar.setText("Avaliação Fechada");
                             }
 
                             //preencher dados
-//                            opiniaoTextView.setText(criterioSelecionado.getCriterioAvaliacao().getId().toString());
+                            opiniaoTextView.setText(avaliacaoBuscadaNoBanco.getOpiniao());
                             seekBar.setProgress(avaliacaoBuscadaNoBanco.getNota().intValue());
-                            //testar
-                            Toast.makeText(getContext(), avaliacaoBuscadaNoBanco.getOpiniao(), Toast.LENGTH_SHORT).show();
                         }
                     }
 

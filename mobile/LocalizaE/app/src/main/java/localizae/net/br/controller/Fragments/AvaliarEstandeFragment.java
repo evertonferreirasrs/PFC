@@ -62,7 +62,7 @@ public class AvaliarEstandeFragment extends Fragment {
         getActivity().setTitle("Avaliar Estandes");
         View view = inflater.inflate(R.layout.fragment_avaliar_estande, container, false);
 
-        Usuario usuarioLogado = LerDadosUsuario.lerDados(getContext());
+        final Usuario usuarioLogado = LerDadosUsuario.lerDados(getContext());
 
         final ListView listaEstandes = (ListView) view.findViewById(R.id.fragment_avaliar_estande_listaEstandes);
 
