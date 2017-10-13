@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Usuario extends BaseEntity implements Serializable{
 
@@ -31,8 +32,20 @@ public class Usuario extends BaseEntity implements Serializable{
     @Expose
     private String hash;
 
-    public Usuario(){
+
+    private List<CriterioJurado> criterioAvaliacaoList;
+
+    public List<CriterioJurado> getCriterioAvaliacaoList() {
+        return criterioAvaliacaoList;
     }
+
+    public void setCriterioAvaliacaoList(List<CriterioJurado> criterioAvaliacaoList) {
+        this.criterioAvaliacaoList = criterioAvaliacaoList;
+    }
+
+    public Usuario(){}
+
+
 
     public Usuario(String nome, String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;

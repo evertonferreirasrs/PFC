@@ -56,8 +56,6 @@ public class QualificacaoComentariosFragment extends Fragment {
                 Toast.makeText(getContext(), "Serviço indisponivel no momento", Toast.LENGTH_SHORT).show();
             }
         });
-
-
         return view;
     }
 
