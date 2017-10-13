@@ -5,13 +5,14 @@
  */
 package br.com.localizae.model.entity;
 
+import br.com.localizae.model.base.BaseEntity;
 import java.util.Objects;
 
 /**
  *
  * @author marca
  */
-public class CriterioJurado {
+public class CriterioJurado extends BaseEntity{
     private CriterioAvaliacao criterioAvaliacao;
     private Usuario usuario;
     private Estande estande;

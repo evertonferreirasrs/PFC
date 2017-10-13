@@ -87,6 +87,12 @@ public class Estande extends BaseEntity {
         this.areaTematica = areaTematica;
     }
 
+<<<<<<< HEAD
+    @Override
+    public String toString() {
+        return this.getTitulo();
+    }
+=======
     public String getDescricao() {
         return descricao;
     }
@@ -95,5 +101,6 @@ public class Estande extends BaseEntity {
         this.descricao = descricao;
     }
 
+>>>>>>> f49c7e7f354dfe073b56454484c4fc3195787db4
 }
 

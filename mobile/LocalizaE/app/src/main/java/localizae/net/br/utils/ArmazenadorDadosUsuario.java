@@ -3,6 +3,7 @@ package localizae.net.br.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.widget.Toast;
 
 import localizae.net.br.controller.R;
 import localizae.net.br.model.TipoUsuario;
@@ -12,7 +13,6 @@ import localizae.net.br.model.Usuario;
 public class ArmazenadorDadosUsuario {
 
     public static void aramazenarDados(Usuario usuario, Context context) {
-
         SharedPreferences sharedPref =  context.getSharedPreferences("UsuarioLogado", 0);
         SharedPreferences.Editor editor = sharedPref.edit();
 
