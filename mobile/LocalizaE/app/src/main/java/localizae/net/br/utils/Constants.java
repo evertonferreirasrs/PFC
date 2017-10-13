@@ -34,5 +34,13 @@ public class Constants {
 
     public static final String RESPONSE_VALUE_RETROFIT_FAILURE = "Algo deu errado";
 
+    // Tipo Uusuário
+    public static final Long TIPO_USUARIO_ADMINISTRADOR = 1L;
+    public static final Long TIPO_USUARIO_VISITANTE = 2L;
+    public static final Long TIPO_USUARIO_EXPOSITOR = 3L;
+    public static final Long TIPO_USUARIO_JURADO = 4L;
+
+
+
 
 }
