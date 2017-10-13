@@ -22,6 +22,7 @@ import localizae.net.br.controller.R;
 import localizae.net.br.model.AvaliacaoJurado;
 import localizae.net.br.model.CriterioJurado;
 import localizae.net.br.Retrofit.RetrofitInicializador;
+import localizae.net.br.services.endpoints.AvaliacaoJuradoInterface;
 import localizae.net.br.utils.LerDadosUsuario;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,12 +86,14 @@ public class CriterioAvalicaoFragment extends Fragment {
                 notaValueTextView.setText("00");
                 opiniaoTextView.setText(LerDadosUsuario.lerDados(getContext()).getNome());
                 botaoConfirmar.setText("Salvar");
+                botaoConfirmar.setEnabled(true);
                 seekBar.setProgress(0);
 
                 final CriterioJurado criterioSelecionado = (CriterioJurado)adapterView.getItemAtPosition(position);
 
                 //Busca se existe avaliação para este criterio e seu status.
-                Call buscaDeAvaliacaoCall = new RetrofitInicializador().getAvaliacaoJuradoService().getByParameter(criterioSelecionado.getUsuario().getId(), criterioSelecionado.getCriterioAvaliacao().getId(), criterioSelecionado.getEstande().getId());
+                final AvaliacaoJuradoInterface avaliacaoJuradoService = new RetrofitInicializador().getAvaliacaoJuradoService();
+                Call buscaDeAvaliacaoCall = avaliacaoJuradoService.getByParameter(criterioSelecionado.getUsuario().getId(), criterioSelecionado.getCriterioAvaliacao().getId(), criterioSelecionado.getEstande().getId());
 
                 buscaDeAvaliacaoCall.enqueue(new Callback() {
                     @Override
@@ -111,6 +114,38 @@ public class CriterioAvalicaoFragment extends Fragment {
                             //preencher dados
                             opiniaoTextView.setText(avaliacaoBuscadaNoBanco.getOpiniao());
                             seekBar.setProgress(avaliacaoBuscadaNoBanco.getNota().intValue());
+
+                            final AvaliacaoJurado finalAvaliacaoBuscadaNoBanco = avaliacaoBuscadaNoBanco;
+                            botaoConfirmar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //Salvar atualizando
+
+                                    finalAvaliacaoBuscadaNoBanco.setOpiniao(opiniaoTextView.getText().toString());
+                                    finalAvaliacaoBuscadaNoBanco.setNota(new Long(seekBar.getProgress()));
+                                    finalAvaliacaoBuscadaNoBanco.setStatus("fechada");
+
+                                    Call<AvaliacaoJurado> atualizarAvaliacaoCall = avaliacaoJuradoService.put(finalAvaliacaoBuscadaNoBanco);
+                                    atualizarAvaliacaoCall.enqueue(new Callback<AvaliacaoJurado>() {
+                                        @Override
+                                        public void onResponse(Call<AvaliacaoJurado> call, Response<AvaliacaoJurado> response) {
+                                            Toast.makeText(getContext(), "Atualizado com sucesso.", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<AvaliacaoJurado> call, Throwable t) {
+                                            Toast.makeText(getContext(), "Impossível atualizar no momento.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            });
+                        }else{
+                            botaoConfirmar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //Salvar criando
+                                }
+                            });
                         }
                     }
 
@@ -133,7 +168,9 @@ public class CriterioAvalicaoFragment extends Fragment {
         botao_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //Buscar avaliacao
+                //Se existir salvar atualizando
+                //Senão salvar criando
                 AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_id, avaliarEstandeFragment);
