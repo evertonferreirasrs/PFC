@@ -1,5 +1,6 @@
 package localizae.net.br.controller.Activity;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +42,7 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
                     case 200:
                         // 200 sempre é sucesso enviado pelo servidor
                         Toast.makeText(context, getString(R.string.account_created), Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(CadastrarUsuarioActivity.this,LoginActivity.class));
                         break;
                     default:
                         // Caso outro erro aconteca

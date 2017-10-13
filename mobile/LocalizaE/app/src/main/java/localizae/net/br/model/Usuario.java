@@ -31,7 +31,8 @@ public class Usuario extends BaseEntity implements Serializable{
     @Expose
     private String hash;
 
-    public Usuario(){}
+    public Usuario(){
+    }
 
     public Usuario(String nome, String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;
