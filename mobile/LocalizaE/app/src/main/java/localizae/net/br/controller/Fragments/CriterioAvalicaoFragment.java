@@ -21,7 +21,7 @@ import java.util.List;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.AvaliacaoJurado;
 import localizae.net.br.model.CriterioJurado;
-import localizae.net.br.retrofit.RetrofitInicializador;
+import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.utils.LerDadosUsuario;
 import retrofit2.Call;
 import retrofit2.Callback;

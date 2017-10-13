@@ -34,7 +34,7 @@ import localizae.net.br.model.CriterioJurado;
 import localizae.net.br.model.Estande;
 import localizae.net.br.model.TipoUsuario;
 import localizae.net.br.model.Usuario;
-import localizae.net.br.retrofit.RetrofitInicializador;
+import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.utils.Cryptographer;
 import retrofit2.Call;
 import retrofit2.Callback;
