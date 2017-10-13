@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                 switch (responseCode) {
                     case 200:
                         Toast.makeText(context, getString(R.string.successful_login), Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(LoginActivity.this,MenuActivity.class));
                         break;
                     default:
                         String text = ResponseCodeValidator.validateResponseCode(responseCode);
@@ -65,20 +66,21 @@ public class LoginActivity extends AppCompatActivity {
         botao_entrar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(LoginActivity.this,MenuActivity.class));
-                String email = ((EditText) findViewById(R.id.campo_email_id)).getText().toString();
-                String senha = ((EditText) findViewById(R.id.campo_senha_id)).getText().toString();
-                if(email.isEmpty() || senha.isEmpty()){
-                    Toast.makeText(context, getString(R.string.fill_entries), Toast.LENGTH_LONG).show();
-                }else {
-                    registerBroadcast();
-
-                    String hash = Cryptographer.md5(email + Cryptographer.md5(senha));
-                    Usuario usuario = new Usuario(email,hash);
-
-                    UserService userService = new UserService();
-                    userService.login(usuario,context);
-                }
+                startActivity(new Intent(LoginActivity.this,MenuActivity.class));
+//
+//                String email = ((EditText) findViewById(R.id.campo_email_id)).getText().toString();
+//                String senha = ((EditText) findViewById(R.id.campo_senha_id)).getText().toString();
+//                if(email.isEmpty() || senha.isEmpty()){
+//                    Toast.makeText(context, getString(R.string.fill_entries), Toast.LENGTH_LONG).show();
+//                }else {
+//                    registerBroadcast();
+//
+//                    String hash = Cryptographer.md5(email + Cryptographer.md5(senha));
+//                    Usuario usuario = new Usuario(email,hash);
+//
+//                    UserService userService = new UserService();
+//                    userService.login(usuario,context);
+//                }
             }
         });
 

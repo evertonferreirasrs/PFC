@@ -14,7 +14,7 @@ public class LocationService {
 
     private static String TAG = "LOCATION_SERVICE";
 
-    public double[] detectUserPosition(double[][] positions, double[] distances) {
+    public static double[] detectUserPosition(double[][] positions, double[] distances) {
         NonLinearLeastSquaresSolver solver = new NonLinearLeastSquaresSolver(new TrilaterationFunction(positions, distances),
                 new LevenbergMarquardtOptimizer());
         Optimum optimum = solver.solve();
@@ -24,6 +24,17 @@ public class LocationService {
         RealMatrix covarianceMatrix = optimum.getCovariances(0);
 
         return optimum.getPoint().toArray();
+    }
+
+    public static double getDistance(int rssi, int txPower) {
+        /*
+         * RSSI = TxPower - 10 * n * lg(d)
+         * n = 2 (in free space)
+         *
+         * d = 10 ^ ((TxPower - RSSI) / (10 * n))
+         */
+
+        return Math.pow(10d, ((double) txPower - rssi) / (10 * 2));
     }
 
 }

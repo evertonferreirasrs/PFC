@@ -1,10 +1,21 @@
 package localizae.net.br.controller.Activity;
 
+import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.le.ScanRecord;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.net.wifi.ScanResult;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,12 +25,24 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.litesuits.bluetooth.LiteBluetooth;
+import com.litesuits.bluetooth.scan.PeriodScanCallback;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import localizae.net.br.controller.Fragments.EstandeFragment;
 import localizae.net.br.controller.R;
+import localizae.net.br.helper.Location.BeaconScanner;
+import localizae.net.br.model.Beacon;
 import localizae.net.br.model.Estande;
+import localizae.net.br.services.LocationService;
 import localizae.net.br.services.impl.EstandeService;
 import localizae.net.br.utils.Constants;
 import localizae.net.br.utils.ResponseCodeValidator;
@@ -29,6 +52,8 @@ public class MapaActivity extends AppCompatActivity {
     private ImageView mapaImageView;
     private List<Estande> estandeList;
     private Integer[][] mapColisionMatrix;
+    private Timer timer;
+    private Map<String,Integer> beacons = new HashMap();
 
     public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -59,10 +84,17 @@ public class MapaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-
         setContentView(R.layout.activity_mapa);
 
+        if (ActivityCompat.checkSelfPermission(MapaActivity.this, Manifest.permission.BLUETOOTH) == PermissionChecker.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MapaActivity.this,
+                    new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
+                            Manifest.permission.BLUETOOTH_PRIVILEGED, Manifest.permission.ACCESS_COARSE_LOCATION},
+                            Constants.REQUEST_PERMISSION_CODE);
+        }
+
         registerBroadcast();
+
         EstandeService es = new EstandeService();
         es.getAllBooth(this);
 
@@ -75,10 +107,16 @@ public class MapaActivity extends AppCompatActivity {
                     int y = (int) motionEvent.getAxisValue(MotionEvent.AXIS_Y);
                     //Toast.makeText(MapaActivity.this, "X " + x + " Y " + y, Toast.LENGTH_SHORT).show();
 
-                    final int estandeNumber = mapColisionMatrix[x][y];
-                    Optional<Estande> estande = estandeList.stream().filter(e -> e.getNumero() == estandeNumber).findFirst();
-                    if (estande.isPresent()) {
-                        Toast.makeText(MapaActivity.this, estande.get().getTitulo(), Toast.LENGTH_SHORT).show();
+                    Estande estande = null;
+                    for (Estande e : estandeList) {
+                        if (e.getNumero() == mapColisionMatrix[x][y]) {
+                            estande = e;
+                            break;
+                        }
+                    }
+
+                    if (estande != null) {
+                        Toast.makeText(MapaActivity.this, estande.getTitulo(), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MapaActivity.this, "X " + x + " Y " + y, Toast.LENGTH_SHORT).show();
                     }
@@ -95,11 +133,57 @@ public class MapaActivity extends AppCompatActivity {
         //Unregister broadcast receiver
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
         lbm.unregisterReceiver(broadcastReceiver);
+
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case Constants.REQUEST_PERMISSION_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startBeaconScan();
+                }
+                break;
+        }
+    }
+
+    private void startBeaconScan() {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //Permission granted start beacon finding
+                List<Beacon> beaconList = BeaconScanner.scanBeacon(MapaActivity.this);
+//                double[][] positions = new double[beaconList.size()][beaconList.size()];
+//                double[] distances = new double[beaconList.size()];
+//                int i = 0;
+//                for (Beacon b: beaconList) {
+//                    positions[i][0] = b.getxCoordinate();
+//                    positions[i][1] = b.getyCoordinate();
+//                    distances[i] = LocationService.getDistance(b.getRSSI(), b.getTxPower());
+//                    i++;
+//                }
+//
+//                LocationService.detectUserPosition(positions, distances);
+            }
+        }, 60, Constants.BEACON_SCAN_PERIOD);
     }
 
     private void updateMatrix() {
-        int width = mapaImageView.getMeasuredWidth();
-        int height = mapaImageView.getMeasuredHeight();
+        int width = mapaImageView.getWidth();
+        int height = mapaImageView.getHeight();
 
         mapColisionMatrix = new Integer[height][width];
         for(int i = 0; i < height; i++) {
