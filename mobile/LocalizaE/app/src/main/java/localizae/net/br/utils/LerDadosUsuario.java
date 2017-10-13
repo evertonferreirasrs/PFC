@@ -14,16 +14,17 @@ public class LerDadosUsuario {
 
         SharedPreferences sharedPref = context.getSharedPreferences("UsuarioLogado", 0);
 
-        String usuarioId = sharedPref.getString("chave_logado_id", "id não encontrado");
-        String usuarioNome = sharedPref.getString("chave_logado_nome", "nome não encontrado");
-        String usuarioEmail = sharedPref.getString("chave_logado_email", "email não encontrado");
-        String usuarioHash = sharedPref.getString("chave_logado_hash", "hash não encontrado");
-        String usuarioSenha = sharedPref.getString("chave_logado_senha", "senha não encontrado");
-        String usuarioTipo = sharedPref.getString("chave_logado_tipo", "tipo não encontrado");
-        String usuarioSituacao = sharedPref.getString("chave_logado_situacao", "situacao não encontrado");
+        String usuarioId = sharedPref.getString(context.getString(R.string.chave_logado_id), "id não encontrado");
+        String usuarioNome = sharedPref.getString(context.getString(R.string.chave_logado_nome), "nome não encontrado");
+        String usuarioEmail = sharedPref.getString(context.getString(R.string.chave_logado_email), "email não encontrado");
+        String usuarioHash = sharedPref.getString(context.getString(R.string.chave_logado_hash), "hash não encontrado");
+        String usuarioSenha = sharedPref.getString(context.getString(R.string.chave_logado_senha), "senha não encontrado");
+        String usuarioTipo = sharedPref.getString(context.getString(R.string.chave_logado_tipo), "tipo não encontrado");
+        String usuarioSituacao = sharedPref.getString(context.getString(R.string.chave_logado_situacao), "situacao não encontrado");
 
         Usuario usuario = new Usuario();
         usuario.setId(Long.parseLong(usuarioId));
+        usuario.setNome(usuarioNome);
         usuario.setEmail(usuarioEmail);
         usuario.setHash(usuarioHash);
         usuario.setSenha(usuarioSenha);

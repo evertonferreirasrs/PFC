@@ -30,11 +30,7 @@
     <string name="successful_login">Login realizado</string>
     <string name="successful_comment">Comentario realizado</string>
 
-
-<<<<<<< HEAD
     <!-- Informações do Usuario -->
-=======
->>>>>>> 79be5d27a81aef0966bbb73aec432e698f21615f
     <string name="chave_usuario">Chave do Usuário</string>
     <string name="chave_logado_id">Chave usuario logado id</string>
     <string name="chave_logado_nome">Chave usuario logado nome</string>
