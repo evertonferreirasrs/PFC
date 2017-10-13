@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_comentar_qualificar"
     tools:context="localizae.net.br.controller.Fragments.ComentarQualificarFragment">
 
     <LinearLayout
@@ -24,16 +25,14 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/img_localizae" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/estrelas" />
 
+        <RatingBar
+            android:id="@+id/comentarQualificar_nota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:numStars="5"
+            android:stepSize="1"/>
 
         <View
             android:layout_width="fill_parent"
@@ -54,7 +53,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/comentario_editText_comentario"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"

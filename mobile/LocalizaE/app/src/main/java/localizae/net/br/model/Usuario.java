@@ -43,8 +43,13 @@ public class Usuario extends BaseEntity implements Serializable{
         this.hash = hash;
     }
 
+<<<<<<< HEAD
     public Usuario(){
 
+=======
+    public Usuario(Long id){
+        this.setId(id);
+>>>>>>> 0d20b5c4a4ce167809a696f4b284824634f17f43
     }
 
     public String getNome() {
@@ -94,4 +99,5 @@ public class Usuario extends BaseEntity implements Serializable{
     public void setHash(String hash) {
         this.hash = hash;
     }
+
 }

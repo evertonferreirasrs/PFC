@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import localizae.net.br.controller.R;
-import localizae.net.br.model.TipoUsuario;
 import localizae.net.br.model.Usuario;
 import localizae.net.br.services.impl.UserService;
 import localizae.net.br.utils.ArmazenadorDadosUsuario;
@@ -102,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                     Usuario usuario = new Usuario(email,hash);
 
                     UserService userService = new UserService();
-                    userService.login(usuario,context);
+                   userService.login(usuario,context);
                 }
 
             }
