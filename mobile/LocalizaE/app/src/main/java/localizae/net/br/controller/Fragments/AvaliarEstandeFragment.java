@@ -36,6 +36,7 @@ import localizae.net.br.model.TipoUsuario;
 import localizae.net.br.model.Usuario;
 import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.utils.Cryptographer;
+import localizae.net.br.utils.LerDadosUsuario;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,9 +62,11 @@ public class AvaliarEstandeFragment extends Fragment {
         getActivity().setTitle("Avaliar Estandes");
         View view = inflater.inflate(R.layout.fragment_avaliar_estande, container, false);
 
+        Usuario usuarioLogado = LerDadosUsuario.lerDados(getContext());
+
         final ListView listaEstandes = (ListView) view.findViewById(R.id.fragment_avaliar_estande_listaEstandes);
 
-        Call buscarCriteriosJuradoCall = new RetrofitInicializador().getCriterioJuradoService().getByParameters(71L);
+        Call buscarCriteriosJuradoCall = new RetrofitInicializador().getCriterioJuradoService().getByParameters(usuarioLogado.getId());
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         //progressDialog.setTitle("Carregando");
         progressDialog.setMessage("Carregando... por favor aguarde.");

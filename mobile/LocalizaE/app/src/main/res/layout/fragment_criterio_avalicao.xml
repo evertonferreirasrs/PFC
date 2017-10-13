@@ -14,22 +14,12 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:textSize="18dp"
-            android:layout_gravity="left"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Critério:" />
-
 
         <Spinner
             android:id="@+id/criterio_avaliacao_fragment_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.05"
-            android:hint="Critério"
             />
 
         <TextView
@@ -143,7 +133,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="#2196F3"
-                android:text="SALVAR"
+                android:text="Salvar"
                 android:textColor="@color/texto_botao" />
 
         </LinearLayout>
@@ -157,7 +147,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="#757575"
-            android:text="VOLTAR"
+            android:text="Voltar"
             android:textColor="@color/texto_botao" />
 
 
