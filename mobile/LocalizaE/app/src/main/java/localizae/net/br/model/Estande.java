@@ -3,7 +3,13 @@ package localizae.net.br.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Estande extends BaseEntity{
+import java.util.List;
+
+public class Estande extends BaseEntity {
+
+    @SerializedName("equipe")
+    @Expose
+    private List<IntegranteEquipe> equipe;
 
     @SerializedName("titulo")
     @Expose
@@ -25,7 +31,19 @@ public class Estande extends BaseEntity{
     @Expose
     private String areaTematica;
 
-    public Estande(Long id){
+    @SerializedName("descricao")
+    @Expose
+    private String descricao;
+
+    public List<IntegranteEquipe> getEquipe() {
+        return equipe;
+    }
+
+    public void setEquipe(List<IntegranteEquipe> equipe) {
+        this.equipe = equipe;
+    }
+
+    public Estande(Long id) {
         this.setId(id);
     }
 
@@ -69,9 +87,20 @@ public class Estande extends BaseEntity{
         this.areaTematica = areaTematica;
     }
 
+<<<<<<< HEAD
     @Override
     public String toString() {
         return this.getTitulo();
     }
+=======
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+>>>>>>> f49c7e7f354dfe073b56454484c4fc3195787db4
 }
 
