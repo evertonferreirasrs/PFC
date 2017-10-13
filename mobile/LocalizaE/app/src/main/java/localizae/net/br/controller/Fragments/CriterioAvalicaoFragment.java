@@ -22,6 +22,7 @@ import localizae.net.br.controller.R;
 import localizae.net.br.model.AvaliacaoJurado;
 import localizae.net.br.model.CriterioJurado;
 import localizae.net.br.retrofit.RetrofitInicializador;
+import localizae.net.br.utils.LerDadosUsuario;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -83,10 +84,10 @@ public class CriterioAvalicaoFragment extends Fragment {
             @Override
             public void onItemSelected(final AdapterView<?> adapterView, View view, final int position, long l) {
                 notaValueTextView.setText("00");
-                opiniaoTextView.setText("");
+                opiniaoTextView.setText(LerDadosUsuario.lerDados(getContext()).getNome());
                 botaoConfirmar.setText("Salvar");
 
-                CriterioJurado criterioSelecionado = (CriterioJurado)adapterView.getItemAtPosition(position);
+                final CriterioJurado criterioSelecionado = (CriterioJurado)adapterView.getItemAtPosition(position);
 
                 //Busca se existe avaliação para este criterio e seu status.
                 Call buscaDeAvaliacaoCall = new RetrofitInicializador().getAvaliacaoJuradoService().getByParameter(criterioSelecionado.getUsuario().getId(), criterioSelecionado.getCriterioAvaliacao().getId(), criterioSelecionado.getEstande().getId());
@@ -108,8 +109,10 @@ public class CriterioAvalicaoFragment extends Fragment {
                             }
 
                             //preencher dados
-                            opiniaoTextView.setText(avaliacaoBuscadaNoBanco.getOpiniao());
+//                            opiniaoTextView.setText(criterioSelecionado.getCriterioAvaliacao().getId().toString());
                             seekBar.setProgress(avaliacaoBuscadaNoBanco.getNota().intValue());
+                            //testar
+                            Toast.makeText(getContext(), avaliacaoBuscadaNoBanco.getOpiniao(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
