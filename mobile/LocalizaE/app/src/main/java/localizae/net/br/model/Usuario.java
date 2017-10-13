@@ -46,6 +46,7 @@ public class Usuario extends BaseEntity implements Serializable{
     public Usuario(){}
 
 
+
     public Usuario(String nome, String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.email = email;

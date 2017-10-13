@@ -22,8 +22,10 @@ public class MapaActivity extends AppCompatActivity {
 
 //        getSupportActionBar().setTitle(" Mapa");
         getSupportActionBar().hide();
+        final android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
         botaoMapa = (ImageView) findViewById(R.id.mapa_id);
+
 
         botaoMapa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,8 +39,8 @@ public class MapaActivity extends AppCompatActivity {
                     public void onClick(DialogInterface arg0, int arg1) {
 
                         EstandeFragment estandeFragment = new EstandeFragment();
-                        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.fragment_id, estandeFragment).commit();
+                        botaoMapa.setVisibility(View.GONE);
+                        fragmentManager.beginTransaction().replace(R.id.mapa_fragment_id, estandeFragment).commit();
 
                     }
                 });
