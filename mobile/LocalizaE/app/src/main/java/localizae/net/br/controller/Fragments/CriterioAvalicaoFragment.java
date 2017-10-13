@@ -47,11 +47,12 @@ public class CriterioAvalicaoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         final View fragment = inflater.inflate(R.layout.fragment_criterio_avalicao, container, false);
-        Spinner spinnerCriterio = (Spinner) fragment.findViewById(R.id.criterio_avaliacao_fragment_spinner);
+        final Spinner spinnerCriterio = (Spinner) fragment.findViewById(R.id.criterio_avaliacao_fragment_spinner);
         final SeekBar seekBar = (SeekBar) fragment.findViewById(R.id.criterio_avaliacao_fragment_seekbar);
         final TextView notaValueTextView = (TextView) fragment.findViewById(R.id.criterio_avaliacao_fragment_nota_textView);
         final TextView opiniaoTextView = (TextView) fragment.findViewById(R.id.criterio_avaliacao_fragment_opiniao_textView);
         final Button botaoConfirmar = (Button)fragment.findViewById(R.id.criterio_avaliacao_fragment_button_confirm);
+        final AvaliacaoJuradoInterface avaliacaoJuradoService = new RetrofitInicializador().getAvaliacaoJuradoService();
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -92,7 +93,7 @@ public class CriterioAvalicaoFragment extends Fragment {
                 final CriterioJurado criterioSelecionado = (CriterioJurado)adapterView.getItemAtPosition(position);
 
                 //Busca se existe avaliação para este criterio e seu status.
-                final AvaliacaoJuradoInterface avaliacaoJuradoService = new RetrofitInicializador().getAvaliacaoJuradoService();
+
                 Call buscaDeAvaliacaoCall = avaliacaoJuradoService.getByParameter(criterioSelecionado.getUsuario().getId(), criterioSelecionado.getCriterioAvaliacao().getId(), criterioSelecionado.getEstande().getId());
 
                 buscaDeAvaliacaoCall.enqueue(new Callback() {
@@ -186,19 +187,80 @@ public class CriterioAvalicaoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Buscar avaliacao
+                CriterioJurado selectedCriterio = (CriterioJurado) spinnerCriterio.getSelectedItem();
 
-                //Se existir salvar atualizando
-                //Senão salvar criando
-                AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_id, avaliarEstandeFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                Call buscaDeAvaliacaoCall = avaliacaoJuradoService.getByParameter(selectedCriterio.getUsuario().getId(), selectedCriterio.getCriterioAvaliacao().getId(), selectedCriterio.getEstande().getId());
+                buscaDeAvaliacaoCall.enqueue(new Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        List<AvaliacaoJurado> avaliacaoJuradoList =(List<AvaliacaoJurado>) response.body();
+                        AvaliacaoJurado avaliacaoBuscadaNoBanco = null;
+
+                        if(!avaliacaoJuradoList.isEmpty()){
+                            avaliacaoBuscadaNoBanco = avaliacaoJuradoList.get(0);
+                        }
+                        //Se existir salvar atualizando
+                        if(avaliacaoBuscadaNoBanco != null){
+                            if(!avaliacaoBuscadaNoBanco.getStatus().equals("fechada")){
+                                avaliacaoBuscadaNoBanco.setNota(new Long(seekBar.getProgress()));
+                                avaliacaoBuscadaNoBanco.setOpiniao(opiniaoTextView.getText().toString());
+                                Call<AvaliacaoJurado> putCall = avaliacaoJuradoService.put(avaliacaoBuscadaNoBanco);
+                                putCall.enqueue(new Callback<AvaliacaoJurado>() {
+                                    @Override
+                                    public void onResponse(Call<AvaliacaoJurado> call, Response<AvaliacaoJurado> response) {
+                                        finishFragment();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<AvaliacaoJurado> call, Throwable t) {
+
+                                    }
+                                });
+                            }else{
+                                finishFragment();
+                            }
+
+                        }
+                        //Senão salvar criando
+                        else{
+                            avaliacaoBuscadaNoBanco.setNota(new Long(seekBar.getProgress()));
+                            avaliacaoBuscadaNoBanco.setOpiniao(opiniaoTextView.getText().toString());
+                            Call<AvaliacaoJurado> postCall = avaliacaoJuradoService.post(avaliacaoBuscadaNoBanco);
+                            postCall.enqueue(new Callback<AvaliacaoJurado>() {
+                                @Override
+                                public void onResponse(Call<AvaliacaoJurado> call, Response<AvaliacaoJurado> response) {
+                                    finishFragment();
+                                }
+
+                                @Override
+                                public void onFailure(Call<AvaliacaoJurado> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+
+                    }
+                });
+
+
+
 
             }
         });
 
         return fragment;
+    }
+
+    private void finishFragment() {
+        AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_id, avaliarEstandeFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
 }
