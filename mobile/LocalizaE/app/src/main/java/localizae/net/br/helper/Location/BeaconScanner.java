@@ -5,30 +5,34 @@ import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.litesuits.bluetooth.LiteBluetooth;
 import com.litesuits.bluetooth.scan.PeriodScanCallback;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import localizae.net.br.controller.Activity.MapaActivity;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Beacon;
 import localizae.net.br.model.Estande;
+import localizae.net.br.services.impl.BeaconService;
 import localizae.net.br.utils.Constants;
 import localizae.net.br.utils.ResponseCodeValidator;
 
 public class BeaconScanner {
 
-    public static List<Beacon> scanBeacon(final Context context) {
-        final List<Beacon> beaconList = new ArrayList<>();
+    public static void scanBeacon(final Context context) {
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent intent) {
+            public void onReceive(Context receoverContext, Intent intent) {
                 if (intent.getAction().equals(Constants.BEACON_SCANNER_TAG)) {
                     int responseCode = intent.getIntExtra(Constants.RESPONSE_CODE_KEY, 500);
                     Log.d(Constants.BEACON_SCANNER_TAG, "Recebeu resposta " + responseCode);
@@ -38,10 +42,7 @@ public class BeaconScanner {
                             if (returnedBeaconList == null && returnedBeaconList.isEmpty()) {
                                 Toast.makeText(context, context.getString(R.string.impossible_location_estimation), Toast.LENGTH_LONG).show();
                             } else {
-                                for (Beacon b : returnedBeaconList) {
-                                    beaconList.add(b);
-                                }
-                                updateBeaconData(beaconList, context);
+                                updateBeaconData(returnedBeaconList, context);
                             }
                             break;
                         default:
@@ -53,7 +54,11 @@ public class BeaconScanner {
             }
         };
 
-        return beaconList;
+        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
+        lbm.registerReceiver(broadcastReceiver, new IntentFilter(Constants.BEACON_SCANNER_TAG));
+
+        BeaconService bs = new BeaconService();
+        bs.getBeacons(context);
     }
 
     private static void updateBeaconData(final List<Beacon> beaconList, final Context context) {
@@ -62,7 +67,11 @@ public class BeaconScanner {
         liteBluetooth.startLeScan(new PeriodScanCallback(Constants.BLE_SCAN_TIMEOUT) {
             @Override
             public void onScanTimeout() {
-                Toast.makeText(context, context.getString(R.string.impossible_location_estimation), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Constants.BEACON_SCAN_ACTIVITY_TAG);
+                intent.putExtra(Constants.DATA_KEY, (Serializable) beaconList);
+
+                LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
+                lbm.sendBroadcast(intent);
             }
 
             @Override

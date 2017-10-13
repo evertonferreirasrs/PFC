@@ -17,6 +17,7 @@ public class Constants {
     public static final String BOOTH_SERVICE_TAG = "BOOTH_SERVICE";
 
     public static final String BEACON_SCANNER_TAG = "BEACON_SCANNER";
+    public static final String BEACON_SCAN_ACTIVITY_TAG = "BEACON_SCAN_ACT";
 
     public static final String CREATE_USER_ACTIVITY_TAG = "CADASTRAR_USUARIO_ACT";
     public static final String MAP_ACTIVITY_TAG = "MAP_ACT";

@@ -20,8 +20,9 @@ public class LocationService {
         Optimum optimum = solver.solve();
 
         // TODO: Print both values below and look their meaning
-        RealVector standardDeviation = optimum.getSigma(0);
-        RealMatrix covarianceMatrix = optimum.getCovariances(0);
+        // NOT NEEDED
+        //RealVector standardDeviation = optimum.getSigma(0);
+        //RealMatrix covarianceMatrix = optimum.getCovariances(0);
 
         return optimum.getPoint().toArray();
     }

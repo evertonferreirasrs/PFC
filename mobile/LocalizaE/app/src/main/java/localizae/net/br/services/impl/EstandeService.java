@@ -41,7 +41,7 @@ public class EstandeService {
             public void onFailure(Call<List<Estande>> call, Throwable t) {
                 Log.d(Constants.USER_SERVICE_TAG, t.toString());
 
-                Intent intent = new Intent(Constants.CREATE_USER_ACTIVITY_TAG);
+                Intent intent = new Intent(Constants.MAP_ACTIVITY_TAG);
                 intent.putExtra(Constants.RESPONSE_CODE_KEY, Constants.RETROFIT_FAILURE);
 
                 LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);

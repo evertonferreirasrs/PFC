@@ -28,7 +28,7 @@ public class BeaconService {
             public void onResponse(Call<List<Beacon>> call, Response<List<Beacon>> response) {
                 Log.d(Constants.BEACON_SERVICE_TAG, response.toString());
 
-                Intent intent = new Intent(Constants.MAP_ACTIVITY_TAG);
+                Intent intent = new Intent(Constants.BEACON_SCANNER_TAG);
                 intent.putExtra(Constants.RESPONSE_CODE_KEY, response.code());
                 intent.putExtra(Constants.DATA_KEY, (Serializable) response.body());
 
@@ -40,7 +40,7 @@ public class BeaconService {
             public void onFailure(Call<List<Beacon>> call, Throwable t) {
                 Log.d(Constants.BEACON_SERVICE_TAG, t.toString());
 
-                Intent intent = new Intent(Constants.CREATE_USER_ACTIVITY_TAG);
+                Intent intent = new Intent(Constants.BEACON_SCANNER_TAG);
                 intent.putExtra(Constants.RESPONSE_CODE_KEY, Constants.RETROFIT_FAILURE);
 
                 LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
