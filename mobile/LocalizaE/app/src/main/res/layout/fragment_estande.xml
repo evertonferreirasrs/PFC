@@ -172,6 +172,18 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp" />
 
+            <Button
+                android:id="@+id/botao_voltar_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="#757575"
+                android:text="VOLTAR PARA MAPA"
+                android:textColor="@color/texto_botao" />
+
 
         </LinearLayout>
     </ScrollView>

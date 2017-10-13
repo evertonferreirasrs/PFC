@@ -1,7 +1,6 @@
 package br.com.localizae.model.entity;
 
 import br.com.localizae.model.base.BaseEntity;
-import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Evento extends BaseEntity{

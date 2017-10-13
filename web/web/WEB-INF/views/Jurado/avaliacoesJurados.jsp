@@ -10,29 +10,31 @@
     <head>
         <jsp:include page="../Componentes/cabecalhoAdministrador.jsp"/>
     </head>
-    
+
     <body class="sidebar-mini fixed">
         <div class="wrapper">
-            
+
             <jsp:include page="../Componentes/menuAdministrador.jsp"/> 
-            
+
             <div class="content-wrapper">
                 <div class="page-title">
                     <div>
                         <h1><i class="fa fa-commenting"></i> Avaliações dos Jurados</h1>
-                        <p> LocalizaÊ - Sistema de Posicionamento Interno FAITEC</p>
+                        <p> LocalizaÊ - Sistema de Posicionamento Interno para Eventos</p>
                     </div>
                     <div>
                         <ul class="breadcrumb">
                             <li><i class="fa fa-home fa-lg"></i></li>
-                            <li><a href="#">Avaliações dos Jurados</a></li>
+                            <li><a href="<c:url value="/jurado/avaliacoes" />">Avaliações dos Jurados</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            
+                            <div class="card-body" id="table-avaliacoes">
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -48,6 +50,16 @@
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/jquery.dataTables.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/dataTables.bootstrap.min.js"/>"></script>
         <script type="text/javascript">$('#sampleTable').DataTable();</script>
+        <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script>
+
+        <jsp:include page="import-script-avaliacao-jurado.jsp"/> 
+
+
+        <script>
+            let avaliacaoJuradoController = new AvaliacaoJuradoController()
+            avaliacaoJuradoController.loadAvaliacoes()
+        </script>
 
     </body>
 </html>
