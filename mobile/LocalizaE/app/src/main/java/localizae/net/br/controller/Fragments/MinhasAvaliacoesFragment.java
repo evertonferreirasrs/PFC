@@ -39,26 +39,6 @@ public class MinhasAvaliacoesFragment extends Fragment {
 
     private List<AvaliacaoVisitante> avaliacaoVisitantes = new ArrayList<>();
 
-    public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Constants.COMENTS_TAG)) {
-                int responseCode = intent.getIntExtra(Constants.RESPONSE_CODE_KEY, 500);
-                Log.d(Constants.MY_AVALIATIONS_FRAGMENT_TAG, "Recebeu resposta " + responseCode);
-                switch (responseCode) {
-                    case 200:
-                        Usuario usuario = (Usuario) intent.getSerializableExtra(Constants.DATA_KEY);
-                        List<AvaliacaoVisitante> avaliacaoVisitantes = (List<AvaliacaoVisitante>) intent.getSerializableExtra(Constants.DATA_KEY);
-                        break;
-                    default:
-                        String text = ResponseCodeValidator.validateResponseCode(responseCode);
-                        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-        }
-    };
-
     public MinhasAvaliacoesFragment() {
         // Required empty public constructor
     }
@@ -75,8 +55,8 @@ public class MinhasAvaliacoesFragment extends Fragment {
             @Override
             public void onResponse(Call<List<AvaliacaoVisitante>> call, Response<List<AvaliacaoVisitante>> response) {
                 List<AvaliacaoVisitante> listaAvaliacao = response.body();
-                if(listaAvaliacao.isEmpty()){
-                    Toast.makeText(getContext(),"Não possui avaliação",Toast.LENGTH_SHORT).show();
+                if (listaAvaliacao.isEmpty()) {
+                    Toast.makeText(getContext(), "Não possui avaliação", Toast.LENGTH_SHORT).show();
                 }
                 AvaliacaoVisitanteAdapter adapterEstandes = new AvaliacaoVisitanteAdapter(getContext(), listaAvaliacao);
                 avaliacaoVisitanteListView.setAdapter(adapterEstandes);
@@ -84,16 +64,9 @@ public class MinhasAvaliacoesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<AvaliacaoVisitante>> call, Throwable t) {
-                Toast.makeText(getContext(),"Serviço indisponivel no momento",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Serviço indisponivel no momento", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
-
-
-
 
         return view;
     }
