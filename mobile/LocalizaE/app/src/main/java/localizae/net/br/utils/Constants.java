@@ -12,6 +12,7 @@ public class Constants {
     public static final String LOGIN_ACTIVITY_TAG = "LOGIN_ACT";
     public static final String COMENTS_TAG = "COMENTS_ACT";
     public static final String COMENTAR_QUALIFICAR_FRAGMENT_TAG = "COMENTAR_QUALIFICAR_FRAGMENT_TAG";
+    public static final String MY_AVALIATIONS_FRAGMENT_TAG = "MY_AVALIATIONS_FRAG";
 
 
     public static final Long USER_VISITANT = 2L;
@@ -28,6 +29,7 @@ public class Constants {
     public static final String RESPONSE_VALUE_405  = "Metodo nao suportado";
     public static final String RESPONSE_VALUE_500  = "Erro no servidor";
     public static final String RESPONSE_UNKNOWN  = "Erro desconhecido";
+
 
     public static final String RESPONSE_VALUE_RETROFIT_FAILURE = "Algo deu errado";
 
