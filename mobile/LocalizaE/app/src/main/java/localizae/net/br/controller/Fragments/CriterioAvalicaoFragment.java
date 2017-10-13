@@ -105,6 +105,8 @@ public class CriterioAvalicaoFragment extends Fragment {
                             avaliacaoBuscadaNoBanco = avaliacaoJuradoList.get(0);
                         }
 
+                        final AvaliacaoJurado finalAvaliacaoBuscadaNoBanco = avaliacaoBuscadaNoBanco;
+
                         if(avaliacaoBuscadaNoBanco != null){
                             if(avaliacaoBuscadaNoBanco.getStatus().equals("fechada")){
                                 botaoConfirmar.setEnabled(false);
@@ -115,7 +117,7 @@ public class CriterioAvalicaoFragment extends Fragment {
                             opiniaoTextView.setText(avaliacaoBuscadaNoBanco.getOpiniao());
                             seekBar.setProgress(avaliacaoBuscadaNoBanco.getNota().intValue());
 
-                            final AvaliacaoJurado finalAvaliacaoBuscadaNoBanco = avaliacaoBuscadaNoBanco;
+
                             botaoConfirmar.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -140,10 +142,25 @@ public class CriterioAvalicaoFragment extends Fragment {
                                 }
                             });
                         }else{
+                            finalAvaliacaoBuscadaNoBanco.setOpiniao(opiniaoTextView.getText().toString());
+                            finalAvaliacaoBuscadaNoBanco.setNota(new Long(seekBar.getProgress()));
+                            finalAvaliacaoBuscadaNoBanco.setStatus("fechada");
+
                             botaoConfirmar.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    //Salvar criando
+                                    Call<AvaliacaoJurado> atualizarAvaliacaoCall = avaliacaoJuradoService.post(finalAvaliacaoBuscadaNoBanco);
+                                    atualizarAvaliacaoCall.enqueue(new Callback<AvaliacaoJurado>() {
+                                        @Override
+                                        public void onResponse(Call<AvaliacaoJurado> call, Response<AvaliacaoJurado> response) {
+                                            Toast.makeText(getContext(), "Atualizado com sucesso.", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<AvaliacaoJurado> call, Throwable t) {
+                                            Toast.makeText(getContext(), "Impossível atualizar no momento.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -169,6 +186,7 @@ public class CriterioAvalicaoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Buscar avaliacao
+
                 //Se existir salvar atualizando
                 //Senão salvar criando
                 AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
