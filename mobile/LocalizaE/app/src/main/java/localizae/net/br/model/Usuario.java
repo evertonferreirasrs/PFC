@@ -32,6 +32,7 @@ public class Usuario extends BaseEntity implements Serializable{
     @Expose
     private String hash;
 
+
     private List<CriterioJurado> criterioAvaliacaoList;
 
     public List<CriterioJurado> getCriterioAvaliacaoList() {
@@ -41,6 +42,9 @@ public class Usuario extends BaseEntity implements Serializable{
     public void setCriterioAvaliacaoList(List<CriterioJurado> criterioAvaliacaoList) {
         this.criterioAvaliacaoList = criterioAvaliacaoList;
     }
+
+    public Usuario(){}
+
 
     public Usuario(String nome, String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;

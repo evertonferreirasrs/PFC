@@ -49,6 +49,7 @@ public class CriterioAvalicaoFragment extends Fragment {
         final SeekBar seekBar = (SeekBar) fragment.findViewById(R.id.criterio_avaliacao_fragment_seekbar);
         final TextView notaValueTextView = (TextView) fragment.findViewById(R.id.criterio_avaliacao_fragment_nota_textView);
         final TextView opiniaoTextView = (TextView) fragment.findViewById(R.id.criterio_avaliacao_fragment_opiniao_textView);
+        final Button botaoConfirmar = (Button)fragment.findViewById(R.id.criterio_avaliacao_fragment_button_confirm);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -81,6 +82,9 @@ public class CriterioAvalicaoFragment extends Fragment {
         spinnerCriterio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final AdapterView<?> adapterView, View view, final int position, long l) {
+                notaValueTextView.setText("00");
+                opiniaoTextView.setText("");
+                botaoConfirmar.setText("Salvar");
 
                 CriterioJurado criterioSelecionado = (CriterioJurado)adapterView.getItemAtPosition(position);
 
@@ -97,30 +101,20 @@ public class CriterioAvalicaoFragment extends Fragment {
                             avaliacaoBuscadaNoBanco = avaliacaoJuradoList.get(0);
                         }
 
-
                         if(avaliacaoBuscadaNoBanco != null){
-                            Toast.makeText(getContext(), ((CriterioJurado)adapterView.getItemAtPosition(position)).getCriterioAvaliacao().getNome(), Toast.LENGTH_SHORT).show();
                             if(avaliacaoBuscadaNoBanco.getStatus().toLowerCase() == "fechada"){
-                                Button botaoConfirmar = (Button)fragment.findViewById(R.id.criterio_avaliacao_fragment_button_confirm);
                                 botaoConfirmar.setEnabled(false);
                                 botaoConfirmar.setText("Avaliação Fechada");
-
-                                Button botaoFecharAvaliacao = (Button) fragment.findViewById(R.id.criterio_avaliacao_fragment_button_close);
-                                botaoFecharAvaliacao.setVisibility(View.INVISIBLE);
                             }
 
                             //preencher dados
                             opiniaoTextView.setText(avaliacaoBuscadaNoBanco.getOpiniao());
                             seekBar.setProgress(avaliacaoBuscadaNoBanco.getNota().intValue());
-                        }else{
-                            Toast.makeText(getContext(), "Não existe avaliação", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call call, Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                        opiniaoTextView.setText(call.request().url().toString());
 
                     }
                 });

@@ -39,7 +39,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/circle_blue"
-            android:text="50"
+            android:text="00"
             android:gravity="center"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -148,18 +148,6 @@
                 android:background="#2196F3"
                 android:text="SALVAR"
                 android:textColor="@color/texto_botao" />
-
-            <Button
-                android:id="@+id/criterio_avaliacao_fragment_button_close"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="#0F0"
-                android:text="FECHAR AVALIAÇÃO"
-                android:textColor="#000000" />
 
         </LinearLayout>
 

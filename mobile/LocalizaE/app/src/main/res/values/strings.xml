@@ -31,4 +31,14 @@
     <string name="successful_comment">Comentario realizado</string>
 
 
+    <string name="chave_usuario">Chave do Usuário</string>
+    <string name="chave_logado_id">Chave usuario logado id</string>
+    <string name="chave_logado_nome">Chave usuario logado nome</string>
+    <string name="chave_logado_email">Chave usuario logado email</string>
+    <string name="chave_logado_hash">Chave usuario hash</string>
+    <string name="chave_logado_senha">Chave usuario logado senha</string>
+    <string name="chave_logado_tipo">Chave usuario logado tipo</string>
+    <string name="chave_logado_situacao">Chave usuario logado situacao</string>
+
+
 </resources>

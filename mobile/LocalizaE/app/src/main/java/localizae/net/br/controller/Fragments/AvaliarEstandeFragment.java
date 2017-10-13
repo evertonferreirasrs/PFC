@@ -58,43 +58,8 @@ public class AvaliarEstandeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
-        getActivity().setTitle(" Avaliar Estandes");
+        getActivity().setTitle("Avaliar Estandes");
         View view = inflater.inflate(R.layout.fragment_avaliar_estande, container, false);
-
-        usuario = new Usuario("Jurado", "jurado@localizae.net.br", Cryptographer.md5("123"), new TipoUsuario(3l));
-
-        List<CriterioJurado> criterioAvaliacaoList = new ArrayList<>();
-
-
-
-        CriterioAvaliacao criterioAvaliacao = new CriterioAvaliacao();
-        criterioAvaliacao.setNome("Explanação");
-        criterioAvaliacao.setPeso(4l);
-
-
-
-        CriterioAvaliacao criterioAvaliacao2 = new CriterioAvaliacao();
-        criterioAvaliacao2.setNome("Documentação");
-        criterioAvaliacao2.setPeso(5l);
-
-
-
-        Estande estande = new Estande(18l);
-        estande.setTitulo("LocalizaE");
-        estande.setCurso("Sistemas de Informação");
-
-        CriterioJurado criterioJurado = new CriterioJurado();
-        criterioJurado.setCriterioAvaliacao(criterioAvaliacao);
-        criterioJurado.setEstande(estande);
-
-        CriterioJurado criterioJurado2 = new CriterioJurado();
-        criterioJurado2.setEstande(estande);
-        criterioJurado2.setCriterioAvaliacao(criterioAvaliacao2);
-
-        criterioAvaliacaoList.add(criterioJurado);
-        criterioAvaliacaoList.add(criterioJurado2);
-
-        usuario.setCriterioAvaliacaoList(criterioAvaliacaoList);
 
         final ListView listaEstandes = (ListView) view.findViewById(R.id.fragment_avaliar_estande_listaEstandes);
 
@@ -108,11 +73,11 @@ public class AvaliarEstandeFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) {
-                List<CriterioJurado> criterioJuradoList = (List<CriterioJurado>)response.body();
-                Toast.makeText(getContext(), criterioJuradoList.toString(), Toast.LENGTH_SHORT).show();
                 progressDialog.cancel();
                 progressDialog.dismiss();
-//                criterioJuradoList = usuario.getCriterioAvaliacaoList();
+
+                List<CriterioJurado> criterioJuradoList = (List<CriterioJurado>)response.body();
+
                 //Montar um mapa com chave sendo titulo do estande e valor a lista de criterios daquele estande.
                 final Map<String, List<CriterioJurado>> mapaDeCriterios = getMapEstandeFromListCriterio(criterioJuradoList);
 
@@ -135,7 +100,6 @@ public class AvaliarEstandeFragment extends Fragment {
 
                         Bundle args = new Bundle();
                         args.putSerializable("criterioList", (Serializable) listaDeCriterios);
-
                         criterioAvalicaoFragment.setArguments(args);
 
                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
