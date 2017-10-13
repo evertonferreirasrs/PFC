@@ -33,8 +33,8 @@ public class MeuEstandeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_meu_estande, container, false);
 
+        View view = inflater.inflate(R.layout.fragment_meu_estande, container, false);
         final TextView campoNumero = (TextView) view.findViewById(R.id.fragment_meuEstande_vNumero);
         final TextView campoProjeto = (TextView) view.findViewById(R.id.fragment_meuEstande_vProjeto);
         final TextView campoAreaTematica = (TextView) view.findViewById(R.id.fragment_meuEstande_vAreaTematica);
@@ -48,6 +48,7 @@ public class MeuEstandeFragment extends Fragment {
             @Override
             public void onResponse(Call<Estande> call, Response<Estande> response) {
                 Estande estande = response.body();
+                getActivity().setTitle(estande.getTitulo());
                 campoNumero.setText(estande.getNumero().toString());
                 campoProjeto.setText(estande.getTitulo());
                 campoAreaTematica.setText(estande.getAreaTematica());
