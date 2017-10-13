@@ -8,9 +8,6 @@ import localizae.net.br.controller.R;
 import localizae.net.br.model.TipoUsuario;
 import localizae.net.br.model.Usuario;
 
-/**
- * Created by Roberto Júnior on 11/10/2017.
- */
 
 public class ArmazenadorDadosUsuario {
 

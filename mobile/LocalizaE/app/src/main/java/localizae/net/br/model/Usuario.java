@@ -31,6 +31,9 @@ public class Usuario extends BaseEntity implements Serializable{
     @Expose
     private String hash;
 
+    public Usuario(){
+    }
+
     public Usuario(String nome, String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.email = email;
@@ -43,13 +46,8 @@ public class Usuario extends BaseEntity implements Serializable{
         this.hash = hash;
     }
 
-<<<<<<< HEAD
-    public Usuario(){
-
-=======
     public Usuario(Long id){
         this.setId(id);
->>>>>>> 0d20b5c4a4ce167809a696f4b284824634f17f43
     }
 
     public String getNome() {
