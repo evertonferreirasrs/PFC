@@ -5,6 +5,7 @@ import java.util.List;
 import localizae.net.br.model.AvaliacaoJurado;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * Created by marca on 10/10/2017.
@@ -13,4 +14,7 @@ import retrofit2.http.GET;
 public interface AvaliacaoJuradoInterface {
     @GET("avaliacaoJurado")
     Call<List<AvaliacaoJurado>> getAll();
+
+    @GET("avaliacaoJurado")
+    Call<List<AvaliacaoJurado>> getByParameter(@Query("usuario") Long usuario, @Query("criterio") Long criterio, @Query("estande") Long estande);
 }

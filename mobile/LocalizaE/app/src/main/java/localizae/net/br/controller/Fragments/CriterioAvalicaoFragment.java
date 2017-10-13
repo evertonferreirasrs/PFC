@@ -21,6 +21,10 @@ import java.util.List;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.AvaliacaoJurado;
 import localizae.net.br.model.CriterioJurado;
+import localizae.net.br.retrofit.RetrofitInicializador;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,32 +80,50 @@ public class CriterioAvalicaoFragment extends Fragment {
 
         spinnerCriterio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+            public void onItemSelected(final AdapterView<?> adapterView, View view, final int position, long l) {
 
                 CriterioJurado criterioSelecionado = (CriterioJurado)adapterView.getItemAtPosition(position);
 
                 //Busca se existe avaliação para este criterio e seu status.
-                AvaliacaoJurado avaliacaoBuscadaNoBanco = new AvaliacaoJurado();
-                avaliacaoBuscadaNoBanco.setStatus("fechada");
-                avaliacaoBuscadaNoBanco.setNota(55l);
-                avaliacaoBuscadaNoBanco.setOpiniao("TESTE LOCO");
+                Call buscaDeAvaliacaoCall = new RetrofitInicializador().getAvaliacaoJuradoService().getByParameter(criterioSelecionado.getUsuario().getId(), criterioSelecionado.getCriterioAvaliacao().getId(), criterioSelecionado.getEstande().getId());
 
-                if(avaliacaoBuscadaNoBanco != null){
-                    if(avaliacaoBuscadaNoBanco.getStatus().toLowerCase() == "fechada"){
-                        Button botaoConfirmar = (Button)fragment.findViewById(R.id.criterio_avaliacao_fragment_button_confirm);
-                        botaoConfirmar.setEnabled(false);
-                        botaoConfirmar.setText("Avaliação Fechada");
+                buscaDeAvaliacaoCall.enqueue(new Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        List<AvaliacaoJurado> avaliacaoJuradoList =(List<AvaliacaoJurado>) response.body();
+                        AvaliacaoJurado avaliacaoBuscadaNoBanco = null;
 
-                        Button botaoFecharAvaliacao = (Button) fragment.findViewById(R.id.criterio_avaliacao_fragment_button_close);
-                        botaoFecharAvaliacao.setVisibility(View.INVISIBLE);
+                        if(!avaliacaoJuradoList.isEmpty()){
+                            avaliacaoBuscadaNoBanco = avaliacaoJuradoList.get(0);
+                        }
+
+
+                        if(avaliacaoBuscadaNoBanco != null){
+                            Toast.makeText(getContext(), ((CriterioJurado)adapterView.getItemAtPosition(position)).getCriterioAvaliacao().getNome(), Toast.LENGTH_SHORT).show();
+                            if(avaliacaoBuscadaNoBanco.getStatus().toLowerCase() == "fechada"){
+                                Button botaoConfirmar = (Button)fragment.findViewById(R.id.criterio_avaliacao_fragment_button_confirm);
+                                botaoConfirmar.setEnabled(false);
+                                botaoConfirmar.setText("Avaliação Fechada");
+
+                                Button botaoFecharAvaliacao = (Button) fragment.findViewById(R.id.criterio_avaliacao_fragment_button_close);
+                                botaoFecharAvaliacao.setVisibility(View.INVISIBLE);
+                            }
+
+                            //preencher dados
+                            opiniaoTextView.setText(avaliacaoBuscadaNoBanco.getOpiniao());
+                            seekBar.setProgress(avaliacaoBuscadaNoBanco.getNota().intValue());
+                        }else{
+                            Toast.makeText(getContext(), "Não existe avaliação", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
-                    //preencher dados
-                    opiniaoTextView.setText(avaliacaoBuscadaNoBanco.getOpiniao());
-                    seekBar.setProgress(avaliacaoBuscadaNoBanco.getNota().intValue());
-                }
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        opiniaoTextView.setText(call.request().url().toString());
 
-                Toast.makeText(getContext(), ((CriterioJurado)adapterView.getItemAtPosition(position)).getCriterioAvaliacao().getNome(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
