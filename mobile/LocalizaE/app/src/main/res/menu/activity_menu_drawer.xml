@@ -30,10 +30,6 @@
             android:id="@+id/menu_botao_avaliar_estande"
             android:icon="@drawable/ic_speaker_notes_black_24dp"
             android:title="Avaliar Estandes" />
-        <item
-            android:id="@+id/menu_botao_minhas_avaliacoes_jurado"
-            android:icon="@drawable/ic_chat_black_24dp"
-            android:title="Minhas Avaliações" />
 
     </group>
 

@@ -1,6 +1,5 @@
 package localizae.net.br.controller.Activity;
 
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,23 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import localizae.net.br.controller.Fragments.AlterarSenhaFragment;
 import localizae.net.br.controller.Fragments.AvaliarEstandeFragment;
-import localizae.net.br.controller.Fragments.ComentarQualificarFragment;
 import localizae.net.br.controller.Fragments.EnviarFeedbackFragment;
 import localizae.net.br.controller.Fragments.InicioFragment;
 import localizae.net.br.controller.Fragments.MeuEstandeFragment;
 import localizae.net.br.controller.Fragments.MinhasAvaliacoesFragment;
-import localizae.net.br.controller.Fragments.MinhasAvaliacoesJuradoFragment;
 import localizae.net.br.controller.Fragments.MinhasPromocoesFragment;
 import localizae.net.br.controller.Fragments.QualificacaoComentariosFragment;
 import localizae.net.br.controller.Fragments.SobreFragment;
 import localizae.net.br.controller.R;
-import localizae.net.br.model.Usuario;
-import localizae.net.br.utils.Constants;
-import localizae.net.br.utils.LerDadosUsuario;
 import localizae.net.br.utils.VerificadorUsuario;
 
 public class MenuActivity extends AppCompatActivity
@@ -80,8 +73,6 @@ public class MenuActivity extends AppCompatActivity
         MenuItem avaliarEstande = menu.findItem(R.id.menu_botao_avaliar_estande);
         avaliarEstande.setVisible(false);
 
-        MenuItem avaliacoesJurado = menu.findItem(R.id.menu_botao_minhas_avaliacoes_jurado);
-        avaliacoesJurado.setVisible(false);
         // Fim Restrições  =========================================================================
 
         // PERMISSÕES DE VISIBILIDADE PARA USUÁRIOS ================================================
@@ -96,7 +87,6 @@ public class MenuActivity extends AppCompatActivity
         if(VerificadorUsuario.getInstances(this).isJurado()){
 
             avaliarEstande.setVisible(true);
-            avaliacoesJurado.setVisible(true);
 
         }
 
@@ -223,14 +213,6 @@ public class MenuActivity extends AppCompatActivity
             AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, avaliarEstandeFragment).commit();
-
-
-        // MINHAS AVALIAÇÕES
-        } else if (id == R.id.menu_botao_minhas_avaliacoes_jurado) {
-            setTitle(" Minhas Avaliações");
-            MinhasAvaliacoesJuradoFragment minhasAvaliacoesJuradoFragment = new MinhasAvaliacoesJuradoFragment();
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, minhasAvaliacoesJuradoFragment).commit();
 
 
         // ENVIAR FEEDBACK
