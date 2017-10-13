@@ -191,6 +191,13 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <ListView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fragment_integrantesequipe_listView">
+            </ListView>
+
         </LinearLayout>
 
     </ScrollView>
