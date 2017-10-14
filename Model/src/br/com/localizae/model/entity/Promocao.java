@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Promocao extends BaseEntity{
     private String nome;
     private String descricao;
-    private Timestamp dataHora;
+    private Long dataHora;
     private Estande estande;
 
     @Override
@@ -77,11 +77,11 @@ public class Promocao extends BaseEntity{
         this.descricao = descricao;
     }
 
-    public Timestamp getDataHora() {
+    public Long getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(Timestamp dataHora) {
+    public void setDataHora(Long dataHora) {
         this.dataHora = dataHora;
     }
 
