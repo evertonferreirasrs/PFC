@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="(Nome da Promoção)"
+                android:text=""
                 android:id="@+id/fragment_minhas_promocoes_textViewTitulo"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp" />
@@ -102,7 +102,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Data e Hora: 20/09/2017 - 19:30"
+                android:text=""
                 android:gravity="center"
                 android:id="@+id/fragment_minhas_promocoes_textViewDataHora"
                 android:layout_gravity="center_horizontal"
@@ -129,7 +129,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center_horizontal"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
 

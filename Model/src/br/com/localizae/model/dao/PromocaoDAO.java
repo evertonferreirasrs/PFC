@@ -162,7 +162,9 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
             criteriaFile.put(FileCriteria.PROMO_EQ, promocao.getId());
             
             List<File> fileList = fileDAO.readByCriteria(conn, criteriaFile, null, null);
-            promocao.setImagem(fileList.get(0));
+            if(!fileList.isEmpty()){
+                promocao.setImagem(fileList.get(0));
+            }
 
             promocaoList.add(promocao);
         }

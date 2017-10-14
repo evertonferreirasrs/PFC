@@ -1,10 +1,12 @@
 package localizae.net.br.model;
 
+import java.io.Serializable;
+
 /**
  * Created by marca on 14/10/2017.
  */
 
-public class Promocao {
+public class Promocao extends BaseEntity implements Serializable {
     private String nome;
     private String descricao;
     private Long dataHora;

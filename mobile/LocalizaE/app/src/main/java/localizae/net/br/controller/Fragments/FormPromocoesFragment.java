@@ -15,13 +15,11 @@ import localizae.net.br.controller.R;
  * A simple {@link Fragment} subclass.
  */
 public class FormPromocoesFragment extends Fragment {
-
     private Button botao_voltar;
 
     public FormPromocoesFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

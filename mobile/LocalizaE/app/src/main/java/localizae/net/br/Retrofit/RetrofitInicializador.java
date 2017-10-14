@@ -5,6 +5,7 @@ import localizae.net.br.services.endpoints.BoothEndpointInterface;
 
 import localizae.net.br.services.endpoints.CriterioJuradoInterface;
 
+import localizae.net.br.services.endpoints.PromocaoInterface;
 import localizae.net.br.services.endpoints.StandEndpointInterface;
 
 import retrofit2.Retrofit;
@@ -37,5 +38,9 @@ public class RetrofitInicializador {
 
     public StandEndpointInterface getEstandeService(){
         return retrofit.create(StandEndpointInterface.class);
+    }
+
+    public PromocaoInterface getPromocaoService(){
+        return retrofit.create(PromocaoInterface.class);
     }
 }
