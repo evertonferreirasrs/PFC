@@ -26,6 +26,7 @@ public class PromocaoService implements BasePromocaoService{
         PromocaoDAO dao = new PromocaoDAO();
         
         try{
+            this.validate(entity);
             dao.create(conn, entity);
             conn.commit();
         }catch(Exception e){
@@ -42,6 +43,7 @@ public class PromocaoService implements BasePromocaoService{
         PromocaoDAO dao = new PromocaoDAO();
         
         try{
+            this.validate(entity);
             dao.update(conn, entity);
             conn.commit();
         }catch(Exception e){
@@ -127,7 +129,21 @@ public class PromocaoService implements BasePromocaoService{
 
     @Override
     public void validate(Promocao entity) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(entity.getDataHora() < 0){
+            throw new IllegalArgumentException("Campo data e hora deve ser maior o igual a 0");
+        }
+        
+        if(entity.getDescricao() == null || entity.getDescricao().isEmpty()){
+            throw new IllegalArgumentException("Campo descrição obrigatório");
+        }
+        
+        if(entity.getNome() == null || entity.getNome().isEmpty()){
+            throw new IllegalArgumentException("Campo nome obrigatório");
+        }
+        
+        if(entity.getEstande() == null){
+            throw new IllegalArgumentException("Campo estande obrigatório");
+        }
     }
     
 }
