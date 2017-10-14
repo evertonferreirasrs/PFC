@@ -6,8 +6,10 @@
 package br.com.localizae.model.dao;
 
 import br.com.localizae.model.base.BaseDAO;
+import br.com.localizae.model.criteria.FileCriteria;
 import br.com.localizae.model.criteria.PromocaoCriteria;
 import br.com.localizae.model.entity.Estande;
+import br.com.localizae.model.entity.File;
 import br.com.localizae.model.entity.Promocao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -78,6 +80,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
 
     @Override
     public Promocao readById(Connection conn, Long id) throws Exception {
+        FileDAO fileDAO = new FileDAO();
         Promocao promocao = null;
         String sql = "SELECT p.*, e.titulo estande, e.numero FROM promocao p JOIN estande e ON p.estande_fk = e.id WHERE p.id=?;";
 
@@ -100,6 +103,12 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
             estande.setTitulo(rs.getString("estande"));
             estande.setNumero(rs.getLong("numero"));
             promocao.setEstande(estande);
+            
+            Map<Enum, Object> criteria = new HashMap<>();
+            criteria.put(FileCriteria.PROMO_EQ, promocao.getId());
+            
+            List<File> fileList = fileDAO.readByCriteria(conn, criteria, null, null);
+            promocao.setImagem(fileList.get(0));
         }
 
         return promocao;
@@ -110,6 +119,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
         if (criteria == null) {
             criteria = new HashMap<>();
         }
+        FileDAO fileDAO = new FileDAO();
         List<Promocao> promocaoList = new ArrayList<>();
         String sql = "SELECT p.*, e.titulo estande, e.numero FROM promocao p JOIN estande e ON p.estande_fk = e.id WHERE 1=1";
 
@@ -147,6 +157,12 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
             estande.setTitulo(rs.getString("estande"));
             estande.setNumero(rs.getLong("numero"));
             promocao.setEstande(estande);
+            
+            Map<Enum, Object> criteriaFile = new HashMap<>();
+            criteriaFile.put(FileCriteria.PROMO_EQ, promocao.getId());
+            
+            List<File> fileList = fileDAO.readByCriteria(conn, criteriaFile, null, null);
+            promocao.setImagem(fileList.get(0));
 
             promocaoList.add(promocao);
         }

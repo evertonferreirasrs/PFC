@@ -180,7 +180,7 @@ public class FileDAO implements BaseDAO<File> {
 
             Long promocao = (Long) criteria.get(FileCriteria.PROMO_EQ);
             if (promocao != null) {
-                sql += " AND promocao_fk = ?";
+                sql += " AND i.promocao_fk = ?";
                 args.add(promocao);
             }
         }

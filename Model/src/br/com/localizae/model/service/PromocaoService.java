@@ -7,6 +7,7 @@ package br.com.localizae.model.service;
 
 import br.com.localizae.model.ConnectionManager;
 import br.com.localizae.model.base.service.BasePromocaoService;
+import br.com.localizae.model.dao.FileDAO;
 import br.com.localizae.model.dao.PromocaoDAO;
 import br.com.localizae.model.entity.Promocao;
 import java.sql.Connection;
@@ -24,11 +25,16 @@ public class PromocaoService implements BasePromocaoService{
     public void create(Promocao entity) throws Exception {
         Connection conn = ConnectionManager.getInstance().getConnection();
         PromocaoDAO dao = new PromocaoDAO();
+        FileServiceLocal fileServiceLocal = new FileServiceLocal();
         
         try{
             this.validate(entity);
             dao.create(conn, entity);
+            if(entity.getImagem() != null){
+                fileServiceLocal.upload(entity.getImagem());
+            }
             conn.commit();
+            
         }catch(Exception e){
             conn.rollback();
             throw e;
