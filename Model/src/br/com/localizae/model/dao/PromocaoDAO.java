@@ -79,7 +79,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
     @Override
     public Promocao readById(Connection conn, Long id) throws Exception {
         Promocao promocao = null;
-        String sql = "SELECT p.*, e.nome estande, e.numero FROM promocao p JOIN estande e ON p.estande_fk = e.id WHERE p.id=?;";
+        String sql = "SELECT p.*, e.titulo estande, e.numero FROM promocao p JOIN estande e ON p.estande_fk = e.id WHERE p.id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -111,7 +111,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
             criteria = new HashMap<>();
         }
         List<Promocao> promocaoList = new ArrayList<>();
-        String sql = "SELECT p.*, e.nome estande, e.numero FROM promocao p JOIN estande e ON p.estande_fk = e.id WHERE 1=1";
+        String sql = "SELECT p.*, e.titulo estande, e.numero FROM promocao p JOIN estande e ON p.estande_fk = e.id WHERE 1=1";
 
         List<Object> args = new ArrayList<>();
         sql += this.applyCriteria(criteria, args);
