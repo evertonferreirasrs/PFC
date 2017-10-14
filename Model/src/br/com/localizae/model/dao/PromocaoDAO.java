@@ -33,7 +33,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getDescricao());
-        ps.setTimestamp(++i, entity.getDataHora());
+        ps.setTimestamp(++i, new Timestamp(entity.getDataHora()));
         ps.setLong(++i, entity.getEstande().getId());
 
         ResultSet rs = ps.executeQuery();
@@ -68,7 +68,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getDescricao());
-        ps.setTimestamp(++i, entity.getDataHora());
+        ps.setTimestamp(++i, new Timestamp(entity.getDataHora()));
         ps.setLong(++i, entity.getEstande().getId());
         ps.setLong(++i, entity.getId());
 
@@ -90,7 +90,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
 
         while (rs.next()) {
             promocao = new Promocao();
-            promocao.setDataHora(rs.getTimestamp("dataHora"));
+            promocao.setDataHora(rs.getTimestamp("dataHora").getTime());
             promocao.setDescricao(rs.getString("descricao"));
             promocao.setId(rs.getLong("id"));
             promocao.setNome(rs.getString("nome"));
@@ -137,7 +137,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
 
         while (rs.next()) {
             Promocao promocao = new Promocao();
-            promocao.setDataHora(rs.getTimestamp("dataHora"));
+            promocao.setDataHora(rs.getTimestamp("dataHora").getTime());
             promocao.setDescricao(rs.getString("descricao"));
             promocao.setId(rs.getLong("id"));
             promocao.setNome(rs.getString("nome"));
@@ -172,10 +172,10 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
             args.add(nome);
         }
         //DATA_EQ
-        Timestamp dataHora = (Timestamp) criteria.get(PromocaoCriteria.DATA_EQ);
+        Long dataHora = (Long) criteria.get(PromocaoCriteria.DATA_EQ);
         if (dataHora != null) {
             sql = " AND p.dataHora = ?";
-            args.add(dataHora);
+            args.add(new Timestamp(dataHora));
         }
         //AREA_TEMATICA_EQ
         String areaTematica = (String) criteria.get(PromocaoCriteria.AREA_TEMATICA_EQ);
@@ -201,7 +201,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
         
         if(entity.getDataHora() != null){
             sql += ", dataHora=?";
-            args.add(entity.getDataHora());
+            args.add(new Timestamp(entity.getDataHora()));
         }
         
         if(entity.getDescricao() != null && !entity.getDescricao().isEmpty()){
