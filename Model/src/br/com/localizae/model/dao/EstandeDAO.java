@@ -149,6 +149,16 @@ public class EstandeDAO implements BaseDAO<Estande> {
         sql += this.applyCriteria(criteria, args);
 
         sql += " order by e.id";
+        
+        if(limit != null && limit > 0){
+            sql += " LIMIT ?";
+            args.add(limit);
+        }
+        
+        if(offset != null && offset > 0){
+            sql += " OFFSET ?";
+            args.add(offset);
+        }
 
         PreparedStatement ps = conn.prepareStatement(sql);
 

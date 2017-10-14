@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import java.io.Serializable;
+
 import localizae.net.br.helper.WebRequest;
 import localizae.net.br.model.Usuario;
 import localizae.net.br.services.endpoints.UserEndpointInterface;
@@ -63,6 +65,10 @@ public class UserService {
 
                 Intent intent = new Intent(Constants.LOGIN_ACTIVITY_TAG);
                 intent.putExtra(Constants.RESPONSE_CODE_KEY, response.code());
+
+                intent.putExtra(Constants.DATA_KEY, (Serializable) response.body());
+
+                intent.putExtra(Constants.DATA_KEY, response.body());
 
                 LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
                 lbm.sendBroadcast(intent);

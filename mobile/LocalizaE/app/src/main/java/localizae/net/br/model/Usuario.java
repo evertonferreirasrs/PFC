@@ -3,7 +3,10 @@ package localizae.net.br.model;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.annotations.Expose;
 
-public class Usuario extends BaseEntity{
+import java.io.Serializable;
+import java.util.List;
+
+public class Usuario extends BaseEntity implements Serializable{
 
     @SerializedName("nome")
     @Expose
@@ -29,6 +32,21 @@ public class Usuario extends BaseEntity{
     @Expose
     private String hash;
 
+
+    private List<CriterioJurado> criterioAvaliacaoList;
+
+    public List<CriterioJurado> getCriterioAvaliacaoList() {
+        return criterioAvaliacaoList;
+    }
+
+    public void setCriterioAvaliacaoList(List<CriterioJurado> criterioAvaliacaoList) {
+        this.criterioAvaliacaoList = criterioAvaliacaoList;
+    }
+
+    public Usuario(){}
+
+
+
     public Usuario(String nome, String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.email = email;
@@ -39,6 +57,10 @@ public class Usuario extends BaseEntity{
     public Usuario(String email, String hash){
         this.email = email;
         this.hash = hash;
+    }
+
+    public Usuario(Long id){
+        this.setId(id);
     }
 
     public String getNome() {
@@ -88,4 +110,5 @@ public class Usuario extends BaseEntity{
     public void setHash(String hash) {
         this.hash = hash;
     }
+
 }

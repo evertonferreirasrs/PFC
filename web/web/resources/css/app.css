@@ -1,3 +1,15 @@
 .sub-menu-active > a{
     background-color: #000 !important;
 }
+
+.img-stat{
+    max-width: 25%;
+}
+
+.background-success{
+    background-color: #5cb85c;
+}
+
+.background-danger{
+    background-color: #F00;
+}

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import localizae.net.br.controller.R;
@@ -17,6 +18,7 @@ import localizae.net.br.controller.R;
 public class EstandeFragment extends Fragment {
 
     private TextView botao_comentar;
+    private Button botao_voltar;
 
 
     public EstandeFragment() {
@@ -41,6 +43,17 @@ public class EstandeFragment extends Fragment {
                 fragmentTransaction.replace(R.id.fragment_id, comentarQualificarFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+
+            }
+        });
+
+        botao_voltar = (Button) view.findViewById(R.id.botao_voltar_id);
+
+        botao_voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
 
             }
         });

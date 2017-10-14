@@ -1,5 +1,6 @@
 package localizae.net.br.controller.Activity;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +42,7 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
                     case 200:
                         // 200 sempre é sucesso enviado pelo servidor
                         Toast.makeText(context, getString(R.string.account_created), Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(CadastrarUsuarioActivity.this,LoginActivity.class));
                         break;
                     default:
                         // Caso outro erro aconteca
@@ -83,7 +85,6 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
                     if (senha.equals(confirmaSenha)) {
                         // Registrar o broadcast receiver para receber chamadas de outros atores
                         registerBroadcast();
-
                         // Instancia de uma user service para criar o usuario
                         UserService userService = new UserService();
                         userService.CreateUser(new Usuario(nome, email, senha, new TipoUsuario(Constants.USER_VISITANT)), context);

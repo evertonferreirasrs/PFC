@@ -1,5 +1,6 @@
 package localizae.net.br.controller.Activity;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import localizae.net.br.controller.R;
-import localizae.net.br.model.TipoUsuario;
 import localizae.net.br.model.Usuario;
 import localizae.net.br.services.impl.UserService;
 import localizae.net.br.utils.Constants;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import localizae.net.br.utils.Cryptographer;
 import localizae.net.br.utils.ResponseCodeValidator;
 
@@ -40,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
                 switch (responseCode) {
                     case 200:
                         Toast.makeText(context, getString(R.string.successful_login), Toast.LENGTH_LONG).show();
+                        Usuario usuario = (Usuario) intent.getSerializableExtra(Constants.DATA_KEY);
+                        ControladorDadosUsuario armazenadorDadosUsuario = new ControladorDadosUsuario();
+                        armazenadorDadosUsuario.aramazenarDados(usuario,context);
                         startActivity(new Intent(LoginActivity.this,MenuActivity.class));
                         break;
                     default:
@@ -59,6 +63,11 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+
+        botao_entrar = (Button) findViewById(R.id.botao_entrar_id);
+
+
+
         texto_esqueceu_senha = (TextView) findViewById(R.id.texto_esqueceu_senha_id);
         texto_criar_conta = (TextView) findViewById(R.id.texto_criar_conta_id);
         botao_entrar = (Button) findViewById(R.id.botao_entrar_id);
@@ -66,21 +75,25 @@ public class LoginActivity extends AppCompatActivity {
         botao_entrar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this,MenuActivity.class));
-//
-//                String email = ((EditText) findViewById(R.id.campo_email_id)).getText().toString();
-//                String senha = ((EditText) findViewById(R.id.campo_senha_id)).getText().toString();
-//                if(email.isEmpty() || senha.isEmpty()){
-//                    Toast.makeText(context, getString(R.string.fill_entries), Toast.LENGTH_LONG).show();
-//                }else {
-//                    registerBroadcast();
-//
-//                    String hash = Cryptographer.md5(email + Cryptographer.md5(senha));
-//                    Usuario usuario = new Usuario(email,hash);
-//
-//                    UserService userService = new UserService();
-//                    userService.login(usuario,context);
-//                }
+                String email = ((EditText) findViewById(R.id.campo_email_id)).getText().toString();
+                String senha = ((EditText) findViewById(R.id.campo_senha_id)).getText().toString();
+                if(email.isEmpty() || senha.isEmpty()){
+                    Toast.makeText(context, getString(R.string.fill_entries), Toast.LENGTH_LONG).show();
+                }else {
+                    // LOADER
+                    ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+                    //progressDialog.setTitle("Carregando");
+                    progressDialog.setMessage("Carregando... por favor aguarde.");
+                    progressDialog.show();
+
+                    registerBroadcast();
+
+                    String hash = Cryptographer.md5(email + Cryptographer.md5(senha));
+                    Usuario usuario = new Usuario(email,hash);
+
+                    UserService userService = new UserService();
+                    userService.login(usuario,context);
+                }
             }
         });
 

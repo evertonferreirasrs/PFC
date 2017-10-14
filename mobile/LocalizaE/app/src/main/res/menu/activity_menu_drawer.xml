@@ -3,64 +3,48 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/mapa_id"
+            android:id="@+id/menu_botao_mapa"
             android:icon="@drawable/ic_location_on_black_24dp"
             android:title="Mapa da FAITEC" />
         <item
-            android:id="@+id/alterar_senha_id"
+            android:id="@+id/menu_botao_alterar_senha"
             android:icon="@drawable/ic_vpn_key_black_24dp"
             android:title="Alterar Senha" />
         <item
-            android:id="@+id/minhas_avaliacoes_id"
+            android:id="@+id/menu_botao_avaliacoes"
             android:icon="@drawable/ic_chat_black_24dp"
             android:title="Minhas Avaliações" />
+        <item
+            android:id="@+id/menu_botao_meu_estande"
+            android:icon="@drawable/ic_pin_drop_black_24dp"
+            android:title="Meu Estande" />
+        <item
+            android:id="@+id/menu_botao_qualificacao_comentarios"
+            android:icon="@drawable/ic_star_black_24dp"
+            android:title="Avaliações do Estande" />
+        <item
+            android:id="@+id/menu_botao_minhas_promocoes"
+            android:icon="@drawable/ic_insert_invitation_black_24dp"
+            android:title="Minhas Promoções" />
+        <item
+            android:id="@+id/menu_botao_avaliar_estande"
+            android:icon="@drawable/ic_speaker_notes_black_24dp"
+            android:title="Avaliar Estandes" />
 
     </group>
-
-    <item android:title="Visão Expositor">
-        <menu>
-            <item
-                android:id="@+id/meu_estande_id"
-                android:icon="@drawable/ic_pin_drop_black_24dp"
-                android:title="Meu Estande" />
-            <item
-                android:id="@+id/qualificacao_comentarios_id"
-                android:icon="@drawable/ic_star_black_24dp"
-                android:title="Avaliações do Estande" />
-            <item
-                android:id="@+id/minhas_promocoes_id"
-                android:icon="@drawable/ic_insert_invitation_black_24dp"
-                android:title="Minhas Promoções" />
-
-        </menu>
-    </item>
-
-    <item android:title="Visão Jurado">
-        <menu>
-            <item
-                android:id="@+id/avaliar_estande_id"
-                android:icon="@drawable/ic_speaker_notes_black_24dp"
-                android:title="Avaliar Estandes" />
-            <item
-                android:id="@+id/minhas_avaliacoes_jurado_id"
-                android:icon="@drawable/ic_chat_black_24dp"
-                android:title="Minhas Avaliações" />
-
-        </menu>
-    </item>
 
     <item android:title="Informações">
         <menu>
             <item
-                android:id="@+id/enviar_feedback_id"
+                android:id="@+id/menu_botao_enviar_feedback"
                 android:icon="@drawable/ic_feedback_black_24dp"
                 android:title="Enviar FeedBack" />
             <item
-                android:id="@+id/sobre_id"
+                android:id="@+id/menu_botao_sobre"
                 android:icon="@drawable/ic_school_black_24dp"
                 android:title="Sobre" />
             <item
-                android:id="@+id/sair_id"
+                android:id="@+id/menu_botao_sair"
                 android:icon="@drawable/ic_arrow_back_black_24dp"
                 android:title="Sair" />
         </menu>

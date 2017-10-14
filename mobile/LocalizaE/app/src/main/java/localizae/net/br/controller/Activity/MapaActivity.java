@@ -1,22 +1,15 @@
 package localizae.net.br.controller.Activity;
 
 import android.Manifest;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.le.ScanRecord;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.wifi.ScanResult;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.content.PermissionChecker;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,12 +18,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.litesuits.bluetooth.LiteBluetooth;
-import com.litesuits.bluetooth.scan.PeriodScanCallback;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +79,7 @@ public class MapaActivity extends AppCompatActivity {
                             Manifest.permission.BLUETOOTH_PRIVILEGED, Manifest.permission.ACCESS_COARSE_LOCATION},
                     Constants.REQUEST_PERMISSION_CODE);
         }
+        final android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
         registerBroadcast();
 
@@ -106,7 +94,6 @@ public class MapaActivity extends AppCompatActivity {
                     int x = (int) motionEvent.getAxisValue(MotionEvent.AXIS_X);
                     int y = (int) motionEvent.getAxisValue(MotionEvent.AXIS_Y);
                     //Toast.makeText(MapaActivity.this, "X " + x + " Y " + y, Toast.LENGTH_SHORT).show();
-
                     Estande estande = null;
                     for (Estande e : estandeList) {
                         if (e.getNumero() == mapColisionMatrix[x][y]) {
@@ -119,6 +106,8 @@ public class MapaActivity extends AppCompatActivity {
                         Toast.makeText(MapaActivity.this, estande.getTitulo(), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MapaActivity.this, "X " + x + " Y " + y, Toast.LENGTH_SHORT).show();
+                        EstandeFragment estandeFragment = new EstandeFragment();
+                        //fragmentManager.beginTransaction().replace(R.id.mapa_fragment_id, estandeFragment).commit();
                     }
                 }
                 return false;

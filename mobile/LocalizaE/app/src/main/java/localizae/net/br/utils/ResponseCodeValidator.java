@@ -1,7 +1,5 @@
 package localizae.net.br.utils;
 
-import localizae.net.br.controller.R;
-
 public class ResponseCodeValidator {
 
     public static String validateResponseCode(int responseCode) {

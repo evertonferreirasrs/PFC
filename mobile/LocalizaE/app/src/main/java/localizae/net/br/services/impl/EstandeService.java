@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import localizae.net.br.helper.WebRequest;
+import localizae.net.br.model.AvaliacaoVisitante;
 import localizae.net.br.model.Estande;
 import localizae.net.br.services.endpoints.EstandeEndpointInterface;
 import localizae.net.br.utils.Constants;
@@ -49,5 +50,4 @@ public class EstandeService {
             }
         });
     }
-
 }
