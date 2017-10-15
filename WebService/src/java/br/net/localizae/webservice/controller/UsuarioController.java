@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author marca
  */
-
+@CrossOrigin("http://localhost:8080")
 @RestController
 public class UsuarioController {
 
