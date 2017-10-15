@@ -27,6 +27,7 @@ import localizae.net.br.controller.R;
 import localizae.net.br.model.AvaliacaoVisitante;
 import localizae.net.br.model.Usuario;
 import localizae.net.br.utils.Constants;
+import localizae.net.br.utils.LerDadosUsuario;
 import localizae.net.br.utils.ResponseCodeValidator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,14 +50,18 @@ public class MinhasAvaliacoesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_minhas_avaliacoes, container, false);
         final ListView avaliacaoVisitanteListView = (ListView) view.findViewById(R.id.fragment_avaliacaoVisitante_listView);
 
-        Call<List<AvaliacaoVisitante>> avaliacoesVisitanteByUserCall = new RetrofitInicializador().getAvaliacaoVisitanteService().getAvaliacoesVisitanteByUser(21L);
+        final Usuario usuarioLogado = LerDadosUsuario.lerDados(getContext());
+
+        Call<List<AvaliacaoVisitante>> avaliacoesVisitanteByUserCall = new RetrofitInicializador().getAvaliacaoVisitanteService().getAvaliacoesVisitanteByUser(usuarioLogado.getId());
 
         avaliacoesVisitanteByUserCall.enqueue(new Callback<List<AvaliacaoVisitante>>() {
             @Override
             public void onResponse(Call<List<AvaliacaoVisitante>> call, Response<List<AvaliacaoVisitante>> response) {
                 List<AvaliacaoVisitante> listaAvaliacao = response.body();
+                getActivity().setTitle("Minhas Avaliações");
                 if (listaAvaliacao.isEmpty()) {
                     Toast.makeText(getContext(), "Não possui avaliação", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), usuarioLogado.getId().toString(), Toast.LENGTH_SHORT).show();
                 }
                 AvaliacaoVisitanteAdapter adapterEstandes = new AvaliacaoVisitanteAdapter(getContext(), listaAvaliacao);
                 avaliacaoVisitanteListView.setAdapter(adapterEstandes);

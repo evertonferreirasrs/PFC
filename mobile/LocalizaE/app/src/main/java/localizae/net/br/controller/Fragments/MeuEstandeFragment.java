@@ -15,6 +15,8 @@ import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Estande;
 import localizae.net.br.model.IntegranteEquipe;
+import localizae.net.br.model.Usuario;
+import localizae.net.br.utils.LerDadosUsuario;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
