@@ -4,6 +4,7 @@ import localizae.net.br.services.endpoints.AvaliacaoJuradoInterface;
 import localizae.net.br.services.endpoints.BoothEndpointInterface;
 import localizae.net.br.services.endpoints.CriterioJuradoInterface;
 import localizae.net.br.services.endpoints.StandEndpointInterface;
+import localizae.net.br.services.endpoints.UserEndpointInterface;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -33,5 +34,9 @@ public class RetrofitInicializador {
 
     public StandEndpointInterface getEstandeService(){
         return retrofit.create(StandEndpointInterface.class);
+    }
+
+    public UserEndpointInterface getUserEndpointInterface(){
+        return retrofit.create(UserEndpointInterface.class);
     }
 }

@@ -14,10 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Usuario;
 import localizae.net.br.utils.Cryptographer;
 import localizae.net.br.utils.LerDadosUsuario;
+import retrofit2.Call;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,25 +43,29 @@ public class AlterarSenhaFragment extends Fragment {
         campoNome.setText(usuarioLogado.getNome());
         campoEmail.setText(usuarioLogado.getEmail());
 
+        //Call<Usuario> alterarSenhaCall = new RetrofitInicializador().getUserEndpointInterface().alterarUser(usuarioLogado);
+
         botaoAlterarSenha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String campoNovaSenha1 = ((EditText) view.findViewById(R.id.fragment_alterar_senha_novaSenha1)).getText().toString();
                 String campoNovaSenha2 = ((EditText) view.findViewById(R.id.fragment_alterar_senha_novaSenha2)).getText().toString();
 
-                if (campoNovaSenha1 == null || campoNovaSenha2 == null) {
+                Toast.makeText(getContext(), campoNovaSenha1, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), campoNovaSenha2, Toast.LENGTH_SHORT).show();
+
+                if (campoNovaSenha1.isEmpty() || campoNovaSenha2.isEmpty()) {
                     Toast.makeText(getContext(), "Preencha os campos", Toast.LENGTH_SHORT).show();
                 } else if (campoNovaSenha1 != campoNovaSenha2) {
                     Toast.makeText(getContext(), "Senhas nao conferem", Toast.LENGTH_SHORT).show();
                 } else {
-
-                    ProgressDialog progressDialog = new ProgressDialog(getContext());
-                    progressDialog.setMessage("Alterando dados... por favor aguarde.");
-                    progressDialog.show();
-
+                    //ProgressDialog progressDialog = new ProgressDialog(getContext());
+                    //progressDialog.setMessage("Alterando dados... por favor aguarde.");
+                    //progressDialog.show();
                     String hash = Cryptographer.md5(campoNovaSenha1);
 
-                    Usuario usuario = new Usuario();
+
+
                 }
             }
         });
