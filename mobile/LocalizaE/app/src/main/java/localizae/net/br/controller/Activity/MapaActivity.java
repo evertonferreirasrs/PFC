@@ -1,6 +1,7 @@
 package localizae.net.br.controller.Activity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -37,6 +39,8 @@ import localizae.net.br.utils.ResponseCodeValidator;
 public class MapaActivity extends AppCompatActivity {
 
     private ImageView mapaImageView;
+    private View userPositionCircleView;
+    private ProgressDialog progress;
     private List<Estande> estandeList;
     private Integer[][] mapColisionMatrix;
     private Timer timer;
@@ -85,6 +89,8 @@ public class MapaActivity extends AppCompatActivity {
 
         EstandeService es = new EstandeService();
         es.getAllBooth(this);
+
+        userPositionCircleView = (View) findViewById(R.id.user_position_circle);
 
         mapaImageView = (ImageView) findViewById(R.id.mapa_id);
         mapaImageView.setOnTouchListener(new View.OnTouchListener() {
@@ -174,7 +180,14 @@ public class MapaActivity extends AppCompatActivity {
                                     distances[i] = LocationService.getDistance(b.getRSSI(), b.getTxPower());
                                     i++;
                                 }
-                                LocationService.detectUserPosition(positions, distances);
+                                // X - 0
+                                // Y - 1
+                                double[] position = LocationService.detectUserPosition(positions, distances);
+
+                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(userPositionCircleView.getWidth(), userPositionCircleView.getHeight());
+                                params.leftMargin = (int) (position[0] + 0.5);
+                                params.topMargin = (int) (position[1] + 0.5);
+                                userPositionCircleView.setLayoutParams(params);
                             }
                         }
                     }

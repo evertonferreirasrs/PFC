@@ -18,9 +18,16 @@
         android:scaleType="fitXY"
         android:src="@drawable/mapa" />
 
+    <View
+        android:id="@+id/user_position_circle"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/user_position_circle" />
+
     <FrameLayout
         android:id="@+id/mapa_fragment_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></FrameLayout>
+
 
 </RelativeLayout>
