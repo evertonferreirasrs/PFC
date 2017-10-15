@@ -35,6 +35,11 @@ public class Estande extends BaseEntity {
     @Expose
     private String descricao;
 
+    @Override
+    public String toString() {
+        return this.getTitulo();
+    }
+
     public List<IntegranteEquipe> getEquipe() {
         return equipe;
     }
@@ -87,10 +92,6 @@ public class Estande extends BaseEntity {
         this.areaTematica = areaTematica;
     }
 
-    @Override
-    public String toString() {
-        return this.getTitulo();
-    }
     public String getDescricao() {
         return descricao;
     }
