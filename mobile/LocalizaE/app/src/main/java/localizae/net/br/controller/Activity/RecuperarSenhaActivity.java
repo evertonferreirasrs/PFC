@@ -18,7 +18,6 @@ import javax.mail.internet.MimeMessage;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.provider.CallLog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,15 +28,10 @@ import android.widget.Toast;
 import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Usuario;
-import localizae.net.br.services.endpoints.AvaliacaoJuradoInterface;
-import localizae.net.br.services.endpoints.UserEndpointInterface;
-import localizae.net.br.services.impl.UserService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Body;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
+
 
 public class RecuperarSenhaActivity extends AppCompatActivity implements OnClickListener{
 
