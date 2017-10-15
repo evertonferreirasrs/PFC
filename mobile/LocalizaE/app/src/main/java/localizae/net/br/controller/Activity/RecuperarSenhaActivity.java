@@ -1,11 +1,11 @@
 package localizae.net.br.controller.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
+
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.provider.CallLog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,11 +28,16 @@ import android.widget.Toast;
 
 import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.controller.R;
-import localizae.net.br.model.AvaliacaoVisitante;
 import localizae.net.br.model.Usuario;
+import localizae.net.br.services.endpoints.AvaliacaoJuradoInterface;
+import localizae.net.br.services.endpoints.UserEndpointInterface;
+import localizae.net.br.services.impl.UserService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Body;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public class RecuperarSenhaActivity extends AppCompatActivity implements OnClickListener{
 
@@ -43,6 +49,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity implements OnClick
     Context context = null;
     EditText sub, msg;
     String rec, subject, textMessage;
+    String senhaGerada = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +80,22 @@ public class RecuperarSenhaActivity extends AppCompatActivity implements OnClick
     @Override
     public void onClick(View v) {
 
-        //Gerar senha
-        String[] carct = {"0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
-        String senhaGerada = "";
-        for (int x = 0; x < 7; x++) {
-            int j = (int) (Math.random() * carct.length);
-            senhaGerada += carct[j];
+        String letras = "abcdefghijklmnopqrstuvwxyz123456789";
+
+        Random random = new Random();
+
+        int index = -1;
+        for( int i = 0; i < 7; i++ ) {
+            index = random.nextInt( letras.length() );
+            senhaGerada += letras.substring( index, index + 1 );
         }
+
+        //Gerar senha
+//        String[] carct = {"0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+//        for (int x = 0; x < 7; x++) {
+//            int j = (int) (Math.random() * carct.length);
+//            senhaGerada += carct[j];
+//        }
         // Fim gerar senha
 
         rec = sub.getText().toString();
@@ -104,7 +120,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity implements OnClick
             }
         });
 
-        Call<List<Usuario>> usuarioList = new RetrofitInicializador().getUsuarioService().getByEmail(rec);
+        final Call<List<Usuario>> usuarioList = new RetrofitInicializador().getUsuarioService().getByEmail(rec);
 
         usuarioList.enqueue(new Callback<List<Usuario>>() {
             @Override
@@ -113,10 +129,26 @@ public class RecuperarSenhaActivity extends AppCompatActivity implements OnClick
                 if (listaUsuario.isEmpty() || rec.isEmpty()) {
                     Toast.makeText(context, "Email não cadastrado no sistema.", Toast.LENGTH_SHORT).show();
                 }else{
-                    pdialog = ProgressDialog.show(context, "", "Enviando...", true);
 
-                    RetreiveFeedTask task = new RetreiveFeedTask();
-                    task.execute();
+                    Usuario usuario = listaUsuario.get(0);
+                    usuario.setSenha(senhaGerada);
+
+                    Call<Usuario> user = new RetrofitInicializador().getUsuarioService().alterarUser(usuario);
+
+                    user.enqueue(new Callback<Usuario>() {
+                        @Override
+                        public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                            pdialog = ProgressDialog.show(context, "", "Enviando...", true);
+
+                            RetreiveFeedTask task = new RetreiveFeedTask();
+                            task.execute();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Usuario> call, Throwable t) {
+                            Toast.makeText(context, "Serviço indisponível no momento", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
 

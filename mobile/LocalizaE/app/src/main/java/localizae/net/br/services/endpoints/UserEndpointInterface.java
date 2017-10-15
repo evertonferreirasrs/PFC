@@ -6,6 +6,7 @@ import localizae.net.br.model.Usuario;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -28,5 +29,8 @@ public interface UserEndpointInterface {
 
     @GET("usuario")
     Call<List<Usuario>> getByEmail(@Query("email") String email);
+
+    @PATCH("usuario")
+    Call<Usuario> alterarUser(@Body Usuario usuario);
 
 }
