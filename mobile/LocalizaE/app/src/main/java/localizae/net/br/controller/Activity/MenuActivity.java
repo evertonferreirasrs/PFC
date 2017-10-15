@@ -1,8 +1,11 @@
 package localizae.net.br.controller.Activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import localizae.net.br.controller.Fragments.AlterarSenhaFragment;
 import localizae.net.br.controller.Fragments.AvaliarEstandeFragment;
@@ -19,16 +24,25 @@ import localizae.net.br.controller.Fragments.EnviarFeedbackFragment;
 import localizae.net.br.controller.Fragments.InicioFragment;
 import localizae.net.br.controller.Fragments.MeuEstandeFragment;
 import localizae.net.br.controller.Fragments.MinhasAvaliacoesFragment;
-import localizae.net.br.controller.Fragments.MinhasAvaliacoesJuradoFragment;
 import localizae.net.br.controller.Fragments.MinhasPromocoesFragment;
 import localizae.net.br.controller.Fragments.QualificacaoComentariosFragment;
 import localizae.net.br.controller.Fragments.SobreFragment;
 import localizae.net.br.controller.R;
+import localizae.net.br.model.Usuario;
+import localizae.net.br.utils.LerDadosUsuario;
+import localizae.net.br.utils.VerificadorUsuario;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private AlertDialog alerta;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        mostrarMenuDoUsuario(navigationView);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +52,19 @@ public class MenuActivity extends AppCompatActivity
         //getActionBar().setIcon(getResources().getDrawable(R.drawable.icone_logo));
         //getSupportActionBar().setIcon(R.drawable.icone_logo);
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+
+        // NOME E EMAIL do usuário logado ==========================================================
+        Usuario usuarioLogado = LerDadosUsuario.lerDados(this);
+        View header = navigationView.getHeaderView(0);
+        TextView nome = (TextView)header.findViewById(R.id.textView_nome);
+        TextView email = (TextView)header.findViewById(R.id.textView_email);
+        nome.setText(usuarioLogado.getNome());
+        email.setText(usuarioLogado.getEmail());
+        // =========================================================================================
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,8 +75,8 @@ public class MenuActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
 
 
        // ABRIR MENSAGEM DE BOAS-VINDAS
@@ -59,6 +86,64 @@ public class MenuActivity extends AppCompatActivity
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_id, inicioFragment).commit();
 
+    }
+
+    private void mostrarMenuDoUsuario(NavigationView navigationView) {
+        Menu menu = navigationView.getMenu();
+
+        MenuItem mapa = menu.findItem(R.id.menu_botao_mapa);
+        mapa.setVisible(true);
+
+        MenuItem alterarSenha = menu.findItem(R.id.menu_botao_alterar_senha);
+        alterarSenha.setVisible(true);
+
+        MenuItem enviarFeedback = menu.findItem(R.id.menu_botao_enviar_feedback);
+        enviarFeedback.setVisible(true);
+
+        MenuItem sobre = menu.findItem(R.id.menu_botao_sobre);
+        sobre.setVisible(true);
+
+        MenuItem sair = menu.findItem(R.id.menu_botao_sair);
+        sair.setVisible(true);
+
+        // Restrições de Visibilidade Particulares =================================================
+        MenuItem avaliacoes = menu.findItem(R.id.menu_botao_avaliacoes);
+        avaliacoes.setVisible(false);
+
+        MenuItem meuEstande = menu.findItem(R.id.menu_botao_meu_estande);
+        meuEstande.setVisible(false);
+
+        MenuItem qualificacaoComentarios = menu.findItem(R.id.menu_botao_qualificacao_comentarios);
+        qualificacaoComentarios.setVisible(false);
+
+        MenuItem minhasPromocoes = menu.findItem(R.id.menu_botao_minhas_promocoes);
+        minhasPromocoes.setVisible(false);
+
+        MenuItem avaliarEstande = menu.findItem(R.id.menu_botao_avaliar_estande);
+        avaliarEstande.setVisible(false);
+
+        // Fim Restrições  =========================================================================
+
+        // PERMISSÕES DE VISIBILIDADE PARA USUÁRIOS ================================================
+        if(VerificadorUsuario.getInstances(this).isExpositor()){
+
+            meuEstande.setVisible(true);
+            qualificacaoComentarios.setVisible(true);
+            minhasPromocoes.setVisible(true);
+
+        }
+
+        if(VerificadorUsuario.getInstances(this).isJurado()){
+
+            avaliarEstande.setVisible(true);
+
+        }
+
+        if(VerificadorUsuario.getInstances(this).isVisitante()){
+
+            avaliacoes.setVisible(true);
+
+        }
     }
 
     @Override
@@ -101,31 +186,29 @@ public class MenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         // MAPA DA FAITEC
-        if (id == R.id.mapa_id) {
-            Intent i = new Intent(getBaseContext(),MapaActivity.class);
-            startActivity(i);
+        if (id == R.id.menu_botao_mapa) {
+            Intent intentAbrirMapa = new Intent(getBaseContext(),MapaActivity.class);
+            startActivity(intentAbrirMapa);
 
 
             // ALTERAR SENHA
-        }else if (id == R.id.alterar_senha_id) {
+        }else if (id == R.id.menu_botao_alterar_senha) {
             setTitle(" Alterar Senha");
 //            getSupportActionBar().setIcon(R.drawable.ic_vpn_key_black_24dp);
             AlterarSenhaFragment alterarSenhaFragment = new AlterarSenhaFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, alterarSenhaFragment).commit();
 
-
             // MINHAS AVALIAÇÕES
-        }else if (id == R.id.minhas_avaliacoes_id) {
-            setTitle(" Minhas Avaliações");
-//            getSupportActionBar().setIcon(R.drawable.ic_chat_black_24dp);
+        }else if (id == R.id.menu_botao_avaliacoes) {
+            setTitle(" Alterar Senha");
             MinhasAvaliacoesFragment minhasAvaliacoesFragment = new MinhasAvaliacoesFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, minhasAvaliacoesFragment).commit();
 
 
         // MEU ESTANDE
-        } else if (id == R.id.meu_estande_id) {
+        } else if (id == R.id.menu_botao_meu_estande) {
             setTitle(" (Nome do Estande)");
 //            getSupportActionBar().setIcon(R.drawable.ic_pin_drop_black_24dp);
             MeuEstandeFragment meuEstandeFragment = new MeuEstandeFragment();
@@ -134,7 +217,7 @@ public class MenuActivity extends AppCompatActivity
 
 
             // COMENTÁRIOS E QUALIFICAÇÕES DO MEU ESTANDE
-        } else if (id == R.id.qualificacao_comentarios_id) {
+        } else if (id == R.id.menu_botao_qualificacao_comentarios) {
             setTitle(" Avaliações do Estande");
 //            getSupportActionBar().setIcon(R.drawable.ic_star_black_24dp);
             QualificacaoComentariosFragment qualificacaoComentariosFragment = new QualificacaoComentariosFragment();
@@ -143,7 +226,7 @@ public class MenuActivity extends AppCompatActivity
 
 
             // CADASTRAR PROMOÇÃO
-        } else if (id == R.id.minhas_promocoes_id) {
+        } else if (id == R.id.menu_botao_minhas_promocoes) {
             setTitle(" Minhas Promoções");
             MinhasPromocoesFragment minhasPromocoesFragment = new MinhasPromocoesFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -151,7 +234,7 @@ public class MenuActivity extends AppCompatActivity
 
 
         // AVALIAR ESTANDES
-        }else if (id == R.id.avaliar_estande_id) {
+        }else if (id == R.id.menu_botao_avaliar_estande) {
             setTitle(" Avaliar Estandes");
 //            getSupportActionBar().setIcon(R.drawable.ic_speaker_notes_black_24dp);
             AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
@@ -159,17 +242,8 @@ public class MenuActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.fragment_id, avaliarEstandeFragment).commit();
 
 
-        // MINHAS AVALIAÇÕES
-        } else if (id == R.id.minhas_avaliacoes_jurado_id) {
-            setTitle(" Minhas Avaliações");
-//            getSupportActionBar().setIcon(R.drawable.ic_chat_black_24dp);
-            MinhasAvaliacoesJuradoFragment minhasAvaliacoesJuradoFragment = new MinhasAvaliacoesJuradoFragment();
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, minhasAvaliacoesJuradoFragment).commit();
-
-
         // ENVIAR FEEDBACK
-        } else if (id == R.id.enviar_feedback_id) {
+        } else if (id == R.id.menu_botao_enviar_feedback) {
             setTitle(" Enviar Feedback");
 //            getSupportActionBar().setIcon(R.drawable.ic_feedback_black_24dp);
             EnviarFeedbackFragment enviarFeedbackFragment = new EnviarFeedbackFragment();
@@ -178,7 +252,7 @@ public class MenuActivity extends AppCompatActivity
 
 
         // SOBRE
-        }else if (id == R.id.sobre_id) {
+        }else if (id == R.id.menu_botao_sobre) {
             setTitle(" Sobre");
 //            getSupportActionBar().setIcon(R.drawable.ic_school_black_24dp);
             SobreFragment sobre = new SobreFragment();
@@ -186,7 +260,7 @@ public class MenuActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.fragment_id, sobre).commit();
 
         // SAIR
-        } else if (id == R.id.sair_id) {
+        } else if (id == R.id.menu_botao_sair) {
             setTitle(" Sair");
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -194,7 +268,13 @@ public class MenuActivity extends AppCompatActivity
             builder.setMessage("Deseja realmente sair do aplicativo?");
             builder.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface arg0, int arg1) {
-                    finish();
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MenuActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.commit();
+
+                    android.os.Process.killProcess(android.os.Process.myPid());
+//                    finishAffinity();
                 }
             });
 
@@ -207,9 +287,8 @@ public class MenuActivity extends AppCompatActivity
             alerta = builder.create();
             alerta.show();
 
-            // SE CONTINUAR, VOLTA PARA O MAPA
+            // SE CONTINUAR, VOLTA PARA O INICIO
             setTitle("LozalizaÊ");
-//            getSupportActionBar().setIcon(R.drawable.ic_location_on_black_24dp);
             InicioFragment inicioFragment = new InicioFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, inicioFragment).commit();

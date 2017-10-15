@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import java.io.Serializable;
+
 import localizae.net.br.helper.WebRequest;
+import localizae.net.br.model.AvaliacaoVisitante;
 import localizae.net.br.model.Usuario;
+import localizae.net.br.services.endpoints.BoothEndpointInterface;
 import localizae.net.br.services.endpoints.UserEndpointInterface;
 import localizae.net.br.utils.Constants;
 import retrofit2.Call;
@@ -52,7 +56,37 @@ public class UserService {
                 lbm.sendBroadcast(intent);
             }
         });
+    }
 
+    public void login(Usuario usuario, final Context context){
+        Call<Usuario> call = userServiceEndpoint.login(usuario);
+        call.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                Log.d(Constants.USER_SERVICE_TAG, response.toString());
+
+                Intent intent = new Intent(Constants.LOGIN_ACTIVITY_TAG);
+                intent.putExtra(Constants.RESPONSE_CODE_KEY, response.code());
+
+                intent.putExtra(Constants.DATA_KEY, (Serializable) response.body());
+
+                intent.putExtra(Constants.DATA_KEY, response.body());
+
+                LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
+                lbm.sendBroadcast(intent);
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Log.d(Constants.USER_SERVICE_TAG, t.toString());
+
+                Intent intent = new Intent(Constants.LOGIN_ACTIVITY_TAG);
+                intent.putExtra(Constants.RESPONSE_CODE_KEY, Constants.RETROFIT_FAILURE);
+
+                LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
+                lbm.sendBroadcast(intent);
+            }
+        });
     }
 
 }
