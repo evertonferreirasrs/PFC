@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,7 +14,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="localizae.net.br.controller.Activity.SplashActivity"
+        <activity
+            android:name=".Activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="localizae.net.br.controller.Activity.MainActivity" />
+        <activity android:name=".Activity.MainActivity" />
 
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -32,22 +32,23 @@
         </intent-filter>
 
         <activity
-            android:name="localizae.net.br.controller.Activity.MenuActivity"
+            android:name=".Activity.MenuActivity"
             android:label="@string/title_activity_menu"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="localizae.net.br.controller.Activity.CadastrarUsuarioActivity"
+            android:name=".Activity.CadastrarUsuarioActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="localizae.net.br.controller.Activity.LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="localizae.net.br.controller.Activity.MapaActivity"
+            android:name=".Activity.MapaActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="localizae.net.br.controller.Activity.RecuperarSenhaActivity"
+            android:name=".Activity.RecuperarSenhaActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".Activity.FeedbackActivity"></activity>
     </application>
 
 </manifest>
