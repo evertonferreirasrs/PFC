@@ -29,7 +29,7 @@ import localizae.net.br.utils.ResponseCodeValidator;
 
 public class BeaconScanner {
 
-    public static void scanBeacon(final Context context) {
+    public static void scanBeacon(final Context context, List<Beacon> beaconList) {
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context receoverContext, Intent intent) {
@@ -54,11 +54,15 @@ public class BeaconScanner {
             }
         };
 
-        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
-        lbm.registerReceiver(broadcastReceiver, new IntentFilter(Constants.BEACON_SCANNER_TAG));
+        if(beaconList == null || beaconList.isEmpty()) {
+            LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
+            lbm.registerReceiver(broadcastReceiver, new IntentFilter(Constants.BEACON_SCANNER_TAG));
 
-        BeaconService bs = new BeaconService();
-        bs.getBeacons(context);
+            BeaconService bs = new BeaconService();
+            bs.getBeacons(context);
+        } else {
+            updateBeaconData(beaconList, context);
+        }
     }
 
     private static void updateBeaconData(final List<Beacon> beaconList, final Context context) {

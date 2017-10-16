@@ -30,6 +30,8 @@
     <string name="successful_login">Login realizado</string>
 
     <string name="impossible_location_estimation">Não foi possível estimar sua posição</string>
+    <string name="loading_booths">Carregando estandes</string>
+
     <string name="successful_comment">Comentario realizado</string>
 
     <!-- Informações do Usuario -->

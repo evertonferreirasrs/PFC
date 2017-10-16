@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +43,9 @@ public class MapaActivity extends AppCompatActivity {
 
     private ImageView mapaImageView;
     private View userPositionCircleView;
-    private ProgressDialog progress;
+    private ProgressDialog progressDialog;
     private List<Estande> estandeList;
+    private List<Beacon> beaconList;
     private Integer[][] mapColisionMatrix;
     private Timer timer;
     private Map<String, Integer> beacons = new HashMap();
@@ -50,6 +54,8 @@ public class MapaActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Constants.MAP_ACTIVITY_TAG)) {
+                progressDialog.dismiss();
+
                 int responseCode = intent.getIntExtra(Constants.RESPONSE_CODE_KEY, 500);
                 Log.d(Constants.MAP_ACTIVITY_TAG, "Recebeu resposta " + responseCode);
                 switch (responseCode) {
@@ -87,10 +93,15 @@ public class MapaActivity extends AppCompatActivity {
 
         registerBroadcast();
 
+        progressDialog = new ProgressDialog(MapaActivity.this);
+        progressDialog.setMessage(getString(R.string.loading_booths));
+        progressDialog.show();
+
         EstandeService es = new EstandeService();
         es.getAllBooth(this);
 
         userPositionCircleView = (View) findViewById(R.id.user_position_circle);
+        userPositionCircleView.setVisibility(View.INVISIBLE);
 
         mapaImageView = (ImageView) findViewById(R.id.mapa_id);
         mapaImageView.setOnTouchListener(new View.OnTouchListener() {
@@ -155,13 +166,13 @@ public class MapaActivity extends AppCompatActivity {
     }
 
     private void startBeaconScan() {
+        final boolean allowScan[] = new boolean[1];
+        allowScan[0] = true;
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 //Permission granted start beacon finding
-                final boolean allowScan[] = new boolean[1];
-                allowScan[0] = true;
                 final BroadcastReceiver beaconBr = new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
@@ -171,6 +182,8 @@ public class MapaActivity extends AppCompatActivity {
                             if (returnedBeaconList == null && returnedBeaconList.isEmpty()) {
                                 Toast.makeText(context, context.getString(R.string.impossible_location_estimation), Toast.LENGTH_LONG).show();
                             } else {
+                                beaconList = new ArrayList<Beacon>(returnedBeaconList);
+                                //Collections.copy(beaconList, returnedBeaconList);
                                 double[][] positions = new double[returnedBeaconList.size()][2];
                                 double[] distances = new double[returnedBeaconList.size()];
                                 int i = 0;
@@ -188,6 +201,10 @@ public class MapaActivity extends AppCompatActivity {
                                 params.leftMargin = (int) (position[0] + 0.5);
                                 params.topMargin = (int) (position[1] + 0.5);
                                 userPositionCircleView.setLayoutParams(params);
+
+                                if(userPositionCircleView.getVisibility() == View.INVISIBLE) {
+                                    userPositionCircleView.setVisibility(View.VISIBLE);
+                                }
                             }
                         }
                     }
@@ -198,7 +215,7 @@ public class MapaActivity extends AppCompatActivity {
                     LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(MapaActivity.this);
                     lbm.registerReceiver(beaconBr, new IntentFilter(Constants.BEACON_SCAN_ACTIVITY_TAG));
 
-                    BeaconScanner.scanBeacon(MapaActivity.this);
+                    BeaconScanner.scanBeacon(MapaActivity.this, beaconList);
                 }
             }
         }, 60, Constants.BEACON_SCAN_PERIOD);
@@ -208,9 +225,9 @@ public class MapaActivity extends AppCompatActivity {
         int width = mapaImageView.getWidth();
         int height = mapaImageView.getHeight();
 
-        mapColisionMatrix = new Integer[height][width];
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+        mapColisionMatrix = new Integer[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 mapColisionMatrix[i][j] = 0;
             }
         }
@@ -222,8 +239,8 @@ public class MapaActivity extends AppCompatActivity {
             int minY = e.getPosicaoY();
             int maxY = e.getPosicaoY() + 50;
 
-            for (int i = minY; i < maxY; i++) {
-                for (int j = minX; j < maxX; j++) {
+            for (int i = minX; i < maxX; i++) {
+                for (int j = minY; j < maxY; j++) {
                     mapColisionMatrix[i][j] = e.getNumero();
                 }
             }
