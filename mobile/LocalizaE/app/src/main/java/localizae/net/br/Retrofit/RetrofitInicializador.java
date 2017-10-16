@@ -36,7 +36,7 @@ public class RetrofitInicializador {
         return retrofit.create(StandEndpointInterface.class);
     }
 
-    public UserEndpointInterface getUserEndpointInterface(){
+    public UserEndpointInterface getUsuarioService(){
         return retrofit.create(UserEndpointInterface.class);
     }
 }
