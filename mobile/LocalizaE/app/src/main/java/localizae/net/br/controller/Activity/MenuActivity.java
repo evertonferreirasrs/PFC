@@ -244,7 +244,7 @@ public class MenuActivity extends AppCompatActivity
             Bundle args = new Bundle();
             args.putSerializable("estandeId", 19L);
             estandeFragment.setArguments(args);
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_id, estandeFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_id, estandeFragment).addToBackStack(null).commit();
 
 
         // ENVIAR FEEDBACK

@@ -3,6 +3,7 @@ package localizae.net.br.controller.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,7 +101,13 @@ public class EstandeFragment extends Fragment {
         voltarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                FragmentManager supportFragmentManager = getActivity().getSupportFragmentManager();
+
+                if(supportFragmentManager.getBackStackEntryCount() > 0){
+                    supportFragmentManager.popBackStack();
+
+                    
+                }
             }
         });
 
