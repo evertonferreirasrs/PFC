@@ -3,9 +3,10 @@ package localizae.net.br.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Estande extends BaseEntity {
+public class Estande extends BaseEntity implements Serializable {
 
     @SerializedName("equipe")
     @Expose
