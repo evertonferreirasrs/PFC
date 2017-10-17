@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="localizae.net.br.controller.Fragments.EstandeFragment">
+    tools:context="localizae.net.br.controller.Fragments.EstandeFragment"
+    android:id="@+id/fragment_estande">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -93,11 +94,20 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Integrantes:"
-                android:id="@+id/fragment_estande_integrantes"
+                android:id="@+id/fragment_estande_titulo_integrantes"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp" />
+
+            <ListView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/fragment_estande_integrantes"></ListView>
 
             <TextView
                 android:layout_width="fill_parent"

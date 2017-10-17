@@ -9,15 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
+import localizae.net.br.Adapter.IntegranteEquipeAdapter;
 import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.CriterioJurado;
 import localizae.net.br.model.Estande;
+import localizae.net.br.model.IntegranteEquipe;
 import localizae.net.br.services.endpoints.StandEndpointInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,8 +34,8 @@ public class EstandeFragment extends Fragment {
     private TextView numeroTextView;
     private TextView areaTematicaTextView;
     private TextView periodoTextView;
-    private TextView integrantesTextView;
     private TextView descricaoTextView;
+    private ListView integrantesListView;
     private Button avaliarButton;
     private Button voltarButton;
     private Estande estande;
@@ -50,7 +53,7 @@ public class EstandeFragment extends Fragment {
         numeroTextView = (TextView) view.findViewById(R.id.fragment_estande_numero);
         areaTematicaTextView = (TextView) view.findViewById(R.id.fragment_estande_areaTematica);
         periodoTextView = (TextView) view.findViewById(R.id.fragment_estande_periodo);
-        integrantesTextView = (TextView) view.findViewById(R.id.fragment_estande_integrantes);
+        integrantesListView = (ListView) view.findViewById(R.id.fragment_estande_integrantes);
         descricaoTextView = (TextView) view.findViewById(R.id.fragment_estande_descricao);
         avaliarButton = (Button) view.findViewById(R.id.fragment_estande_avaliar);
         StandEndpointInterface estandeService = new RetrofitInicializador().getEstandeService();
@@ -96,7 +99,8 @@ public class EstandeFragment extends Fragment {
         voltarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getActivity().getSupportFragmentManager().beginTransaction().
+                        remove(getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_estande)).commit();
             }
         });
 
@@ -108,6 +112,9 @@ public class EstandeFragment extends Fragment {
         areaTematicaTextView.setText(estande.getAreaTematica());
         periodoTextView.setText(estande.getPeriodo().toString());
         descricaoTextView.setText(estande.getDescricao());
+
+        IntegranteEquipeAdapter integranteEquipeAdapter = new IntegranteEquipeAdapter(estande.getEquipe(), getContext());
+        integrantesListView.setAdapter(integranteEquipeAdapter);
     }
 
 }
