@@ -1,12 +1,11 @@
 package localizae.net.br.helper;
 
 import localizae.net.br.services.endpoints.AvaliacaoJuradoInterface;
-
 import localizae.net.br.services.endpoints.AvaliacaoVisitanteEndpointInterface;
 import localizae.net.br.services.endpoints.CriterioJuradoInterface;
-
 import localizae.net.br.services.endpoints.EstandeEndpointInterface;
 
+import localizae.net.br.services.endpoints.UserEndpointInterface;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -35,5 +34,9 @@ public class RetrofitInicializador {
 
     public AvaliacaoVisitanteEndpointInterface getAvaliacaoVisitanteService() {
         return retrofit.create(AvaliacaoVisitanteEndpointInterface.class);
+    }
+
+    public UserEndpointInterface getUsuarioService(){
+        return retrofit.create(UserEndpointInterface.class);
     }
 }

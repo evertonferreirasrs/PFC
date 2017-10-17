@@ -16,6 +16,9 @@ import localizae.net.br.Adapter.AvaliacaoVisitanteAdapter;
 import localizae.net.br.helper.RetrofitInicializador;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.AvaliacaoVisitante;
+
+import localizae.net.br.model.Usuario;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,8 +39,9 @@ public class MinhasAvaliacoesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_minhas_avaliacoes, container, false);
         final ListView avaliacaoVisitanteListView = (ListView) view.findViewById(R.id.fragment_avaliacaoVisitante_listView);
+        final Usuario usuarioLogado = ControladorDadosUsuario.lerDados(getContext());
 
-        Call<List<AvaliacaoVisitante>> avaliacoesVisitanteByUserCall = new RetrofitInicializador().getAvaliacaoVisitanteService().getAvaliacoesVisitanteByUser(21L);
+        Call<List<AvaliacaoVisitante>> avaliacoesVisitanteByUserCall = new RetrofitInicializador().getAvaliacaoVisitanteService().getAvaliacoesVisitanteByUser(usuarioLogado.getId());
 
         avaliacoesVisitanteByUserCall.enqueue(new Callback<List<AvaliacaoVisitante>>() {
             @Override

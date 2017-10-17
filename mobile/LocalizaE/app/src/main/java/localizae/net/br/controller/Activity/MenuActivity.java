@@ -1,6 +1,5 @@
 package localizae.net.br.controller.Activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +19,7 @@ import android.widget.TextView;
 
 import localizae.net.br.controller.Fragments.AlterarSenhaFragment;
 import localizae.net.br.controller.Fragments.AvaliarEstandeFragment;
-import localizae.net.br.controller.Fragments.EnviarFeedbackFragment;
+import localizae.net.br.controller.Fragments.EstandeFragment;
 import localizae.net.br.controller.Fragments.InicioFragment;
 import localizae.net.br.controller.Fragments.MeuEstandeFragment;
 import localizae.net.br.controller.Fragments.MinhasAvaliacoesFragment;
@@ -238,18 +237,28 @@ public class MenuActivity extends AppCompatActivity
         }else if (id == R.id.menu_botao_avaliar_estande) {
             setTitle(" Avaliar Estandes");
 //            getSupportActionBar().setIcon(R.drawable.ic_speaker_notes_black_24dp);
-            AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, avaliarEstandeFragment).commit();
+//            AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
+//            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction().replace(R.id.fragment_id, avaliarEstandeFragment).commit();
+
+            EstandeFragment estandeFragment = new EstandeFragment();
+            Bundle args = new Bundle();
+            args.putSerializable("estandeId", 19L);
+            estandeFragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_id, estandeFragment).addToBackStack(null).commit();
 
 
         // ENVIAR FEEDBACK
         } else if (id == R.id.menu_botao_enviar_feedback) {
             setTitle(" Enviar Feedback");
 //            getSupportActionBar().setIcon(R.drawable.ic_feedback_black_24dp);
-            EnviarFeedbackFragment enviarFeedbackFragment = new EnviarFeedbackFragment();
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, enviarFeedbackFragment).commit();
+//            EnviarFeedbackFragment enviarFeedbackFragment = new EnviarFeedbackFragment();
+//            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction().replace(R.id.fragment_id, enviarFeedbackFragment).commit();
+
+            startActivity(new Intent(MenuActivity.this,FeedbackActivity.class));
+
+
 
 
         // SOBRE
