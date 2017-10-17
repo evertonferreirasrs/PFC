@@ -93,6 +93,11 @@ public class EstandeFragment extends Fragment {
             public void onClick(View view) {
 
                 ComentarQualificarFragment comentarQualificarFragment = new ComentarQualificarFragment();
+
+                Bundle argsAvaliar = new Bundle();
+                argsAvaliar.putSerializable("estande", estande);
+                comentarQualificarFragment.setArguments(argsAvaliar);
+
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_id, comentarQualificarFragment);
                 fragmentTransaction.addToBackStack(null);
