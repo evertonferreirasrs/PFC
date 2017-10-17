@@ -1,6 +1,7 @@
 package localizae.net.br.controller.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -59,9 +60,12 @@ public class EstandeFragment extends Fragment {
         avaliarButton = (Button) view.findViewById(R.id.fragment_estande_avaliar);
         voltarButton = (Button) view.findViewById(R.id.fragment_estande_voltar);
         StandEndpointInterface estandeService = new RetrofitInicializador().getEstandeService();
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Carregando...");
+
+        progressDialog.show();
 
         Bundle args = getArguments();
-
         if(args != null){
             Long estandeId = (Long)args.getSerializable("estandeId");
             if(estandeId != null){
@@ -69,6 +73,8 @@ public class EstandeFragment extends Fragment {
                 estandeCall.enqueue(new Callback<Estande>() {
                     @Override
                     public void onResponse(Call<Estande> call, Response<Estande> response) {
+                        progressDialog.cancel();
+                        progressDialog.dismiss();
                         estande = response.body();
                         getActivity().setTitle(estande.getTitulo());
                         preencherDados(estande);
@@ -80,7 +86,6 @@ public class EstandeFragment extends Fragment {
                     }
                 });
             }
-
         }
 
         avaliarButton.setOnClickListener(new View.OnClickListener() {
@@ -105,8 +110,6 @@ public class EstandeFragment extends Fragment {
 
                 if(supportFragmentManager.getBackStackEntryCount() > 0){
                     supportFragmentManager.popBackStack();
-
-                    
                 }
             }
         });
