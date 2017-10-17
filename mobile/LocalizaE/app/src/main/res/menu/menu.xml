@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <item android:id="@+id/menuSearch"
-        android:title="Logo LocalizaÊ"
-        android:icon="@drawable/logo_splash"
-        app:showAsAction="always"
-        ></item>
+    <!--<item android:id="@+id/menuSearch"-->
+        <!--android:title="Logo LocalizaÊ"-->
+        <!--android:icon="@drawable/logo_splash"-->
+        <!--app:showAsAction="always"-->
+        <!--&gt;</item>-->
 
 
     <!--<item-->
