@@ -119,13 +119,22 @@ public class MapaActivity extends AppCompatActivity {
                     }
 
                     if (estande != null) {
-                        Toast.makeText(MapaActivity.this, estande.getTitulo(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MapaActivity.this, estande.getTitulo(), Toast.LENGTH_SHORT).show();
+                        timer.cancel();
+                        timer.purge();
+
+                        mapaImageView.setVisibility(View.INVISIBLE);
+                        userPositionCircleView.setVisibility(View.INVISIBLE);
+
+                        Bundle args = new Bundle();
+                        args.putSerializable("estandeId", estande.getId());
+
+                        EstandeFragment estandeFragment = new EstandeFragment();
+                        estandeFragment.setArguments(args);
+
+                        getSupportFragmentManager().beginTransaction().replace(R.id.mapa_fragment_id, estandeFragment).addToBackStack(null).commit();
                     } else {
                         Toast.makeText(MapaActivity.this, "X " + x + " Y " + y, Toast.LENGTH_SHORT).show();
-                        EstandeFragment estandeFragment = new EstandeFragment();
-
-                        timer.cancel();
-                        //fragmentManager.beginTransaction().replace(R.id.mapa_fragment_id, estandeFragment).commit();
                     }
                 }
                 return false;
@@ -153,6 +162,13 @@ public class MapaActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapaImageView.setVisibility(View.VISIBLE);
+        startBeaconScan();
     }
 
     @Override

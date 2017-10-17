@@ -18,12 +18,13 @@ import android.widget.Toast;
 import java.util.List;
 
 import localizae.net.br.Adapter.IntegranteEquipeAdapter;
-import localizae.net.br.Retrofit.RetrofitInicializador;
+import localizae.net.br.controller.Activity.MapaActivity;
 import localizae.net.br.controller.R;
+import localizae.net.br.helper.RetrofitInicializador;
 import localizae.net.br.model.CriterioJurado;
 import localizae.net.br.model.Estande;
 import localizae.net.br.model.IntegranteEquipe;
-import localizae.net.br.services.endpoints.StandEndpointInterface;
+import localizae.net.br.services.endpoints.EstandeEndpointInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,16 +60,16 @@ public class EstandeFragment extends Fragment {
         descricaoTextView = (TextView) view.findViewById(R.id.fragment_estande_descricao);
         avaliarButton = (Button) view.findViewById(R.id.fragment_estande_avaliar);
         voltarButton = (Button) view.findViewById(R.id.fragment_estande_voltar);
-        StandEndpointInterface estandeService = new RetrofitInicializador().getEstandeService();
+        EstandeEndpointInterface estandeService = new RetrofitInicializador().getEstandeService();
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Carregando...");
 
         progressDialog.show();
 
         Bundle args = getArguments();
-        if(args != null){
-            Long estandeId = (Long)args.getSerializable("estandeId");
-            if(estandeId != null){
+        if (args != null) {
+            Long estandeId = (Long) args.getSerializable("estandeId");
+            if (estandeId != null) {
                 Call<Estande> estandeCall = estandeService.getEstande(estandeId);
                 estandeCall.enqueue(new Callback<Estande>() {
                     @Override
@@ -99,21 +100,18 @@ public class EstandeFragment extends Fragment {
                 comentarQualificarFragment.setArguments(argsAvaliar);
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_id, comentarQualificarFragment);
+                fragmentTransaction.replace(R.id.mapa_fragment_id, comentarQualificarFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-
             }
         });
-
-
 
         voltarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager supportFragmentManager = getActivity().getSupportFragmentManager();
 
-                if(supportFragmentManager.getBackStackEntryCount() > 0){
+                if (supportFragmentManager.getBackStackEntryCount() > 0) {
                     supportFragmentManager.popBackStack();
                 }
             }

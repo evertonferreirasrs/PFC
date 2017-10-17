@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -144,11 +145,9 @@ public class ComentarQualificarFragment extends Fragment {
         botao_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EstandeFragment estandeFragment = new EstandeFragment();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_id, estandeFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                if(supportFragmentManager.getBackStackEntryCount() > 0){
+                    supportFragmentManager.popBackStack();
+                }
             }
         });
 
@@ -158,11 +157,13 @@ public class ComentarQualificarFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(broadcastReceiver);
+        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getContext());
+        lbm.unregisterReceiver(broadcastReceiver);
     }
 
     private void registerBroadcast() {
-        getActivity().registerReceiver(broadcastReceiver,new IntentFilter(Constants.COMENTAR_QUALIFICAR_FRAGMENT_TAG));
+        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getContext());
+        lbm.registerReceiver(broadcastReceiver, new IntentFilter(Constants.COMENTAR_QUALIFICAR_FRAGMENT_TAG));
     }
 
 }

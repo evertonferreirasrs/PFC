@@ -11,9 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.controller.R;
+import localizae.net.br.helper.RetrofitInicializador;
 import localizae.net.br.model.Usuario;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import localizae.net.br.utils.LerDadosUsuario;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +39,7 @@ public class AlterarSenhaFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_alterar_senha, container, false);
 
-        final Usuario usuarioLogado = LerDadosUsuario.lerDados(getContext());
+        final Usuario usuarioLogado = ControladorDadosUsuario.lerDados(getContext());
 
 
         TextView campoNome = (TextView) view.findViewById(R.id.fragment_alterar_senha_vNome);
