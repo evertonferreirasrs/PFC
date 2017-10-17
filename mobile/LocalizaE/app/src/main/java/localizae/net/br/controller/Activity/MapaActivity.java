@@ -110,7 +110,6 @@ public class MapaActivity extends AppCompatActivity {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     int x = (int) motionEvent.getAxisValue(MotionEvent.AXIS_X);
                     int y = (int) motionEvent.getAxisValue(MotionEvent.AXIS_Y);
-                    //Toast.makeText(MapaActivity.this, "X " + x + " Y " + y, Toast.LENGTH_SHORT).show();
                     Estande estande = null;
                     for (Estande e : estandeList) {
                         if (e.getNumero() == mapColisionMatrix[x][y]) {
@@ -124,6 +123,8 @@ public class MapaActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(MapaActivity.this, "X " + x + " Y " + y, Toast.LENGTH_SHORT).show();
                         EstandeFragment estandeFragment = new EstandeFragment();
+
+                        timer.cancel();
                         //fragmentManager.beginTransaction().replace(R.id.mapa_fragment_id, estandeFragment).commit();
                     }
                 }
@@ -135,6 +136,8 @@ public class MapaActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        mapColisionMatrix = null;
 
         //Unregister broadcast receiver
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
@@ -197,9 +200,11 @@ public class MapaActivity extends AppCompatActivity {
                                 // Y - 1
                                 double[] position = LocationService.detectUserPosition(positions, distances);
 
+                                RelativeLayout.LayoutParams mapParams = (RelativeLayout.LayoutParams) mapaImageView.getLayoutParams();
+
                                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(userPositionCircleView.getWidth(), userPositionCircleView.getHeight());
-                                params.leftMargin = (int) (position[0] + 0.5);
-                                params.topMargin = (int) (position[1] + 0.5);
+                                params.leftMargin = (int) ((mapParams.leftMargin + position[0] + 0.5) / 6.95);
+                                params.topMargin = (int) ((mapParams.topMargin + position[1] + 0.5) / 23.09);
                                 userPositionCircleView.setLayoutParams(params);
 
                                 if(userPositionCircleView.getVisibility() == View.INVISIBLE) {
@@ -234,10 +239,10 @@ public class MapaActivity extends AppCompatActivity {
 
         for (Estande e : estandeList) {
             int minX = e.getPosicaoX();
-            int maxX = e.getPosicaoX() + 50;
+            int maxX = e.getPosicaoX() + 80;
 
             int minY = e.getPosicaoY();
-            int maxY = e.getPosicaoY() + 50;
+            int maxY = e.getPosicaoY() + 110;
 
             for (int i = minX; i < maxX; i++) {
                 for (int j = minY; j < maxY; j++) {
