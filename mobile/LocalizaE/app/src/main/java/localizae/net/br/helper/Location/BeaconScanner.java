@@ -80,15 +80,14 @@ public class BeaconScanner {
 
             @Override
             public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
-                Log.d("BATATA", "device: " + device.getName() + "  mac: " + device.getAddress()
-                        + "  rssi: " + rssi + "  scanRecord: " + Arrays.toString(scanRecord));
                 // Based on  iBeacon standard
                 // 0  - 8  9 bytes  - iBeacon prefix
                 // 9  - 24 16 bytes - Proximity UUID
                 // 25 - 26 2 bytes  - Major
                 // 27 - 28 2 bytes  - Minor
                 // 29      1 byte   - TxPower ?????
-                Integer txPower = new Byte(scanRecord[31]).intValue();
+                //Integer txPower = new Byte(scanRecord[29]).intValue();
+                Integer txPower = -59;
                 for (Beacon b : beaconList) {
                     if (b.getMAC().equals(device.getAddress())) {
                         b.setRSSI(rssi);
