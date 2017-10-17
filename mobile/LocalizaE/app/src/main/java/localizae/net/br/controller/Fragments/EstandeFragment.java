@@ -17,8 +17,13 @@ import localizae.net.br.controller.R;
  */
 public class EstandeFragment extends Fragment {
 
-    private TextView botao_comentar;
-    private Button botao_voltar;
+    private TextView numeroTextView;
+    private TextView areaTematicaTextView;
+    private TextView periodoTextView;
+    private TextView integrantesTextView;
+    private TextView descricaoTextView;
+    private Button avaliarButton;
+    private Button voltarButton;
 
 
     public EstandeFragment() {
@@ -27,14 +32,19 @@ public class EstandeFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_estande, container, false);
 
-        botao_comentar = (TextView) view.findViewById(R.id.comentar_id);
+        numeroTextView = (TextView) view.findViewById(R.id.fragment_estande_numero);
+        areaTematicaTextView = (TextView) view.findViewById(R.id.fragment_estande_areaTematica);
+        periodoTextView = (TextView) view.findViewById(R.id.fragment_estande_periodo);
+        integrantesTextView = (TextView) view.findViewById(R.id.fragment_estande_integrantes);
+        descricaoTextView = (TextView) view.findViewById(R.id.fragment_estande_descricao);
 
-        botao_comentar.setOnClickListener(new View.OnClickListener() {
+
+        avaliarButton = (Button) view.findViewById(R.id.comentar_id);
+
+        avaliarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -47,14 +57,12 @@ public class EstandeFragment extends Fragment {
             }
         });
 
-        botao_voltar = (Button) view.findViewById(R.id.botao_voltar_id);
+        voltarButton = (Button) view.findViewById(R.id.botao_voltar_id);
 
-        botao_voltar.setOnClickListener(new View.OnClickListener() {
+        voltarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
+                
             }
         });
 
