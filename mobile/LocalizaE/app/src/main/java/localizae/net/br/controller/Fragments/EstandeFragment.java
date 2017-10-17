@@ -56,6 +56,7 @@ public class EstandeFragment extends Fragment {
         integrantesListView = (ListView) view.findViewById(R.id.fragment_estande_integrantes);
         descricaoTextView = (TextView) view.findViewById(R.id.fragment_estande_descricao);
         avaliarButton = (Button) view.findViewById(R.id.fragment_estande_avaliar);
+        voltarButton = (Button) view.findViewById(R.id.fragment_estande_voltar);
         StandEndpointInterface estandeService = new RetrofitInicializador().getEstandeService();
 
         Bundle args = getArguments();
@@ -94,13 +95,12 @@ public class EstandeFragment extends Fragment {
             }
         });
 
-        voltarButton = (Button) view.findViewById(R.id.botao_voltar_id);
+
 
         voltarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().
-                        remove(getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_estande)).commit();
+                
             }
         });
 
