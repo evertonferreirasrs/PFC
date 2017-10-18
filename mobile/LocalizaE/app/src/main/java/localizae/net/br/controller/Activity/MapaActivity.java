@@ -206,32 +206,41 @@ public class MapaActivity extends AppCompatActivity {
                                 Toast.makeText(context, context.getString(R.string.impossible_location_estimation), Toast.LENGTH_LONG).show();
                             } else {
                                 beaconList = new ArrayList<Beacon>(returnedBeaconList);
-                                //Collections.copy(beaconList, returnedBeaconList);
-                                double[][] positions = new double[returnedBeaconList.size()][2];
-                                double[] distances = new double[returnedBeaconList.size()];
-                                int i = 0;
                                 for (Beacon b : returnedBeaconList) {
-                                    positions[i][0] = b.getxCoordinate();
-                                    positions[i][1] = b.getyCoordinate();
-                                    distances[i] = LocationService.getDistance(b.getRSSI(), b.getTxPower());
-                                    Log.d("BATATA", "MAC:" + b.getMAC() + " RSSI: " + b.getRSSI() + " TxPower: " + b.getTxPower() + "SCAN RECORD" + Arrays.toString(b.getScanRecord()));
-                                    i++;
+                                    if (b.getRSSI() == 0) {
+                                        returnedBeaconList.remove(b);
+                                    }
                                 }
-                                // X - 0
-                                // Y - 1
-                                double[] position = LocationService.detectUserPosition(positions, distances);
-                                Log.d("BATATA", "positions: " + Arrays.toString(positions));
-                                Log.d("BATATA", "distances: " + Arrays.toString(distances));
-                                Log.d("BATATA", "user coordniate: " + Arrays.toString(position));
-                                RelativeLayout.LayoutParams mapParams = (RelativeLayout.LayoutParams) mapaImageView.getLayoutParams();
+                                if (returnedBeaconList.size() < 3) {
+                                    Toast.makeText(context, context.getString(R.string.impossible_location_estimation), Toast.LENGTH_LONG).show();
+                                } else {
+                                    //Collections.copy(beaconList, returnedBeaconList);
+                                    double[][] positions = new double[returnedBeaconList.size()][2];
+                                    double[] distances = new double[returnedBeaconList.size()];
+                                    int i = 0;
+                                    for (Beacon b : returnedBeaconList) {
+                                        positions[i][0] = b.getxCoordinate();
+                                        positions[i][1] = b.getyCoordinate();
+                                        distances[i] = LocationService.getDistance(b.getRSSI(), b.getTxPower());
+                                        Log.d("BATATA", "MAC:" + b.getMAC() + " RSSI: " + b.getRSSI() + " TxPower: " + b.getTxPower() + "SCAN RECORD" + Arrays.toString(b.getScanRecord()));
+                                        i++;
+                                    }
+                                    // X - 0
+                                    // Y - 1
+                                    double[] position = LocationService.detectUserPosition(positions, distances);
+                                    Log.d("BATATA", "positions: " + Arrays.toString(positions));
+                                    Log.d("BATATA", "distances: " + Arrays.toString(distances));
+                                    Log.d("BATATA", "user coordniate: " + Arrays.toString(position));
+                                    RelativeLayout.LayoutParams mapParams = (RelativeLayout.LayoutParams) mapaImageView.getLayoutParams();
 
-                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(userPositionCircleView.getWidth(), userPositionCircleView.getHeight());
-                                params.leftMargin = (int) ((mapParams.leftMargin + position[0] + 0.5));
-                                params.topMargin = (int) ((mapParams.topMargin + position[1] + 0.5));
-                                userPositionCircleView.setLayoutParams(params);
+                                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(userPositionCircleView.getWidth(), userPositionCircleView.getHeight());
+                                    params.leftMargin = (int) ((mapParams.leftMargin + position[0] + 0.5));
+                                    params.topMargin = (int) ((mapParams.topMargin + position[1] + 0.5));
+                                    userPositionCircleView.setLayoutParams(params);
 
-                                if (userPositionCircleView.getVisibility() == View.INVISIBLE) {
-                                    userPositionCircleView.setVisibility(View.VISIBLE);
+                                    if (userPositionCircleView.getVisibility() == View.INVISIBLE) {
+                                        userPositionCircleView.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             }
                         }
