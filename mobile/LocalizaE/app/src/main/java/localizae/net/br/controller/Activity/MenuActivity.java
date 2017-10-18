@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import localizae.net.br.controller.Fragments.AlterarSenhaFragment;
 import localizae.net.br.controller.Fragments.AvaliarEstandeFragment;
+import localizae.net.br.controller.Fragments.EstandeFragment;
 import localizae.net.br.controller.Fragments.InicioFragment;
 import localizae.net.br.controller.Fragments.MeuEstandeFragment;
 import localizae.net.br.controller.Fragments.MinhasAvaliacoesFragment;
@@ -27,6 +28,7 @@ import localizae.net.br.controller.Fragments.QualificacaoComentariosFragment;
 import localizae.net.br.controller.Fragments.SobreFragment;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Usuario;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import localizae.net.br.utils.LerDadosUsuario;
 import localizae.net.br.utils.VerificadorUsuario;
 
@@ -56,7 +58,7 @@ public class MenuActivity extends AppCompatActivity
 
 
         // NOME E EMAIL do usuário logado ==========================================================
-        Usuario usuarioLogado = LerDadosUsuario.lerDados(this);
+        Usuario usuarioLogado = ControladorDadosUsuario.lerDados(this);
         View header = navigationView.getHeaderView(0);
         TextView nome = (TextView)header.findViewById(R.id.textView_nome);
         TextView email = (TextView)header.findViewById(R.id.textView_email);
@@ -234,10 +236,16 @@ public class MenuActivity extends AppCompatActivity
         // AVALIAR ESTANDES
         }else if (id == R.id.menu_botao_avaliar_estande) {
             setTitle(" Avaliar Estandes");
-//            getSupportActionBar().setIcon(R.drawable.ic_speaker_notes_black_24dp);
+            getSupportActionBar().setIcon(R.drawable.ic_speaker_notes_black_24dp);
             AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_id, avaliarEstandeFragment).commit();
+
+//            EstandeFragment estandeFragment = new EstandeFragment();
+//            Bundle args = new Bundle();
+//            args.putSerializable("estandeId", 19L);
+//            estandeFragment.setArguments(args);
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_id, estandeFragment).addToBackStack(null).commit();
 
 
         // ENVIAR FEEDBACK

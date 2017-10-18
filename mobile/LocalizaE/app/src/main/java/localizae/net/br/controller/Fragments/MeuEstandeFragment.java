@@ -11,10 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import localizae.net.br.Adapter.IntegranteEquipeAdapter;
-import localizae.net.br.Retrofit.RetrofitInicializador;
+import localizae.net.br.helper.RetrofitInicializador;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Estande;
-import localizae.net.br.model.IntegranteEquipe;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

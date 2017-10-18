@@ -16,14 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Usuario;
 import localizae.net.br.services.impl.UserService;
-import localizae.net.br.utils.ArmazenadorDadosUsuario;
 import localizae.net.br.utils.Constants;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import localizae.net.br.utils.Cryptographer;
 import localizae.net.br.utils.ResponseCodeValidator;
 
@@ -46,13 +43,9 @@ public class LoginActivity extends AppCompatActivity {
                 switch (responseCode) {
                     case 200:
                         Toast.makeText(context, getString(R.string.successful_login), Toast.LENGTH_LONG).show();
-
                         Usuario usuario = (Usuario) intent.getSerializableExtra(Constants.DATA_KEY);
-
-                        ArmazenadorDadosUsuario armazenadorDadosUsuario = new ArmazenadorDadosUsuario();
-
+                        ControladorDadosUsuario armazenadorDadosUsuario = new ControladorDadosUsuario();
                         armazenadorDadosUsuario.aramazenarDados(usuario,context);
-
                         startActivity(new Intent(LoginActivity.this,MenuActivity.class));
                         break;
                     default:
@@ -89,13 +82,11 @@ public class LoginActivity extends AppCompatActivity {
                 if(email.isEmpty() || senha.isEmpty()){
                     Toast.makeText(context, getString(R.string.fill_entries), Toast.LENGTH_LONG).show();
                 }else {
-
                     // LOADER
                     progressDialog = new ProgressDialog(LoginActivity.this);
                     //progressDialog.setTitle("Carregando");
                     progressDialog.setMessage("Carregando... por favor aguarde.");
                     progressDialog.show();
-
 
                     registerBroadcast();
 
@@ -103,9 +94,8 @@ public class LoginActivity extends AppCompatActivity {
                     Usuario usuario = new Usuario(email,hash);
 
                     UserService userService = new UserService();
-                   userService.login(usuario,context);
+                    userService.login(usuario,context);
                 }
-
             }
         });
 

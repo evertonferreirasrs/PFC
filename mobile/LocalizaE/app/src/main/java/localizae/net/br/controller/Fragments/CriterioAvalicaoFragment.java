@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,17 +19,16 @@ import java.util.List;
 
 import localizae.net.br.controller.R;
 import localizae.net.br.model.AvaliacaoJurado;
+import localizae.net.br.model.CriterioAvaliacao;
 import localizae.net.br.model.CriterioJurado;
-import localizae.net.br.Retrofit.RetrofitInicializador;
+import localizae.net.br.helper.RetrofitInicializador;
+import localizae.net.br.model.Estande;
 import localizae.net.br.services.endpoints.AvaliacaoJuradoInterface;
-import localizae.net.br.utils.LerDadosUsuario;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class CriterioAvalicaoFragment extends Fragment {
 
     private Button botao_voltar;
@@ -51,7 +49,7 @@ public class CriterioAvalicaoFragment extends Fragment {
         final SeekBar seekBar = (SeekBar) fragment.findViewById(R.id.criterio_avaliacao_fragment_seekbar);
         final TextView notaValueTextView = (TextView) fragment.findViewById(R.id.criterio_avaliacao_fragment_nota_textView);
         final TextView opiniaoTextView = (TextView) fragment.findViewById(R.id.criterio_avaliacao_fragment_opiniao_textView);
-        final Button botaoConfirmar = (Button)fragment.findViewById(R.id.criterio_avaliacao_fragment_button_confirm);
+        final Button botaoConfirmar = (Button) fragment.findViewById(R.id.criterio_avaliacao_fragment_button_confirm);
         final AvaliacaoJuradoInterface avaliacaoJuradoService = new RetrofitInicializador().getAvaliacaoJuradoService();
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -72,25 +70,27 @@ public class CriterioAvalicaoFragment extends Fragment {
         });
 
         Bundle args = getArguments();
-
-        if(args != null){
-            List<CriterioJurado> criterioList = (List<CriterioJurado>)args.getSerializable("criterioList");
-            getActivity().setTitle(criterioList.get(0).getEstande().getTitulo());
+        Estande estandeSelecionado = null;
+        if (args != null) {
+            List<CriterioJurado> criterioList = (List<CriterioJurado>) args.getSerializable("criterioList");
+            estandeSelecionado = criterioList.get(0).getEstande();
+            getActivity().setTitle(estandeSelecionado.getTitulo());
 
             ArrayAdapter<CriterioJurado> adapterCriterioSpinner = new ArrayAdapter<CriterioJurado>(getContext(), android.R.layout.simple_list_item_1, criterioList);
             spinnerCriterio.setAdapter(adapterCriterioSpinner);
         }
 
+        final Estande finalEstandeSelecionado = estandeSelecionado;
         spinnerCriterio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final AdapterView<?> adapterView, View view, final int position, long l) {
                 notaValueTextView.setText("00");
-                opiniaoTextView.setText(LerDadosUsuario.lerDados(getContext()).getNome());
+                opiniaoTextView.setText("");
                 botaoConfirmar.setText("Salvar");
                 botaoConfirmar.setEnabled(true);
                 seekBar.setProgress(0);
 
-                final CriterioJurado criterioSelecionado = (CriterioJurado)adapterView.getItemAtPosition(position);
+                final CriterioJurado criterioSelecionado = (CriterioJurado) adapterView.getItemAtPosition(position);
 
                 //Busca se existe avaliação para este criterio e seu status.
 
@@ -99,17 +99,18 @@ public class CriterioAvalicaoFragment extends Fragment {
                 buscaDeAvaliacaoCall.enqueue(new Callback() {
                     @Override
                     public void onResponse(Call call, Response response) {
-                        List<AvaliacaoJurado> avaliacaoJuradoList =(List<AvaliacaoJurado>) response.body();
+                        List<AvaliacaoJurado> avaliacaoJuradoList = (List<AvaliacaoJurado>) response.body();
                         AvaliacaoJurado avaliacaoBuscadaNoBanco = null;
 
-                        if(!avaliacaoJuradoList.isEmpty()){
+                        if (!avaliacaoJuradoList.isEmpty()) {
                             avaliacaoBuscadaNoBanco = avaliacaoJuradoList.get(0);
                         }
 
                         final AvaliacaoJurado finalAvaliacaoBuscadaNoBanco = avaliacaoBuscadaNoBanco;
 
-                        if(avaliacaoBuscadaNoBanco != null){
-                            if(avaliacaoBuscadaNoBanco.getStatus().equals("fechada")){
+                        if (avaliacaoBuscadaNoBanco != null) {
+                            Toast.makeText(getContext(), avaliacaoBuscadaNoBanco.getStatus(), Toast.LENGTH_SHORT).show();
+                            if (avaliacaoBuscadaNoBanco.getStatus().equals("fechada")) {
                                 botaoConfirmar.setEnabled(false);
                                 botaoConfirmar.setText("Avaliação Fechada");
                             }
@@ -142,15 +143,21 @@ public class CriterioAvalicaoFragment extends Fragment {
                                     });
                                 }
                             });
-                        }else{
-                            finalAvaliacaoBuscadaNoBanco.setOpiniao(opiniaoTextView.getText().toString());
-                            finalAvaliacaoBuscadaNoBanco.setNota(new Long(seekBar.getProgress()));
-                            finalAvaliacaoBuscadaNoBanco.setStatus("fechada");
+                        } else {
+
 
                             botaoConfirmar.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Call<AvaliacaoJurado> atualizarAvaliacaoCall = avaliacaoJuradoService.post(finalAvaliacaoBuscadaNoBanco);
+                                    AvaliacaoJurado avaliacaoParaSalvar = new AvaliacaoJurado();
+                                    avaliacaoParaSalvar.setOpiniao(opiniaoTextView.getText().toString());
+                                    avaliacaoParaSalvar.setNota(new Long(seekBar.getProgress()));
+                                    avaliacaoParaSalvar.setStatus("fechada");
+                                    avaliacaoParaSalvar.setUsuario(ControladorDadosUsuario.lerDados(getContext()));
+                                    avaliacaoParaSalvar.setEstande(finalEstandeSelecionado);
+                                    avaliacaoParaSalvar.setCriterio(((CriterioJurado) spinnerCriterio.getSelectedItem()).getCriterioAvaliacao());
+
+                                    Call<AvaliacaoJurado> atualizarAvaliacaoCall = avaliacaoJuradoService.post(avaliacaoParaSalvar);
                                     atualizarAvaliacaoCall.enqueue(new Callback<AvaliacaoJurado>() {
                                         @Override
                                         public void onResponse(Call<AvaliacaoJurado> call, Response<AvaliacaoJurado> response) {
@@ -193,17 +200,18 @@ public class CriterioAvalicaoFragment extends Fragment {
                 buscaDeAvaliacaoCall.enqueue(new Callback() {
                     @Override
                     public void onResponse(Call call, Response response) {
-                        List<AvaliacaoJurado> avaliacaoJuradoList =(List<AvaliacaoJurado>) response.body();
+                        List<AvaliacaoJurado> avaliacaoJuradoList = (List<AvaliacaoJurado>) response.body();
                         AvaliacaoJurado avaliacaoBuscadaNoBanco = null;
 
-                        if(!avaliacaoJuradoList.isEmpty()){
+                        if (!avaliacaoJuradoList.isEmpty()) {
                             avaliacaoBuscadaNoBanco = avaliacaoJuradoList.get(0);
                         }
                         //Se existir salvar atualizando
-                        if(avaliacaoBuscadaNoBanco != null){
-                            if(!avaliacaoBuscadaNoBanco.getStatus().equals("fechada")){
+                        if (avaliacaoBuscadaNoBanco != null) {
+                            if (!avaliacaoBuscadaNoBanco.getStatus().equals("fechada")) {
                                 avaliacaoBuscadaNoBanco.setNota(new Long(seekBar.getProgress()));
                                 avaliacaoBuscadaNoBanco.setOpiniao(opiniaoTextView.getText().toString());
+                                avaliacaoBuscadaNoBanco.setStatus("aberta");
                                 Call<AvaliacaoJurado> putCall = avaliacaoJuradoService.put(avaliacaoBuscadaNoBanco);
                                 putCall.enqueue(new Callback<AvaliacaoJurado>() {
                                     @Override
@@ -216,15 +224,22 @@ public class CriterioAvalicaoFragment extends Fragment {
 
                                     }
                                 });
-                            }else{
+                            } else {
                                 finishFragment();
                             }
 
                         }
                         //Senão salvar criando
-                        else{
+                        else {
+                            avaliacaoBuscadaNoBanco = new AvaliacaoJurado();
+//                            Toast.makeText(getContext(), String.valueOf(seekBar.getProgress()), Toast.LENGTH_SHORT).show();
                             avaliacaoBuscadaNoBanco.setNota(new Long(seekBar.getProgress()));
                             avaliacaoBuscadaNoBanco.setOpiniao(opiniaoTextView.getText().toString());
+                            avaliacaoBuscadaNoBanco.setStatus("aberta");
+                            avaliacaoBuscadaNoBanco.setUsuario(ControladorDadosUsuario.lerDados(getContext()));
+                            avaliacaoBuscadaNoBanco.setEstande(finalEstandeSelecionado);
+                            avaliacaoBuscadaNoBanco.setCriterio(((CriterioJurado) spinnerCriterio.getSelectedItem()).getCriterioAvaliacao());
+
                             Call<AvaliacaoJurado> postCall = avaliacaoJuradoService.post(avaliacaoBuscadaNoBanco);
                             postCall.enqueue(new Callback<AvaliacaoJurado>() {
                                 @Override
@@ -245,10 +260,6 @@ public class CriterioAvalicaoFragment extends Fragment {
 
                     }
                 });
-
-
-
-
             }
         });
 

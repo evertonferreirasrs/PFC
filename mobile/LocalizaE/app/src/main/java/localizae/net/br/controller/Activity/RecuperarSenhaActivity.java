@@ -25,8 +25,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.controller.R;
+import localizae.net.br.helper.RetrofitInicializador;
 import localizae.net.br.model.Usuario;
 import retrofit2.Call;
 import retrofit2.Callback;

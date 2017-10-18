@@ -28,7 +28,11 @@
     <string name="password_mismatch">Senhas não conferem</string>
     <string name="fill_entries">Preencha os campos</string>
     <string name="successful_login">Login realizado</string>
-    <string name="successful_comment">Comentário realizado</string>
+
+    <string name="impossible_location_estimation">Não foi possível estimar sua posição</string>
+    <string name="loading_booths">Carregando estandes</string>
+
+    <string name="successful_comment">Comentario realizado</string>
 
     <!-- Informações do Usuario -->
     <string name="chave_usuario">Chave do Usuário</string>
