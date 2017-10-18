@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
@@ -122,6 +123,7 @@ public class MapaActivity extends AppCompatActivity {
                         //Toast.makeText(MapaActivity.this, estande.getTitulo(), Toast.LENGTH_SHORT).show();
                         timer.cancel();
                         timer.purge();
+                        timer = null;
 
                         mapaImageView.setVisibility(View.INVISIBLE);
                         userPositionCircleView.setVisibility(View.INVISIBLE);
@@ -132,7 +134,16 @@ public class MapaActivity extends AppCompatActivity {
                         EstandeFragment estandeFragment = new EstandeFragment();
                         estandeFragment.setArguments(args);
 
-                        getSupportFragmentManager().beginTransaction().replace(R.id.mapa_fragment_id, estandeFragment).addToBackStack(null).commit();
+                        FragmentManager.OnBackStackChangedListener onBackStackChangedListener = new FragmentManager.OnBackStackChangedListener() {
+                            @Override
+                            public void onBackStackChanged() {
+                                restoreActivity();
+                            }
+                        };
+
+                        FragmentManager supportFragmentManager = getSupportFragmentManager();
+                        supportFragmentManager.addOnBackStackChangedListener(onBackStackChangedListener);
+                        supportFragmentManager.beginTransaction().replace(R.id.mapa_fragment_id, estandeFragment).addToBackStack(null).commit();
                     } else {
                         Toast.makeText(MapaActivity.this, "X " + x + " Y " + y, Toast.LENGTH_SHORT).show();
                     }
@@ -162,13 +173,6 @@ public class MapaActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mapaImageView.setVisibility(View.VISIBLE);
-        startBeaconScan();
     }
 
     @Override
@@ -269,5 +273,10 @@ public class MapaActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void restoreActivity() {
+        mapaImageView.setVisibility(View.VISIBLE);
+        startBeaconScan();
     }
 }
