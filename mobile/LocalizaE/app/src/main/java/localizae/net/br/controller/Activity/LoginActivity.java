@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button botao_entrar;
     private AlertDialog alerta;
     private Context context;
+    private ProgressDialog progressDialog;
 
     public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
             if (intent.getAction().equals(Constants.LOGIN_ACTIVITY_TAG)) {
                 int responseCode = intent.getIntExtra(Constants.RESPONSE_CODE_KEY, 500);
                 Log.d(Constants.LOGIN_ACTIVITY_TAG, "Recebeu resposta " + responseCode);
+                progressDialog.dismiss();
                 switch (responseCode) {
                     case 200:
                         Toast.makeText(context, getString(R.string.successful_login), Toast.LENGTH_LONG).show();
@@ -81,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(context, getString(R.string.fill_entries), Toast.LENGTH_LONG).show();
                 }else {
                     // LOADER
-                    ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+                    progressDialog = new ProgressDialog(LoginActivity.this);
                     //progressDialog.setTitle("Carregando");
                     progressDialog.setMessage("Carregando... por favor aguarde.");
                     progressDialog.show();
