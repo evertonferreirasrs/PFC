@@ -12,8 +12,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import localizae.net.br.Adapter.AvaliacaoEstandeAdapter;
-import localizae.net.br.Adapter.AvaliacaoVisitanteAdapter;
-import localizae.net.br.Retrofit.RetrofitInicializador;
+import localizae.net.br.helper.RetrofitInicializador;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.AvaliacaoVisitante;
 import retrofit2.Call;

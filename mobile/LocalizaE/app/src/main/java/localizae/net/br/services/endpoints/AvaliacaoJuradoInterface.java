@@ -25,5 +25,5 @@ public interface AvaliacaoJuradoInterface {
     Call<AvaliacaoJurado> put(@Body AvaliacaoJurado avaliacao);
 
     @POST("avaliacaoJurado")
-    Call<AvaliacaoJurado> post(AvaliacaoJurado avaliacao);
+    Call<AvaliacaoJurado> post(@Body AvaliacaoJurado avaliacao);
 }

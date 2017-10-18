@@ -14,7 +14,7 @@ public class VerificadorUsuario {
     private static VerificadorUsuario instances;
 
     private VerificadorUsuario(Context context){
-        this.usuario = LerDadosUsuario.lerDados(context);
+        this.usuario = ControladorDadosUsuario.lerDados(context);
     }
 
     public static VerificadorUsuario getInstances(Context context){

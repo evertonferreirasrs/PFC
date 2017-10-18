@@ -2,19 +2,34 @@ package localizae.net.br.utils;
 
 public class Constants {
 
+    // Timers
+    public static final long BEACON_SCAN_PERIOD = 6000;
+
+    // Permission request code
+    public static final int REQUEST_PERMISSION_CODE = 1234;
+
     // Failure code
-    public  static final int RETROFIT_FAILURE = -1000;
+    public static final int RETROFIT_FAILURE = -1000;
 
     // TAGS
     public static final String USER_SERVICE_TAG = "USER_SERVICE";
+    public static final String BEACON_SERVICE_TAG = "BEACON_SERVICE";
+    public static final String BOOTH_SERVICE_TAG = "BOOTH_SERVICE";
+
+    public static final String BEACON_SCANNER_TAG = "BEACON_SCANNER";
+    public static final String BEACON_SCAN_ACTIVITY_TAG = "BEACON_SCAN_ACT";
 
     public static final String CREATE_USER_ACTIVITY_TAG = "CADASTRAR_USUARIO_ACT";
+    public static final String MAP_ACTIVITY_TAG = "MAP_ACT";
     public static final String LOGIN_ACTIVITY_TAG = "LOGIN_ACT";
     public static final String COMENTS_TAG = "COMENTS_ACT";
     public static final String COMENTAR_QUALIFICAR_FRAGMENT_TAG = "COMENTAR_QUALIFICAR_FRAGMENT_TAG";
     public static final String MY_AVALIATIONS_FRAGMENT_TAG = "MY_AVALIATIONS_FRAG";
 
+    // Timeout
+    public static final int BLE_SCAN_TIMEOUT = 5000;
 
+    // User Kind/
     public static final Long USER_VISITANT = 2L;
 
     // Intent keys
@@ -31,16 +46,12 @@ public class Constants {
     public static final String RESPONSE_VALUE_500  = "Erro no servidor";
     public static final String RESPONSE_UNKNOWN  = "Erro desconhecido";
 
-
     public static final String RESPONSE_VALUE_RETROFIT_FAILURE = "Algo deu errado";
 
-    // Tipo Uusuário
+    // Tipo Usuário
     public static final Long TIPO_USUARIO_ADMINISTRADOR = 1L;
     public static final Long TIPO_USUARIO_VISITANTE = 2L;
     public static final Long TIPO_USUARIO_EXPOSITOR = 3L;
     public static final Long TIPO_USUARIO_JURADO = 4L;
-
-
-
 
 }

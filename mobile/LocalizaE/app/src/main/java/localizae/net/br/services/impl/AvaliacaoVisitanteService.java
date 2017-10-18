@@ -10,23 +10,29 @@ import java.util.List;
 
 import localizae.net.br.helper.WebRequest;
 import localizae.net.br.model.AvaliacaoVisitante;
-import localizae.net.br.services.endpoints.BoothEndpointInterface;
+import localizae.net.br.services.endpoints.AvaliacaoVisitanteEndpointInterface;
+import localizae.net.br.services.endpoints.EstandeEndpointInterface;
 import localizae.net.br.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BoothService {
-    private BoothEndpointInterface boothEndpointInterface = WebRequest.getRetrofitInstance().create(BoothEndpointInterface.class);
+/**
+ * Created by Lyan on 14/10/2017.
+ */
 
-    public void avaliacao(AvaliacaoVisitante avaliacaoVisitante, final Context context){
-        Call<AvaliacaoVisitante> call = boothEndpointInterface.avaliacao(avaliacaoVisitante);
+public class AvaliacaoVisitanteService {
+
+    private AvaliacaoVisitanteEndpointInterface avaliacaoServiceEndpoint = WebRequest.getRetrofitInstance().create(AvaliacaoVisitanteEndpointInterface.class);
+
+    public void avaliacao(AvaliacaoVisitante avaliacaoVisitante, final Context context) {
+        Call<AvaliacaoVisitante> call = avaliacaoServiceEndpoint.avaliacao(avaliacaoVisitante);
         call.enqueue(new Callback<AvaliacaoVisitante>() {
             @Override
             public void onResponse(Call<AvaliacaoVisitante> call, Response<AvaliacaoVisitante> response) {
                 Log.d(Constants.USER_SERVICE_TAG, response.toString());
 
-                Intent intent = new Intent(Constants.COMENTS_TAG    );
+                Intent intent = new Intent(Constants.COMENTS_TAG);
                 intent.putExtra(Constants.RESPONSE_CODE_KEY, response.code());
 
                 LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
@@ -46,8 +52,8 @@ public class BoothService {
         });
     }
 
-    public void getAvaliacoesUsuario(Long userId, final Context context){
-        Call<List<AvaliacaoVisitante>> call = boothEndpointInterface.getAvaliacoesVisitanteByUser(userId);
+    public void getAvaliacoesUsuario(Long userId, final Context context) {
+        Call<List<AvaliacaoVisitante>> call = avaliacaoServiceEndpoint.getAvaliacoesVisitanteByUser(userId);
         call.enqueue(new Callback<List<AvaliacaoVisitante>>() {
             @Override
             public void onResponse(Call<List<AvaliacaoVisitante>> call, Response<List<AvaliacaoVisitante>> response) {
@@ -73,4 +79,5 @@ public class BoothService {
             }
         });
     }
+
 }

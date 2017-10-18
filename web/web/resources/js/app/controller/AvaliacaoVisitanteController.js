@@ -36,6 +36,7 @@ class AvaliacaoVisitanteController{
                 text: "A avaliação excluída não poderá ser recuperada!",
                 type: "warning",
                 showCancelButton: true,
+                cancelButtonText: 'Cancelar',
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Sim, excluir!",
                 closeOnConfirm: false

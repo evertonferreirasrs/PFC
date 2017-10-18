@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,30 +12,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import localizae.net.br.controller.Activity.LoginActivity;
 import localizae.net.br.controller.R;
-import localizae.net.br.dao.EstandeDAO;
-import localizae.net.br.model.CriterioAvaliacao;
 import localizae.net.br.model.CriterioJurado;
-import localizae.net.br.model.Estande;
-import localizae.net.br.model.TipoUsuario;
 import localizae.net.br.model.Usuario;
-import localizae.net.br.Retrofit.RetrofitInicializador;
-import localizae.net.br.utils.Cryptographer;
-import localizae.net.br.utils.LerDadosUsuario;
+import localizae.net.br.helper.RetrofitInicializador;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,7 +50,7 @@ public class AvaliarEstandeFragment extends Fragment {
         getActivity().setTitle("Avaliar Estandes");
         View view = inflater.inflate(R.layout.fragment_avaliar_estande, container, false);
 
-        final Usuario usuarioLogado = LerDadosUsuario.lerDados(getContext());
+        final Usuario usuarioLogado = ControladorDadosUsuario.lerDados(getContext());
 
         final ListView listaEstandes = (ListView) view.findViewById(R.id.fragment_avaliar_estande_listaEstandes);
 
