@@ -2,8 +2,10 @@ package localizae.net.br.controller.Fragments;
 
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -48,10 +50,10 @@ public class EstandeFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_estande, container, false);
+        view.setBackgroundColor(Color.WHITE);
 
         numeroTextView = (TextView) view.findViewById(R.id.fragment_estande_numero);
         areaTematicaTextView = (TextView) view.findViewById(R.id.fragment_estande_areaTematica);

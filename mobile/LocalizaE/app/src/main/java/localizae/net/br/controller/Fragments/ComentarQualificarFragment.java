@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -82,6 +83,7 @@ public class ComentarQualificarFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_comentar_qualificar, container, false);
+        view.setBackgroundColor(Color.WHITE);
 
         botao_enviar = (Button) view.findViewById(R.id.botao_entrar_id);
         botao_voltar = (Button) view.findViewById(R.id.botao_voltar_id);

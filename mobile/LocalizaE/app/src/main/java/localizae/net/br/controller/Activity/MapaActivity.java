@@ -42,7 +42,7 @@ import localizae.net.br.utils.ResponseCodeValidator;
 
 public class MapaActivity extends AppCompatActivity {
 
-    private ImageView mapaImageView;
+    public ImageView mapaImageView;
     private View userPositionCircleView;
     private ProgressDialog progressDialog;
     private List<Estande> estandeList;
