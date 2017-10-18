@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -199,17 +200,18 @@ public class MapaActivity extends AppCompatActivity {
                     @Override
                     public void onReceive(Context context, Intent intent) {
                         if (intent.getAction().equals(Constants.BEACON_SCAN_ACTIVITY_TAG)) {
-                            allowScan[0] = true;
                             List<Beacon> returnedBeaconList = (List<Beacon>) intent.getSerializableExtra(Constants.DATA_KEY);
                             if (returnedBeaconList == null && returnedBeaconList.isEmpty()) {
                                 Toast.makeText(context, context.getString(R.string.impossible_location_estimation), Toast.LENGTH_LONG).show();
                             } else {
                                 beaconList = new ArrayList<Beacon>(returnedBeaconList);
-                                for (Beacon b : returnedBeaconList) {
-                                    if (b.getRSSI() == 0) {
-                                        returnedBeaconList.remove(b);
+                                Iterator<Beacon> beaconIter = returnedBeaconList.iterator();
+                                while (beaconIter.hasNext()) {
+                                    if (beaconIter.next().getRSSI() == 0) {
+                                        beaconIter.remove();
                                     }
                                 }
+
                                 if (returnedBeaconList.size() < 3) {
                                     Toast.makeText(context, context.getString(R.string.impossible_location_estimation), Toast.LENGTH_LONG).show();
                                 } else {
@@ -242,6 +244,7 @@ public class MapaActivity extends AppCompatActivity {
                                     }
                                 }
                             }
+                            allowScan[0] = true;
                         }
                     }
                 };
