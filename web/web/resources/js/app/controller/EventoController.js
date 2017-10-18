@@ -105,6 +105,7 @@ class EventoController {
                 text: "O evento excluído não poderá ser recuperado!",
                 type: "warning",
                 showCancelButton: true,
+                cancelButtonText: 'Cancelar',
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Sim, excluir!",
                 closeOnConfirm: false

@@ -8,9 +8,7 @@ import android.util.Log;
 import java.io.Serializable;
 
 import localizae.net.br.helper.WebRequest;
-import localizae.net.br.model.AvaliacaoVisitante;
 import localizae.net.br.model.Usuario;
-import localizae.net.br.services.endpoints.BoothEndpointInterface;
 import localizae.net.br.services.endpoints.UserEndpointInterface;
 import localizae.net.br.utils.Constants;
 import retrofit2.Call;

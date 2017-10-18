@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Usuario;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import localizae.net.br.utils.LerDadosUsuario;
 
 
@@ -69,7 +70,7 @@ public class FeedbackActivity extends Activity implements OnClickListener{
         subject = sub.getText().toString();
         textMessage = msg.getText().toString();
 
-        Usuario usuarioLogado = LerDadosUsuario.lerDados(this);
+        Usuario usuarioLogado = ControladorDadosUsuario.lerDados(this);
         String tipo = "";
         if(usuarioLogado.getTipoUsuario().getId() == 1){
             tipo = "ADMINISTRADOR";

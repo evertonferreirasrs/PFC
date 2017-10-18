@@ -9,12 +9,15 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public interface BoothEndpointInterface {
+/**
+ * Created by Lyan on 14/10/2017.
+ */
+
+public interface AvaliacaoVisitanteEndpointInterface {
 
     @POST("avaliacaoVisitante")
     Call<AvaliacaoVisitante> avaliacao (@Body AvaliacaoVisitante avaliacaoVisitante);
 
     @GET("avaliacaoVisitante")
     Call<List<AvaliacaoVisitante>> getAvaliacoesVisitanteByUser (@Query("usuario") Long userId);
-
 }

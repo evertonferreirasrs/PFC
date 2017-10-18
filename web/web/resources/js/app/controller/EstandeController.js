@@ -102,6 +102,7 @@ class EstandeController {
                 text: "Esta operação não poderá ser desfeita!",
                 type: "warning",
                 showCancelButton: true,
+                cancelButtonText: 'Cancelar',
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Sim, apagar!",
                 cancelButtonText: "Cancelar",

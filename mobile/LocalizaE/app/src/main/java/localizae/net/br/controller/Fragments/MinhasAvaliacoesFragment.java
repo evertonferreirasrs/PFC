@@ -1,34 +1,24 @@
 package localizae.net.br.controller.Fragments;
 
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import localizae.net.br.Adapter.AvaliacaoVisitanteAdapter;
-import localizae.net.br.Retrofit.RetrofitInicializador;
+import localizae.net.br.helper.RetrofitInicializador;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.AvaliacaoVisitante;
+
 import localizae.net.br.model.Usuario;
-import localizae.net.br.utils.Constants;
-import localizae.net.br.utils.LerDadosUsuario;
-import localizae.net.br.utils.ResponseCodeValidator;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +39,7 @@ public class MinhasAvaliacoesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_minhas_avaliacoes, container, false);
         final ListView avaliacaoVisitanteListView = (ListView) view.findViewById(R.id.fragment_avaliacaoVisitante_listView);
-        final Usuario usuarioLogado = LerDadosUsuario.lerDados(getContext());
+        final Usuario usuarioLogado = ControladorDadosUsuario.lerDados(getContext());
 
         Call<List<AvaliacaoVisitante>> avaliacoesVisitanteByUserCall = new RetrofitInicializador().getAvaliacaoVisitanteService().getAvaliacoesVisitanteByUser(usuarioLogado.getId());
 

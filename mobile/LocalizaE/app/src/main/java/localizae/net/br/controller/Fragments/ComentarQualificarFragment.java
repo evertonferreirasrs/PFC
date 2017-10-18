@@ -1,15 +1,16 @@
 package localizae.net.br.controller.Fragments;
 
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +23,16 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 
-import localizae.net.br.Retrofit.RetrofitInicializador;
 import localizae.net.br.controller.R;
+import localizae.net.br.helper.RetrofitInicializador;
 import localizae.net.br.model.AvaliacaoVisitante;
 import localizae.net.br.model.Estande;
 import localizae.net.br.model.Usuario;
-import localizae.net.br.services.endpoints.BoothEndpointInterface;
-import localizae.net.br.services.impl.BoothService;
+import localizae.net.br.services.endpoints.AvaliacaoVisitanteEndpointInterface;
+import localizae.net.br.services.impl.AvaliacaoVisitanteService;
+import localizae.net.br.services.impl.EstandeService;
 import localizae.net.br.utils.Constants;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import localizae.net.br.utils.LerDadosUsuario;
 import localizae.net.br.utils.ResponseCodeValidator;
 import retrofit2.Call;
@@ -80,6 +83,7 @@ public class ComentarQualificarFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_comentar_qualificar, container, false);
+        view.setBackgroundColor(Color.WHITE);
 
         botao_enviar = (Button) view.findViewById(R.id.botao_entrar_id);
         botao_voltar = (Button) view.findViewById(R.id.botao_voltar_id);
@@ -116,10 +120,10 @@ public class ComentarQualificarFragment extends Fragment {
                         }
                     }
 
-                    Usuario usuarioLogado = LerDadosUsuario.lerDados(getContext());
+                    Usuario usuarioLogado = ControladorDadosUsuario.lerDados(getContext());
 
                     AvaliacaoVisitante avaliacaoVisitante = new AvaliacaoVisitante(nota, comentario, usuarioLogado, estande);
-                    BoothEndpointInterface service = new RetrofitInicializador().getAvaliacaoVisitanteService();
+                    AvaliacaoVisitanteEndpointInterface service = new RetrofitInicializador().getAvaliacaoVisitanteService();
                     Call<AvaliacaoVisitante> avaliacaoVisitanteCall = service.avaliacao(avaliacaoVisitante);
 
                     avaliacaoVisitanteCall.enqueue(new Callback<AvaliacaoVisitante>() {
@@ -136,8 +140,6 @@ public class ComentarQualificarFragment extends Fragment {
                             Toast.makeText(getContext(), "Impossível enviar avaliação no momento", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-
                 }
             }
         });
@@ -145,11 +147,9 @@ public class ComentarQualificarFragment extends Fragment {
         botao_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EstandeFragment estandeFragment = new EstandeFragment();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_id, estandeFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                if(supportFragmentManager.getBackStackEntryCount() > 0){
+                    supportFragmentManager.popBackStack();
+                }
             }
         });
 
@@ -159,11 +159,13 @@ public class ComentarQualificarFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(broadcastReceiver);
+        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getContext());
+        lbm.unregisterReceiver(broadcastReceiver);
     }
 
     private void registerBroadcast() {
-        getActivity().registerReceiver(broadcastReceiver,new IntentFilter(Constants.COMENTAR_QUALIFICAR_FRAGMENT_TAG));
+        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getContext());
+        lbm.registerReceiver(broadcastReceiver, new IntentFilter(Constants.COMENTAR_QUALIFICAR_FRAGMENT_TAG));
     }
 
 }

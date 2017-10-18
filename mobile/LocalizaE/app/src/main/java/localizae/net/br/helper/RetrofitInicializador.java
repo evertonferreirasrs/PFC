@@ -1,9 +1,10 @@
-package localizae.net.br.Retrofit;
+package localizae.net.br.helper;
 
 import localizae.net.br.services.endpoints.AvaliacaoJuradoInterface;
-import localizae.net.br.services.endpoints.BoothEndpointInterface;
+import localizae.net.br.services.endpoints.AvaliacaoVisitanteEndpointInterface;
 import localizae.net.br.services.endpoints.CriterioJuradoInterface;
-import localizae.net.br.services.endpoints.StandEndpointInterface;
+import localizae.net.br.services.endpoints.EstandeEndpointInterface;
+
 import localizae.net.br.services.endpoints.UserEndpointInterface;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,11 +18,6 @@ public class RetrofitInicializador {
 
     public RetrofitInicializador (){
         retrofit = new Retrofit.Builder().baseUrl("http://18.220.190.201:8080/localizae/").addConverterFactory(GsonConverterFactory.create()).build();
-
-    }
-
-    public BoothEndpointInterface getAvaliacaoVisitanteService(){
-        return retrofit.create(BoothEndpointInterface.class);
     }
 
     public CriterioJuradoInterface getCriterioJuradoService() {
@@ -32,8 +28,12 @@ public class RetrofitInicializador {
         return retrofit.create(AvaliacaoJuradoInterface.class);
     }
 
-    public StandEndpointInterface getEstandeService(){
-        return retrofit.create(StandEndpointInterface.class);
+    public EstandeEndpointInterface getEstandeService(){
+        return retrofit.create(EstandeEndpointInterface.class);
+    }
+
+    public AvaliacaoVisitanteEndpointInterface getAvaliacaoVisitanteService() {
+        return retrofit.create(AvaliacaoVisitanteEndpointInterface.class);
     }
 
     public UserEndpointInterface getUsuarioService(){
