@@ -21,13 +21,13 @@ class EstandeController {
         )
     }
 
-    async altera(event){
+    async altera(event) {
         event.preventDefault()
 
         let evento = new Evento(this._evento.text)
         evento.id = this._evento.value
 
-        let estande = new Estande(this._titulo.value, this._curso.value, this._periodo.value, 
+        let estande = new Estande(this._titulo.value, this._curso.value, this._periodo.value,
             this._descricao.value, this._areaTematica.value, this._numero.value, evento, null, this._id.value, this._posicaoX.value, this._posicaoY.value)
 
         let service = new EstandeService()
@@ -41,7 +41,7 @@ class EstandeController {
         })
     }
 
-    async loadEstande(){
+    async loadEstande() {
         let id = this._id.value
         let service = new EstandeService();
 
@@ -55,37 +55,37 @@ class EstandeController {
         this._posicaoY.value = estande.posicaoY
 
         let areaTematicaList = this._areaTematica.getElementsByTagName('option')
-        
-        for(let i = 0; i < areaTematicaList.length; i++){
+
+        for (let i = 0; i < areaTematicaList.length; i++) {
             let element = areaTematicaList[i]
-            if(element.value == estande.areaTematica){
-                element.selected = true   
+            if (element.value == estande.areaTematica) {
+                element.selected = true
             }
         }
 
         let cursoList = this._curso.getElementsByTagName('option')
 
-        for(let i = 0; i < cursoList.length; i++){
+        for (let i = 0; i < cursoList.length; i++) {
             let element = cursoList[i]
-            if(element.value == estande.curso){
-                element.selected = true   
+            if (element.value == estande.curso) {
+                element.selected = true
             }
         }
 
         let periodoList = this._periodo.getElementsByTagName('option')
 
-        for(let i = 0; i < periodoList.length; i++){
+        for (let i = 0; i < periodoList.length; i++) {
             let element = periodoList[i]
-            if(element.value == estande.periodo){
-                element.selected = true   
+            if (element.value == estande.periodo) {
+                element.selected = true
             }
         }
 
         let eventoList = this._evento.getElementsByTagName('option')
 
-        for(let i = 0; i < eventoList.length; i++){
+        for (let i = 0; i < eventoList.length; i++) {
             let element = eventoList[i]
-            if(element.value == estande.evento.id){
+            if (element.value == estande.evento.id) {
                 element.selected = true
             }
         }
@@ -161,7 +161,8 @@ class EstandeController {
         let service = new EventoService()
         let eventoList = await service.readAll()
 
-        let option = new Option('Selecione....')
+        let option = new Option('Selecione....', 0)
+        
         option.disabled = true
         option.selected = true
 
@@ -178,23 +179,27 @@ class EstandeController {
     async adiciona(event) {
         event.preventDefault()
 
-        let service = new EstandeService();
+        try {
+            let service = new EstandeService();
 
-        let evento = new Evento(this._evento.text)
-        evento.id = this._evento.value
+            let evento = new Evento(this._evento.text)
+            evento.id = this._evento.value
 
-        let estande = new Estande(this._titulo.value, this._curso.value, this._periodo.value,
-            this._descricao.value, this._areaTematica.value, this._numero.value, evento, null, null, this._posicaoX.value, this._posicaoY.value)
+            let estande = new Estande(this._titulo.value, this._curso.value, this._periodo.value,
+                this._descricao.value, this._areaTematica.value, this._numero.value, evento, null, null, this._posicaoX.value, this._posicaoY.value)
 
-        // console.log(estande)
+            service.validate(estande)
 
-        service.add(estande)
-            .then(result => {
-                // swal('Cadastrado!', 'Estande Cadastrado com sucesso.', 'success')
-                this._mensagemView.exibirMensagemDeSucesso('Cadastrado!', 'Estande Cadastrado Com Sucesso.')
-            }).catch(error => {
-                // swal('Erro!', error, 'error')
-                this._mensagemView.exibirMensagemDeErro(error)
-            })
+            service.add(estande)
+                .then(result => {
+                    // swal('Cadastrado!', 'Estande Cadastrado com sucesso.', 'success')
+                    this._mensagemView.exibirMensagemDeSucesso('Cadastrado!', 'Estande Cadastrado Com Sucesso.')
+                }).catch(error => {
+                    // swal('Erro!', error, 'error')
+                    this._mensagemView.exibirMensagemDeErro(error)
+                })
+        }catch(err){
+            this._mensagemView.exibirMensagemDeErro(err)
+        }
     }
 }

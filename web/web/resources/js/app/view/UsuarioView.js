@@ -26,7 +26,7 @@ class UsuarioView extends View{
                                     <center>
                                         <a class="btn btn-danger" onclick="usuarioController.blockUser(this, ${this.isBlock(user.situacao)})"><i class="fa fa-lg fa-${this.isBan(user.situacao)}"></i></a>&nbsp;
                                         <a class="btn btn-info" onclick="usuarioController.viewData(this)"><i class="fa fa-lg fa-eye"></i></a>&nbsp;
-                                        <a class="btn btn-warning" href="${this.linkUpdate(user.tipoUsuario.nome, user.id)}"><i class="fa fa-edit"></i></a>&nbsp;
+                                        ${this.linkUpdate(user.tipoUsuario.nome, user.id)}
                                         <a class="btn btn-danger" onclick="usuarioController.delete(this)" href="#"><i class="fa fa-lg fa-trash"></i></a>
                                     </center>
                                 </td>
@@ -40,11 +40,13 @@ class UsuarioView extends View{
 
     linkUpdate(tipo, id){
         if(tipo.toUpperCase() == "ADMINISTRADOR"){
-            return Configuration.getUrlWebApp() + 'usuario/alterar/administrador/'+id
+            return `<a class="btn btn-warning" href="${Configuration.getUrlWebApp() + 'usuario/alterar/administrador/'+id}"><i class="fa fa-edit"></i></a>&nbsp;`
         }else if(tipo.toUpperCase() == "EXPOSITOR"){
-            return Configuration.getUrlWebApp() + 'usuario/alterar/expositor/'+id
+            return `<a class="btn btn-warning" href="${Configuration.getUrlWebApp() + 'usuario/alterar/expositor/'+id}"><i class="fa fa-edit"></i></a>&nbsp;`
         }else if(tipo.toUpperCase() == "JURADO"){
-            return Configuration.getUrlWebApp() + 'usuario/alterar/jurado/'+id
+            return `<a class="btn btn-warning" href="${Configuration.getUrlWebApp() + 'usuario/alterar/jurado/'+id}"><i class="fa fa-edit"></i></a>&nbsp;`
+        }else{
+            return ''
         }
     }
 
