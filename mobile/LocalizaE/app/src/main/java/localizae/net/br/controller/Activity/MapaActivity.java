@@ -121,12 +121,6 @@ public class MapaActivity extends AppCompatActivity {
 
                     if (estande != null) {
                         //Toast.makeText(MapaActivity.this, estande.getTitulo(), Toast.LENGTH_SHORT).show();
-                        timer.cancel();
-                        timer.purge();
-                        timer = null;
-
-                        mapaImageView.setVisibility(View.INVISIBLE);
-                        userPositionCircleView.setVisibility(View.INVISIBLE);
 
                         Bundle args = new Bundle();
                         args.putSerializable("estandeId", estande.getId());
@@ -134,15 +128,7 @@ public class MapaActivity extends AppCompatActivity {
                         EstandeFragment estandeFragment = new EstandeFragment();
                         estandeFragment.setArguments(args);
 
-                        FragmentManager.OnBackStackChangedListener onBackStackChangedListener = new FragmentManager.OnBackStackChangedListener() {
-                            @Override
-                            public void onBackStackChanged() {
-                                restoreActivity();
-                            }
-                        };
-
                         FragmentManager supportFragmentManager = getSupportFragmentManager();
-                        supportFragmentManager.addOnBackStackChangedListener(onBackStackChangedListener);
                         supportFragmentManager.beginTransaction().replace(R.id.mapa_fragment_id, estandeFragment).addToBackStack(null).commit();
                     } else {
                         Toast.makeText(MapaActivity.this, "X " + x + " Y " + y, Toast.LENGTH_SHORT).show();
@@ -212,9 +198,7 @@ public class MapaActivity extends AppCompatActivity {
                                     }
                                 }
 
-                                if (returnedBeaconList.size() < 3) {
-                                    Toast.makeText(context, context.getString(R.string.impossible_location_estimation), Toast.LENGTH_LONG).show();
-                                } else {
+                                if (returnedBeaconList.size() >= 3) {
                                     //Collections.copy(beaconList, returnedBeaconList);
                                     double[][] positions = new double[returnedBeaconList.size()][2];
                                     double[] distances = new double[returnedBeaconList.size()];
@@ -286,8 +270,4 @@ public class MapaActivity extends AppCompatActivity {
         }
     }
 
-    private void restoreActivity() {
-        mapaImageView.setVisibility(View.VISIBLE);
-        startBeaconScan();
-    }
 }
