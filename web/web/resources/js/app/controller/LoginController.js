@@ -27,7 +27,7 @@ class LoginController {
             })
             window.location.href = Configuration.getUrlWebApp() + "entrar"
         } else {
-            ControladorDeDados.saveUser()
+            ControladorDeDados.saveUser(user)
             window.location.href = Configuration.getUrlWebApp() + "gerenciador"
         }
     }
