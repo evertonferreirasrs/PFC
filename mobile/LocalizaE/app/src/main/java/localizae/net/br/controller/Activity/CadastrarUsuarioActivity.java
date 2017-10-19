@@ -100,8 +100,8 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
         voltar_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                startActivity(new Intent(CadastrarUsuarioActivity.this,LoginActivity.class));
+            finish();
+//                startActivity(new Intent(CadastrarUsuarioActivity.this,LoginActivity.class));
             }
         });
     }

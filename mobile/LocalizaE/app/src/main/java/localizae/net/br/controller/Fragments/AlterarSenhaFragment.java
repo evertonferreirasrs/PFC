@@ -15,6 +15,7 @@ import localizae.net.br.controller.R;
 import localizae.net.br.helper.RetrofitInicializador;
 import localizae.net.br.model.Usuario;
 import localizae.net.br.utils.ControladorDadosUsuario;
+import localizae.net.br.utils.Cryptographer;
 import localizae.net.br.utils.LerDadosUsuario;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,13 +69,14 @@ public class AlterarSenhaFragment extends Fragment {
                 }else if(!senha1.equals(senha2)){
                     Toast.makeText(getContext(), "Senhas não conferem", Toast.LENGTH_SHORT).show();
                 } else{
-                    usuarioLogado.setSenha(senha1);
+                    usuarioLogado.setSenha(Cryptographer.md5(senha1));
                     Call<Usuario> user = new RetrofitInicializador().getUsuarioService().alterarUser(usuarioLogado);
 
                     user.enqueue(new Callback<Usuario>() {
                         @Override
                         public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                             Toast.makeText(getContext(), "Senha alterada com sucesso", Toast.LENGTH_SHORT).show();
+                            getActivity().getSupportFragmentManager().popBackStack();
                         }
 
                         @Override
