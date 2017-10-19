@@ -37,11 +37,7 @@ public class FormPromocoesFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                MinhasPromocoesFragment minhasPromocoesFragment = new MinhasPromocoesFragment();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_id, minhasPromocoesFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                getActivity().getSupportFragmentManager().popBackStack();
 
             }
         });
