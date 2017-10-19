@@ -2,6 +2,7 @@ package localizae.net.br.controller.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class CriterioAvalicaoFragment extends Fragment {
     private SeekBar seekBar;
     private ImageView imagem_id;
     private CriterioJurado criterio;
+    private FragmentManager manager;
 
     public CriterioAvalicaoFragment() {
         // Required empty public constructor
@@ -51,6 +53,7 @@ public class CriterioAvalicaoFragment extends Fragment {
         final TextView opiniaoTextView = (TextView) fragment.findViewById(R.id.criterio_avaliacao_fragment_opiniao_textView);
         final Button botaoConfirmar = (Button) fragment.findViewById(R.id.criterio_avaliacao_fragment_button_confirm);
         final AvaliacaoJuradoInterface avaliacaoJuradoService = new RetrofitInicializador().getAvaliacaoJuradoService();
+        manager = getActivity().getSupportFragmentManager();
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -267,11 +270,9 @@ public class CriterioAvalicaoFragment extends Fragment {
     }
 
     private void finishFragment() {
-        AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_id, avaliarEstandeFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+       if(manager.getBackStackEntryCount() > 0){
+           manager.popBackStack();
+       }
     }
 
 }
