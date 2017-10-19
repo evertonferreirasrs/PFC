@@ -305,16 +305,16 @@ class UsuarioController {
             for (let i = 0; i < criterioList.length; i++) {
                 let inputCriterio = criterioList[i].getElementsByClassName('inputCriterio')[0]
                 let inputEstandeCriterio = criterioList[i].getElementsByClassName('inputEstandeCriterio')[0]
+                if(!isNaN(inputCriterio.value) && !isNaN(inputEstandeCriterio.value)){
+                    let criterioAvaliacao = new CriterioAvaliacao()
+                    criterioAvaliacao.id = inputCriterio.value
 
-                let criterioAvaliacao = new CriterioAvaliacao()
-                criterioAvaliacao.id = inputCriterio.value
+                    let estande = new Estande()
+                    estande.id = inputEstandeCriterio.value
 
-                let estande = new Estande()
-                estande.id = inputEstandeCriterio.value
-
-                let criterioJurado = new CriterioJurado(criterioAvaliacao, null, estande)
-                user.criterioAvaliacaoList.push(criterioJurado)
-
+                    let criterioJurado = new CriterioJurado(criterioAvaliacao, null, estande)
+                    user.criterioAvaliacaoList.push(criterioJurado)
+                }
                 // console.log(user.criterioAvaliacaoList)
             }
 

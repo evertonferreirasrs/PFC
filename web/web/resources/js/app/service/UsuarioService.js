@@ -82,15 +82,21 @@ class UsuarioService {
 
     validate(user) {
         if (user.nome == "") {
-            throw 'Campo Nome obrigatório'
+            throw 'Campo Nome obrigatório.'
         }
 
         if (user.email == "") {
-            throw 'Campo Email obrigatório'
+            throw 'Campo Email obrigatório.'
         }
 
         if (user.senha == "") {
-            throw 'Campo Senha obrigatório'
+            throw 'Campo Senha obrigatório.'
+        }
+
+        if(user.tipoUsuario.id == 3){
+            if(isNaN(user.estande.id)){
+                throw 'Campo Estande obrigatório.'
+            }
         }
     }
 }
