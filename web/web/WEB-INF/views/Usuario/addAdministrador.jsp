@@ -36,7 +36,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <form onsubmit="usuarioController.submitForm(event)">
+                                    <form onsubmit="usuarioController.addAdm(event)">
                                         <input type="hidden" id="inputTipoUsuario" value="1">
                                         <div class="col-md-6">
                                             <div class="form-group">
