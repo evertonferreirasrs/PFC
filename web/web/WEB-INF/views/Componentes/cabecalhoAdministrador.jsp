@@ -17,10 +17,11 @@
 <script src="<c:url value="/resources/js/respond.min.js"/>"></script>
 <![endif]-->
 <script src="<c:url value="/resources/js/app/controller/LoginController.js" />"></script>
+<script src="<c:url value="/resources/js/app/helper/ControladorDeDados.js" />"></script>
 <script src="<c:url value="/resources/js/app/config/Configuration.js" />"></script>
 <script>
     let loginController = new LoginController()
-    if(localStorage['user-localizae'] == 'null' || localStorage['user-localizae'] == null){
+    if(ControladorDeDados.getUserLogged() == null || ControladorDeDados.getUserLogged() == 'null'){
         localStorage['msg-localizae'] = JSON.stringify({
             'msg': "É preciso logar para acessar esta página.",
             'type': 'danger'

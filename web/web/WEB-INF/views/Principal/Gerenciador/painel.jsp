@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <img src="<c:url value="/resources/img/logos/logo.png"/>" alt="LocalizaÊ" class="img-responsive pull-right">
+                            <!-- <img src="<c:url value="/resources/img/logos/logo.png"/>" alt="LocalizaÊ" class="img-responsive pull-right"> -->
                             <h3 class="card-title">Olá</h3>                    
                             <p style="font-size: 16px;">Bem vindo(a) ao Sistema de Gerenciamento do LocalizaÊ. <br><br> Utilze a barra de menus para ter acesso as funcionalidades do sistema.</p>
                         </div>
