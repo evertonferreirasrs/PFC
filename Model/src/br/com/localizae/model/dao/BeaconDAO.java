@@ -28,7 +28,7 @@ public class BeaconDAO implements BaseDAO<Beacon>{
 
         int i = 0;
         ps.setString(++i, entity.getMac());
-        ps.setDouble(++i, entity.getyCoordinate());
+        ps.setDouble(++i, entity.getxCoordinate());
         ps.setDouble(++i, entity.getyCoordinate());
 
         ResultSet rs = ps.executeQuery();
