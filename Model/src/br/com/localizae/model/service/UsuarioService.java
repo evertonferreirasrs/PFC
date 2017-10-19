@@ -30,6 +30,15 @@ public class UsuarioService implements BaseUsuarioService{
             this.validate(entity);
             dao.create(conn, entity);
             conn.commit();
+        }catch(SQLException ex){
+            conn.rollback();
+            int errorCode = Integer.parseInt(ex.getSQLState());
+            if(errorCode == 23505){
+                throw new IllegalArgumentException("Este e-mail já está sendo utilizado.");
+            }else{
+                throw ex;
+            }
+            
         }catch(Exception e){
             conn.rollback();
             throw e;

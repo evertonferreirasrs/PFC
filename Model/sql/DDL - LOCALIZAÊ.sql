@@ -116,7 +116,7 @@ create table beacon(
     PRIMARY KEY(id)
 );
 
-alter table estatistica add constraint usuario_fk_estatistica foreign key (usuario_fk) references usuario(id) on update cascade on delete no action;
+alter table estatistica add constraint usuario_fk_estatistica foreign key (usuario_fk) references usuario(id) on update cascade on delete cascade;
 ALTER TABLE usuario ADD CONSTRAINT usuario_tipoUsuario_fk FOREIGN KEY (tipoUsuario_fk) REFERENCES tipoUsuario(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE avaliacaoVisitante ADD CONSTRAINT avaliacaoVisitante_usuario_fk FOREIGN KEY (usuario_fk) REFERENCES usuario(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE avaliacaoVisitante ADD CONSTRAINT avaliacaoVisitante_estande_fk FOREIGN KEY (estande_fk) REFERENCES estande(id) ON UPDATE CASCADE ON DELETE CASCADE;
@@ -127,7 +127,7 @@ ALTER TABLE imagem ADD CONSTRAINT imagem_promocao_fk FOREIGN KEY (promocao_fk) R
 ALTER TABLE promocao ADD CONSTRAINT promocao_estande_fk FOREIGN KEY (estande_fk) REFERENCES estande(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE criterioJurado ADD CONSTRAINT criterioJurado_usuario_fk FOREIGN KEY (usuario_fk) REFERENCES usuario(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE criterioJurado ADD CONSTRAINT criterioJurado_criterioAvaliacao_fk FOREIGN KEY (criterioAvaliacao_fk) REFERENCES criterioAvaliacao(id) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE avaliacaoJurado ADD CONSTRAINT avaliacaoJurado_usuario_fk FOREIGN KEY (usuario_fk) REFERENCES usuario(id) ON UPDATE CASCADE ON DELETE NO ACTION;
-ALTER TABLE avaliacaoJurado ADD CONSTRAINT avaliacaoJurado_criterioAvaliacao_fk FOREIGN KEY (criterioAvaliacao_fk) REFERENCES criterioAvaliacao(id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE avaliacaoJurado ADD CONSTRAINT avaliacaoJurado_usuario_fk FOREIGN KEY (usuario_fk) REFERENCES usuario(id) ON UPDATE CASCADE ON DELETE cascade;
+ALTER TABLE avaliacaoJurado ADD CONSTRAINT avaliacaoJurado_criterioAvaliacao_fk FOREIGN KEY (criterioAvaliacao_fk) REFERENCES criterioAvaliacao(id) ON UPDATE CASCADE ON DELETE cascade;
 ALTER TABLE criterioJurado ADD CONSTRAINT criterioJurado_estande_fk FOREIGN KEY (estande_fk) REFERENCES estande(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE avaliacaoJurado ADD CONSTRAINT avaliacaoJurado_estande_fk FOREIGN KEY (estande_fk) REFERENCES estande(id) ON UPDATE CASCADE ON DELETE CASCADE;

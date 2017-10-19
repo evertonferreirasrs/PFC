@@ -94,6 +94,7 @@
                     });
         });
 </script>
+<script src="<c:url value="/resources/js/app/helper/ControladorDeDados.js" />"></script>
 <script src="<c:url value="/resources/js/app/controller/LoginController.js" />"></script>
 <script src="<c:url value="/resources/js/app/config/Configuration.js" />"></script>
 <script src="<c:url value="/resources/js/app/service/LoginService.js" />"></script>

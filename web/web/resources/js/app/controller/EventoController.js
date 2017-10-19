@@ -90,7 +90,7 @@ class EventoController {
                     // swal('Erro!', error, 'error')
                 })
         } catch (error) {
-            this._mensagemView.exibirMensagemDeSucesso(error.message)
+            this._mensagemView.exibirMensagemDeErro(error.message)
         }
     }
 
