@@ -200,8 +200,9 @@ public class MenuActivity extends AppCompatActivity
             fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_id, alterarSenhaFragment).commit();
 
             // MINHAS AVALIAÇÕES
+            //TODO: COLOCAR OS TITULOS NO ARQUIVO DE STRINGS
         }else if (id == R.id.menu_botao_avaliacoes) {
-            setTitle(" Alterar Senha");
+            setTitle(" Minhas Avaliações");
             MinhasAvaliacoesFragment minhasAvaliacoesFragment = new MinhasAvaliacoesFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_id, minhasAvaliacoesFragment).commit();

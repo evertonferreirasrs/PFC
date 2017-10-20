@@ -1,5 +1,6 @@
 package localizae.net.br.controller.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -125,10 +126,14 @@ public class ComentarQualificarFragment extends Fragment {
                     AvaliacaoVisitante avaliacaoVisitante = new AvaliacaoVisitante(nota, comentario, usuarioLogado, estande);
                     AvaliacaoVisitanteEndpointInterface service = new RetrofitInicializador().getAvaliacaoVisitanteService();
                     Call<AvaliacaoVisitante> avaliacaoVisitanteCall = service.avaliacao(avaliacaoVisitante);
-
+                    final ProgressDialog progress = new ProgressDialog(getContext());
+                    progress.setMessage("Carregando..");
+                    progress.show();
                     avaliacaoVisitanteCall.enqueue(new Callback<AvaliacaoVisitante>() {
                         @Override
                         public void onResponse(Call<AvaliacaoVisitante> call, Response<AvaliacaoVisitante> response) {
+                            progress.cancel();
+                            progress.dismiss();
                             Toast.makeText(getContext(), "Avaliado Com Sucesso.", Toast.LENGTH_LONG).show();
                             if(supportFragmentManager.getBackStackEntryCount() > 0){
                                 supportFragmentManager.popBackStack();
@@ -137,6 +142,8 @@ public class ComentarQualificarFragment extends Fragment {
 
                         @Override
                         public void onFailure(Call<AvaliacaoVisitante> call, Throwable t) {
+                            progress.cancel();
+                            progress.dismiss();
                             Toast.makeText(getContext(), "Impossível enviar avaliação no momento", Toast.LENGTH_SHORT).show();
                         }
                     });
