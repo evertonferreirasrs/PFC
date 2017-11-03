@@ -90,7 +90,7 @@ class EventoController {
                     // swal('Erro!', error, 'error')
                 })
         } catch (error) {
-            this._mensagemView.exibirMensagemDeSucesso(error.message)
+            this._mensagemView.exibirMensagemDeErro(error.message)
         }
     }
 
@@ -105,6 +105,7 @@ class EventoController {
                 text: "O evento excluído não poderá ser recuperado!",
                 type: "warning",
                 showCancelButton: true,
+                cancelButtonText: 'Cancelar',
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Sim, excluir!",
                 closeOnConfirm: false

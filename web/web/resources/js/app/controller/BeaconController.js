@@ -14,19 +14,6 @@ class BeaconController {
         )
     }
 
-    // async openEventoInfo(element) {
-    //     let id = $(element).closest('tr').data('id')
-    //     let service = new EventoService()
-
-    //     let evento = await service.readById(id)
-
-    //     swal({
-    //         title: evento.nome,
-    //         text: this._eventoInfoView.template(evento),
-    //         html: true
-    //     })
-    // }
-
     async altera(event) {
         event.preventDefault()
         // let view = new MensagemView()
@@ -70,6 +57,7 @@ class BeaconController {
             let service = new BeaconService()
 
             let beacon = new Beacon(this._mac.value, this._xCoordinate.value, this._yCoordinate.value)
+            service.validate(beacon)
 
             service.add(beacon)
                 .then(result => {
@@ -80,7 +68,7 @@ class BeaconController {
                     // swal('Erro!', error, 'error')
                 })
         } catch (error) {
-            this._mensagemView.exibirMensagemDeSucesso(error.message)
+            this._mensagemView.exibirMensagemDeErro(error)
         }
     }
 
@@ -95,6 +83,7 @@ class BeaconController {
                 text: "O beacon excluído não poderá ser recuperado!",
                 type: "warning",
                 showCancelButton: true,
+                cancelButtonText: 'Cancelar',
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Sim, excluir!",
                 closeOnConfirm: false

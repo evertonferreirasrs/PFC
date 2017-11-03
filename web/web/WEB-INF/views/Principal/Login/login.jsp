@@ -52,7 +52,7 @@
         <form onsubmit="controller.login(event)">
             <p id="msg"></p>
             <a href="<c:url value="/"/>" class="pull-left">Voltar</a>
-            <h1>Login</h1>
+            <h1>Identificação</h1>
             <input type="text" value="" placeholder="Email" id="inputUsername" />
             <input type="password" value="" placeholder="Senha" id="inputPassword" />
             <a id="demoSwal" href="#" class="pull-right" >Recuperar Senha</a>
@@ -94,6 +94,7 @@
                     });
         });
 </script>
+<script src="<c:url value="/resources/js/app/helper/ControladorDeDados.js" />"></script>
 <script src="<c:url value="/resources/js/app/controller/LoginController.js" />"></script>
 <script src="<c:url value="/resources/js/app/config/Configuration.js" />"></script>
 <script src="<c:url value="/resources/js/app/service/LoginService.js" />"></script>

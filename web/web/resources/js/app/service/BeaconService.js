@@ -124,4 +124,18 @@ class BeaconService {
             xhr.send(beacon);
         })
     }
+
+    validate(beacon){
+        if(beacon.mac == ""){
+            throw "Campo MAC obrigatório."
+        }
+
+        if(beacon.posicaoX == "" || isNaN(beacon.posicaoX) || beacon.posicaoX < 0){
+            throw "Campos posição X obrigatório e deve ser um número positivo."
+        }
+
+        if(beacon.posicaoY == "" || isNaN(beacon.posicaoY) || beacon.posicaoY < 0){
+            throw "Campos posição Y obrigatório e deve ser um número positivo."
+        }
+    }
 }

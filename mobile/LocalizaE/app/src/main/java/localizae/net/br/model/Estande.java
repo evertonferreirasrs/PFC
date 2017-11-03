@@ -4,8 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.io.Serializable;
 
-public class Estande extends BaseEntity {
+public class Estande extends BaseEntity implements Serializable {
 
     @SerializedName("equipe")
     @Expose
@@ -25,11 +26,19 @@ public class Estande extends BaseEntity {
 
     @SerializedName("numero")
     @Expose
-    private Long numero;
+    private Integer numero;
 
     @SerializedName("areaTematica")
     @Expose
     private String areaTematica;
+
+    @SerializedName("posicaoX")
+    @Expose
+    private Integer posicaoX;
+
+    @SerializedName("posicaoY")
+    @Expose
+    private Integer posicaoY;
 
     @SerializedName("descricao")
     @Expose
@@ -71,11 +80,11 @@ public class Estande extends BaseEntity {
         this.periodo = periodo;
     }
 
-    public Long getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(Long numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 
@@ -85,6 +94,22 @@ public class Estande extends BaseEntity {
 
     public void setAreaTematica(String areaTematica) {
         this.areaTematica = areaTematica;
+    }
+
+    public Integer getPosicaoX() {
+        return posicaoX;
+    }
+
+    public void setPosicaoX(Integer posicaoX) {
+        this.posicaoX = posicaoX;
+    }
+
+    public Integer getPosicaoY() {
+        return posicaoY;
+    }
+
+    public void setPosicaoY(Integer posicaoY) {
+        this.posicaoY = posicaoY;
     }
 
     @Override
@@ -101,4 +126,3 @@ public class Estande extends BaseEntity {
     }
 
 }
-

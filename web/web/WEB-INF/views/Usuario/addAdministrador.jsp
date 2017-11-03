@@ -36,7 +36,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <form onsubmit="usuarioController.submitForm(event)">
+                                    <form onsubmit="usuarioController.addAdm(event)">
                                         <input type="hidden" id="inputTipoUsuario" value="1">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -81,12 +81,7 @@
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/jquery.vmap.world.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/jquery.vmap.sampledata.js"/>"></script>     
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script>
-        <script type="text/javascript">
-            $('#demoSwal').click(function () {
-                swal("Confirmado!", "Foi adicionado um Administrador!", "success")
-            });
-        </script> 
+         <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script> 
 
 
         <jsp:include page="import-scripts-user.jsp"/> 

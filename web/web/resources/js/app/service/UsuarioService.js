@@ -81,16 +81,22 @@ class UsuarioService {
     }
 
     validate(user) {
-        if (user.nome == null) {
-            throw new Error('Campo Nome obrigatório')
+        if (user.nome == "") {
+            throw 'Campo Nome obrigatório.'
         }
 
-        if (user.email == null) {
-            throw new Error('Campo Email obrigatório')
+        if (user.email == "") {
+            throw 'Campo Email obrigatório.'
         }
 
-        if (user.senha == null) {
-            throw new Error('Campo Senha obrigatório')
+        if (user.senha == "") {
+            throw 'Campo Senha obrigatório.'
+        }
+
+        if(user.tipoUsuario.id == 3){
+            if(isNaN(user.estande.id)){
+                throw 'Campo Estande obrigatório.'
+            }
         }
     }
 }

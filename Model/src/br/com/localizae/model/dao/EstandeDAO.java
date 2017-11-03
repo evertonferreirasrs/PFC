@@ -216,6 +216,8 @@ public class EstandeDAO implements BaseDAO<Estande> {
                     estande.setTitulo(rs.getString("titulo"));
                     estande.setNumero(rs.getLong("numero"));
                     estande.setPeriodo(rs.getLong("periodo"));
+                    estande.setPosicaoX(rs.getLong("posicaoX"));
+                    estande.setPosicaoY(rs.getLong("posicaoY"));
                     estande.setEquipe(new ArrayList<>());
 
                     Evento evento = new Evento();

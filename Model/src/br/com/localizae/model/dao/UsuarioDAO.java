@@ -29,7 +29,7 @@ import java.util.Map;
 public class UsuarioDAO implements BaseDAO<Usuario> {
 
     @Override
-    public void create(Connection conn, Usuario entity) throws Exception {
+    public void create(Connection conn, Usuario entity) throws SQLException {
         String sql = "INSERT INTO usuario (nome, email, senha, situacao, motivo, tokenRedeSocial, tokenAutenticacao, dataHoraExpiracaoToken, tipoUsuario_fk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
@@ -82,7 +82,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         }
     }
 
-    private void createIntegrante(Usuario entity, Connection conn) throws Exception {
+    private void createIntegrante(Usuario entity, Connection conn) throws SQLException {
         String sql = "INSERT INTO integranteEquipe(responsavel, usuario_fk, estande_fk) VALUES(?, ?, ?);";
         
         PreparedStatement ps = conn.prepareStatement(sql);

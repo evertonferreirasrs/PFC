@@ -1,6 +1,5 @@
 package localizae.net.br.controller.Activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +19,7 @@ import android.widget.TextView;
 
 import localizae.net.br.controller.Fragments.AlterarSenhaFragment;
 import localizae.net.br.controller.Fragments.AvaliarEstandeFragment;
-import localizae.net.br.controller.Fragments.EnviarFeedbackFragment;
+import localizae.net.br.controller.Fragments.EstandeFragment;
 import localizae.net.br.controller.Fragments.InicioFragment;
 import localizae.net.br.controller.Fragments.MeuEstandeFragment;
 import localizae.net.br.controller.Fragments.MinhasAvaliacoesFragment;
@@ -29,6 +28,7 @@ import localizae.net.br.controller.Fragments.QualificacaoComentariosFragment;
 import localizae.net.br.controller.Fragments.SobreFragment;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Usuario;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import localizae.net.br.utils.LerDadosUsuario;
 import localizae.net.br.utils.VerificadorUsuario;
 
@@ -58,7 +58,7 @@ public class MenuActivity extends AppCompatActivity
 
 
         // NOME E EMAIL do usuário logado ==========================================================
-        Usuario usuarioLogado = LerDadosUsuario.lerDados(this);
+        Usuario usuarioLogado = ControladorDadosUsuario.lerDados(this);
         View header = navigationView.getHeaderView(0);
         TextView nome = (TextView)header.findViewById(R.id.textView_nome);
         TextView email = (TextView)header.findViewById(R.id.textView_email);
@@ -84,7 +84,7 @@ public class MenuActivity extends AppCompatActivity
         setTitle(" LocalizaÊ");
         InicioFragment inicioFragment = new InicioFragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_id, inicioFragment).commit();
+        fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_id, inicioFragment).commit();
 
     }
 
@@ -197,14 +197,15 @@ public class MenuActivity extends AppCompatActivity
 //            getSupportActionBar().setIcon(R.drawable.ic_vpn_key_black_24dp);
             AlterarSenhaFragment alterarSenhaFragment = new AlterarSenhaFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, alterarSenhaFragment).commit();
+            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_id, alterarSenhaFragment).commit();
 
             // MINHAS AVALIAÇÕES
+            //TODO: COLOCAR OS TITULOS NO ARQUIVO DE STRINGS
         }else if (id == R.id.menu_botao_avaliacoes) {
-            setTitle(" Alterar Senha");
+            setTitle(" Minhas Avaliações");
             MinhasAvaliacoesFragment minhasAvaliacoesFragment = new MinhasAvaliacoesFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, minhasAvaliacoesFragment).commit();
+            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_id, minhasAvaliacoesFragment).commit();
 
 
         // MEU ESTANDE
@@ -213,7 +214,7 @@ public class MenuActivity extends AppCompatActivity
 //            getSupportActionBar().setIcon(R.drawable.ic_pin_drop_black_24dp);
             MeuEstandeFragment meuEstandeFragment = new MeuEstandeFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, meuEstandeFragment).commit();
+            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_id, meuEstandeFragment).commit();
 
 
             // COMENTÁRIOS E QUALIFICAÇÕES DO MEU ESTANDE
@@ -222,7 +223,7 @@ public class MenuActivity extends AppCompatActivity
 //            getSupportActionBar().setIcon(R.drawable.ic_star_black_24dp);
             QualificacaoComentariosFragment qualificacaoComentariosFragment = new QualificacaoComentariosFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, qualificacaoComentariosFragment).commit();
+            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_id, qualificacaoComentariosFragment).commit();
 
 
             // CADASTRAR PROMOÇÃO
@@ -236,19 +237,29 @@ public class MenuActivity extends AppCompatActivity
         // AVALIAR ESTANDES
         }else if (id == R.id.menu_botao_avaliar_estande) {
             setTitle(" Avaliar Estandes");
-//            getSupportActionBar().setIcon(R.drawable.ic_speaker_notes_black_24dp);
+            getSupportActionBar().setIcon(R.drawable.ic_speaker_notes_black_24dp);
             AvaliarEstandeFragment avaliarEstandeFragment = new AvaliarEstandeFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, avaliarEstandeFragment).commit();
+            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_id, avaliarEstandeFragment).commit();
+
+//            EstandeFragment estandeFragment = new EstandeFragment();
+//            Bundle args = new Bundle();
+//            args.putSerializable("estandeId", 19L);
+//            estandeFragment.setArguments(args);
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_id, estandeFragment).addToBackStack(null).commit();
 
 
         // ENVIAR FEEDBACK
         } else if (id == R.id.menu_botao_enviar_feedback) {
             setTitle(" Enviar Feedback");
 //            getSupportActionBar().setIcon(R.drawable.ic_feedback_black_24dp);
-            EnviarFeedbackFragment enviarFeedbackFragment = new EnviarFeedbackFragment();
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, enviarFeedbackFragment).commit();
+//            EnviarFeedbackFragment enviarFeedbackFragment = new EnviarFeedbackFragment();
+//            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction().replace(R.id.fragment_id, enviarFeedbackFragment).commit();
+
+            startActivity(new Intent(MenuActivity.this,FeedbackActivity.class));
+
+
 
 
         // SOBRE
@@ -257,7 +268,7 @@ public class MenuActivity extends AppCompatActivity
 //            getSupportActionBar().setIcon(R.drawable.ic_school_black_24dp);
             SobreFragment sobre = new SobreFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, sobre).commit();
+            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_id, sobre).commit();
 
         // SAIR
         } else if (id == R.id.menu_botao_sair) {
@@ -291,7 +302,7 @@ public class MenuActivity extends AppCompatActivity
             setTitle("LozalizaÊ");
             InicioFragment inicioFragment = new InicioFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, inicioFragment).commit();
+            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_id, inicioFragment).commit();
 
         }
 

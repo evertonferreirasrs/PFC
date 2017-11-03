@@ -38,7 +38,7 @@
             <div class="pull-left image"><img src="<c:url value="/resources/img/icon.ico"/>" alt="Localizaï¿½" class="img-responsive img-circle"></div>
             <div class="pull-left info">
                 <!-- <p>Roberto Júnior</p> -->
-                <p class="designation">Administrador</p>
+                <p class="designation"><span class="user-name"></span></p>
             </div>
         </div>
         <!-- Sidebar Menu-->
@@ -66,3 +66,9 @@
         </ul>
     </section>
 </aside>
+<script>
+    let elements = document.getElementsByClassName("user-name")
+    for(let i = 0; i< elements.length; i++){
+        elements[i].innerHTML = ControladorDeDados.getUserLogged().nome
+    }
+</script>
