@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
-import localizae.net.br.Retrofit.RetrofitInicializador;
+import localizae.net.br.helper.RetrofitInicializador;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Promocao;
 import localizae.net.br.services.endpoints.PromocaoInterface;
@@ -139,8 +139,10 @@ public class MinhasPromocoesFragment extends Fragment {
                 progressDialog.dismiss();
                 List<Promocao> promocaoList = response.body();
 
-                ArrayAdapter<Promocao> adapterPromocao = new ArrayAdapter<Promocao>(getContext(), android.R.layout.simple_list_item_1, promocaoList);
-                minhasPromocoesSpinner.setAdapter(adapterPromocao);
+                if(promocaoList != null){
+                    ArrayAdapter<Promocao> adapterPromocao = new ArrayAdapter<Promocao>(getContext(), android.R.layout.simple_list_item_1, promocaoList);
+                    minhasPromocoesSpinner.setAdapter(adapterPromocao);
+                }
             }
 
             @Override
@@ -152,9 +154,10 @@ public class MinhasPromocoesFragment extends Fragment {
 
     private void irParaFormNovaPromocao(final Long idPromocao) {
         final FormPromocoesFragment formPromocoesFragment = new FormPromocoesFragment ();
-        progressDialog.show();
+
 
         if(idPromocao != null){
+            progressDialog.show();
             Call<Promocao> buscarPromocaoCall = promocaoService.getById(idPromocao);
 
             buscarPromocaoCall.enqueue(new Callback<Promocao>() {
@@ -177,6 +180,8 @@ public class MinhasPromocoesFragment extends Fragment {
                 @Override
                 public void onFailure(Call<Promocao> call, Throwable t) {
                     Toast.makeText(getContext(), "Falha ao carregar dados", Toast.LENGTH_SHORT).show();
+                    progressDialog.cancel();
+                    progressDialog.dismiss();
                 }
             });
         }else{
