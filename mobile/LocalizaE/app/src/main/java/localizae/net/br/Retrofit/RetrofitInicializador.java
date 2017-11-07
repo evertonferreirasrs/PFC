@@ -1,12 +1,12 @@
 package localizae.net.br.Retrofit;
 
 import localizae.net.br.services.endpoints.AvaliacaoJuradoInterface;
-import localizae.net.br.services.endpoints.BoothEndpointInterface;
+//import localizae.net.br.services.endpoints.BoothEndpointInterface;
 
 import localizae.net.br.services.endpoints.CriterioJuradoInterface;
 
 import localizae.net.br.services.endpoints.PromocaoInterface;
-import localizae.net.br.services.endpoints.StandEndpointInterface;
+//import localizae.net.br.services.endpoints.StandEndpointInterface;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -23,9 +23,9 @@ public class RetrofitInicializador {
 
     }
 
-    public BoothEndpointInterface getAvaliacaoVisitanteService(){
-        return retrofit.create(BoothEndpointInterface.class);
-    }
+//    public BoothEndpointInterface getAvaliacaoVisitanteService(){
+//        return retrofit.create(BoothEndpointInterface.class);
+//    }
 
 
     public CriterioJuradoInterface getCriterioJuradoService() {
@@ -36,9 +36,9 @@ public class RetrofitInicializador {
         return retrofit.create(AvaliacaoJuradoInterface.class);
     }
 
-    public StandEndpointInterface getEstandeService(){
-        return retrofit.create(StandEndpointInterface.class);
-    }
+//    public StandEndpointInterface getEstandeService(){
+//        return retrofit.create(StandEndpointInterface.class);
+//    }
 
     public PromocaoInterface getPromocaoService(){
         return retrofit.create(PromocaoInterface.class);
