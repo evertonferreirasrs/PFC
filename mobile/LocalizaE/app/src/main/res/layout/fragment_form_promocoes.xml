@@ -49,14 +49,25 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/data_hora_id"
+                android:id="@+id/data_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:ems="10"
-                android:hint="Data e Hora"
+                android:hint="Data (dd/mm/aaaa)"
                 android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/hora_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:ems="10"
+                android:hint="Hora (hh:mm)"
+                android:inputType="textPersonName" />
+
 
             <TextView
                 android:layout_width="wrap_content"
