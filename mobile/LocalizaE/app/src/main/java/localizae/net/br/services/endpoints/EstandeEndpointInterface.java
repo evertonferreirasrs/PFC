@@ -18,4 +18,7 @@ public interface EstandeEndpointInterface {
 
     @GET("estande/{estandeId}")
     Call<Estande> getEstande (@Path("estandeId") Long estandeId);
+
+    @GET("estande")
+    Call<List<Estande>> getByUser(@Query("usuario") Long usuarioId);
 }
