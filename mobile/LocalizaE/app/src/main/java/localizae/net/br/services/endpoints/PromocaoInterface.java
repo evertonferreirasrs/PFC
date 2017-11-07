@@ -4,8 +4,10 @@ import java.util.List;
 
 import localizae.net.br.model.Promocao;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 import static android.R.attr.path;
@@ -23,4 +25,7 @@ public interface PromocaoInterface {
 
     @DELETE("promocao/{id}")
     Call<Void> delete(@Path("id") Long id);
+
+    @POST("promocao")
+    Call<Promocao> create(@Body Promocao promocao);
 }
