@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class WebRequest {
 
     public static final String TAG = "WEB_REQUEST";
-    public static final String BASE_URL = "http://18.220.190.201:8080/localizae/";
+    public static final String BASE_URL = "http://18.216.45.164:8080/localizae/";
 
     public static Retrofit retrofit = null;
 

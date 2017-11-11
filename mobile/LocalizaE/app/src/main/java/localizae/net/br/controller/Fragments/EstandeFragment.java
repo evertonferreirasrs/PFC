@@ -40,6 +40,8 @@ public class EstandeFragment extends Fragment {
     private TextView areaTematicaTextView;
     private TextView periodoTextView;
     private TextView descricaoTextView;
+    private TextView tituloTextView;
+    private TextView cursoTextView;
     private ListView integrantesListView;
     private Button avaliarButton;
     private Button voltarButton;
@@ -60,10 +62,13 @@ public class EstandeFragment extends Fragment {
         periodoTextView = (TextView) view.findViewById(R.id.fragment_estande_periodo);
         integrantesListView = (ListView) view.findViewById(R.id.fragment_estande_integrantes);
         descricaoTextView = (TextView) view.findViewById(R.id.fragment_estande_descricao);
+        tituloTextView = (TextView) view.findViewById(R.id.fragment_estande_titulo);
+        cursoTextView = (TextView) view.findViewById(R.id.fragment_estande_curso);
         avaliarButton = (Button) view.findViewById(R.id.fragment_estande_avaliar);
         voltarButton = (Button) view.findViewById(R.id.fragment_estande_voltar);
         EstandeEndpointInterface estandeService = new RetrofitInicializador().getEstandeService();
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        voltarButton.setEnabled(false);
         progressDialog.setMessage("Carregando...");
 
         progressDialog.show();
@@ -78,6 +83,7 @@ public class EstandeFragment extends Fragment {
                     public void onResponse(Call<Estande> call, Response<Estande> response) {
                         progressDialog.cancel();
                         progressDialog.dismiss();
+                        voltarButton.setEnabled(true);
                         estande = response.body();
                         getActivity().setTitle(estande.getTitulo());
                         preencherDados(estande);
@@ -127,6 +133,8 @@ public class EstandeFragment extends Fragment {
         areaTematicaTextView.setText(estande.getAreaTematica());
         periodoTextView.setText(estande.getPeriodo().toString());
         descricaoTextView.setText(estande.getDescricao());
+        tituloTextView.setText(estande.getTitulo());
+        cursoTextView.setText(estande.getCurso());
 
         IntegranteEquipeAdapter integranteEquipeAdapter = new IntegranteEquipeAdapter(estande.getEquipe(), getContext());
         integrantesListView.setAdapter(integranteEquipeAdapter);

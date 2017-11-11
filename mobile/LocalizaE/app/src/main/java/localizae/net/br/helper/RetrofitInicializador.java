@@ -17,7 +17,7 @@ public class RetrofitInicializador {
     private final Retrofit retrofit;
 
     public RetrofitInicializador (){
-        retrofit = new Retrofit.Builder().baseUrl("http://18.220.190.201:8080/localizae/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://18.216.45.164:8080/localizae/").addConverterFactory(GsonConverterFactory.create()).build();
     }
 
     public CriterioJuradoInterface getCriterioJuradoService() {
