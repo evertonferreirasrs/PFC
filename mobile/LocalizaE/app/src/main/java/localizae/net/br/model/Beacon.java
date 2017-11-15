@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import localizae.net.br.model.BaseEntity;
-
 public class Beacon extends BaseEntity implements Serializable {
 
     @SerializedName("xCoordinate")

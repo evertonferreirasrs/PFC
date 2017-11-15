@@ -1,12 +1,12 @@
 package localizae.net.br.model;
 
-import com.google.gson.annotations.SerializedName;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Usuario extends BaseEntity implements Serializable{
+public class Usuario extends BaseEntity implements Serializable {
 
     @SerializedName("nome")
     @Expose
@@ -35,17 +35,8 @@ public class Usuario extends BaseEntity implements Serializable{
 
     private List<CriterioJurado> criterioAvaliacaoList;
 
-    public List<CriterioJurado> getCriterioAvaliacaoList() {
-        return criterioAvaliacaoList;
+    public Usuario() {
     }
-
-    public void setCriterioAvaliacaoList(List<CriterioJurado> criterioAvaliacaoList) {
-        this.criterioAvaliacaoList = criterioAvaliacaoList;
-    }
-
-    public Usuario(){}
-
-
 
     public Usuario(String nome, String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;
@@ -54,13 +45,22 @@ public class Usuario extends BaseEntity implements Serializable{
         this.tipoUsuario = tipoUsuario;
     }
 
-    public Usuario(String email, String hash){
+    public Usuario(String email, String hash) {
         this.email = email;
         this.hash = hash;
     }
 
-    public Usuario(Long id){
+
+    public Usuario(Long id) {
         this.setId(id);
+    }
+
+    public List<CriterioJurado> getCriterioAvaliacaoList() {
+        return criterioAvaliacaoList;
+    }
+
+    public void setCriterioAvaliacaoList(List<CriterioJurado> criterioAvaliacaoList) {
+        this.criterioAvaliacaoList = criterioAvaliacaoList;
     }
 
     public String getNome() {

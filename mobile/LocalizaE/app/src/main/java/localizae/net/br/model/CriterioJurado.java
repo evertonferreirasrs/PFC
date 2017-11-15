@@ -11,22 +11,20 @@ import java.io.Serializable;
 
 public class CriterioJurado extends BaseEntity implements Serializable {
 
+    @SerializedName("criterioAvaliacao")
+    @Expose
+    private CriterioAvaliacao criterioAvaliacao;
+    @SerializedName("usuario")
+    @Expose
+    private Usuario usuario;
+    @SerializedName("estande")
+    @Expose
+    private Estande estande;
+
     @Override
     public String toString() {
         return this.criterioAvaliacao.getNome();
     }
-
-    @SerializedName("criterioAvaliacao")
-    @Expose
-    private CriterioAvaliacao criterioAvaliacao;
-
-    @SerializedName("usuario")
-    @Expose
-    private Usuario usuario;
-
-    @SerializedName("estande")
-    @Expose
-    private Estande estande;
 
     public CriterioAvaliacao getCriterioAvaliacao() {
         return criterioAvaliacao;

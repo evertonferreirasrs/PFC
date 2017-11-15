@@ -1,18 +1,18 @@
 package localizae.net.br.controller.Activity;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.content.PermissionChecker;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -41,13 +41,14 @@ import localizae.net.br.utils.ResponseCodeValidator;
 
 public class MapaActivity extends AppCompatActivity {
 
-    public ImageView mapaImageView;
+    private ImageView mapaImageView;
+    private ImageView markImageView;
     private View userPositionCircleView;
     private ProgressDialog progressDialog;
     private List<Estande> estandeList;
     private List<Beacon> beaconList;
     private Integer[][] mapColisionMatrix;
-    private Timer timer;
+    private Timer beaconScanTimerTask;
     private Map<String, Integer> beacons = new HashMap();
 
     public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -61,7 +62,11 @@ public class MapaActivity extends AppCompatActivity {
                 switch (responseCode) {
                     case 200:
                         estandeList = (List<Estande>) intent.getSerializableExtra(Constants.DATA_KEY);
-                        updateMatrix();
+                        try {
+                            updateMatrix();
+                        } catch (IndexOutOfBoundsException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     default:
                         String text = ResponseCodeValidator.validateResponseCode(responseCode);
@@ -83,12 +88,12 @@ public class MapaActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_mapa);
 
-        if (ActivityCompat.checkSelfPermission(MapaActivity.this, Manifest.permission.BLUETOOTH) == PermissionChecker.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MapaActivity.this,
-                    new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
-                            Manifest.permission.BLUETOOTH_PRIVILEGED, Manifest.permission.ACCESS_COARSE_LOCATION},
-                    Constants.REQUEST_PERMISSION_CODE);
-        }
+//        if (ActivityCompat.checkSelfPermission(MapaActivity.this, Manifest.permission.BLUETOOTH) == PermissionChecker.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(MapaActivity.this,
+//                    new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
+//                            Manifest.permission.BLUETOOTH_PRIVILEGED, Manifest.permission.ACCESS_COARSE_LOCATION},
+//                    Constants.REQUEST_PERMISSION_CODE);
+//        }
         final android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
         registerBroadcast();
@@ -108,41 +113,78 @@ public class MapaActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    int x = (int) motionEvent.getAxisValue(MotionEvent.AXIS_X);
-                    int y = (int) motionEvent.getAxisValue(MotionEvent.AXIS_Y);
-                    Estande estande = null;
+                    final int x = (int) motionEvent.getAxisValue(MotionEvent.AXIS_X);
+                    final int y = (int) motionEvent.getAxisValue(MotionEvent.AXIS_Y);
+                    Estande es = null;
                     for (Estande e : estandeList) {
                         if (e.getNumero() == mapColisionMatrix[x][y]) {
-                            estande = e;
+                            es = e;
                             break;
                         }
                     }
-
+                    final Estande estande = es;
                     if (estande != null) {
-                        //Toast.makeText(MapaActivity.this, estande.getTitulo(), Toast.LENGTH_SHORT).show();
-                        timer.cancel();
-                        timer.purge();
-                        timer = null;
-
-                        mapaImageView.setVisibility(View.INVISIBLE);
-                        userPositionCircleView.setVisibility(View.INVISIBLE);
-
-                        Bundle args = new Bundle();
-                        args.putSerializable("estandeId", estande.getId());
-
-                        EstandeFragment estandeFragment = new EstandeFragment();
-                        estandeFragment.setArguments(args);
-
-                        FragmentManager.OnBackStackChangedListener onBackStackChangedListener = new FragmentManager.OnBackStackChangedListener() {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(MapaActivity.this);
+                        alert.setTitle(estande.getTitulo());
+                        //TODO: SET STRING CONSTANTS IN STRINGS XML FILE
+                        alert.setMessage("Área: " + estande.getAreaTematica() + "\n" +
+                                "Curso: " + estande.getCurso() + "\n" +
+                                "Número: " + estande.getNumero());
+                        alert.setNegativeButton("Marcar", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onBackStackChanged() {
-                                restoreActivity();
-                            }
-                        };
+                            public void onClick(DialogInterface dialog, int i) {
+                                markImageView = (ImageView) findViewById(R.id.estande_mark);
+                                markImageView.getHeight();
 
-                        FragmentManager supportFragmentManager = getSupportFragmentManager();
-                        supportFragmentManager.addOnBackStackChangedListener(onBackStackChangedListener);
-                        supportFragmentManager.beginTransaction().replace(R.id.mapa_fragment_id, estandeFragment).addToBackStack(null).commit();
+
+                                RelativeLayout.LayoutParams mapParams = (RelativeLayout.LayoutParams) mapaImageView.getLayoutParams();
+
+                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(markImageView.getWidth(), markImageView.getHeight());
+                                params.leftMargin = (int) ((mapParams.leftMargin + x) - markImageView.getWidth() / 2);
+                                params.topMargin = (int) (((mapParams.topMargin + y) - markImageView.getHeight()));
+
+                                markImageView.setLayoutParams(params);
+                                markImageView.setVisibility(View.VISIBLE);
+
+                                dialog.cancel();
+                            }
+                        });
+
+                        alert.setNeutralButton("Compartilhar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                //TODO: Implementar compartilhamento
+                                dialog.cancel();
+                            }
+                        });
+
+                        alert.setPositiveButton("Informações", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                cancelBeaconScannerTimer();
+
+                                mapaImageView.setVisibility(View.INVISIBLE);
+                                userPositionCircleView.setVisibility(View.INVISIBLE);
+
+                                Bundle args = new Bundle();
+                                args.putSerializable("estandeId", estande.getId());
+
+                                EstandeFragment estandeFragment = new EstandeFragment();
+                                estandeFragment.setArguments(args);
+
+                                FragmentManager.OnBackStackChangedListener onBackStackChangedListener = new FragmentManager.OnBackStackChangedListener() {
+                                    @Override
+                                    public void onBackStackChanged() {
+                                        restoreActivity();
+                                    }
+                                };
+
+                                FragmentManager supportFragmentManager = getSupportFragmentManager();
+                                supportFragmentManager.addOnBackStackChangedListener(onBackStackChangedListener);
+                                supportFragmentManager.beginTransaction().replace(R.id.mapa_fragment_id, estandeFragment).addToBackStack(null).commit();
+                            }
+                        });
+                        alert.show();
                     } else {
                         Toast.makeText(MapaActivity.this, "X " + x + " Y " + y, Toast.LENGTH_SHORT).show();
                     }
@@ -162,10 +204,7 @@ public class MapaActivity extends AppCompatActivity {
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
         lbm.unregisterReceiver(broadcastReceiver);
 
-        if (timer != null) {
-            timer.cancel();
-            timer.purge();
-        }
+        cancelBeaconScannerTimer();
     }
 
     @Override
@@ -190,8 +229,8 @@ public class MapaActivity extends AppCompatActivity {
     private void startBeaconScan() {
         final boolean allowScan[] = new boolean[1];
         allowScan[0] = true;
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
+        beaconScanTimerTask = new Timer();
+        beaconScanTimerTask.schedule(new TimerTask() {
             @Override
             public void run() {
                 //Permission granted start beacon finding
@@ -257,7 +296,7 @@ public class MapaActivity extends AppCompatActivity {
         }, 60, Constants.BEACON_SCAN_PERIOD);
     }
 
-    private void updateMatrix() {
+    private void updateMatrix() throws IndexOutOfBoundsException {
         int width = mapaImageView.getWidth();
         int height = mapaImageView.getHeight();
 
@@ -280,6 +319,14 @@ public class MapaActivity extends AppCompatActivity {
                     mapColisionMatrix[i][j] = e.getNumero();
                 }
             }
+        }
+    }
+
+    private void cancelBeaconScannerTimer() {
+        if (beaconScanTimerTask != null) {
+            beaconScanTimerTask.cancel();
+            beaconScanTimerTask.purge();
+            beaconScanTimerTask = null;
         }
     }
 

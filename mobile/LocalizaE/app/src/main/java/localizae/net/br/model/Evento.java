@@ -3,7 +3,7 @@ package localizae.net.br.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Evento extends BaseEntity{
+public class Evento extends BaseEntity {
 
     @SerializedName("nome")
     @Expose

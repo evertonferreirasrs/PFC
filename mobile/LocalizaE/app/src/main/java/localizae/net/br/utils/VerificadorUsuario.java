@@ -10,15 +10,15 @@ import localizae.net.br.model.Usuario;
 
 public class VerificadorUsuario {
 
-    private Usuario usuario;
     private static VerificadorUsuario instances;
+    private Usuario usuario;
 
-    private VerificadorUsuario(Context context){
+    private VerificadorUsuario(Context context) {
         this.usuario = ControladorDadosUsuario.lerDados(context);
     }
 
-    public static VerificadorUsuario getInstances(Context context){
-        if(instances == null){
+    public static VerificadorUsuario getInstances(Context context) {
+        if (instances == null) {
             instances = new VerificadorUsuario(context);
         }
 
@@ -26,34 +26,34 @@ public class VerificadorUsuario {
 
     }
 
-    public boolean isJurado(){
-        if(this.usuario.getTipoUsuario().getId() == Constants.TIPO_USUARIO_JURADO){
+    public boolean isJurado() {
+        if (this.usuario.getTipoUsuario().getId() == Constants.TIPO_USUARIO_JURADO) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public boolean isAdministrador(){
-        if(this.usuario.getTipoUsuario().getId() == Constants.TIPO_USUARIO_ADMINISTRADOR){
+    public boolean isAdministrador() {
+        if (this.usuario.getTipoUsuario().getId() == Constants.TIPO_USUARIO_ADMINISTRADOR) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public boolean isExpositor(){
-        if(this.usuario.getTipoUsuario().getId() == Constants.TIPO_USUARIO_EXPOSITOR){
+    public boolean isExpositor() {
+        if (this.usuario.getTipoUsuario().getId() == Constants.TIPO_USUARIO_EXPOSITOR) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public boolean isVisitante(){
-        if(this.usuario.getTipoUsuario().getId() == Constants.TIPO_USUARIO_VISITANTE){
+    public boolean isVisitante() {
+        if (this.usuario.getTipoUsuario().getId() == Constants.TIPO_USUARIO_VISITANTE) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

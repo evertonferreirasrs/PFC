@@ -27,7 +27,7 @@ public class ResponseCodeValidator {
                 text = Constants.RESPONSE_UNKNOWN;
                 break;
         }
-        return  text;
+        return text;
     }
 
 }
