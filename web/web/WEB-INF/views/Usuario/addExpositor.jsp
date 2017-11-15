@@ -89,11 +89,6 @@
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/jquery.vmap.sampledata.js"/>"></script>     
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/bootstrap-notify.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/plugins/sweetalert.min.js"/>"></script>
-        <script type="text/javascript">
-            $('#demoSwal').click(function () {
-                swal("Confirmado!", "Foi adicionado um Expositor!", "success")
-            });
-        </script> 
         <script src="<c:url value="/resources/js/app/model/Estande.js"/>"></script>
         <script src="<c:url value="/resources/js/app/model/IntegranteEquipe.js"/>"></script>
         <script src="<c:url value="/resources/js/app/service/EstandeService.js"/>"></script>

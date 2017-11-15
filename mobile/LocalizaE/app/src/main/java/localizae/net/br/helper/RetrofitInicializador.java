@@ -7,10 +7,6 @@ import localizae.net.br.services.endpoints.EstandeEndpointInterface;
 import localizae.net.br.services.endpoints.UserEndpointInterface;
 import retrofit2.Retrofit;
 
-/**
- * Created by Everton on 13/10/2017.
- */
-
 public class RetrofitInicializador {
     private final Retrofit retrofit;
 

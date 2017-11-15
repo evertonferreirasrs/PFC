@@ -1,6 +1,7 @@
 package localizae.net.br.controller.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -42,9 +43,14 @@ public class MinhasAvaliacoesFragment extends Fragment {
         final Usuario usuarioLogado = ControladorDadosUsuario.lerDados(getContext());
         Call<List<AvaliacaoVisitante>> avaliacoesVisitanteByUserCall = new RetrofitInicializador().getAvaliacaoVisitanteService().getAvaliacoesVisitanteByUser(usuarioLogado.getId());
 
+        final ProgressDialog progress = new ProgressDialog(getContext());
+        progress.setMessage("Carregando");
+        progress.show();
+
         avaliacoesVisitanteByUserCall.enqueue(new Callback<List<AvaliacaoVisitante>>() {
             @Override
             public void onResponse(Call<List<AvaliacaoVisitante>> call, Response<List<AvaliacaoVisitante>> response) {
+                progress.dismiss();
                 List<AvaliacaoVisitante> listaAvaliacao = response.body();
                 getActivity().setTitle("Minhas Avaliações");
                 if (listaAvaliacao.isEmpty()) {
@@ -57,7 +63,9 @@ public class MinhasAvaliacoesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<AvaliacaoVisitante>> call, Throwable t) {
-                Toast.makeText(getContext(), "Serviço indisponivel no momento", Toast.LENGTH_SHORT).show();
+                progress.cancel();
+                progress.dismiss();
+                Toast.makeText(getContext(), "Serviço indisponível no momento", Toast.LENGTH_SHORT).show();
             }
         });
 

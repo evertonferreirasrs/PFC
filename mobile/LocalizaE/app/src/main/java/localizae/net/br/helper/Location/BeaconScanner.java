@@ -54,7 +54,7 @@ public class BeaconScanner {
             }
         };
 
-        if(beaconList == null || beaconList.isEmpty()) {
+        if (beaconList == null || beaconList.isEmpty()) {
             LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(context);
             lbm.registerReceiver(broadcastReceiver, new IntentFilter(Constants.BEACON_SCANNER_TAG));
 
@@ -80,6 +80,7 @@ public class BeaconScanner {
 
             @Override
             public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
+                Log.d("BATATA", "MAC: " + device.getAddress() + "RSSI> " + rssi + "ScanRecord> " + Arrays.toString(scanRecord));
                 // Based on  iBeacon standard
                 // 0  - 8  9 bytes  - iBeacon prefix
                 // 9  - 24 16 bytes - Proximity UUID

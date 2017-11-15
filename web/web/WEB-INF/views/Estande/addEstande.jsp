@@ -96,13 +96,13 @@
                                                 <div class="col-xs-6">
                                                     <div class="form-group">
                                                         <label for="inputPosicaoX">Posição X:</label>
-                                                        <input type="text" id="inputPosicaoX" class="form-control">
+                                                        <input type="text" id="inputPosicaoX" class="form-control" value="0">
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <div class="form-group">
                                                         <label for="inputPosicaoY">Posição Y:</label>
-                                                        <input type="text" id="inputPosicaoY" class="form-control">
+                                                        <input type="text" id="inputPosicaoY" class="form-control" value="0">
                                                     </div>
                                                 </div>
                                             </div>

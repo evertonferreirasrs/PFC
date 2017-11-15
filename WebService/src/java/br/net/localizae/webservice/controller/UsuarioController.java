@@ -1,7 +1,6 @@
 package br.net.localizae.webservice.controller;
 
 import br.com.localizae.model.criteria.UsuarioCriteria;
-import br.com.localizae.model.entity.CriterioJurado;
 import br.com.localizae.model.entity.Usuario;
 import br.com.localizae.model.service.UsuarioService;
 import br.com.localizae.model.utils.Criptografia;
@@ -9,8 +8,6 @@ import br.net.localizae.webservice.converter.JsonConverter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

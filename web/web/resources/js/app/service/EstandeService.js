@@ -1,38 +1,4 @@
 class EstandeService {
-    // buscarTodosEstandes(cb) {
-    //     let xhr = new XMLHttpRequest()
-
-    //     xhr.open('GET', Configuration.getUrl() + "estande")
-
-    //     xhr.onreadystatechange = () => {
-    //         //Se a requisicao estiver concluida e a resposta estivar pronta
-    //         if (xhr.readyState == 4) {
-    //             //Se a requisico foi executada com sucesso
-    //             if (xhr.status == 200) {
-    //                 cb(null, JSON.parse(xhr.responseText)
-    //                     .map(e => new Estande(
-    //                         e.titulo,
-    //                         e.curso,
-    //                         e.periodo,
-    //                         e.descricao,
-    //                         e.areaTematica,
-    //                         e.numero,
-    //                         e.evento,
-    //                         e.equipe,
-    //                         e.id,
-    //                         e.posicaoX,
-    //                         e.posicaoY
-    //                     )))
-    //             } else {
-    //                 // console.log(xhr.responseText);
-    //                 cb("Impossível obter lista de estandes. Tente novamente mais tarde")
-    //             }
-    //         }
-    //     }
-
-    //     xhr.send()
-    // }
-
     delete(id) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest()
@@ -172,5 +138,31 @@ class EstandeService {
             estande = JSON.stringify(estande)
             xhr.send(estande)
         })
+    }
+
+    validate(estande) {
+        if (estande.titulo == "") {
+            throw "Campo título obrigatório."
+        }
+
+        if(estande.descricao == ""){
+            throw "Campo descrição obrigatório."
+        }
+
+        if(estande.numero == "" || isNaN(estande.numero) || estande.numero < 0){
+            throw "Campo número obrigatório e deve ser um número positivo."
+        }
+
+        if(estande.evento.id <= 0){
+            throw "Campo evento obrigatório."
+        }
+
+        if(estande.posicaoX < 0 || estande.posicaoX == "" || isNaN(estande.posicaoX)){
+            throw "Campo posição X obrigatório e deve ser um número positivo."
+        }
+
+        if(estande.posicaoY < 0 || estande.posicaoY == "" || isNaN(estande.posicaoY)){
+            throw "Campo posição Y obrigatório e deve ser um número positivo."
+        }
     }
 }
