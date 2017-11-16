@@ -1,5 +1,6 @@
-﻿package localizae.net.br.controller.Activity;
+package localizae.net.br.controller.Activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,11 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -89,12 +91,13 @@ public class MapaActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_mapa);
 
-//        if (ActivityCompat.checkSelfPermission(MapaActivity.this, Manifest.permission.BLUETOOTH) == PermissionChecker.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(MapaActivity.this,
-//                    new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
-//                            Manifest.permission.BLUETOOTH_PRIVILEGED, Manifest.permission.ACCESS_COARSE_LOCATION},
-//                    Constants.REQUEST_PERMISSION_CODE);
-//        }
+        if (ActivityCompat.checkSelfPermission(MapaActivity.this, Manifest.permission.BLUETOOTH) == PermissionChecker.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MapaActivity.this,
+                    new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
+                            Manifest.permission.BLUETOOTH_PRIVILEGED, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    Constants.REQUEST_PERMISSION_CODE);
+        }
+
         final android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
         registerBroadcast();
@@ -279,6 +282,8 @@ public class MapaActivity extends AppCompatActivity {
                                     if (userPositionCircleView.getVisibility() == View.INVISIBLE) {
                                         userPositionCircleView.setVisibility(View.VISIBLE);
                                     }
+                                } else {
+                                    //Toast.makeText(MapaActivity.this, R.string.impossible_location_estimation + " somente " + returnedBeaconList.size() + " beacons", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             allowScan[0] = true;

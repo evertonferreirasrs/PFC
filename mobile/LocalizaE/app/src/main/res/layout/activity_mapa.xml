@@ -21,21 +21,26 @@
 
     <View
         android:id="@+id/user_position_circle"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@drawable/user_position_circle" />
+
+    <ImageView
+        android:id="@+id/estande_mark"
+        android:layout_width="150dp"
+        android:layout_height="170dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@mipmap/pin" />
 
     <FrameLayout
         android:id="@+id/mapa_fragment_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
 
-    <ImageView
-        android:id="@+id/estande_mark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:srcCompat="@mipmap/pin" />
+    </FrameLayout>
 
 
 </RelativeLayout>
