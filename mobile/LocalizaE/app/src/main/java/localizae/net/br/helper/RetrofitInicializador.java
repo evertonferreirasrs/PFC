@@ -11,7 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Everton on 13/10/2017.
+ * Created by Localizae on 13/10/2017.
  */
 
 public class RetrofitInicializador {
@@ -19,7 +19,8 @@ public class RetrofitInicializador {
     private PromocaoInterface promocaoService;
 
     public RetrofitInicializador (){
-        retrofit = new Retrofit.Builder().baseUrl("http://18.216.45.164:8080/localizae/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.102:8080/WebService/").addConverterFactory(GsonConverterFactory.create()).build();
+//        18.216.45.164
     }
 
     public CriterioJuradoInterface getCriterioJuradoService() {

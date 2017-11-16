@@ -4,7 +4,7 @@ package localizae.net.br.model;
  * Created by marca on 14/10/2017.
  */
 
-class File {
+public class File {
     private String uri;
     private byte[] file;
     private String base64;

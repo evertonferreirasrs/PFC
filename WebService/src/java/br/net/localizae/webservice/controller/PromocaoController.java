@@ -70,7 +70,7 @@ public class PromocaoController {
             PromocaoService service = new PromocaoService();
             service.create(promocao);
             
-            return new ResponseEntity(promocao, HttpStatus.OK);
+            return new ResponseEntity(null, HttpStatus.OK);
         }catch(Exception ex){
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

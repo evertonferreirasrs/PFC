@@ -27,5 +27,5 @@ public interface PromocaoInterface {
     Call<Void> delete(@Path("id") Long id);
 
     @POST("promocao")
-    Call<Promocao> create(@Body Promocao promocao);
+    Call<Void> create(@Body Promocao promocao);
 }

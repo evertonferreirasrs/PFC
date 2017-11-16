@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -96,6 +99,7 @@ public class MinhasPromocoesFragment extends Fragment {
                 tituloPromocaoTextView.setText(promocao.getNome());
                 dataHoraPromocaoTextView.setText(new Timestamp(promocao.getDataHora()).toString());
                 descricaoPromocaoTextView.setText(promocao.getDescricao());
+                Picasso.with(getContext()).load("http://s3.us-east-2.amazonaws.com/localizae/"+promocao.getImagem().getUri()).fit().into(imagemPromocaoImageView);
             }
 
             @Override
@@ -148,6 +152,11 @@ public class MinhasPromocoesFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Promocao>> call, Throwable t) {
                 Toast.makeText(getContext(), "Falha ao carregar dados.", Toast.LENGTH_SHORT).show();
+                progressDialog.cancel();
+                progressDialog.dismiss();
+//                Log.i("ERROR HTTP", t.getMessage());
+                getActivity().getSupportFragmentManager().popBackStack();
+
             }
         });
     }
