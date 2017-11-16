@@ -2,6 +2,11 @@ package localizae.net.br.utils;
 
 public class Constants {
 
+    //AWS
+    public static final String ACCESSKEYAWS = "AKIAI6NCNN7X6DFOUV5A";
+    public static final String SECRETKEYAWS = "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";
+    public static final String BUCKET_NAME = "localizae";
+
     // Timers
     public static final long BEACON_SCAN_PERIOD = 6000;
 

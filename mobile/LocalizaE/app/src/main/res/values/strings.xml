@@ -32,7 +32,7 @@
     <string name="impossible_location_estimation">Não foi possível estimar sua posição</string>
     <string name="loading_booths">Carregando estandes</string>
 
-    <string name="successful_comment">Comentario realizado</string>
+    <string name="successful_comment">Comentário realizado</string>
 
     <!-- Informações do Usuario -->
     <string name="chave_usuario">Chave do Usuário</string>
@@ -44,5 +44,14 @@
     <string name="chave_logado_tipo">Chave usuario logado tipo</string>
     <string name="chave_logado_situacao">Chave usuario logado situacao</string>
 
+    <!-- Loading -->
+    <string name="loading_dialog">Carregando...</string>
+
+    <!-- Success -->
+    <string name="success_create_promocao">Promoção salva com sucesso</string>
+
+    <!-- Error -->
+    <string name="error_read_estande">Falha ao busca estande</string>
+    <string name="error_create_promocao">Falha ao salvar promoção</string>
 
 </resources>

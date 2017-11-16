@@ -108,7 +108,7 @@ public class FileDAOTest {
         estandeDAO.create(conn, estande);
         
         Promocao promocao = new Promocao();
-        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0));
+        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0).getTime());
         promocao.setDescricao("Description");
         promocao.setEstande(estande);
         promocao.setNome("Uma promocao");
@@ -154,7 +154,7 @@ public class FileDAOTest {
         estandeDAO.create(conn, estande);
         
         Promocao promocao = new Promocao();
-        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0));
+        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0).getTime());
         promocao.setDescricao("Description");
         promocao.setEstande(estande);
         promocao.setNome("Uma promocao");
@@ -202,7 +202,7 @@ public class FileDAOTest {
         estandeDAO.create(conn, estande);
         
         Promocao promocao = new Promocao();
-        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0));
+        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0).getTime());
         promocao.setDescricao("Description");
         promocao.setEstande(estande);
         promocao.setNome("Uma promocao");
@@ -252,7 +252,7 @@ public class FileDAOTest {
         estandeDAO.create(conn, estande);
         
         Promocao promocao = new Promocao();
-        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0));
+        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0).getTime());
         promocao.setDescricao("Description");
         promocao.setEstande(estande);
         promocao.setNome("Uma promocao");
@@ -305,7 +305,7 @@ public class FileDAOTest {
         estandeDAO.create(conn, estande);
         
         Promocao promocao = new Promocao();
-        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0));
+        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0).getTime());
         promocao.setDescricao("Description");
         promocao.setEstande(estande);
         promocao.setNome("Uma promocao");
@@ -361,7 +361,7 @@ public class FileDAOTest {
         estandeDAO.create(conn, estande);
         
         Promocao promocao = new Promocao();
-        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0));
+        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0).getTime());
         promocao.setDescricao("Description");
         promocao.setEstande(estande);
         promocao.setNome("Uma promocao");
@@ -417,7 +417,7 @@ public class FileDAOTest {
         estandeDAO.create(conn, estande);
         
         Promocao promocao = new Promocao();
-        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0));
+        promocao.setDataHora(new Timestamp(2017, 10, 19, 19, 20,0,0).getTime());
         promocao.setDescricao("Description");
         promocao.setEstande(estande);
         promocao.setNome("Uma promocao");

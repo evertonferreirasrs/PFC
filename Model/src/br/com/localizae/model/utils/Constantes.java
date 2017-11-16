@@ -11,4 +11,7 @@ package br.com.localizae.model.utils;
  */
 public abstract class Constantes {
     public static final String PATH_FILE = "D:/localizae/resource/img/";
+    public static final String ACCESSKEYAWS = "AKIAI6NCNN7X6DFOUV5A";
+    public static final String SECRETKEYAWS = "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";
+    public static final String BUCKET_NAME = "localizae";
 }

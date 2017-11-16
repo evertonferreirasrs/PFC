@@ -231,7 +231,7 @@ public class MenuActivity extends AppCompatActivity
             setTitle(" Minhas Promoções");
             MinhasPromocoesFragment minhasPromocoesFragment = new MinhasPromocoesFragment();
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_id, minhasPromocoesFragment).commit();
+            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_id, minhasPromocoesFragment).commit();
 
 
         // AVALIAR ESTANDES

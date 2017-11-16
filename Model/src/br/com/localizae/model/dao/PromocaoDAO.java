@@ -6,8 +6,10 @@
 package br.com.localizae.model.dao;
 
 import br.com.localizae.model.base.BaseDAO;
+import br.com.localizae.model.criteria.FileCriteria;
 import br.com.localizae.model.criteria.PromocaoCriteria;
 import br.com.localizae.model.entity.Estande;
+import br.com.localizae.model.entity.File;
 import br.com.localizae.model.entity.Promocao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +35,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getDescricao());
-        ps.setTimestamp(++i, entity.getDataHora());
+        ps.setTimestamp(++i, new Timestamp(entity.getDataHora()));
         ps.setLong(++i, entity.getEstande().getId());
 
         ResultSet rs = ps.executeQuery();
@@ -68,7 +70,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
         int i = 0;
         ps.setString(++i, entity.getNome());
         ps.setString(++i, entity.getDescricao());
-        ps.setTimestamp(++i, entity.getDataHora());
+        ps.setTimestamp(++i, new Timestamp(entity.getDataHora()));
         ps.setLong(++i, entity.getEstande().getId());
         ps.setLong(++i, entity.getId());
 
@@ -78,8 +80,9 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
 
     @Override
     public Promocao readById(Connection conn, Long id) throws Exception {
+        FileDAO fileDAO = new FileDAO();
         Promocao promocao = null;
-        String sql = "SELECT p.*, e.nome estande, e.numero FROM promocao p JOIN estande e ON p.estande_fk = e.id WHERE p.id=?;";
+        String sql = "SELECT p.*, e.titulo estande, e.numero FROM promocao p JOIN estande e ON p.estande_fk = e.id WHERE p.id=?;";
 
         PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -90,7 +93,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
 
         while (rs.next()) {
             promocao = new Promocao();
-            promocao.setDataHora(rs.getTimestamp("dataHora"));
+            promocao.setDataHora(rs.getTimestamp("dataHora").getTime());
             promocao.setDescricao(rs.getString("descricao"));
             promocao.setId(rs.getLong("id"));
             promocao.setNome(rs.getString("nome"));
@@ -100,6 +103,12 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
             estande.setTitulo(rs.getString("estande"));
             estande.setNumero(rs.getLong("numero"));
             promocao.setEstande(estande);
+            
+            Map<Enum, Object> criteria = new HashMap<>();
+            criteria.put(FileCriteria.PROMO_EQ, promocao.getId());
+            
+            List<File> fileList = fileDAO.readByCriteria(conn, criteria, null, null);
+            promocao.setImagem(fileList.get(0));
         }
 
         return promocao;
@@ -110,8 +119,9 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
         if (criteria == null) {
             criteria = new HashMap<>();
         }
+        FileDAO fileDAO = new FileDAO();
         List<Promocao> promocaoList = new ArrayList<>();
-        String sql = "SELECT p.*, e.nome estande, e.numero FROM promocao p JOIN estande e ON p.estande_fk = e.id WHERE 1=1";
+        String sql = "SELECT p.*, e.titulo estande, e.numero FROM promocao p JOIN estande e ON p.estande_fk = e.id WHERE 1=1";
 
         List<Object> args = new ArrayList<>();
         sql += this.applyCriteria(criteria, args);
@@ -137,7 +147,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
 
         while (rs.next()) {
             Promocao promocao = new Promocao();
-            promocao.setDataHora(rs.getTimestamp("dataHora"));
+            promocao.setDataHora(rs.getTimestamp("dataHora").getTime());
             promocao.setDescricao(rs.getString("descricao"));
             promocao.setId(rs.getLong("id"));
             promocao.setNome(rs.getString("nome"));
@@ -147,6 +157,14 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
             estande.setTitulo(rs.getString("estande"));
             estande.setNumero(rs.getLong("numero"));
             promocao.setEstande(estande);
+            
+            Map<Enum, Object> criteriaFile = new HashMap<>();
+            criteriaFile.put(FileCriteria.PROMO_EQ, promocao.getId());
+            
+            List<File> fileList = fileDAO.readByCriteria(conn, criteriaFile, null, null);
+            if(!fileList.isEmpty()){
+                promocao.setImagem(fileList.get(0));
+            }
 
             promocaoList.add(promocao);
         }
@@ -172,10 +190,10 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
             args.add(nome);
         }
         //DATA_EQ
-        Timestamp dataHora = (Timestamp) criteria.get(PromocaoCriteria.DATA_EQ);
+        Long dataHora = (Long) criteria.get(PromocaoCriteria.DATA_EQ);
         if (dataHora != null) {
             sql = " AND p.dataHora = ?";
-            args.add(dataHora);
+            args.add(new Timestamp(dataHora));
         }
         //AREA_TEMATICA_EQ
         String areaTematica = (String) criteria.get(PromocaoCriteria.AREA_TEMATICA_EQ);
@@ -201,7 +219,7 @@ public class PromocaoDAO implements BaseDAO<Promocao> {
         
         if(entity.getDataHora() != null){
             sql += ", dataHora=?";
-            args.add(entity.getDataHora());
+            args.add(new Timestamp(entity.getDataHora()));
         }
         
         if(entity.getDescricao() != null && !entity.getDescricao().isEmpty()){

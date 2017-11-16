@@ -6,7 +6,6 @@
 package br.com.localizae.model.entity;
 
 import br.com.localizae.model.base.BaseEntity;
-import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -16,8 +15,9 @@ import java.util.Objects;
 public class Promocao extends BaseEntity{
     private String nome;
     private String descricao;
-    private Timestamp dataHora;
+    private Long dataHora;
     private Estande estande;
+    private File imagem;
 
     @Override
     public String toString() {
@@ -77,11 +77,11 @@ public class Promocao extends BaseEntity{
         this.descricao = descricao;
     }
 
-    public Timestamp getDataHora() {
+    public Long getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(Timestamp dataHora) {
+    public void setDataHora(Long dataHora) {
         this.dataHora = dataHora;
     }
 
@@ -91,5 +91,13 @@ public class Promocao extends BaseEntity{
 
     public void setEstande(Estande usuario) {
         this.estande = usuario;
+    }
+
+    public File getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(File imagem) {
+        this.imagem = imagem;
     }
 }
