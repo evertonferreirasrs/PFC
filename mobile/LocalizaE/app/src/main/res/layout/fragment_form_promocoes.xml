@@ -18,7 +18,7 @@
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="170dp"
-                android:id="@+id/imageView2"
+                android:id="@+id/imageViewPromocaoForm"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/img_localizae"
                 android:layout_marginLeft="20dp"
@@ -26,7 +26,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp" />
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/alterar_id"
@@ -35,7 +35,8 @@
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/colorPrimary"
                 android:text="Alterar Imagem"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:background="@android:color/transparent"/>
 
 
             <EditText
@@ -49,14 +50,25 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/data_hora_id"
+                android:id="@+id/data_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:ems="10"
-                android:hint="Data e Hora"
+                android:hint="Data (dd/mm/aaaa)"
                 android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/hora_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:ems="10"
+                android:hint="Hora (hh:mm)"
+                android:inputType="textPersonName" />
+
 
             <TextView
                 android:layout_width="wrap_content"

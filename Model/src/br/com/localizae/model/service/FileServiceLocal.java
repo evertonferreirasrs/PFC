@@ -14,9 +14,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.sql.Connection;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -32,11 +32,17 @@ public class FileServiceLocal implements FileServiceBase {
         try {
             conn = ConnectionManager.getInstance().getConnection();
             FileDAO dao = new FileDAO();
-
+            if(file.getUri() == null || file.getUri().isEmpty()){
+                file.setUri(String.valueOf(System.currentTimeMillis()));
+            }
             dao.create(conn, file);
 
             if (!file.getBase64().isEmpty()) {
-                byte[] data = Base64.getDecoder().decode(file.getBase64());
+                
+               // byte[] data = Base64.getDecoder().decode(file.getBase64().replace("\\",""));
+                byte[] data = DatatypeConverter.parseBase64Binary(file.getBase64());
+                int teste = data.length;
+                System.out.println(data);
                 try (OutputStream stream = new FileOutputStream(Constantes.PATH_FILE + file.getUri())) {
                     stream.write(data);
                 }
@@ -52,7 +58,7 @@ public class FileServiceLocal implements FileServiceBase {
             conn.commit();
         } catch (Exception e) {
             conn.rollback();
-
+            System.out.println(e.getMessage());
             throw e;
         } finally {
             conn.close();

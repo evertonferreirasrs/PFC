@@ -163,7 +163,7 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         
         if(entity.getSenha() != null && !entity.getSenha().isEmpty()){
             sql += ", senha=?";
-            args.add(entity.getSenha());
+            args.add(entity.encryptPasswd(entity.getSenha()));
         }
         
         if(entity.getSituacao() != null &&!entity.getSituacao().isEmpty()){

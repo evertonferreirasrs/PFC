@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class File extends BaseEntity{
     private String uri;
-    private byte[] File;
+    private byte[] file;
     private String base64;
     private Estande estande;
     private Promocao promocao;
@@ -24,7 +24,7 @@ public class File extends BaseEntity{
     public int hashCode() {
         int hash = 5;
         hash = 53 * hash + Objects.hashCode(this.uri);
-        hash = 53 * hash + Arrays.hashCode(this.File);
+        hash = 53 * hash + Arrays.hashCode(this.file);
         hash = 53 * hash + Objects.hashCode(this.base64);
         hash = 53 * hash + Objects.hashCode(this.estande);
         hash = 53 * hash + Objects.hashCode(this.promocao);
@@ -49,7 +49,7 @@ public class File extends BaseEntity{
         if (!Objects.equals(this.base64, other.base64)) {
             return false;
         }
-        if (!Arrays.equals(this.File, other.File)) {
+        if (!Arrays.equals(this.file, other.file)) {
             return false;
         }
         return true;
@@ -57,7 +57,7 @@ public class File extends BaseEntity{
     
     @Override
     public String toString() {
-        return "File{" + "uri=" + uri + ", File=" + File + ", estande=" + estande + ", promocao=" + promocao + '}';
+        return "File{" + "uri=" + uri + ", File=" + file + ", estande=" + estande + ", promocao=" + promocao + '}';
     }
 
     public String getUri() {
@@ -72,11 +72,11 @@ public class File extends BaseEntity{
     }
 
     public byte[] getFile() {
-        return File;
+        return file;
     }
 
     public void setFile(byte[] File) {
-        this.File = File;
+        this.file = File;
     }
 
     public Estande getEstande() {
