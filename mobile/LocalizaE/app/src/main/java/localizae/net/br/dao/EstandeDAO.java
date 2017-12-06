@@ -11,7 +11,7 @@ import localizae.net.br.model.Estande;
 
 public class EstandeDAO {
 
-    public List<Estande> getEstandes(){
+    public List<Estande> getEstandes() {
         List<Estande> estandeList = new ArrayList<>();
 
         Estande estande = new Estande(18l);

@@ -6,10 +6,7 @@ import localizae.net.br.services.endpoints.CriterioJuradoInterface;
 import localizae.net.br.services.endpoints.EstandeEndpointInterface;
 import localizae.net.br.services.endpoints.UserEndpointInterface;
 import retrofit2.Retrofit;
-
 import localizae.net.br.services.endpoints.PromocaoInterface;
-import localizae.net.br.services.endpoints.UserEndpointInterface;
-import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -18,7 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInicializador {
     private final Retrofit retrofit;
-    private PromocaoInterface promocaoService;
 
     public RetrofitInicializador (){
         retrofit = WebRequest.getRetrofitInstance();
@@ -33,7 +29,7 @@ public class RetrofitInicializador {
         return retrofit.create(AvaliacaoJuradoInterface.class);
     }
 
-    public EstandeEndpointInterface getEstandeService(){
+    public EstandeEndpointInterface getEstandeService() {
         return retrofit.create(EstandeEndpointInterface.class);
     }
 
@@ -41,7 +37,7 @@ public class RetrofitInicializador {
         return retrofit.create(AvaliacaoVisitanteEndpointInterface.class);
     }
 
-    public UserEndpointInterface getUsuarioService(){
+    public UserEndpointInterface getUsuarioService() {
         return retrofit.create(UserEndpointInterface.class);
     }
 

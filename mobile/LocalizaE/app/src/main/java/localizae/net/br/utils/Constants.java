@@ -45,12 +45,12 @@ public class Constants {
     public static final String USER_ID_KEY = "usuario";
 
     // Texts
-    public static final String RESPONSE_VALUE_200  = "Sucesso";
-    public static final String RESPONSE_VALUE_400  = "Dados incorretos";
-    public static final String RESPONSE_VALUE_404  = "Recurso não encontrado";
-    public static final String RESPONSE_VALUE_405  = "Metodo nao suportado";
-    public static final String RESPONSE_VALUE_500  = "Erro no servidor";
-    public static final String RESPONSE_UNKNOWN  = "Erro desconhecido";
+    public static final String RESPONSE_VALUE_200 = "Sucesso";
+    public static final String RESPONSE_VALUE_400 = "Dados incorretos";
+    public static final String RESPONSE_VALUE_404 = "Recurso não encontrado";
+    public static final String RESPONSE_VALUE_405 = "Metodo nao suportado";
+    public static final String RESPONSE_VALUE_500 = "Erro no servidor";
+    public static final String RESPONSE_UNKNOWN = "Erro desconhecido";
 
     public static final String RESPONSE_VALUE_RETROFIT_FAILURE = "Algo deu errado";
 

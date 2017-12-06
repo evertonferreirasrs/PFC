@@ -3,8 +3,8 @@ package localizae.net.br.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
 import java.io.Serializable;
+import java.util.List;
 
 public class Estande extends BaseEntity implements Serializable {
 
@@ -44,16 +44,16 @@ public class Estande extends BaseEntity implements Serializable {
     @Expose
     private String descricao;
 
+    public Estande(Long id) {
+        this.setId(id);
+    }
+
     public List<IntegranteEquipe> getEquipe() {
         return equipe;
     }
 
     public void setEquipe(List<IntegranteEquipe> equipe) {
         this.equipe = equipe;
-    }
-
-    public Estande(Long id) {
-        this.setId(id);
     }
 
     public String getTitulo() {
