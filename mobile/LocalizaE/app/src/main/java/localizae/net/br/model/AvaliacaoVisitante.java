@@ -23,6 +23,13 @@ public class AvaliacaoVisitante extends BaseEntity implements Serializable {
     @Expose
     private Estande estande;
 
+    public AvaliacaoVisitante(Long nota, String opiniao, Usuario usuario, Estande estande) {
+        this.nota = nota;
+        this.opiniao = opiniao;
+        this.usuario = usuario;
+        this.estande = estande;
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -52,13 +59,6 @@ public class AvaliacaoVisitante extends BaseEntity implements Serializable {
     }
 
     public void setEstande(Estande estande) {
-        this.estande = estande;
-    }
-
-    public AvaliacaoVisitante(Long nota, String opiniao, Usuario usuario, Estande estande) {
-        this.nota = nota;
-        this.opiniao = opiniao;
-        this.usuario = usuario;
         this.estande = estande;
     }
 

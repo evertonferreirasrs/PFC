@@ -48,11 +48,11 @@ public class AvaliacaoEstandeAdapter extends BaseAdapter {
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = convertView;
-        if(view == null){
+        if (view == null) {
             view = inflater.inflate(R.layout.item_listview_avaliacaovisitante, parent, false);
         }
 
-        TextView tituloUsuario = (TextView)view.findViewById(R.id.fragment_avaliacaoVisitante_Estande);
+        TextView tituloUsuario = (TextView) view.findViewById(R.id.fragment_avaliacaoVisitante_Estande);
         tituloUsuario.setText("Usuário: ");
 
         TextView campoUsuario = (TextView) view.findViewById(R.id.fragment_avaliacaoVisitante_vEstande);

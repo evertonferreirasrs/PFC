@@ -12,17 +12,14 @@ import android.widget.Toast;
 
 import com.litesuits.bluetooth.LiteBluetooth;
 import com.litesuits.bluetooth.scan.PeriodScanCallback;
+import com.litesuits.bluetooth.utils.HexUtil;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
-import localizae.net.br.controller.Activity.MapaActivity;
 import localizae.net.br.controller.R;
 import localizae.net.br.model.Beacon;
-import localizae.net.br.model.Estande;
 import localizae.net.br.services.impl.BeaconService;
 import localizae.net.br.utils.Constants;
 import localizae.net.br.utils.ResponseCodeValidator;
@@ -80,7 +77,7 @@ public class BeaconScanner {
 
             @Override
             public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
-                Log.d("BATATA", "MAC: " + device.getAddress() + "RSSI> " + rssi + "ScanRecord> " + Arrays.toString(scanRecord));
+                Log.d("BATATA", "\nMAC> " + device.getAddress() + "\nRSSI> " + rssi + "\nScanRecord> " + HexUtil.encodeHexStr(scanRecord));
                 // Based on  iBeacon standard
                 // 0  - 8  9 bytes  - iBeacon prefix
                 // 9  - 24 16 bytes - Proximity UUID
