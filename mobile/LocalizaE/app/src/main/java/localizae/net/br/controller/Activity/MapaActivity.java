@@ -35,9 +35,13 @@ import localizae.net.br.controller.R;
 import localizae.net.br.helper.Location.BeaconScanner;
 import localizae.net.br.model.Beacon;
 import localizae.net.br.model.Estande;
+import localizae.net.br.model.Estatistica;
+import localizae.net.br.model.Usuario;
 import localizae.net.br.services.LocationService;
 import localizae.net.br.services.impl.EstandeService;
+import localizae.net.br.services.impl.EstatisticaService;
 import localizae.net.br.utils.Constants;
+import localizae.net.br.utils.ControladorDadosUsuario;
 import localizae.net.br.utils.ResponseCodeValidator;
 
 public class MapaActivity extends AppCompatActivity {
@@ -121,6 +125,16 @@ public class MapaActivity extends AppCompatActivity {
 
                     if (estande != null) {
                         //Toast.makeText(MapaActivity.this, estande.getTitulo(), Toast.LENGTH_SHORT).show();
+                        alert.setPositiveButton("Informações", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                cancelBeaconScannerTimer();
+
+                                mapaImageView.setVisibility(View.INVISIBLE);
+                                userPositionCircleView.setVisibility(View.INVISIBLE);
+                                if (markImageView != null) {
+                                    markImageView.setVisibility(View.INVISIBLE);
+                                }
 
                         Bundle args = new Bundle();
                         args.putSerializable("estandeId", estande.getId());
@@ -226,6 +240,11 @@ public class MapaActivity extends AppCompatActivity {
                                     if (userPositionCircleView.getVisibility() == View.INVISIBLE) {
                                         userPositionCircleView.setVisibility(View.VISIBLE);
                                     }
+
+                                    EstatisticaService es = new EstatisticaService();
+                                    es.storeUserPosition(new Estatistica(position[0], position[1], new Usuario(ControladorDadosUsuario.lerDados(MapaActivity.this).getId())), MapaActivity.this);
+                                } else {
+                                    //Toast.makeText(MapaActivity.this, R.string.impossible_location_estimation + " somente " + returnedBeaconList.size() + " beacons", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             allowScan[0] = true;
@@ -257,10 +276,10 @@ public class MapaActivity extends AppCompatActivity {
 
         for (Estande e : estandeList) {
             int minX = e.getPosicaoX();
-            int maxX = e.getPosicaoX() + 80;
+            int maxX = e.getPosicaoX() + 200;
 
             int minY = e.getPosicaoY();
-            int maxY = e.getPosicaoY() + 110;
+            int maxY = e.getPosicaoY() + 230;
 
             for (int i = minX; i < maxX; i++) {
                 for (int j = minY; j < maxY; j++) {

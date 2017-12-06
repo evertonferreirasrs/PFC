@@ -18,6 +18,7 @@ public class Constants {
 
     // TAGS
     public static final String USER_SERVICE_TAG = "USER_SERVICE";
+    public static final String STATISTIC_SERVICE_TAG = "STATISTIC_SERVICE";
     public static final String BEACON_SERVICE_TAG = "BEACON_SERVICE";
     public static final String BOOTH_SERVICE_TAG = "BOOTH_SERVICE";
 

@@ -4,6 +4,8 @@ import localizae.net.br.services.endpoints.AvaliacaoJuradoInterface;
 import localizae.net.br.services.endpoints.AvaliacaoVisitanteEndpointInterface;
 import localizae.net.br.services.endpoints.CriterioJuradoInterface;
 import localizae.net.br.services.endpoints.EstandeEndpointInterface;
+import localizae.net.br.services.endpoints.UserEndpointInterface;
+import retrofit2.Retrofit;
 
 import localizae.net.br.services.endpoints.PromocaoInterface;
 import localizae.net.br.services.endpoints.UserEndpointInterface;
@@ -19,7 +21,7 @@ public class RetrofitInicializador {
     private PromocaoInterface promocaoService;
 
     public RetrofitInicializador (){
-        retrofit = new Retrofit.Builder().baseUrl("http://18.216.45.164:8080/localizae/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = WebRequest.getRetrofitInstance();
 //        18.216.45.164
     }
 
